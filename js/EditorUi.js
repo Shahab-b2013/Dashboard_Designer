@@ -22,15 +22,15 @@ function createDivs() {
   Container.appendChild(row);
 
   //sidebar
-  let Sidebar = createDiv("col-lg-1", "geSidebar");
-  Sidebar.innerHTML = "sidebar";
-  row.appendChild(Sidebar);
+  // let Sidebar = createDiv("col-lg-1", "geSidebar");
+  // Sidebar.innerHTML = "sidebar";
+  // row.appendChild(Sidebar);
 
   //Panel
   CreatePanel();
 
   //Content create form
-  let Content = createDiv("col-lg-7" + ' noDrop', "geContent");
+  let Content = createDiv("col-lg-8" + ' noDrop', "geContent");
   row.appendChild(Content);
 
   //content Header

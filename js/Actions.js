@@ -33,14 +33,14 @@ function CreatePanel() {
   //div Header
   let divHeader = document.createElement("div");
   divHeader.className = "headerDiv";
-  divHeader.innerHTML = "افزودن فیلد";
+  divHeader.innerHTML = "افزودن نمودار";
   divHeader.style.backgroundColor = "#ffffff";
   RightPanel.appendChild(divHeader);
 
   //FildsPanel Header
   let panelHeader = document.createElement("div");
   panelHeader.className = "divHeader";
-  panelHeader.innerHTML = "فیلدهای پایه";
+  panelHeader.innerHTML = "نمودار ها";
   panelHeader.style.backgroundColor = "#61892f";
   panelHeader.style.gridColumn = "1/span 4";
   RightPanel.appendChild(panelHeader);
@@ -72,7 +72,7 @@ function CreatePanel() {
     lbl.setAttribute("id", "lbl" + index);
 
     if (index == 0) {
-      lbl.innerHTML = "متن";
+      lbl.innerHTML = "نمودار ستونی ";
       lbl.style.gridColumn = "2";
       lbl.style.gridRow = "2";
       item.style.gridColumn = "1";
@@ -80,7 +80,7 @@ function CreatePanel() {
       item.setAttribute("width", "55");
       item.setAttribute("height", "55");
     } else if (index == 1) {
-      lbl.innerHTML = "متن چند خطی";
+      lbl.innerHTML = "نمودار دایره ای";
       lbl.style.gridColumn = "2";
       lbl.style.gridRow = "3";
       item.style.gridColumn = "1";
@@ -88,7 +88,7 @@ function CreatePanel() {
       item.setAttribute("width", "35");
       item.setAttribute("height", "35");
     } else if (index == 2) {
-      lbl.innerHTML = "برچسب";
+      lbl.innerHTML = "نمودار میله ای";
       lbl.style.gridColumn = "2";
       lbl.style.gridRow = "4";
       item.style.gridColumn = "1";
@@ -96,7 +96,7 @@ function CreatePanel() {
       item.setAttribute("width", "40");
       item.setAttribute("height", "40");
     } else if (index == 3) {
-      lbl.innerHTML = "انتخابی";
+      lbl.innerHTML = "نمودار خطی";
       lbl.style.gridColumn = "4";
       lbl.style.gridRow = "2";
       item.style.gridColumn = "3";
@@ -104,7 +104,7 @@ function CreatePanel() {
       item.setAttribute("width", "30");
       item.setAttribute("height", "30");
     } else if (index == 4) {
-      lbl.innerHTML = "لیست کشویی";
+      lbl.innerHTML = "نمودار مساحت";
       lbl.style.gridColumn = "4";
       lbl.style.gridRow = "3";
       item.style.gridColumn = "3";
@@ -112,22 +112,23 @@ function CreatePanel() {
       item.setAttribute("width", "55");
       item.setAttribute("height", "55");
     } else if (index == 5) {
-      lbl.innerHTML = "دکمه رادیویی";
+      lbl.innerHTML = "'گروه";
       lbl.style.gridColumn = "4";
       lbl.style.gridRow = "4";
       item.style.gridColumn = "3";
       item.style.gridRow = "4";
-      item.setAttribute("width", "25");
-      item.setAttribute("height", "25");
-    } else if (index == 6) {
-      lbl.innerHTML = "گروه";
-      lbl.style.gridColumn = "2";
-      lbl.style.gridRow = "5";
-      item.style.gridColumn = "1";
-      item.style.gridRow = "5";
-      item.setAttribute("width", "40");
-      item.setAttribute("height", "40");
+      item.setAttribute("width", "55");
+      item.setAttribute("height", "55");
     }
+    // else if (index == 6) {
+    //   lbl.innerHTML = "گروه";
+    //   lbl.style.gridColumn = "2";
+    //   lbl.style.gridRow = "5";
+    //   item.style.gridColumn = "1";
+    //   item.style.gridRow = "5";
+    //   item.setAttribute("width", "40");
+    //   item.setAttribute("height", "40");
+    // }
     lbl.style.marginTop = "27px";
     lbl.style.marginRight = "0px";
     lbl.className = "lbl";
@@ -286,77 +287,57 @@ function CheckboxFns(ev) {
   $("#" + rowId).append(lbl);
 }
 
-function Radio(ev) {
-  //form-group
-  let rowId = rowContent(ev);
-  //radio
-  let itemsPanel = document.createElement("input");
-  itemsPanel.type = "radio";
-  itemsPanel.className = "radio";
-  itemsPanel.setAttribute("id", "radioAfterDrag-" + createID());
-  itemsPanel.addEventListener("dragover", (event) => allowDrop(event));
-  itemsPanel.addEventListener("dblclick", (e) => RadioProp(e.target.id));
-  $("#" + rowId).append(itemsPanel);
-  //lbl
-  let getId = "form-item-radio-" + createID();
-  let radiolbl = document.createElement("label");
-  radiolbl.innerText = "متن انتخابی ...";
-  radiolbl.className = "lbl";
-  radiolbl.style.margin = "0px 5px 10px 0px";
-  radiolbl.setAttribute("id", getId);
-  radiolbl.setAttribute("for", itemsPanel.id);
-  radiolbl.addEventListener("dblclick", (ev) => labelProp(ev.target.id));
-  $("#" + rowId).append(radiolbl);
-}
-
 function Group(ev) {
-  console.log(ev.target.id);
-  if ($("#" + ev.target.id).hasClass("form-group-box")) {
-    let GroupId = ev.target.id;
-    const parent = $("#" + GroupId)
-      .parent()
-      .attr("id");
-
-    let id;
-    id = +GroupId.replace("form-group-", "");
-    $("#" + parent)
-      .children()
-      .each(function () {
-        if ($(this).hasClass("form-group-box")) {
-          let nextId = $(this).attr("id").replace("form-group-", "");
-          if (nextId > id) {
-            id = nextId;
-          }
-        }
-      });
-
-    $(document).ready(function () {
-      $("#" + GroupId).after(
-        $(
-          '<div  style="" id="form-group-' +
-            id +
-            '" class="row form-group-box"  ondragover="allowDrop(event)" >' +
-            '<div class="col-lg-2 col-md-2 group-info noDrop" id="group-info-' +
-            id +
-            '"' +
-            '><h4 class="group-title">' +
-            "نام پیش فرض" +
-            "<br /><small>" +
-            "" +
-            "</small></h4></div>" +
-            '<div style="padding:10px;" class="' +
-            "col-lg-7 col-md-10 form-group-body" +
-            ' col-sm-12  col-xs-12" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
-            id +
-            '-0"></div><div class="col-md-1" id="miniDiv-1' +
-            id +
-            '"></div>' +
-            Group_Btn(id) +
-            "</div"
-        )
-      );
-    });
-  }
+ if ($("#" + ev.target.id).hasClass("rowBtnGroup")) {
+   let GroupId = ev.target.id;
+   const parent = $("#" + GroupId)
+     .parent()
+     .parent()
+     .attr("id");
+   let id = 0;
+   // id = +GroupId.replace("form-group-", "");
+   $("#" + parent)
+     .children()
+     .each(function () {
+       if ($(this).hasClass("form-group-box")) {
+         let nextId = +$(this).attr("id").replace("form-group-", "");
+         console.log(nextId);
+         if (nextId > id) {
+           id = nextId;
+         }
+       }
+     });
+   id++;
+   $(document).ready(function () {
+     $("#" + GroupId)
+       .parent()
+       .after(
+         $(
+           '<div  style="" id="' +
+             "form-group-" +
+             id +
+             '" class="row form-group-box" ondragover="allowDrop(event)"  >' +
+             '<div class="col-lg-2 col-md-2 group-info noDrop" id="group-info-' +
+             id +
+             '"' +
+             '><h4 class="group-title">' +
+             "نام پیش فرض" +
+             "<br /><small>" +
+             "" +
+             "</small></h4></div>" +
+             '<div style="padding:10px;" class="' +
+             "col-lg-7 col-md-10 form-group-body" +
+             ' col-sm-12  col-xs-12" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
+             id +
+             '-0"></div><div class="col-md-1" id="miniDiv-1' +
+             id +
+             '"></div>' +
+             Group_Btn(id) +
+             "</div"
+         )
+       );
+   });
+ }
 }
 
 //=============================================================================drag and drop functions=================================================================================
@@ -365,31 +346,28 @@ function Group(ev) {
  * */
 function drop(ev) {
   if (ev.target.id) {
-    if (!$("#" + ev.target.id).hasClass("noDrop") ) {
+    if (!$("#" + ev.target.id).hasClass("noDrop")) {
       //get senderId and check number or string for switch
       let dataId = ev.dataTransfer.getData("text");
       dataId = dataId.length < 3 ? +dataId : dataId;
 
       switch (dataId) {
         case 0:
-          TextboxFns(ev);
+          ColumnFns(ev);
           break;
         case 1:
-          TextboxFns(ev);
+          PieFns(ev);
           break;
         case 2:
-          LabelFns(ev);
+          BarFns(ev);
           break;
         case 3:
-          CheckboxFns(ev);
+          LineFns(ev);
           break;
         case 4:
-          DropdownFns(ev);
+          AreaFns(ev);
           break;
         case 5:
-          Radio(ev);
-          break;
-        case 6:
           Group(ev);
           break;
         default:
@@ -416,7 +394,7 @@ function Group_Btn(GroupId) {
   return (
     '<div id="' +
     GroupId +
-    'rowBtnGroup" class="col-lg-3 col-md-8" style="margin-right:85%;margin-bottom:-10px;padding-left:0px;">' +
+    '-rowBtnGroup" class="row  container-fluid rowBtnGroup" style="margin-left:-30px; margin-right:30px;justify-content: left;margin-bottom:-15px" ondrop="drop(event)">' +
     '<span style="" class="btn btn-light glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="حذف گروه" onclick="DeleteGroup(event);" id=' +
     GroupId +
     "DeleteGroup></span>" +

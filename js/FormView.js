@@ -765,7 +765,7 @@
           (formGroup.Visibility == "DefaultHidden" ? "display:none" : "") +
           '" id="form-group-' +
           formGroup.FormGroupBoxID +
-          '"  class="row form-group-box"  ondrop="drop(event)" ondragover="allowDrop(event)">';
+          '"  class="row form-group-box"  ondragover="allowDrop(event)">';
 
         // $$FormGroups[formGroup.Name] = formGroup.FormGroupBoxID;
 
