@@ -1,0 +1,225 @@
+﻿html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0px;
+  background-color: #f1f1f1;
+  --mainFont: "IRANSansWeb", Tahoma, Verdana, sans-serif;
+  --mainbackground: white;
+  padding: 0px;
+}
+
+#geTopDiv {
+  background-color: #0091ea;
+  height: 40px;
+  width: 100%;
+  color: white;
+  font: 16px var(--mainFont);
+}
+/**/
+#geToolbar {
+  background-color: var(--mainbackground);
+  font: 1rem var(--mainFont);
+  height: 40px;
+  border: 1px solid #ccc;
+}
+
+#geSidebar {
+  background-color: var(--mainbackground);
+  font: 1rem, var(--mainFont);
+  margin: 0px 0px 0px 50px;
+  border: 1px solid #ccc;
+}
+
+#RightPanel {
+  background-color: var(--mainbackground);
+  font: 1rem var(--mainFont);
+  margin: 10px 0px 10px 30px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 10px;
+  height: 800px;
+}
+
+#PanelId {
+  overflow: auto;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  border: 1px solid #ccc;
+  margin: 5px 5px 10px 5px;
+  padding: 0px 10px 10px 10px;
+}
+::placeholder {
+  font: 10px var(--mainFont);
+}
+#PanelPropId {
+  overflow: auto;
+  border: 1px solid #ccc;
+  margin: 5px;
+  padding: 10px;
+  height: 350px;
+}
+#geContent {
+  background-color: var(--mainbackground);
+  font: 1rem var(--mainFont);
+  margin: 10px 0px 10px 20px;
+  height: 800px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  overflow: auto;
+}
+
+#geFooter {
+  background-color: var(--mainbackground);
+  font: 1rem var(--mainFont);
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  height: 40px;
+  border: 1px solid #ccc;
+}
+
+.divHeader {
+  height: 45px;
+  border: 1px solid #ccc;
+  text-align: center;
+  align-self: center;
+  justify-self: center;
+  background-color: #506495;
+  color: white;
+  font: 1.2rem var(--mainFont);
+  border-radius: 4px;
+  padding: 5px;
+  z-index: 1;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+.headerDiv {
+  color: black;
+  font: 1rem var(--mainFont);
+  font-weight: bold;
+  margin: 10px;
+}
+.textcontent {
+  width: 200px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 10px;
+  font: 14px var(--mainFont);
+  resize: horizontal;
+  max-width: 800px;
+  min-width: 200px;
+  overflow: auto;
+  cursor: move;
+  padding-top: 7px;
+}
+.rowContent {
+  margin-bottom: 2rem;
+}
+.lbl {
+  font: 14px var(--mainFont);
+  align-self: center;
+  justify-self: right;
+}
+
+.PanelTxt {
+  width: 90%;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 10px;
+  font-family: var(--mainFont);
+  font-size: 14px;
+}
+
+#textarea {
+  width: 90%;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 10px;
+}
+#textlbl {
+  width: 11rem;
+  resize: horizontal;
+  height: 30px;
+  font-size: 0.9rem;
+  margin: 0px 5px 10px 0px;
+  border: 1px solid #ccc;
+}
+.flex-container {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: rgb(180, 194, 209);
+  border-radius: 4px;
+  width: 14%;
+  margin-right: 10px;
+}
+
+.dropdown {
+  background-color: #f9f9f9;
+  font: 1rem var(--mainFont);
+  min-width: 160px;
+  height: 32px;
+  border-radius: 4px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  margin: 10px;
+  cursor: move;
+  overflow: auto;
+}
+
+input[type="number"] {
+  width: 80px;
+  height: 25px;
+  font: 14px var(--mainFont);
+  margin: 10px 15px 10px 0px;
+}
+#lblAfrerDrag {
+  margin: 12px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+#radioAfterDrag,
+#checkAferDrag {
+  margin: 12px 10px 0px 5px;
+}
+
+br {
+  margin: 20px;
+}
+
+#hider {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 1600px;
+  height: 2000px;
+  margin-top: -800px; /*set to a negative number 1/2 of your height*/
+  margin-left: -500px; /*set to a negative number 1/2 of your width*/
+  /*
+        z- index must be lower than pop up box
+       */
+  z-index: 99;
+  background-color: Black;
+  opacity: 0.6;
+}
+
+#popup_box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10em;
+  height: 10em;
+  margin-top: -5em; /*set to a negative number 1/2 of your height*/
+  margin-left: -5em; /*set to a negative number 1/2 of your width*/
+  border: 1px solid #ccc;
+  border: 2px solid black;
+  z-index: 100;
+}
