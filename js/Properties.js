@@ -5,7 +5,7 @@ function lbl(value, forId) {
   item.setAttribute("for", forId);
   item.innerHTML = value + ":";
   item.style.display = "inline";
-  
+
   $("#PanelPropId").append(item);
 }
 function br() {
@@ -113,7 +113,11 @@ function labelProp(id) {
       $("#" + id).css("color", "#ccc");
     } else {
       $("#" + id).html(e.target.value);
-      $("#" + id).css("color", "#000");
+      if ($("#" + id).hasClass("divHeader")) {
+        $("#" + id).css("color", "#fff");
+      } else {
+        $("#" + id).css("color", "#000");
+      }
     }
   });
   $("#PanelPropId").append(item);
@@ -205,7 +209,7 @@ function GroupProp(elem) {
         }
         return [...new Set(groupDivIdArray)];
       }
-      switch (+($("#" + e.target.id).val())) {
+      switch (+$("#" + e.target.id).val()) {
         case 1:
           $("#" + groupDivId(elem)[0]).attr(
             "class",
@@ -250,7 +254,6 @@ function GroupProp(elem) {
           }
           break;
         case 3:
-          
           // let parentId = elem.parentNode.parentNode.id + "-0";
           // parentId = parentId.replace("form-group-", "form-group-body-");
           // $("#" + parentId).attr("class", "col-md-3");
@@ -259,4 +262,54 @@ function GroupProp(elem) {
     };
     $("#PanelPropId").append(item);
   }
+}
+
+function ChartProp(prop) {
+  const chartType = prop.userOptions.chart.type;
+
+  // let div =
+  //   '<div class="col-lg-12 row"><div class="col-lg-5" id="div1"></div><div class=""></div><div class="col-lg-5" id="div2"></div></div>';
+  // $("#PanelPropId").append(div);
+
+  // for (let i = 0; i < 14; i++) {
+  //   const lblArray = [
+  //     "Text",
+  //     "Name",
+  //     "chartType",
+  //     "categoryLabel",
+  //     "valueLabel",
+  //     "categoryName",
+  //     "catExpression",
+  //     "Operators",
+  //     "dataExpression",
+  //     "seriesText",
+  //     "seriesName",
+  //     "seriesType",
+  //     "styleColor",
+  //     "version",
+  //   ];
+  //   let lbl = document.createElement("label");
+  //   lbl.innerText = lblArray[i] + ":";
+  //   lbl.className = "lbl container-fluid";
+  //   lbl.style.margin = "10px 0px 8px 10px";
+  //   $("#div1").append(lbl);
+
+  //   if (i == 2 || i == 6 || i == 7) {
+  //     let select = document.createElement("select");
+  //     select.className = "selectBox";
+  //     $("#div2").append(select);
+  //   } else if (i == 12) {
+  //     let colorInput = document.createElement("input");
+  //     colorInput.type = "color";
+  //     colorInput.style.width = '150px'
+  //     colorInput.value='#'
+  //     $("#div2").append(colorInput);
+  //   } else {
+  //     let textbox = document.createElement("input");
+  //     textbox.className = "Textbox";
+  //     $("#div2").append(textbox);
+  //   }
+  // }
+
+  console.log(chartType);
 }

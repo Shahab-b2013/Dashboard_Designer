@@ -19,6 +19,7 @@
   font-family: "IRANSansWeb";
   font-size: 1.05rem;
   color: #2a3f54;
+ 
 }
 
 .form-group-box .group-title small {
@@ -31,6 +32,7 @@
 
 .form-control:focus {
   border-color: #506495 !important; /*@MainColor-A1*/
+ 
 }
 
 .form-input {

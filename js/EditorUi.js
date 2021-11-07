@@ -7,7 +7,7 @@ function createDivs() {
 
   //TopDiv
   let TopDiv = createDiv("container-fluid", "geTopDiv");
-  TopDiv.innerHTML = "فرم ساز امن پرداز";
+  TopDiv.innerHTML = " داشبورد امن پرداز";
   Container.appendChild(TopDiv);
 
   //Toolbar
@@ -21,10 +21,7 @@ function createDivs() {
   let row = createDiv("row", "rowId");
   Container.appendChild(row);
 
-  //sidebar
-  // let Sidebar = createDiv("col-lg-1", "geSidebar");
-  // Sidebar.innerHTML = "sidebar";
-  // row.appendChild(Sidebar);
+ 
 
   //Panel
   CreatePanel();

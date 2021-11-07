@@ -41,7 +41,7 @@ function CreatePanel() {
   let panelHeader = document.createElement("div");
   panelHeader.className = "divHeader";
   panelHeader.innerHTML = "نمودار ها";
-  panelHeader.style.backgroundColor = "#61892f";
+  panelHeader.style.background = "linear-gradient(#61892f99,#527428)";
   panelHeader.style.gridColumn = "1/span 4";
   RightPanel.appendChild(panelHeader);
 
@@ -77,48 +77,48 @@ function CreatePanel() {
       lbl.style.gridRow = "2";
       item.style.gridColumn = "1";
       item.style.gridRow = "2";
-      item.setAttribute("width", "55");
-      item.setAttribute("height", "55");
+      item.setAttribute("width", "45");
+      item.setAttribute("height", "45");
     } else if (index == 1) {
       lbl.innerHTML = "نمودار دایره ای";
       lbl.style.gridColumn = "2";
       lbl.style.gridRow = "3";
       item.style.gridColumn = "1";
       item.style.gridRow = "3";
-      item.setAttribute("width", "35");
-      item.setAttribute("height", "35");
+      item.setAttribute("width", "45");
+      item.setAttribute("height", "45");
     } else if (index == 2) {
       lbl.innerHTML = "نمودار میله ای";
       lbl.style.gridColumn = "2";
       lbl.style.gridRow = "4";
       item.style.gridColumn = "1";
       item.style.gridRow = "4";
-      item.setAttribute("width", "40");
-      item.setAttribute("height", "40");
+      item.setAttribute("width", "45");
+      item.setAttribute("height", "45");
     } else if (index == 3) {
       lbl.innerHTML = "نمودار خطی";
       lbl.style.gridColumn = "4";
       lbl.style.gridRow = "2";
       item.style.gridColumn = "3";
       item.style.gridRow = "2";
-      item.setAttribute("width", "30");
-      item.setAttribute("height", "30");
+      item.setAttribute("width", "50");
+      item.setAttribute("height", "40");
     } else if (index == 4) {
       lbl.innerHTML = "نمودار مساحت";
       lbl.style.gridColumn = "4";
       lbl.style.gridRow = "3";
       item.style.gridColumn = "3";
       item.style.gridRow = "3";
-      item.setAttribute("width", "55");
-      item.setAttribute("height", "55");
+      item.setAttribute("width", "50");
+      item.setAttribute("height", "50");
     } else if (index == 5) {
-      lbl.innerHTML = "'گروه";
+      lbl.innerHTML = "گروه";
       lbl.style.gridColumn = "4";
       lbl.style.gridRow = "4";
       item.style.gridColumn = "3";
       item.style.gridRow = "4";
-      item.setAttribute("width", "55");
-      item.setAttribute("height", "55");
+      item.setAttribute("width", "50");
+      item.setAttribute("height", "50");
     }
     // else if (index == 6) {
     //   lbl.innerHTML = "گروه";
@@ -135,10 +135,10 @@ function CreatePanel() {
     FildsPanel.appendChild(lbl);
   });
 
-  //PanelProp Header
+  //PanelProp Header   //todo
   let PanelPropHeader = document.createElement("div");
   PanelPropHeader.className = "divHeader";
-  PanelPropHeader.innerHTML = "تنظیمات فیلد";
+  PanelPropHeader.innerHTML = "تنظیمات ";
   PanelPropHeader.style.gridColumn = "1/span 4";
   PanelPropHeader.style.gridRow = "1";
   RightPanel.appendChild(PanelPropHeader);
@@ -288,56 +288,56 @@ function CheckboxFns(ev) {
 }
 
 function Group(ev) {
- if ($("#" + ev.target.id).hasClass("rowBtnGroup")) {
-   let GroupId = ev.target.id;
-   const parent = $("#" + GroupId)
-     .parent()
-     .parent()
-     .attr("id");
-   let id = 0;
-   // id = +GroupId.replace("form-group-", "");
-   $("#" + parent)
-     .children()
-     .each(function () {
-       if ($(this).hasClass("form-group-box")) {
-         let nextId = +$(this).attr("id").replace("form-group-", "");
-         console.log(nextId);
-         if (nextId > id) {
-           id = nextId;
-         }
-       }
-     });
-   id++;
-   $(document).ready(function () {
-     $("#" + GroupId)
-       .parent()
-       .after(
-         $(
-           '<div  style="" id="' +
-             "form-group-" +
-             id +
-             '" class="row form-group-box" ondragover="allowDrop(event)"  >' +
-             '<div class="col-lg-2 col-md-2 group-info noDrop" id="group-info-' +
-             id +
-             '"' +
-             '><h4 class="group-title">' +
-             "نام پیش فرض" +
-             "<br /><small>" +
-             "" +
-             "</small></h4></div>" +
-             '<div style="padding:10px;" class="' +
-             "col-lg-7 col-md-10 form-group-body" +
-             ' col-sm-12  col-xs-12" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
-             id +
-             '-0"></div><div class="col-md-1" id="miniDiv-1' +
-             id +
-             '"></div>' +
-             Group_Btn(id) +
-             "</div"
-         )
-       );
-   });
- }
+  if ($("#" + ev.target.id).hasClass("rowBtnGroup")) {
+    let GroupId = ev.target.id;
+    const parent = $("#" + GroupId)
+      .parent()
+      .parent()
+      .attr("id");
+    let id = 0;
+    // id = +GroupId.replace("form-group-", "");
+    $("#" + parent)
+      .children()
+      .each(function () {
+        if ($(this).hasClass("form-group-box")) {
+          let nextId = +$(this).attr("id").replace("form-group-", "");
+          console.log(nextId);
+          if (nextId > id) {
+            id = nextId;
+          }
+        }
+      });
+    id++;
+    $(document).ready(function () {
+      $("#" + GroupId)
+        .parent()
+        .after(
+          $(
+            '<div  style="" id="' +
+              "form-group-" +
+              id +
+              '" class="row form-group-box" ondragover="allowDrop(event)"  >' +
+              '<div class="col-lg-2 col-md-2 group-info noDrop" id="group-info-' +
+              id +
+              '"' +
+              '><h4 class="group-title">' +
+              "نام پیش فرض" +
+              "<br /><small>" +
+              "" +
+              "</small></h4></div>" +
+              '<div style="padding:10px;" class="' +
+              "col-lg-7 col-md-10 form-group-body" +
+              ' col-sm-12  col-xs-12" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
+              id +
+              '-0"></div><div class="col-md-1" id="miniDiv-1' +
+              id +
+              '"></div>' +
+              Group_Btn(id) +
+              "</div"
+          )
+        );
+    });
+  }
 }
 
 //=============================================================================drag and drop functions=================================================================================
@@ -395,15 +395,15 @@ function Group_Btn(GroupId) {
     '<div id="' +
     GroupId +
     '-rowBtnGroup" class="row  container-fluid rowBtnGroup" style="margin-left:-30px; margin-right:30px;justify-content: left;margin-bottom:-15px" ondrop="drop(event)">' +
-    '<span style="" class="btn btn-light glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="حذف گروه" onclick="DeleteGroup(event);" id=' +
+    '<span style="" class="btn btn-light glyphicon glyphicon-trash"  title="حذف گروه" onclick="DeleteGroup(event);" id=' +
     GroupId +
     "DeleteGroup></span>" +
-    '<span style="" class="btn btn-light glyphicon glyphicon-cog" data-toggle="tooltip" data-placement="top" title="تنظیمات گروه" onclick="GroupProp(this);" id=' +
+    '<span style="" class="btn btn-light glyphicon glyphicon-cog"  title="تنظیمات گروه" onclick="GroupProp(this);" id=' +
     GroupId +
     "EditGroup></span>" +
-    '<span style="width:35px;padding:5px" class="btn btn-light glyphicon glyphicon-arrow-up" data-toggle="tooltip" data-placement="top" title="انتقال گروه به بالا" onclick="GroupMoveUp(event);" id=' +
+    '<span style="width:35px;padding:5px" class="btn btn-light glyphicon glyphicon-arrow-up" title="انتقال گروه به بالا" onclick="GroupMoveUp(event);" id=' +
     GroupId +
-    'moveup></span><span style="width:35px;padding:5px" class="btn btn-light glyphicon glyphicon-arrow-down" data-toggle="tooltip" data-placement="top" title="انتقال گروه به پایین" onclick="GroupMoveDown(event);" id=' +
+    'moveup></span><span style="width:35px;padding:5px" class="btn btn-light glyphicon glyphicon-arrow-down"  data-placement="top" title="انتقال گروه به پایین" onclick="GroupMoveDown(event)" id=' +
     GroupId +
     "movedown></span ></div>"
   );
@@ -412,7 +412,7 @@ function Group_Btn(GroupId) {
 function DeleteGroup(event) {
   let parentId = event.target.parentNode.parentNode.id;
 
-  $("#" + parentId).children().length < 0
+  $("#" + parentId).children().length < 1
     ? $("#" + parentId).remove()
     : alert("حذف گروه به دلیل داشتن آیتم ممکن نیست،لطفاً آیتم ها را به");
 }
@@ -459,3 +459,5 @@ function GroupMoveDown(event) {
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 });
+
+

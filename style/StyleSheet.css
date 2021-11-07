@@ -38,7 +38,7 @@ body {
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 10px;
-  height: 700px;
+  height: 800px;
   overflow: hidden;
 }
 
@@ -59,8 +59,9 @@ body {
   border: 1px solid #ccc;
   margin: 5px;
   padding: 10px;
-  height: 300px;
+  height: 400px;
 }
+
 #geContent {
   background-color: var(--mainbackground);
   font: 1rem var(--mainFont);
@@ -87,7 +88,8 @@ body {
   text-align: center;
   align-self: center;
   justify-self: center;
-  background-color: #506495;
+  background: linear-gradient(#0091ea, #2e4681);
+  background-color: #2e4681;
   color: white;
   font: 1.2rem var(--mainFont);
   border-radius: 4px;
@@ -121,11 +123,7 @@ body {
 .rowContent {
   margin-bottom: 2rem;
 }
-.lbl {
-  font: 14px var(--mainFont);
-  align-self: center;
-  justify-self: right;
-}
+
 
 .PanelTxt {
   width: 90%;
@@ -223,4 +221,25 @@ br {
   border: 1px solid #ccc;
   border: 2px solid black;
   z-index: 100;
+  background-color: red;
 }
+
+ .Textbox{
+  margin: 5px;
+  width: 200px;
+} 
+.selectBox{
+   height: 30px;
+    width: 200px;
+   margin: 5px;
+    font-size: inherit;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #efefef;
+    cursor: pointer;
+}
+.lbl {
+  font: 14px var(--mainFont);
+  align-self: center;
+  justify-self: right;
+  }
