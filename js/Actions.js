@@ -460,4 +460,28 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 });
 
+function ModalFormCtor(width) {
+  const div =
+    '<div id="myModal" class="modal">' +
+    '<div id="chartModal" class="modal-content" style="border: 1px solid #dcc896; border-radius: 4px;">' +
+    '<span class="close">&times;</span>' +
+    '<div id="contentM" class="row col-lg-12" style="margin-right:10px;"></div>' +
+    "</div>" +
+    "</div>";
+  $("#geContent").append(div);
 
+  // Get the modal
+  var modal = document.getElementById("myModal");
+  modal.style.display = "block";
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+
+  $("#chartModal").css("width", width);
+  // $("#chartModal").css("height", height);
+}

@@ -1,2020 +1,16486 @@
 ﻿/*
- Highcharts JS v9.1.2 (2021-06-16)
+ Highcharts JS v9.3.1 (2021-11-05)
 
  (c) 2009-2021 Torstein Honsi
 
  License: www.highcharts.com/license
 */
-'use strict'; (function (X, L) { "object" === typeof module && module.exports ? (L["default"] = L, module.exports = X.document ? L(X) : L) : "function" === typeof define && define.amd ? define("highcharts/highcharts", function () { return L(X) }) : (X.Highcharts && X.Highcharts.error(16, !0), X.Highcharts = L(X)) })("undefined" !== typeof window ? window : this, function (X) {
-    function L(v, a, E, H) { v.hasOwnProperty(a) || (v[a] = H.apply(null, E)) } var a = {}; L(a, "Core/Globals.js", [], function () {
-        var v = "undefined" !== typeof X ? X : "undefined" !== typeof window ? window :
-            {}, a; (function (a) {
-                a.SVG_NS = "http://www.w3.org/2000/svg"; a.product = "Highcharts"; a.version = "9.1.2"; a.win = v; a.doc = a.win.document; a.svg = a.doc && a.doc.createElementNS && !!a.doc.createElementNS(a.SVG_NS, "svg").createSVGRect; a.userAgent = a.win.navigator && a.win.navigator.userAgent || ""; a.isChrome = -1 !== a.userAgent.indexOf("Chrome"); a.isFirefox = -1 !== a.userAgent.indexOf("Firefox"); a.isMS = /(edge|msie|trident)/i.test(a.userAgent) && !a.win.opera; a.isSafari = !a.isChrome && -1 !== a.userAgent.indexOf("Safari"); a.isTouchDevice =
-                    /(Mobile|Android|Windows Phone)/.test(a.userAgent); a.isWebKit = -1 !== a.userAgent.indexOf("AppleWebKit"); a.deg2rad = 2 * Math.PI / 360; a.hasBidiBug = a.isFirefox && 4 > parseInt(a.userAgent.split("Firefox/")[1], 10); a.hasTouch = !!a.win.TouchEvent; a.marginNames = ["plotTop", "marginRight", "marginBottom", "plotLeft"]; a.noop = function () { }; a.supportsPassiveEvents = function () {
-                        var v = !1; if (!a.isMS) {
-                            var u = Object.defineProperty({}, "passive", { get: function () { v = !0 } }); a.win.addEventListener && a.win.removeEventListener && (a.win.addEventListener("testPassive",
-                                a.noop, u), a.win.removeEventListener("testPassive", a.noop, u))
-                        } return v
-                    }(); a.charts = []; a.dateFormats = {}; a.seriesTypes = {}; a.symbolSizes = {}; a.chartCount = 0
-            })(a || (a = {})); return a
-    }); L(a, "Core/Utilities.js", [a["Core/Globals.js"]], function (a) {
-        function v(b, d, g, r) {
-            var D = d ? "Highcharts error" : "Highcharts warning"; 32 === b && (b = D + ": Deprecated member"); var C = h(b), M = C ? D + " #" + b + "" + b + "/" : b.toString(); if ("undefined" !== typeof r) {
-                var l = ""; C && (M += "?"); J(r, function (b, Q) {
-                    l += "\n - " + Q + ": " + b; C &&
-                        (M += encodeURI(Q) + "=" + encodeURI(b))
-                }); M += l
-            } A(a, "displayError", { chart: g, code: b, message: M, params: r }, function () { if (d) throw Error(M); k.console && -1 === v.messages.indexOf(M) && console.warn(M) }); v.messages.push(M)
-        } function E(b, d) { var D = {}; J(b, function (g, k) { if (G(b[k], !0) && !b.nodeType && d[k]) g = E(b[k], d[k]), Object.keys(g).length && (D[k] = g); else if (G(b[k]) || b[k] !== d[k]) D[k] = b[k] }); return D } function H(b, d) { return parseInt(b, d || 10) } function x(b) { return "string" === typeof b } function y(b) {
-            b = Object.prototype.toString.call(b);
-            return "[object Array]" === b || "[object Array Iterator]" === b
-        } function G(b, d) { return !!b && "object" === typeof b && (!d || !y(b)) } function B(b) { return G(b) && "number" === typeof b.nodeType } function q(b) { var d = b && b.constructor; return !(!G(b, !0) || B(b) || !d || !d.name || "Object" === d.name) } function h(b) { return "number" === typeof b && !isNaN(b) && Infinity > b && -Infinity < b } function f(b) { return "undefined" !== typeof b && null !== b } function c(b, d, g) {
-            var k; x(d) ? f(g) ? b.setAttribute(d, g) : b && b.getAttribute && ((k = b.getAttribute(d)) || "class" !==
-                d || (k = b.getAttribute(d + "Name"))) : J(d, function (d, g) { b.setAttribute(g, d) }); return k
-        } function e(b, d) { var g; b || (b = {}); for (g in d) b[g] = d[g]; return b } function t() { for (var b = arguments, d = b.length, g = 0; g < d; g++) { var k = b[g]; if ("undefined" !== typeof k && null !== k) return k } } function m(b, d) { a.isMS && !a.svg && d && "undefined" !== typeof d.opacity && (d.filter = "alpha(opacity=" + 100 * d.opacity + ")"); e(b.style, d) } function w(b, g, k, r, l) {
-            b = d.createElement(b); g && e(b, g); l && m(b, { padding: "0", border: "none", margin: "0" }); k && m(b, k); r && r.appendChild(b);
-            return b
-        } function n(b, d) { return parseFloat(b.toPrecision(d || 14)) } function l(b, d, g) {
-            var D = a.getStyle || l; if ("width" === d) return d = Math.min(b.offsetWidth, b.scrollWidth), g = b.getBoundingClientRect && b.getBoundingClientRect().width, g < d && g >= d - 1 && (d = Math.floor(g)), Math.max(0, d - (D(b, "padding-left", !0) || 0) - (D(b, "padding-right", !0) || 0)); if ("height" === d) return Math.max(0, Math.min(b.offsetHeight, b.scrollHeight) - (D(b, "padding-top", !0) || 0) - (D(b, "padding-bottom", !0) || 0)); k.getComputedStyle || v(27, !0); if (b = k.getComputedStyle(b,
-                void 0)) { var r = b.getPropertyValue(d); t(g, "opacity" !== d) && (r = H(r)) } return r
-        } function J(b, d, g) { for (var k in b) Object.hasOwnProperty.call(b, k) && d.call(g || b[k], b[k], k, b) } function K(b, d, g) {
-            function k(d, z) { var Q = b.removeEventListener || a.removeEventListenerPolyfill; Q && Q.call(b, d, z, !1) } function r(g) { var z; if (b.nodeName) { if (d) { var Q = {}; Q[d] = !0 } else Q = g; J(Q, function (b, d) { if (g[d]) for (z = g[d].length; z--;)k(d, g[d][z].fn) }) } } var D = "function" === typeof b && b.prototype || b; if (Object.hasOwnProperty.call(D, "hcEvents")) {
-                var l =
-                    D.hcEvents; d ? (D = l[d] || [], g ? (l[d] = D.filter(function (b) { return g !== b.fn }), k(d, g)) : (r(l), l[d] = [])) : (r(l), delete D.hcEvents)
-            }
-        } function A(b, g, k, r) {
-            k = k || {}; if (d.createEvent && (b.dispatchEvent || b.fireEvent && b !== a)) { var D = d.createEvent("Events"); D.initEvent(g, !0, !0); k = e(D, k); b.dispatchEvent ? b.dispatchEvent(k) : b.fireEvent(g, k) } else if (b.hcEvents) {
-                k.target || e(k, { preventDefault: function () { k.defaultPrevented = !0 }, target: b, type: g }); D = []; for (var l = b, C = !1; l.hcEvents;)Object.hasOwnProperty.call(l, "hcEvents") && l.hcEvents[g] &&
-                    (D.length && (C = !0), D.unshift.apply(D, l.hcEvents[g])), l = Object.getPrototypeOf(l); C && D.sort(function (b, z) { return b.order - z.order }); D.forEach(function (d) { !1 === d.fn.call(b, k) && k.preventDefault() })
-            } r && !k.defaultPrevented && r.call(b, k)
-        } var p = a.charts, d = a.doc, k = a.win; ""; (v || (v = {})).messages = []; var b; Math.easeInOutSine = function (b) { return -.5 * (Math.cos(Math.PI * b) - 1) }; var g = Array.prototype.find ? function (b, d) { return b.find(d) } : function (b, d) { var g, k = b.length; for (g = 0; g < k; g++)if (d(b[g], g)) return b[g] }; J({
-            map: "map",
-            each: "forEach", grep: "filter", reduce: "reduce", some: "some"
-        }, function (b, d) { a[d] = function (g) { var k; v(32, !1, void 0, (k = {}, k["Highcharts." + d] = "use Array." + b, k)); return Array.prototype[b].apply(g, [].slice.call(arguments, 1)) } }); var r, F = function () { var b = Math.random().toString(36).substring(2, 9) + "-", d = 0; return function () { return "highcharts-" + (r ? "" : b) + d++ } }(); k.jQuery && (k.jQuery.fn.highcharts = function () {
-            var b = [].slice.call(arguments); if (this[0]) return b[0] ? (new (a[x(b[0]) ? b.shift() : "Chart"])(this[0], b[0], b[1]),
-                this) : p[c(this[0], "data-highcharts-chart")]
-        }); return {
-            addEvent: function (b, d, g, k) {
-                void 0 === k && (k = {}); var r = "function" === typeof b && b.prototype || b; Object.hasOwnProperty.call(r, "hcEvents") || (r.hcEvents = {}); r = r.hcEvents; a.Point && b instanceof a.Point && b.series && b.series.chart && (b.series.chart.runTrackerClick = !0); var l = b.addEventListener || a.addEventListenerPolyfill; l && l.call(b, d, g, a.supportsPassiveEvents ? { passive: void 0 === k.passive ? -1 !== d.indexOf("touch") : k.passive, capture: !1 } : !1); r[d] || (r[d] = []); r[d].push({
-                    fn: g,
-                    order: "number" === typeof k.order ? k.order : Infinity
-                }); r[d].sort(function (b, d) { return b.order - d.order }); return function () { K(b, d, g) }
-            }, arrayMax: function (b) { for (var d = b.length, g = b[0]; d--;)b[d] > g && (g = b[d]); return g }, arrayMin: function (b) { for (var d = b.length, g = b[0]; d--;)b[d] < g && (g = b[d]); return g }, attr: c, clamp: function (b, d, g) { return b > d ? b < g ? b : g : d }, cleanRecursively: E, clearTimeout: function (b) { f(b) && clearTimeout(b) }, correctFloat: n, createElement: w, css: m, defined: f, destroyObjectProperties: function (b, d) {
-                J(b, function (g,
-                    k) { g && g !== d && g.destroy && g.destroy(); delete b[k] })
-            }, discardElement: function (d) { b || (b = w("div")); d && b.appendChild(d); b.innerHTML = "" }, erase: function (b, d) { for (var g = b.length; g--;)if (b[g] === d) { b.splice(g, 1); break } }, error: v, extend: e, extendClass: function (b, d) { var g = function () { }; g.prototype = new b; e(g.prototype, d); return g }, find: g, fireEvent: A, getMagnitude: function (b) { return Math.pow(10, Math.floor(Math.log(b) / Math.LN10)) }, getNestedProperty: function (b, d) {
-                for (b = b.split("."); b.length && f(d);) {
-                    var g = b.shift(); if ("undefined" ===
-                        typeof g || "__proto__" === g) return; d = d[g]; if (!f(d) || "function" === typeof d || "number" === typeof d.nodeType || d === k) return
-                } return d
-            }, getStyle: l, inArray: function (b, d, g) { v(32, !1, void 0, { "Highcharts.inArray": "use Array.indexOf" }); return d.indexOf(b, g) }, isArray: y, isClass: q, isDOMElement: B, isFunction: function (b) { return "function" === typeof b }, isNumber: h, isObject: G, isString: x, keys: function (b) { v(32, !1, void 0, { "Highcharts.keys": "use Object.keys" }); return Object.keys(b) }, merge: function () {
-                var b, d = arguments, g = {}, k = function (b,
-                    d) { "object" !== typeof b && (b = {}); J(d, function (g, z) { "__proto__" !== z && "constructor" !== z && (!G(g, !0) || q(g) || B(g) ? b[z] = d[z] : b[z] = k(b[z] || {}, g)) }); return b }; !0 === d[0] && (g = d[1], d = Array.prototype.slice.call(d, 2)); var r = d.length; for (b = 0; b < r; b++)g = k(g, d[b]); return g
-            }, normalizeTickInterval: function (b, d, g, k, r) {
-                var l = b; g = t(g, 1); var c = b / g; d || (d = r ? [1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10] : [1, 2, 2.5, 5, 10], !1 === k && (1 === g ? d = d.filter(function (b) { return 0 === b % 1 }) : .1 >= g && (d = [1 / g]))); for (k = 0; k < d.length && !(l = d[k], r && l * g >= b || !r && c <= (d[k] +
-                    (d[k + 1] || d[k])) / 2); k++); return l = n(l * g, -Math.round(Math.log(.001) / Math.LN10))
-            }, objectEach: J, offset: function (b) { var g = d.documentElement; b = b.parentElement || b.parentNode ? b.getBoundingClientRect() : { top: 0, left: 0, width: 0, height: 0 }; return { top: b.top + (k.pageYOffset || g.scrollTop) - (g.clientTop || 0), left: b.left + (k.pageXOffset || g.scrollLeft) - (g.clientLeft || 0), width: b.width, height: b.height } }, pad: function (b, d, g) { return Array((d || 2) + 1 - String(b).replace("-", "").length).join(g || "0") + b }, pick: t, pInt: H, relativeLength: function (b,
-                d, g) { return /%$/.test(b) ? d * parseFloat(b) / 100 + (g || 0) : parseFloat(b) }, removeEvent: K, splat: function (b) { return y(b) ? b : [b] }, stableSort: function (b, d) { var g = b.length, k, r; for (r = 0; r < g; r++)b[r].safeI = r; b.sort(function (b, g) { k = d(b, g); return 0 === k ? b.safeI - g.safeI : k }); for (r = 0; r < g; r++)delete b[r].safeI }, syncTimeout: function (b, d, g) { if (0 < d) return setTimeout(b, d, g); b.call(0, g); return -1 }, timeUnits: { millisecond: 1, second: 1E3, minute: 6E4, hour: 36E5, day: 864E5, week: 6048E5, month: 24192E5, year: 314496E5 }, uniqueKey: F, useSerialIds: function (b) {
-                    return r =
-                        t(b, r)
-                }, wrap: function (b, d, g) { var k = b[d]; b[d] = function () { var b = Array.prototype.slice.call(arguments), d = arguments, r = this; r.proceed = function () { k.apply(r, arguments.length ? arguments : d) }; b.unshift(k); b = g.apply(this, b); r.proceed = null; return b } }
+"use strict";
+(function (Z, L) {
+  "object" === typeof module && module.exports
+    ? ((L["default"] = L), (module.exports = Z.document ? L(Z) : L))
+    : "function" === typeof define && define.amd
+    ? define("highcharts/highcharts", function () {
+        return L(Z);
+      })
+    : (Z.Highcharts && Z.Highcharts.error(16, !0), (Z.Highcharts = L(Z)));
+})("undefined" !== typeof window ? window : this, function (Z) {
+  function L(u, a, A, G) {
+    u.hasOwnProperty(a) || (u[a] = G.apply(null, A));
+  }
+  var a = {};
+  L(a, "Core/Globals.js", [], function () {
+    var u =
+        "undefined" !== typeof Z
+          ? Z
+          : "undefined" !== typeof window
+          ? window
+          : {},
+      a;
+    (function (a) {
+      a.SVG_NS = "http://www.w3.org/2000/svg";
+      a.product = "Highcharts";
+      a.version = "9.3.1";
+      a.win = u;
+      a.doc = a.win.document;
+      a.svg =
+        a.doc &&
+        a.doc.createElementNS &&
+        !!a.doc.createElementNS(a.SVG_NS, "svg").createSVGRect;
+      a.userAgent = (a.win.navigator && a.win.navigator.userAgent) || "";
+      a.isChrome = -1 !== a.userAgent.indexOf("Chrome");
+      a.isFirefox = -1 !== a.userAgent.indexOf("Firefox");
+      a.isMS = /(edge|msie|trident)/i.test(a.userAgent) && !a.win.opera;
+      a.isSafari = !a.isChrome && -1 !== a.userAgent.indexOf("Safari");
+      a.isTouchDevice = /(Mobile|Android|Windows Phone)/.test(a.userAgent);
+      a.isWebKit = -1 !== a.userAgent.indexOf("AppleWebKit");
+      a.deg2rad = (2 * Math.PI) / 360;
+      a.hasBidiBug =
+        a.isFirefox && 4 > parseInt(a.userAgent.split("Firefox/")[1], 10);
+      a.hasTouch = !!a.win.TouchEvent;
+      a.marginNames = ["plotTop", "marginRight", "marginBottom", "plotLeft"];
+      a.noop = function () {};
+      a.supportsPassiveEvents = (function () {
+        var u = !1;
+        if (!a.isMS) {
+          var t = Object.defineProperty({}, "passive", {
+            get: function () {
+              u = !0;
+            },
+          });
+          a.win.addEventListener &&
+            a.win.removeEventListener &&
+            (a.win.addEventListener("testPassive", a.noop, t),
+            a.win.removeEventListener("testPassive", a.noop, t));
         }
-    }); L(a, "Core/Color/Palette.js", [], function () {
-        return {
-            colors: "#7cb5ec #434348 #90ed7d #f7a35c #8085e9 #f15c80 #e4d354 #2b908f #f45b5b #91e8e1".split(" "), backgroundColor: "#ffffff", neutralColor100: "#000000", neutralColor80: "#333333", neutralColor60: "#666666", neutralColor40: "#999999",
-            neutralColor20: "#cccccc", neutralColor10: "#e6e6e6", neutralColor5: "#f2f2f2", neutralColor3: "#f7f7f7", highlightColor100: "#003399", highlightColor80: "#335cad", highlightColor60: "#6685c2", highlightColor20: "#ccd6eb", highlightColor10: "#e6ebf5", positiveColor: "#06b535", negativeColor: "#f21313"
+        return u;
+      })();
+      a.charts = [];
+      a.dateFormats = {};
+      a.seriesTypes = {};
+      a.symbolSizes = {};
+      a.chartCount = 0;
+    })(a || (a = {}));
+    ("");
+    return a;
+  });
+  L(a, "Core/Utilities.js", [a["Core/Globals.js"]], function (a) {
+    function u(e, g, c, k) {
+      var v = g ? "Highcharts error" : "Highcharts warning";
+      32 === e && (e = v + ": Deprecated member");
+      var d = m(e),
+        E = d
+          ? v + " #" + e + ": www.highcharts.com/errors/" + e + "/"
+          : e.toString();
+      if ("undefined" !== typeof k) {
+        var J = "";
+        d && (E += "?");
+        r(k, function (b, e) {
+          J += "\n - " + e + ": " + b;
+          d && (E += encodeURI(e) + "=" + encodeURI(b));
+        });
+        E += J;
+      }
+      B(
+        a,
+        "displayError",
+        { chart: c, code: e, message: E, params: k },
+        function () {
+          if (g) throw Error(E);
+          b.console && -1 === u.messages.indexOf(E) && console.warn(E);
         }
-    }); L(a, "Core/Chart/ChartDefaults.js", [a["Core/Color/Palette.js"]], function (a) {
-        return {
-            panning: { enabled: !1, type: "x" }, styledMode: !1, borderRadius: 0, colorCount: 10, defaultSeriesType: "line", ignoreHiddenSeries: !0, spacing: [10, 10,
-                15, 10], resetZoomButton: { theme: { zIndex: 6 }, position: { align: "right", x: -10, y: 10 } }, zoomBySingleTouch: !1, width: null, height: null, borderColor: a.highlightColor80, backgroundColor: a.backgroundColor, plotBorderColor: a.neutralColor20
+      );
+      u.messages.push(E);
+    }
+    function A(b, e) {
+      var v = {};
+      r(b, function (g, c) {
+        if (I(b[c], !0) && !b.nodeType && e[c])
+          (g = A(b[c], e[c])), Object.keys(g).length && (v[c] = g);
+        else if (I(b[c]) || b[c] !== e[c]) v[c] = b[c];
+      });
+      return v;
+    }
+    function G(b, e) {
+      return parseInt(b, e || 10);
+    }
+    function x(b) {
+      return "string" === typeof b;
+    }
+    function C(b) {
+      b = Object.prototype.toString.call(b);
+      return "[object Array]" === b || "[object Array Iterator]" === b;
+    }
+    function I(b, e) {
+      return !!b && "object" === typeof b && (!e || !C(b));
+    }
+    function z(b) {
+      return I(b) && "number" === typeof b.nodeType;
+    }
+    function q(b) {
+      var e = b && b.constructor;
+      return !(!I(b, !0) || z(b) || !e || !e.name || "Object" === e.name);
+    }
+    function m(b) {
+      return (
+        "number" === typeof b && !isNaN(b) && Infinity > b && -Infinity < b
+      );
+    }
+    function h(b) {
+      return "undefined" !== typeof b && null !== b;
+    }
+    function d(b, e, g) {
+      var v;
+      x(e)
+        ? h(g)
+          ? b.setAttribute(e, g)
+          : b &&
+            b.getAttribute &&
+            ((v = b.getAttribute(e)) ||
+              "class" !== e ||
+              (v = b.getAttribute(e + "Name")))
+        : r(e, function (e, v) {
+            h(e) ? b.setAttribute(v, e) : b.removeAttribute(v);
+          });
+      return v;
+    }
+    function c(b, e) {
+      var v;
+      b || (b = {});
+      for (v in e) b[v] = e[v];
+      return b;
+    }
+    function l() {
+      for (var b = arguments, e = b.length, g = 0; g < e; g++) {
+        var c = b[g];
+        if ("undefined" !== typeof c && null !== c) return c;
+      }
+    }
+    function f(b, e) {
+      a.isMS &&
+        !a.svg &&
+        e &&
+        "undefined" !== typeof e.opacity &&
+        (e.filter = "alpha(opacity=" + 100 * e.opacity + ")");
+      c(b.style, e);
+    }
+    function w(b, e, g, d, n) {
+      b = k.createElement(b);
+      e && c(b, e);
+      n && f(b, { padding: "0", border: "none", margin: "0" });
+      g && f(b, g);
+      d && d.appendChild(b);
+      return b;
+    }
+    function p(b, e) {
+      return 1e14 < b ? b : parseFloat(b.toPrecision(e || 14));
+    }
+    function K(e, g, c) {
+      var v = a.getStyle || K;
+      if ("width" === g)
+        return (
+          (g = Math.min(e.offsetWidth, e.scrollWidth)),
+          (c = e.getBoundingClientRect && e.getBoundingClientRect().width),
+          c < g && c >= g - 1 && (g = Math.floor(c)),
+          Math.max(
+            0,
+            g -
+              (v(e, "padding-left", !0) || 0) -
+              (v(e, "padding-right", !0) || 0)
+          )
+        );
+      if ("height" === g)
+        return Math.max(
+          0,
+          Math.min(e.offsetHeight, e.scrollHeight) -
+            (v(e, "padding-top", !0) || 0) -
+            (v(e, "padding-bottom", !0) || 0)
+        );
+      b.getComputedStyle || u(27, !0);
+      if ((e = b.getComputedStyle(e, void 0))) {
+        var k = e.getPropertyValue(g);
+        l(c, "opacity" !== g) && (k = G(k));
+      }
+      return k;
+    }
+    function r(b, e, g) {
+      for (var v in b)
+        Object.hasOwnProperty.call(b, v) && e.call(g || b[v], b[v], v, b);
+    }
+    function y(b, e, g) {
+      function v(e, M) {
+        var J = b.removeEventListener || a.removeEventListenerPolyfill;
+        J && J.call(b, e, M, !1);
+      }
+      function c(J) {
+        var M;
+        if (b.nodeName) {
+          if (e) {
+            var g = {};
+            g[e] = !0;
+          } else g = J;
+          r(g, function (b, e) {
+            if (J[e]) for (M = J[e].length; M--; ) v(e, J[e][M].fn);
+          });
         }
-    }); L(a, "Core/Color/Color.js", [a["Core/Globals.js"], a["Core/Utilities.js"]], function (a, u) {
-        var v = u.isNumber, H = u.merge, x = u.pInt; u = function () {
-            function u(v) {
-                this.parsers = [{
-                    regex: /rgba\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]?(?:\.[0-9]+)?)\s*\)/, parse: function (q) {
-                        return [x(q[1]),
-                        x(q[2]), x(q[3]), parseFloat(q[4], 10)]
-                    }
-                }, { regex: /rgb\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*\)/, parse: function (q) { return [x(q[1]), x(q[2]), x(q[3]), 1] } }]; this.rgba = []; var B = a.Color; if (B && B !== u) return new B(v); if (!(this instanceof u)) return new u(v); this.init(v)
-            } u.parse = function (a) { return new u(a) }; u.prototype.init = function (a) {
-                var B, q; if ((this.input = a = u.names[a && a.toLowerCase ? a.toLowerCase() : ""] || a) && a.stops) this.stops = a.stops.map(function (c) { return new u(c[1]) }); else {
-                    if (a && a.charAt &&
-                        "#" === a.charAt()) { var h = a.length; a = parseInt(a.substr(1), 16); 7 === h ? B = [(a & 16711680) >> 16, (a & 65280) >> 8, a & 255, 1] : 4 === h && (B = [(a & 3840) >> 4 | (a & 3840) >> 8, (a & 240) >> 4 | a & 240, (a & 15) << 4 | a & 15, 1]) } if (!B) for (q = this.parsers.length; q-- && !B;) { var f = this.parsers[q]; (h = f.regex.exec(a)) && (B = f.parse(h)) }
-                } this.rgba = B || []
-            }; u.prototype.get = function (a) {
-                var B = this.input, q = this.rgba; if ("undefined" !== typeof this.stops) { var h = H(B); h.stops = [].concat(h.stops); this.stops.forEach(function (f, c) { h.stops[c] = [h.stops[c][0], f.get(a)] }) } else h =
-                    q && v(q[0]) ? "rgb" === a || !a && 1 === q[3] ? "rgb(" + q[0] + "," + q[1] + "," + q[2] + ")" : "a" === a ? q[3] : "rgba(" + q.join(",") + ")" : B; return h
-            }; u.prototype.brighten = function (a) { var B, q = this.rgba; if (this.stops) this.stops.forEach(function (h) { h.brighten(a) }); else if (v(a) && 0 !== a) for (B = 0; 3 > B; B++)q[B] += x(255 * a), 0 > q[B] && (q[B] = 0), 255 < q[B] && (q[B] = 255); return this }; u.prototype.setOpacity = function (a) { this.rgba[3] = a; return this }; u.prototype.tweenTo = function (a, B) {
-                var q = this.rgba, h = a.rgba; h.length && q && q.length ? (a = 1 !== h[3] || 1 !== q[3], B = (a ?
-                    "rgba(" : "rgb(") + Math.round(h[0] + (q[0] - h[0]) * (1 - B)) + "," + Math.round(h[1] + (q[1] - h[1]) * (1 - B)) + "," + Math.round(h[2] + (q[2] - h[2]) * (1 - B)) + (a ? "," + (h[3] + (q[3] - h[3]) * (1 - B)) : "") + ")") : B = a.input || "none"; return B
-            }; u.names = { white: "#ffffff", black: "#000000" }; return u
-        }(); ""; return u
-    }); L(a, "Core/Time.js", [a["Core/Globals.js"], a["Core/Utilities.js"]], function (a, u) {
-        var v = a.win, H = u.defined, x = u.error, y = u.extend, G = u.isObject, B = u.merge, q = u.objectEach, h = u.pad, f = u.pick, c = u.splat, e = u.timeUnits, t = a.isSafari && Intl && Intl.DateTimeFormat.prototype.formatRange,
-        m = a.isSafari && Intl && !Intl.DateTimeFormat.prototype.formatRange; u = function () {
-            function w(c) { this.options = {}; this.variableTimezone = this.useUTC = !1; this.Date = v.Date; this.getTimezoneOffset = this.timezoneOffsetFunction(); this.update(c) } w.prototype.get = function (c, l) { if (this.variableTimezone || this.timezoneOffset) { var e = l.getTime(), n = e - this.getTimezoneOffset(l); l.setTime(n); c = l["getUTC" + c](); l.setTime(e); return c } return this.useUTC ? l["getUTC" + c]() : l["get" + c]() }; w.prototype.set = function (c, l, e) {
-                if (this.variableTimezone ||
-                    this.timezoneOffset) { if ("Milliseconds" === c || "Seconds" === c || "Minutes" === c && 0 === this.getTimezoneOffset(l) % 36E5) return l["setUTC" + c](e); var n = this.getTimezoneOffset(l); n = l.getTime() - n; l.setTime(n); l["setUTC" + c](e); c = this.getTimezoneOffset(l); n = l.getTime() + c; return l.setTime(n) } return this.useUTC || t && "FullYear" === c ? l["setUTC" + c](e) : l["set" + c](e)
-            }; w.prototype.update = function (c) {
-                var l = f(c && c.useUTC, !0); this.options = c = B(!0, this.options || {}, c); this.Date = c.Date || v.Date || Date; this.timezoneOffset = (this.useUTC =
-                    l) && c.timezoneOffset; this.getTimezoneOffset = this.timezoneOffsetFunction(); this.variableTimezone = l && !(!c.getTimezoneOffset && !c.timezone)
-            }; w.prototype.makeTime = function (c, l, e, h, t, p) { if (this.useUTC) { var d = this.Date.UTC.apply(0, arguments); var k = this.getTimezoneOffset(d); d += k; var b = this.getTimezoneOffset(d); k !== b ? d += b - k : k - 36E5 !== this.getTimezoneOffset(d - 36E5) || m || (d -= 36E5) } else d = (new this.Date(c, l, f(e, 1), f(h, 0), f(t, 0), f(p, 0))).getTime(); return d }; w.prototype.timezoneOffsetFunction = function () {
-                var c = this,
-                l = this.options, e = l.moment || v.moment; if (!this.useUTC) return function (l) { return 6E4 * (new Date(l.toString())).getTimezoneOffset() }; if (l.timezone) { if (e) return function (c) { return 6E4 * -e.tz(c, l.timezone).utcOffset() }; x(25) } return this.useUTC && l.getTimezoneOffset ? function (c) { return 6E4 * l.getTimezoneOffset(c.valueOf()) } : function () { return 6E4 * (c.timezoneOffset || 0) }
-            }; w.prototype.dateFormat = function (c, l, e) {
-                if (!H(l) || isNaN(l)) return a.defaultOptions.lang && a.defaultOptions.lang.invalidDate || ""; c = f(c, "%Y-%m-%d %H:%M:%S");
-                var n = this, t = new this.Date(l), p = this.get("Hours", t), d = this.get("Day", t), k = this.get("Date", t), b = this.get("Month", t), g = this.get("FullYear", t), r = a.defaultOptions.lang, F = r && r.weekdays, D = r && r.shortWeekdays; t = y({ a: D ? D[d] : F[d].substr(0, 3), A: F[d], d: h(k), e: h(k, 2, " "), w: d, b: r.shortMonths[b], B: r.months[b], m: h(b + 1), o: b + 1, y: g.toString().substr(2, 2), Y: g, H: h(p), k: p, I: h(p % 12 || 12), l: p % 12 || 12, M: h(this.get("Minutes", t)), p: 12 > p ? "AM" : "PM", P: 12 > p ? "am" : "pm", S: h(t.getSeconds()), L: h(Math.floor(l % 1E3), 3) }, a.dateFormats); q(t,
-                    function (b, d) { for (; -1 !== c.indexOf("%" + d);)c = c.replace("%" + d, "function" === typeof b ? b.call(n, l) : b) }); return e ? c.substr(0, 1).toUpperCase() + c.substr(1) : c
-            }; w.prototype.resolveDTLFormat = function (e) { return G(e, !0) ? e : (e = c(e), { main: e[0], from: e[1], to: e[2] }) }; w.prototype.getTimeTicks = function (c, l, t, h) {
-                var n = this, p = [], d = {}, k = new n.Date(l), b = c.unitRange, g = c.count || 1, r; h = f(h, 1); if (H(l)) {
-                    n.set("Milliseconds", k, b >= e.second ? 0 : g * Math.floor(n.get("Milliseconds", k) / g)); b >= e.second && n.set("Seconds", k, b >= e.minute ? 0 : g *
-                        Math.floor(n.get("Seconds", k) / g)); b >= e.minute && n.set("Minutes", k, b >= e.hour ? 0 : g * Math.floor(n.get("Minutes", k) / g)); b >= e.hour && n.set("Hours", k, b >= e.day ? 0 : g * Math.floor(n.get("Hours", k) / g)); b >= e.day && n.set("Date", k, b >= e.month ? 1 : Math.max(1, g * Math.floor(n.get("Date", k) / g))); if (b >= e.month) { n.set("Month", k, b >= e.year ? 0 : g * Math.floor(n.get("Month", k) / g)); var F = n.get("FullYear", k) } b >= e.year && n.set("FullYear", k, F - F % g); b === e.week && (F = n.get("Day", k), n.set("Date", k, n.get("Date", k) - F + h + (F < h ? -7 : 0))); F = n.get("FullYear",
-                            k); h = n.get("Month", k); var D = n.get("Date", k), m = n.get("Hours", k); l = k.getTime(); !n.variableTimezone && n.useUTC || !H(t) || (r = t - l > 4 * e.month || n.getTimezoneOffset(l) !== n.getTimezoneOffset(t)); l = k.getTime(); for (k = 1; l < t;)p.push(l), l = b === e.year ? n.makeTime(F + k * g, 0) : b === e.month ? n.makeTime(F, h + k * g) : !r || b !== e.day && b !== e.week ? r && b === e.hour && 1 < g ? n.makeTime(F, h, D, m + k * g) : l + b * g : n.makeTime(F, h, D + k * g * (b === e.day ? 1 : 7)), k++; p.push(l); b <= e.hour && 1E4 > p.length && p.forEach(function (b) {
-                                0 === b % 18E5 && "000000000" === n.dateFormat("%H%M%S%L",
-                                    b) && (d[b] = "day")
-                            })
-                } p.info = y(c, { higherRanks: d, totalRange: b * g }); return p
-            }; return w
-        }(); ""; return u
-    }); L(a, "Core/DefaultOptions.js", [a["Core/Globals.js"], a["Core/Chart/ChartDefaults.js"], a["Core/Color/Color.js"], a["Core/Color/Palette.js"], a["Core/Time.js"], a["Core/Utilities.js"]], function (a, u, E, H, x, y) {
-        var v = a.isTouchDevice, B = a.svg; E = E.parse; var q = y.merge; ""; var h = {
-            colors: H.colors, symbols: ["circle", "diamond", "square", "triangle", "triangle-down"], lang: {
-                loading: "Loading...", months: "January February March April May June July August September October November December".split(" "),
-                shortMonths: "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(" "), weekdays: "Sunday Monday Tuesday Wednesday Thursday Friday Saturday".split(" "), decimalPoint: ".", numericSymbols: "kMGTPE".split(""), resetZoom: "Reset zoom", resetZoomTitle: "Reset zoom level 1:1", thousandsSep: " "
-            }, global: {}, time: { Date: void 0, getTimezoneOffset: void 0, timezone: void 0, timezoneOffset: 0, useUTC: !0 }, chart: u, title: { text: "Chart title", align: "center", margin: 15, widthAdjust: -44 }, subtitle: { text: "", align: "center", widthAdjust: -44 },
-            caption: { margin: 15, text: "", align: "left", verticalAlign: "bottom" }, plotOptions: {}, labels: { style: { position: "absolute", color: H.neutralColor80 } }, legend: {
-                enabled: !0, align: "center", alignColumns: !0, className: "highcharts-no-tooltip", layout: "horizontal", labelFormatter: function () { return this.name }, borderColor: H.neutralColor40, borderRadius: 0, navigation: { activeColor: H.highlightColor100, inactiveColor: H.neutralColor20 }, itemStyle: { color: H.neutralColor80, cursor: "pointer", fontSize: "12px", fontWeight: "bold", textOverflow: "ellipsis" },
-                itemHoverStyle: { color: H.neutralColor100 }, itemHiddenStyle: { color: H.neutralColor20 }, shadow: !1, itemCheckboxStyle: { position: "absolute", width: "13px", height: "13px" }, squareSymbol: !0, symbolPadding: 5, verticalAlign: "bottom", x: 0, y: 0, title: { style: { fontWeight: "bold" } }
-            }, loading: { labelStyle: { fontWeight: "bold", position: "relative", top: "45%" }, style: { position: "absolute", backgroundColor: H.backgroundColor, opacity: .5, textAlign: "center" } }, tooltip: {
-                enabled: !0, animation: B, borderRadius: 3, dateTimeLabelFormats: {
-                    millisecond: "%A, %b %e, %H:%M:%S.%L",
-                    second: "%A, %b %e, %H:%M:%S", minute: "%A, %b %e, %H:%M", hour: "%A, %b %e, %H:%M", day: "%A, %b %e, %Y", week: "Week from %A, %b %e, %Y", month: "%B %Y", year: "%Y"
-                }, footerFormat: "", padding: 8, snap: v ? 25 : 10, headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>', pointFormat: '<span style="color:{point.color}">\u25cf</span> {series.name}: <b>{point.y}</b><br/>', backgroundColor: E(H.neutralColor3).setOpacity(.85).get(), borderWidth: 1, shadow: !0, style: {
-                    color: H.neutralColor80, cursor: "default", fontSize: "12px",
-                    whiteSpace: "nowrap"
+      }
+      var k = ("function" === typeof b && b.prototype) || b;
+      if (Object.hasOwnProperty.call(k, "hcEvents")) {
+        var d = k.hcEvents;
+        e
+          ? ((k = d[e] || []),
+            g
+              ? ((d[e] = k.filter(function (b) {
+                  return g !== b.fn;
+                })),
+                v(e, g))
+              : (c(d), (d[e] = [])))
+          : (c(d), delete k.hcEvents);
+      }
+    }
+    function B(b, e, g, d) {
+      g = g || {};
+      if (k.createEvent && (b.dispatchEvent || (b.fireEvent && b !== a))) {
+        var v = k.createEvent("Events");
+        v.initEvent(e, !0, !0);
+        g = c(v, g);
+        b.dispatchEvent ? b.dispatchEvent(g) : b.fireEvent(e, g);
+      } else if (b.hcEvents) {
+        g.target ||
+          c(g, {
+            preventDefault: function () {
+              g.defaultPrevented = !0;
+            },
+            target: b,
+            type: e,
+          });
+        v = [];
+        for (var n = b, p = !1; n.hcEvents; )
+          Object.hasOwnProperty.call(n, "hcEvents") &&
+            n.hcEvents[e] &&
+            (v.length && (p = !0), v.unshift.apply(v, n.hcEvents[e])),
+            (n = Object.getPrototypeOf(n));
+        p &&
+          v.sort(function (b, e) {
+            return b.order - e.order;
+          });
+        v.forEach(function (e) {
+          !1 === e.fn.call(b, g) && g.preventDefault();
+        });
+      }
+      d && !g.defaultPrevented && d.call(b, g);
+    }
+    var n = a.charts,
+      k = a.doc,
+      b = a.win;
+    (u || (u = {})).messages = [];
+    var g;
+    Math.easeInOutSine = function (b) {
+      return -0.5 * (Math.cos(Math.PI * b) - 1);
+    };
+    var e = Array.prototype.find
+      ? function (b, e) {
+          return b.find(e);
+        }
+      : function (b, e) {
+          var g,
+            v = b.length;
+          for (g = 0; g < v; g++) if (e(b[g], g)) return b[g];
+        };
+    r(
+      {
+        map: "map",
+        each: "forEach",
+        grep: "filter",
+        reduce: "reduce",
+        some: "some",
+      },
+      function (b, e) {
+        a[e] = function (g) {
+          var v;
+          u(
+            32,
+            !1,
+            void 0,
+            ((v = {}), (v["Highcharts." + e] = "use Array." + b), v)
+          );
+          return Array.prototype[b].apply(g, [].slice.call(arguments, 1));
+        };
+      }
+    );
+    var D,
+      H = (function () {
+        var b = Math.random().toString(36).substring(2, 9) + "-",
+          e = 0;
+        return function () {
+          return "highcharts-" + (D ? "" : b) + e++;
+        };
+      })();
+    b.jQuery &&
+      (b.jQuery.fn.highcharts = function () {
+        var b = [].slice.call(arguments);
+        if (this[0])
+          return b[0]
+            ? (new a[x(b[0]) ? b.shift() : "Chart"](this[0], b[0], b[1]), this)
+            : n[d(this[0], "data-highcharts-chart")];
+      });
+    e = {
+      addEvent: function (b, e, g, c) {
+        void 0 === c && (c = {});
+        var v = ("function" === typeof b && b.prototype) || b;
+        Object.hasOwnProperty.call(v, "hcEvents") || (v.hcEvents = {});
+        v = v.hcEvents;
+        a.Point &&
+          b instanceof a.Point &&
+          b.series &&
+          b.series.chart &&
+          (b.series.chart.runTrackerClick = !0);
+        var k = b.addEventListener || a.addEventListenerPolyfill;
+        k &&
+          k.call(
+            b,
+            e,
+            g,
+            a.supportsPassiveEvents
+              ? {
+                  passive:
+                    void 0 === c.passive
+                      ? -1 !== e.indexOf("touch")
+                      : c.passive,
+                  capture: !1,
                 }
-            }, credits: { enabled: !0, href: "", position: { align: "right", x: -10, verticalAlign: "bottom", y: -5 }, style: { cursor: "pointer", color: H.neutralColor40, fontSize: "9px" }, text: "" }
-        }; h.chart.styledMode = !1; ""; var f = new x(q(h.global, h.time)); return { defaultOptions: h, defaultTime: f, getOptions: function () { return h }, setOptions: function (c) { q(!0, h, c); if (c.time || c.global) a.time ? a.time.update(q(h.global, h.time, c.global, c.time)) : a.time = f; return h } }
-    }); L(a, "Core/Animation/Fx.js",
-        [a["Core/Color/Color.js"], a["Core/Globals.js"], a["Core/Utilities.js"]], function (a, u, E) {
-            var v = a.parse, x = u.win, y = E.isNumber, G = E.objectEach; return function () {
-                function a(a, h, f) { this.pos = NaN; this.options = h; this.elem = a; this.prop = f } a.prototype.dSetter = function () {
-                    var a = this.paths, h = a && a[0]; a = a && a[1]; var f = this.now || 0, c = []; if (1 !== f && h && a) if (h.length === a.length && 1 > f) for (var e = 0; e < a.length; e++) {
-                        for (var t = h[e], m = a[e], w = [], n = 0; n < m.length; n++) {
-                            var l = t[n], J = m[n]; y(l) && y(J) && ("A" !== m[0] || 4 !== n && 5 !== n) ? w[n] = l + f * (J -
-                                l) : w[n] = J
-                        } c.push(w)
-                    } else c = a; else c = this.toD || []; this.elem.attr("d", c, void 0, !0)
-                }; a.prototype.update = function () { var a = this.elem, h = this.prop, f = this.now, c = this.options.step; if (this[h + "Setter"]) this[h + "Setter"](); else a.attr ? a.element && a.attr(h, f, null, !0) : a.style[h] = f + this.unit; c && c.call(a, f, this) }; a.prototype.run = function (q, h, f) {
-                    var c = this, e = c.options, t = function (e) { return t.stopped ? !1 : c.step(e) }, m = x.requestAnimationFrame || function (c) { setTimeout(c, 13) }, w = function () {
-                        for (var c = 0; c < a.timers.length; c++)a.timers[c]() ||
-                            a.timers.splice(c--, 1); a.timers.length && m(w)
-                    }; q !== h || this.elem["forceAnimate:" + this.prop] ? (this.startTime = +new Date, this.start = q, this.end = h, this.unit = f, this.now = this.start, this.pos = 0, t.elem = this.elem, t.prop = this.prop, t() && 1 === a.timers.push(t) && m(w)) : (delete e.curAnim[this.prop], e.complete && 0 === Object.keys(e.curAnim).length && e.complete.call(this.elem))
-                }; a.prototype.step = function (a) {
-                    var h = +new Date, f = this.options, c = this.elem, e = f.complete, t = f.duration, m = f.curAnim; if (c.attr && !c.element) a = !1; else if (a ||
-                        h >= t + this.startTime) { this.now = this.end; this.pos = 1; this.update(); var w = m[this.prop] = !0; G(m, function (c) { !0 !== c && (w = !1) }); w && e && e.call(c); a = !1 } else this.pos = f.easing((h - this.startTime) / t), this.now = this.start + (this.end - this.start) * this.pos, this.update(), a = !0; return a
-                }; a.prototype.initPath = function (a, h, f) {
-                    function c(c, l) { for (; c.length < K;) { var d = c[0], k = l[K - c.length]; k && "M" === d[0] && (c[0] = "C" === k[0] ? ["C", d[1], d[2], d[1], d[2], d[1], d[2]] : ["L", d[1], d[2]]); c.unshift(d); w && (d = c.pop(), c.push(c[c.length - 1], d)) } }
-                    function e(c, l) { for (; c.length < K;)if (l = c[Math.floor(c.length / n) - 1].slice(), "C" === l[0] && (l[1] = l[5], l[2] = l[6]), w) { var d = c[Math.floor(c.length / n)].slice(); c.splice(c.length / 2, 0, l, d) } else c.push(l) } var t = a.startX, m = a.endX; f = f.slice(); var w = a.isArea, n = w ? 2 : 1; h = h && h.slice(); if (!h) return [f, f]; if (t && m && m.length) {
-                        for (a = 0; a < t.length; a++)if (t[a] === m[0]) { var l = a; break } else if (t[0] === m[m.length - t.length + a]) { l = a; var J = !0; break } else if (t[t.length - 1] === m[m.length - t.length + a]) { l = t.length - a; break } "undefined" === typeof l &&
-                            (h = [])
-                    } if (h.length && y(l)) { var K = f.length + l * n; J ? (c(h, f), e(f, h)) : (c(f, h), e(h, f)) } return [h, f]
-                }; a.prototype.fillSetter = function () { a.prototype.strokeSetter.apply(this, arguments) }; a.prototype.strokeSetter = function () { this.elem.attr(this.prop, v(this.start).tweenTo(v(this.end), this.pos), null, !0) }; a.timers = []; return a
-            }()
-        }); L(a, "Core/Animation/AnimationUtilities.js", [a["Core/Animation/Fx.js"], a["Core/Utilities.js"]], function (a, u) {
-            function v(c) { return q(c) ? h({ duration: 500, defer: 0 }, c) : { duration: c ? 500 : 0, defer: 0 } }
-            function H(c, f) { for (var e = a.timers.length; e--;)a.timers[e].elem !== c || f && f !== a.timers[e].prop || (a.timers[e].stopped = !0) } var x = u.defined, y = u.getStyle, G = u.isArray, B = u.isNumber, q = u.isObject, h = u.merge, f = u.objectEach, c = u.pick; return {
-                animate: function (c, t, m) {
-                    var e, n = "", l, J; if (!q(m)) { var K = arguments; m = { duration: K[2], easing: K[3], complete: K[4] } } B(m.duration) || (m.duration = 400); m.easing = "function" === typeof m.easing ? m.easing : Math[m.easing] || Math.easeInOutSine; m.curAnim = h(t); f(t, function (f, p) {
-                        H(c, p); J = new a(c, m,
-                            p); l = void 0; "d" === p && G(t.d) ? (J.paths = J.initPath(c, c.pathArray, t.d), J.toD = t.d, e = 0, l = 1) : c.attr ? e = c.attr(p) : (e = parseFloat(y(c, p)) || 0, "opacity" !== p && (n = "px")); l || (l = f); "string" === typeof l && l.match("px") && (l = l.replace(/px/g, "")); J.run(e, l, n)
-                    })
-                }, animObject: v, getDeferredAnimation: function (c, a, f) {
-                    var e = v(a), n = 0, l = 0; (f ? [f] : c.series).forEach(function (c) { c = v(c.options.animation); n = a && x(a.defer) ? e.defer : Math.max(n, c.duration + c.defer); l = Math.min(e.duration, c.duration) }); c.renderer.forExport && (n = 0); return {
-                        defer: Math.max(0,
-                            n - l), duration: Math.min(n, l)
-                    }
-                }, setAnimation: function (e, a) { a.renderer.globalAnimation = c(e, a.options.chart.animation, !0) }, stop: H
-            }
-        }); L(a, "Core/Renderer/HTML/AST.js", [a["Core/Globals.js"], a["Core/Utilities.js"]], function (a, u) {
-            var v = a.SVG_NS, H = u.attr, x = u.createElement, y = u.discardElement, G = u.error, B = u.isString, q = u.objectEach, h = u.splat; try { var f = !!(new DOMParser).parseFromString("", "text/html") } catch (c) { f = !1 } u = function () {
-                function c(c) { this.nodes = "string" === typeof c ? this.parseMarkup(c) : c } c.filterUserAttributes =
-                    function (e) { q(e, function (a, f) { var h = !0; -1 === c.allowedAttributes.indexOf(f) && (h = !1); -1 !== ["background", "dynsrc", "href", "lowsrc", "src"].indexOf(f) && (h = B(a) && c.allowedReferences.some(function (c) { return 0 === a.indexOf(c) })); h || (G("Highcharts warning: Invalid attribute '" + f + "' in config"), delete e[f]) }); return e }; c.setElementHTML = function (e, a) { e.innerHTML = ""; a && (new c(a)).addToDOM(e) }; c.prototype.addToDOM = function (e) {
-                        function f(e, t) {
-                            var n; h(e).forEach(function (l) {
-                                var e = l.tagName, h = l.textContent ? a.doc.createTextNode(l.textContent) :
-                                    void 0; if (e) if ("#text" === e) var m = h; else if (-1 !== c.allowedTags.indexOf(e)) { e = a.doc.createElementNS("svg" === e ? v : t.namespaceURI || v, e); var p = l.attributes || {}; q(l, function (d, k) { "tagName" !== k && "attributes" !== k && "children" !== k && "textContent" !== k && (p[k] = d) }); H(e, c.filterUserAttributes(p)); h && e.appendChild(h); f(l.children || [], e); m = e } else G("Highcharts warning: Invalid tagName '" + e + "' in config"); m && t.appendChild(m); n = m
-                            }); return n
-                        } return f(this.nodes, e)
-                    }; c.prototype.parseMarkup = function (c) {
-                        var e = []; if (f) c =
-                            (new DOMParser).parseFromString(c, "text/html"); else { var a = x("div"); a.innerHTML = c; c = { body: a } } var h = function (c, l) { var e = c.nodeName.toLowerCase(), a = { tagName: e }; if ("#text" === e) { e = c.textContent || ""; if (/^[\s]*$/.test(e)) return; a.textContent = e } if (e = c.attributes) { var f = {};[].forEach.call(e, function (d) { f[d.name] = d.value }); a.attributes = f } if (c.childNodes.length) { var p = [];[].forEach.call(c.childNodes, function (d) { h(d, p) }); p.length && (a.children = p) } l.push(a) };[].forEach.call(c.body.childNodes, function (c) {
-                                return h(c,
-                                    e)
-                            }); a && y(a); return e
-                    }; c.allowedTags = "a b br button caption circle clipPath code dd defs div dl dt em feComponentTransfer feFuncA feFuncB feFuncG feFuncR feGaussianBlur feOffset feMerge feMergeNode filter h1 h2 h3 h4 h5 h6 hr i img li linearGradient marker ol p path pattern pre rect small span stop strong style sub sup svg table text thead tbody tspan td th tr u ul #text".split(" "); c.allowedAttributes = "aria-controls aria-describedby aria-expanded aria-haspopup aria-hidden aria-label aria-labelledby aria-live aria-pressed aria-readonly aria-roledescription aria-selected class clip-path color colspan cx cy d dx dy disabled fill height href id in markerHeight markerWidth offset opacity orient padding paddingLeft paddingRight patternUnits r refX refY role scope slope src startOffset stdDeviation stroke stroke-linecap stroke-width style tableValues result rowspan summary target tabindex text-align textAnchor textLength type valign width x x1 x2 y y1 y2 zIndex".split(" ");
-                c.allowedReferences = "https:// http:// mailto: / ../ ./ #".split(" "); return c
-            }(); ""; return u
-        }); L(a, "Core/FormatUtilities.js", [a["Core/DefaultOptions.js"], a["Core/Utilities.js"]], function (a, u) {
-            function v(a, f, c, e) {
-                a = +a || 0; f = +f; var h = H.lang, m = (a.toString().split(".")[1] || "").split("e")[0].length, w = a.toString().split("e"), n = f; if (-1 === f) f = Math.min(m, 20); else if (!G(f)) f = 2; else if (f && w[1] && 0 > w[1]) {
-                    var l = f + +w[1]; 0 <= l ? (w[0] = (+w[0]).toExponential(l).split("e")[0], f = l) : (w[0] = w[0].split(".")[0] || 0, a = 20 > f ? (w[0] *
-                        Math.pow(10, w[1])).toFixed(f) : 0, w[1] = 0)
-                } l = (Math.abs(w[1] ? w[0] : a) + Math.pow(10, -Math.max(f, m) - 1)).toFixed(f); m = String(q(l)); var J = 3 < m.length ? m.length % 3 : 0; c = B(c, h.decimalPoint); e = B(e, h.thousandsSep); a = (0 > a ? "-" : "") + (J ? m.substr(0, J) + e : ""); a = 0 > +w[1] && !n ? "0" : a + m.substr(J).replace(/(\d{3})(?=\d)/g, "$1" + e); f && (a += c + l.slice(-f)); w[1] && 0 !== +a && (a += "e" + w[1]); return a
-            } var H = a.defaultOptions, x = a.defaultTime, y = u.getNestedProperty, G = u.isNumber, B = u.pick, q = u.pInt; return {
-                dateFormat: function (a, f, c) {
-                    return x.dateFormat(a,
-                        f, c)
-                }, format: function (a, f, c) { var e = "{", h = !1, m = /f$/, w = /\.([0-9])/, n = H.lang, l = c && c.time || x; c = c && c.numberFormatter || v; for (var J = []; a;) { var K = a.indexOf(e); if (-1 === K) break; var A = a.slice(0, K); if (h) { A = A.split(":"); e = y(A.shift() || "", f); if (A.length && "number" === typeof e) if (A = A.join(":"), m.test(A)) { var p = parseInt((A.match(w) || ["", "-1"])[1], 10); null !== e && (e = c(e, p, n.decimalPoint, -1 < A.indexOf(",") ? n.thousandsSep : "")) } else e = l.dateFormat(A, e); J.push(e) } else J.push(A); a = a.slice(K + 1); e = (h = !h) ? "}" : "{" } J.push(a); return J.join("") },
-                numberFormat: v
-            }
-        }); L(a, "Core/Renderer/SVG/SVGElement.js", [a["Core/Animation/AnimationUtilities.js"], a["Core/Renderer/HTML/AST.js"], a["Core/Color/Color.js"], a["Core/Globals.js"], a["Core/Color/Palette.js"], a["Core/Utilities.js"]], function (a, u, E, H, x, y) {
-            var v = a.animate, B = a.animObject, q = a.stop, h = H.deg2rad, f = H.doc, c = H.noop, e = H.svg, t = H.SVG_NS, m = H.win, w = y.addEvent, n = y.attr, l = y.createElement, J = y.css, K = y.defined, A = y.erase, p = y.extend, d = y.fireEvent, k = y.isArray, b = y.isFunction, g = y.isNumber, r = y.isString, F = y.merge,
-            D = y.objectEach, M = y.pick, C = y.pInt, O = y.syncTimeout, S = y.uniqueKey; a = function () {
-                function a() { this.element = void 0; this.onEvents = {}; this.opacity = 1; this.renderer = void 0; this.SVG_NS = t; this.symbolCustomAttribs = "x y width height r start end innerR anchorX anchorY rounded".split(" ") } a.prototype._defaultGetter = function (b) { b = M(this[b + "Value"], this[b], this.element ? this.element.getAttribute(b) : null, 0); /^[\-0-9\.]+$/.test(b) && (b = parseFloat(b)); return b }; a.prototype._defaultSetter = function (b, d, g) {
-                    g.setAttribute(d,
-                        b)
-                }; a.prototype.add = function (b) { var d = this.renderer, g = this.element; b && (this.parentGroup = b); this.parentInverted = b && b.inverted; "undefined" !== typeof this.textStr && "text" === this.element.nodeName && d.buildText(this); this.added = !0; if (!b || b.handleZ || this.zIndex) var k = this.zIndexSetter(); k || (b ? b.element : d.box).appendChild(g); if (this.onAdd) this.onAdd(); return this }; a.prototype.addClass = function (b, d) {
-                    var g = d ? "" : this.attr("class") || ""; b = (b || "").split(/ /g).reduce(function (b, d) { -1 === g.indexOf(d) && b.push(d); return b },
-                        g ? [g] : []).join(" "); b !== g && this.attr("class", b); return this
-                }; a.prototype.afterSetters = function () { this.doTransform && (this.updateTransform(), this.doTransform = !1) }; a.prototype.align = function (b, d, g) {
-                    var z = {}, k = this.renderer, c = k.alignedObjects, a, I, l; if (b) { if (this.alignOptions = b, this.alignByTranslate = d, !g || r(g)) this.alignTo = a = g || "renderer", A(c, this), c.push(this), g = void 0 } else b = this.alignOptions, d = this.alignByTranslate, a = this.alignTo; g = M(g, k[a], "scrollablePlotBox" === a ? k.plotBox : void 0, k); a = b.align; var e =
-                        b.verticalAlign; k = (g.x || 0) + (b.x || 0); c = (g.y || 0) + (b.y || 0); "right" === a ? I = 1 : "center" === a && (I = 2); I && (k += (g.width - (b.width || 0)) / I); z[d ? "translateX" : "x"] = Math.round(k); "bottom" === e ? l = 1 : "middle" === e && (l = 2); l && (c += (g.height - (b.height || 0)) / l); z[d ? "translateY" : "y"] = Math.round(c); this[this.placed ? "animate" : "attr"](z); this.placed = !0; this.alignAttr = z; return this
-                }; a.prototype.alignSetter = function (b) {
-                    var d = { left: "start", center: "middle", right: "end" }; d[b] && (this.alignValue = b, this.element.setAttribute("text-anchor",
-                        d[b]))
-                }; a.prototype.animate = function (b, d, g) { var k = this, z = B(M(d, this.renderer.globalAnimation, !0)); d = z.defer; M(f.hidden, f.msHidden, f.webkitHidden, !1) && (z.duration = 0); 0 !== z.duration ? (g && (z.complete = g), O(function () { k.element && v(k, b, z) }, d)) : (this.attr(b, void 0, g), D(b, function (b, d) { z.step && z.step.call(this, b, { prop: d, pos: 1, elem: this }) }, this)); return this }; a.prototype.applyTextOutline = function (b) {
-                    var d = this.element; -1 !== b.indexOf("contrast") && (b = b.replace(/contrast/g, this.renderer.getContrast(d.style.fill)));
-                    var g = b.split(" "); b = g[g.length - 1]; if ((g = g[0]) && "none" !== g && H.svg) {
-                        this.fakeTS = !0; this.ySetter = this.xSetter; g = g.replace(/(^[\d\.]+)(.*?)$/g, function (b, d, g) { return 2 * Number(d) + g }); this.removeTextOutline(); var k = f.createElementNS(t, "tspan"); n(k, { "class": "highcharts-text-outline", fill: b, stroke: b, "stroke-width": g, "stroke-linejoin": "round" });[].forEach.call(d.childNodes, function (b) {
-                            var d = b.cloneNode(!0); d.removeAttribute && ["fill", "stroke", "stroke-width", "stroke"].forEach(function (b) { return d.removeAttribute(b) });
-                            k.appendChild(d)
-                        }); var c = f.createElementNS(t, "tspan"); c.textContent = "\u200b";["x", "y"].forEach(function (b) { var g = d.getAttribute(b); g && c.setAttribute(b, g) }); k.appendChild(c); d.insertBefore(k, d.firstChild)
-                    }
-                }; a.prototype.attr = function (b, d, g, k) {
-                    var z = this.element, Q = this.symbolCustomAttribs, c, I = this, r, a; if ("string" === typeof b && "undefined" !== typeof d) { var l = b; b = {}; b[l] = d } "string" === typeof b ? I = (this[b + "Getter"] || this._defaultGetter).call(this, b, z) : (D(b, function (d, g) {
-                        r = !1; k || q(this, g); this.symbolName && -1 !==
-                            Q.indexOf(g) && (c || (this.symbolAttr(b), c = !0), r = !0); !this.rotation || "x" !== g && "y" !== g || (this.doTransform = !0); r || (a = this[g + "Setter"] || this._defaultSetter, a.call(this, d, g, z), !this.styledMode && this.shadows && /^(width|height|visibility|x|y|d|transform|cx|cy|r)$/.test(g) && this.updateShadows(g, d, a))
-                    }, this), this.afterSetters()); g && g.call(this); return I
-                }; a.prototype.clip = function (b) { return this.attr("clip-path", b ? "url(" + this.renderer.url + "#" + b.id + ")" : "none") }; a.prototype.crisp = function (b, d) {
-                    d = d || b.strokeWidth ||
-                    0; var g = Math.round(d) % 2 / 2; b.x = Math.floor(b.x || this.x || 0) + g; b.y = Math.floor(b.y || this.y || 0) + g; b.width = Math.floor((b.width || this.width || 0) - 2 * g); b.height = Math.floor((b.height || this.height || 0) - 2 * g); K(b.strokeWidth) && (b.strokeWidth = d); return b
-                }; a.prototype.complexColor = function (b, g, z) {
-                    var Q = this.renderer, c, r, a, I, l, e, f, p, n, C, h = [], t; d(this.renderer, "complexColor", { args: arguments }, function () {
-                        b.radialGradient ? r = "radialGradient" : b.linearGradient && (r = "linearGradient"); if (r) {
-                            a = b[r]; l = Q.gradients; e = b.stops; n = z.radialReference;
-                            k(a) && (b[r] = a = { x1: a[0], y1: a[1], x2: a[2], y2: a[3], gradientUnits: "userSpaceOnUse" }); "radialGradient" === r && n && !K(a.gradientUnits) && (I = a, a = F(a, Q.getRadialAttr(n, I), { gradientUnits: "userSpaceOnUse" })); D(a, function (b, d) { "id" !== d && h.push(d, b) }); D(e, function (b) { h.push(b) }); h = h.join(","); if (l[h]) C = l[h].attr("id"); else {
-                                a.id = C = S(); var d = l[h] = Q.createElement(r).attr(a).add(Q.defs); d.radAttr = I; d.stops = []; e.forEach(function (b) {
-                                    0 === b[1].indexOf("rgba") ? (c = E.parse(b[1]), f = c.get("rgb"), p = c.get("a")) : (f = b[1], p = 1); b = Q.createElement("stop").attr({
-                                        offset: b[0],
-                                        "stop-color": f, "stop-opacity": p
-                                    }).add(d); d.stops.push(b)
-                                })
-                            } t = "url(" + Q.url + "#" + C + ")"; z.setAttribute(g, t); z.gradient = h; b.toString = function () { return t }
-                        }
-                    })
-                }; a.prototype.css = function (b) {
-                    var d = this.styles, g = {}, k = this.element, c = ["textOutline", "textOverflow", "width"], r = "", a = !d; b && b.color && (b.fill = b.color); d && D(b, function (b, k) { d && d[k] !== b && (g[k] = b, a = !0) }); if (a) {
-                        d && (b = p(d, g)); if (b) if (null === b.width || "auto" === b.width) delete this.textWidth; else if ("text" === k.nodeName.toLowerCase() && b.width) var I = this.textWidth =
-                            C(b.width); this.styles = b; I && !e && this.renderer.forExport && delete b.width; if (k.namespaceURI === this.SVG_NS) { var l = function (b, d) { return "-" + d.toLowerCase() }; D(b, function (b, d) { -1 === c.indexOf(d) && (r += d.replace(/([A-Z])/g, l) + ":" + b + ";") }); r && n(k, "style", r) } else J(k, b); this.added && ("text" === this.element.nodeName && this.renderer.buildText(this), b && b.textOutline && this.applyTextOutline(b.textOutline))
-                    } return this
-                }; a.prototype.dashstyleSetter = function (b) {
-                    var d = this["stroke-width"]; "inherit" === d && (d = 1); if (b = b && b.toLowerCase()) {
-                        var g =
-                            b.replace("shortdashdotdot", "3,1,1,1,1,1,").replace("shortdashdot", "3,1,1,1").replace("shortdot", "1,1,").replace("shortdash", "3,1,").replace("longdash", "8,3,").replace(/dot/g, "1,3,").replace("dash", "4,3,").replace(/,$/, "").split(","); for (b = g.length; b--;)g[b] = "" + C(g[b]) * M(d, NaN); b = g.join(",").replace(/NaN/g, "none"); this.element.setAttribute("stroke-dasharray", b)
-                    }
-                }; a.prototype.destroy = function () {
-                    var b = this, d = b.element || {}, g = b.renderer, k = d.ownerSVGElement, c = g.isSVG && "SPAN" === d.nodeName && b.parentGroup ||
-                        void 0; d.onclick = d.onmouseout = d.onmouseover = d.onmousemove = d.point = null; q(b); if (b.clipPath && k) { var r = b.clipPath;[].forEach.call(k.querySelectorAll("[clip-path],[CLIP-PATH]"), function (b) { -1 < b.getAttribute("clip-path").indexOf(r.element.id) && b.removeAttribute("clip-path") }); b.clipPath = r.destroy() } if (b.stops) { for (k = 0; k < b.stops.length; k++)b.stops[k].destroy(); b.stops.length = 0; b.stops = void 0 } b.safeRemoveChild(d); for (g.styledMode || b.destroyShadows(); c && c.div && 0 === c.div.childNodes.length;)d = c.parentGroup,
-                            b.safeRemoveChild(c.div), delete c.div, c = d; b.alignTo && A(g.alignedObjects, b); D(b, function (d, g) { b[g] && b[g].parentGroup === b && b[g].destroy && b[g].destroy(); delete b[g] })
-                }; a.prototype.destroyShadows = function () { (this.shadows || []).forEach(function (b) { this.safeRemoveChild(b) }, this); this.shadows = void 0 }; a.prototype.destroyTextPath = function (b, d) {
-                    var g = b.getElementsByTagName("text")[0]; if (g) {
-                        if (g.removeAttribute("dx"), g.removeAttribute("dy"), d.element.setAttribute("id", ""), this.textPathWrapper && g.getElementsByTagName("textPath").length) {
-                            for (b =
-                                this.textPathWrapper.element.childNodes; b.length;)g.appendChild(b[0]); g.removeChild(this.textPathWrapper.element)
-                        }
-                    } else if (b.getAttribute("dx") || b.getAttribute("dy")) b.removeAttribute("dx"), b.removeAttribute("dy"); this.textPathWrapper && (this.textPathWrapper = this.textPathWrapper.destroy())
-                }; a.prototype.dSetter = function (b, d, g) {
-                    k(b) && ("string" === typeof b[0] && (b = this.renderer.pathToSegments(b)), this.pathArray = b, b = b.reduce(function (b, d, g) { return d && d.join ? (g ? b + " " : "") + d.join(" ") : (d || "").toString() }, ""));
-                    /(NaN| {2}|^$)/.test(b) && (b = "M 0 0"); this[d] !== b && (g.setAttribute(d, b), this[d] = b)
-                }; a.prototype.fadeOut = function (b) { var d = this; d.animate({ opacity: 0 }, { duration: M(b, 150), complete: function () { d.attr({ y: -9999 }).hide() } }) }; a.prototype.fillSetter = function (b, d, g) { "string" === typeof b ? g.setAttribute(d, b) : b && this.complexColor(b, d, g) }; a.prototype.getBBox = function (d, g) {
-                    var k = this.renderer, c = this.element, r = this.styles, l = this.textStr, e = k.cache, I = k.cacheKeys, F = c.namespaceURI === this.SVG_NS; g = M(g, this.rotation, 0); var P =
-                        k.styledMode ? c && a.prototype.getStyle.call(c, "font-size") : r && r.fontSize, f; if (K(l)) { var n = l.toString(); -1 === n.indexOf("<") && (n = n.replace(/[0-9]/g, "0")); n += ["", g, P, this.textWidth, r && r.textOverflow, r && r.fontWeight].join() } n && !d && (f = e[n]); if (!f) {
-                            if (F || k.forExport) {
-                                try { var D = this.fakeTS && function (b) { var d = c.querySelector(".highcharts-text-outline"); d && J(d, { display: b }) }; b(D) && D("none"); f = c.getBBox ? p({}, c.getBBox()) : { width: c.offsetWidth, height: c.offsetHeight }; b(D) && D("") } catch (V) { "" } if (!f || 0 > f.width) f = {
-                                    width: 0,
-                                    height: 0
-                                }
-                            } else f = this.htmlGetBBox(); k.isSVG && (d = f.width, k = f.height, F && (f.height = k = { "11px,17": 14, "13px,20": 16 }[r && r.fontSize + "," + Math.round(k)] || k), g && (r = g * h, f.width = Math.abs(k * Math.sin(r)) + Math.abs(d * Math.cos(r)), f.height = Math.abs(k * Math.cos(r)) + Math.abs(d * Math.sin(r)))); if (n && 0 < f.height) { for (; 250 < I.length;)delete e[I.shift()]; e[n] || I.push(n); e[n] = f }
-                        } return f
-                }; a.prototype.getStyle = function (b) { return m.getComputedStyle(this.element || this, "").getPropertyValue(b) }; a.prototype.hasClass = function (b) {
-                    return -1 !==
-                        ("" + this.attr("class")).split(" ").indexOf(b)
-                }; a.prototype.hide = function (b) { b ? this.attr({ y: -9999 }) : this.attr({ visibility: "hidden" }); return this }; a.prototype.htmlGetBBox = function () { return { height: 0, width: 0, x: 0, y: 0 } }; a.prototype.init = function (b, g) { this.element = "span" === g ? l(g) : f.createElementNS(this.SVG_NS, g); this.renderer = b; d(this, "afterInit") }; a.prototype.invert = function (b) { this.inverted = b; this.updateTransform(); return this }; a.prototype.on = function (b, d) {
-                    var g = this.onEvents; if (g[b]) g[b](); g[b] = w(this.element,
-                        b, d); return this
-                }; a.prototype.opacitySetter = function (b, d, g) { this.opacity = b = Number(Number(b).toFixed(3)); g.setAttribute(d, b) }; a.prototype.removeClass = function (b) { return this.attr("class", ("" + this.attr("class")).replace(r(b) ? new RegExp("(^| )" + b + "( |$)") : b, " ").replace(/ +/g, " ").trim()) }; a.prototype.removeTextOutline = function () { var b = this.element.querySelector("tspan.highcharts-text-outline"); b && this.safeRemoveChild(b) }; a.prototype.safeRemoveChild = function (b) { var d = b.parentNode; d && d.removeChild(b) };
-                a.prototype.setRadialReference = function (b) { var d = this.element.gradient && this.renderer.gradients[this.element.gradient]; this.element.radialReference = b; d && d.radAttr && d.animate(this.renderer.getRadialAttr(b, d.radAttr)); return this }; a.prototype.setTextPath = function (b, d) {
-                    var k = this.element, Q = this.text ? this.text.element : k, r = { textAnchor: "text-anchor" }, a = !1, l = this.textPathWrapper, I = !l; d = F(!0, { enabled: !0, attributes: { dy: -5, startOffset: "50%", textAnchor: "middle" } }, d); var e = u.filterUserAttributes(d.attributes);
-                    if (b && d && d.enabled) {
-                        l && null === l.element.parentNode ? (I = !0, l = l.destroy()) : l && this.removeTextOutline.call(l.parentGroup); this.options && this.options.padding && (e.dx = -this.options.padding); l || (this.textPathWrapper = l = this.renderer.createElement("textPath"), a = !0); var P = l.element; (d = b.element.getAttribute("id")) || b.element.setAttribute("id", d = S()); if (I) for (Q.setAttribute("y", 0), g(e.dx) && Q.setAttribute("x", -e.dx), b = [].slice.call(Q.childNodes), I = 0; I < b.length; I++) {
-                            var f = b[I]; f.nodeType !== Node.TEXT_NODE && "tspan" !==
-                                f.nodeName || P.appendChild(f)
-                        } a && l && l.add({ element: Q }); P.setAttributeNS("http://www.w3.org/1999/xlink", "href", this.renderer.url + "#" + d); K(e.dy) && (P.parentNode.setAttribute("dy", e.dy), delete e.dy); K(e.dx) && (P.parentNode.setAttribute("dx", e.dx), delete e.dx); D(e, function (b, d) { P.setAttribute(r[d] || d, b) }); k.removeAttribute("transform"); this.removeTextOutline.call(l); this.text && !this.renderer.styledMode && this.attr({ fill: "none", "stroke-width": 0 }); this.applyTextOutline = this.updateTransform = c
-                    } else l && (delete this.updateTransform,
-                        delete this.applyTextOutline, this.destroyTextPath(k, b), this.updateTransform(), this.options && this.options.rotation && this.applyTextOutline(this.options.style.textOutline)); return this
-                }; a.prototype.shadow = function (b, d, g) {
-                    var k = [], c = this.element, z = this.oldShadowOptions, r = { color: x.neutralColor100, offsetX: this.parentInverted ? -1 : 1, offsetY: this.parentInverted ? -1 : 1, opacity: .15, width: 3 }, a = !1, l; !0 === b ? l = r : "object" === typeof b && (l = p(r, b)); l && (l && z && D(l, function (b, d) { b !== z[d] && (a = !0) }), a && this.destroyShadows(),
-                        this.oldShadowOptions = l); if (!l) this.destroyShadows(); else if (!this.shadows) {
-                            var e = l.opacity / l.width; var F = this.parentInverted ? "translate(" + l.offsetY + ", " + l.offsetX + ")" : "translate(" + l.offsetX + ", " + l.offsetY + ")"; for (r = 1; r <= l.width; r++) {
-                                var f = c.cloneNode(!1); var C = 2 * l.width + 1 - 2 * r; n(f, { stroke: b.color || x.neutralColor100, "stroke-opacity": e * r, "stroke-width": C, transform: F, fill: "none" }); f.setAttribute("class", (f.getAttribute("class") || "") + " highcharts-shadow"); g && (n(f, "height", Math.max(n(f, "height") - C, 0)),
-                                    f.cutHeight = C); d ? d.element.appendChild(f) : c.parentNode && c.parentNode.insertBefore(f, c); k.push(f)
-                            } this.shadows = k
-                        } return this
-                }; a.prototype.show = function (b) { return this.attr({ visibility: b ? "inherit" : "visible" }) }; a.prototype.strokeSetter = function (b, d, g) {
-                    this[d] = b; this.stroke && this["stroke-width"] ? (a.prototype.fillSetter.call(this, this.stroke, "stroke", g), g.setAttribute("stroke-width", this["stroke-width"]), this.hasStroke = !0) : "stroke-width" === d && 0 === b && this.hasStroke ? (g.removeAttribute("stroke"), this.hasStroke =
-                        !1) : this.renderer.styledMode && this["stroke-width"] && (g.setAttribute("stroke-width", this["stroke-width"]), this.hasStroke = !0)
-                }; a.prototype.strokeWidth = function () { if (!this.renderer.styledMode) return this["stroke-width"] || 0; var b = this.getStyle("stroke-width"), d = 0; if (b.indexOf("px") === b.length - 2) d = C(b); else if ("" !== b) { var g = f.createElementNS(t, "rect"); n(g, { width: b, "stroke-width": 0 }); this.element.parentNode.appendChild(g); d = g.getBBox().width; g.parentNode.removeChild(g) } return d }; a.prototype.symbolAttr =
-                    function (b) { var d = this; "x y r start end width height innerR anchorX anchorY clockwise".split(" ").forEach(function (g) { d[g] = M(b[g], d[g]) }); d.attr({ d: d.renderer.symbols[d.symbolName](d.x, d.y, d.width, d.height, d) }) }; a.prototype.textSetter = function (b) { b !== this.textStr && (delete this.textPxLength, this.textStr = b, this.added && this.renderer.buildText(this)) }; a.prototype.titleSetter = function (b) {
-                        var d = this.element, g = d.getElementsByTagName("title")[0] || f.createElementNS(this.SVG_NS, "title"); d.insertBefore ? d.insertBefore(g,
-                            d.firstChild) : d.appendChild(g); g.textContent = String(M(b, "")).replace(/<[^>]*>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
-                    }; a.prototype.toFront = function () { var b = this.element; b.parentNode.appendChild(b); return this }; a.prototype.translate = function (b, d) { return this.attr({ translateX: b, translateY: d }) }; a.prototype.updateShadows = function (b, d, g) { var k = this.shadows; if (k) for (var c = k.length; c--;)g.call(k[c], "height" === b ? Math.max(d - (k[c].cutHeight || 0), 0) : "d" === b ? this.d : d, b, k[c]) }; a.prototype.updateTransform =
-                        function () {
-                            var b = this.scaleX, d = this.scaleY, g = this.inverted, k = this.rotation, c = this.matrix, r = this.element, a = this.translateX || 0, l = this.translateY || 0; g && (a += this.width, l += this.height); a = ["translate(" + a + "," + l + ")"]; K(c) && a.push("matrix(" + c.join(",") + ")"); g ? a.push("rotate(90) scale(-1,1)") : k && a.push("rotate(" + k + " " + M(this.rotationOriginX, r.getAttribute("x"), 0) + " " + M(this.rotationOriginY, r.getAttribute("y") || 0) + ")"); (K(b) || K(d)) && a.push("scale(" + M(b, 1) + " " + M(d, 1) + ")"); a.length && r.setAttribute("transform",
-                                a.join(" "))
-                        }; a.prototype.visibilitySetter = function (b, d, g) { "inherit" === b ? g.removeAttribute(d) : this[d] !== b && g.setAttribute(d, b); this[d] = b }; a.prototype.xGetter = function (b) { "circle" === this.element.nodeName && ("x" === b ? b = "cx" : "y" === b && (b = "cy")); return this._defaultGetter(b) }; a.prototype.zIndexSetter = function (b, d) {
-                            var g = this.renderer, k = this.parentGroup, c = (k || g).element || g.box, r = this.element; g = c === g.box; var a = !1; var l = this.added; var e; K(b) ? (r.setAttribute("data-z-index", b), b = +b, this[d] === b && (l = !1)) : K(this[d]) &&
-                                r.removeAttribute("data-z-index"); this[d] = b; if (l) { (b = this.zIndex) && k && (k.handleZ = !0); d = c.childNodes; for (e = d.length - 1; 0 <= e && !a; e--) { k = d[e]; l = k.getAttribute("data-z-index"); var f = !K(l); if (k !== r) if (0 > b && f && !g && !e) c.insertBefore(r, d[e]), a = !0; else if (C(l) <= b || f && (!K(b) || 0 <= b)) c.insertBefore(r, d[e + 1] || null), a = !0 } a || (c.insertBefore(r, d[g ? 3 : 0] || null), a = !0) } return a
-                        }; return a
-            }(); a.prototype["stroke-widthSetter"] = a.prototype.strokeSetter; a.prototype.yGetter = a.prototype.xGetter; a.prototype.matrixSetter = a.prototype.rotationOriginXSetter =
-                a.prototype.rotationOriginYSetter = a.prototype.rotationSetter = a.prototype.scaleXSetter = a.prototype.scaleYSetter = a.prototype.translateXSetter = a.prototype.translateYSetter = a.prototype.verticalAlignSetter = function (b, d) { this[d] = b; this.doTransform = !0 }; ""; return a
-        }); L(a, "Core/Renderer/RendererRegistry.js", [a["Core/Globals.js"]], function (a) {
-            var v; (function (v) {
-                var u; v.rendererTypes = {}; v.getRendererType = function (a) { void 0 === a && (a = u); return v.rendererTypes[a] || v.rendererTypes[u] }; v.registerRendererType = function (x,
-                    y, G) { v.rendererTypes[x] = y; if (!u || G) u = x, a.Renderer = y }
-            })(v || (v = {})); return v
-        }); L(a, "Core/Renderer/SVG/SVGLabel.js", [a["Core/Renderer/SVG/SVGElement.js"], a["Core/Utilities.js"]], function (a, u) {
-            var v = this && this.__extends || function () {
-                var a = function (f, c) { a = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (c, a) { c.__proto__ = a } || function (c, a) { for (var e in a) a.hasOwnProperty(e) && (c[e] = a[e]) }; return a(f, c) }; return function (f, c) {
-                    function e() { this.constructor = f } a(f, c); f.prototype = null === c ? Object.create(c) :
-                        (e.prototype = c.prototype, new e)
-                }
-            }(), H = u.defined, x = u.extend, y = u.isNumber, G = u.merge, B = u.pick, q = u.removeEvent; return function (h) {
-                function f(c, a, t, m, w, n, l, J, K, A) {
-                    var e = h.call(this) || this; e.paddingLeftSetter = e.paddingSetter; e.paddingRightSetter = e.paddingSetter; e.init(c, "g"); e.textStr = a; e.x = t; e.y = m; e.anchorX = n; e.anchorY = l; e.baseline = K; e.className = A; e.addClass("button" === A ? "highcharts-no-tooltip" : "highcharts-label"); A && e.addClass("highcharts-" + A); e.text = c.text("", 0, 0, J).attr({ zIndex: 1 }); var d; "string" ===
-                        typeof w && ((d = /^url\((.*?)\)$/.test(w)) || e.renderer.symbols[w]) && (e.symbolKey = w); e.bBox = f.emptyBBox; e.padding = 3; e.baselineOffset = 0; e.needsBox = c.styledMode || d; e.deferredAttr = {}; e.alignFactor = 0; return e
-                } v(f, h); f.prototype.alignSetter = function (c) { c = { left: 0, center: .5, right: 1 }[c]; c !== this.alignFactor && (this.alignFactor = c, this.bBox && y(this.xSetting) && this.attr({ x: this.xSetting })) }; f.prototype.anchorXSetter = function (c, a) { this.anchorX = c; this.boxAttr(a, Math.round(c) - this.getCrispAdjust() - this.xSetting) }; f.prototype.anchorYSetter =
-                    function (c, a) { this.anchorY = c; this.boxAttr(a, c - this.ySetting) }; f.prototype.boxAttr = function (c, a) { this.box ? this.box.attr(c, a) : this.deferredAttr[c] = a }; f.prototype.css = function (c) { if (c) { var e = {}; c = G(c); f.textProps.forEach(function (a) { "undefined" !== typeof c[a] && (e[a] = c[a], delete c[a]) }); this.text.css(e); var h = "width" in e; "fontSize" in e || "fontWeight" in e ? this.updateTextPadding() : h && this.updateBoxSize() } return a.prototype.css.call(this, c) }; f.prototype.destroy = function () {
-                        q(this.element, "mouseenter"); q(this.element,
-                            "mouseleave"); this.text && this.text.destroy(); this.box && (this.box = this.box.destroy()); a.prototype.destroy.call(this)
-                    }; f.prototype.fillSetter = function (c, a) { c && (this.needsBox = !0); this.fill = c; this.boxAttr(a, c) }; f.prototype.getBBox = function () { this.textStr && 0 === this.bBox.width && 0 === this.bBox.height && this.updateBoxSize(); var c = this.padding, a = B(this.paddingLeft, c); return { width: this.width, height: this.height, x: this.bBox.x - a, y: this.bBox.y - c } }; f.prototype.getCrispAdjust = function () {
-                        return this.renderer.styledMode &&
-                            this.box ? this.box.strokeWidth() % 2 / 2 : (this["stroke-width"] ? parseInt(this["stroke-width"], 10) : 0) % 2 / 2
-                    }; f.prototype.heightSetter = function (c) { this.heightSetting = c }; f.prototype.on = function (c, e) {
-                        var f = this, h = f.text, w = h && "SPAN" === h.element.tagName ? h : void 0; if (w) {
-                            var n = function (a) {
-                                ("mouseenter" === c || "mouseleave" === c) && a.relatedTarget instanceof Element && (f.element.compareDocumentPosition(a.relatedTarget) & Node.DOCUMENT_POSITION_CONTAINED_BY || w.element.compareDocumentPosition(a.relatedTarget) & Node.DOCUMENT_POSITION_CONTAINED_BY) ||
-                                e.call(f.element, a)
-                            }; w.on(c, n)
-                        } a.prototype.on.call(f, c, n || e); return f
-                    }; f.prototype.onAdd = function () { var c = this.textStr; this.text.add(this); this.attr({ text: H(c) ? c : "", x: this.x, y: this.y }); this.box && H(this.anchorX) && this.attr({ anchorX: this.anchorX, anchorY: this.anchorY }) }; f.prototype.paddingSetter = function (c, a) { y(c) ? c !== this[a] && (this[a] = c, this.updateTextPadding()) : this[a] = void 0 }; f.prototype.rSetter = function (c, a) { this.boxAttr(a, c) }; f.prototype.shadow = function (c) {
-                        c && !this.renderer.styledMode && (this.updateBoxSize(),
-                            this.box && this.box.shadow(c)); return this
-                    }; f.prototype.strokeSetter = function (c, a) { this.stroke = c; this.boxAttr(a, c) }; f.prototype["stroke-widthSetter"] = function (a, e) { a && (this.needsBox = !0); this["stroke-width"] = a; this.boxAttr(e, a) }; f.prototype["text-alignSetter"] = function (a) { this.textAlign = a }; f.prototype.textSetter = function (a) { "undefined" !== typeof a && this.text.attr({ text: a }); this.updateTextPadding() }; f.prototype.updateBoxSize = function () {
-                        var a = this.text.element.style, e = {}, h = this.padding, m = this.bBox = y(this.widthSetting) &&
-                            y(this.heightSetting) && !this.textAlign || !H(this.text.textStr) ? f.emptyBBox : this.text.getBBox(); this.width = this.getPaddedWidth(); this.height = (this.heightSetting || m.height || 0) + 2 * h; a = this.renderer.fontMetrics(a && a.fontSize, this.text); this.baselineOffset = h + Math.min((this.text.firstLineMetrics || a).b, m.height || Infinity); this.heightSetting && (this.baselineOffset += (this.heightSetting - a.h) / 2); this.needsBox && (this.box || (h = this.box = this.symbolKey ? this.renderer.symbol(this.symbolKey) : this.renderer.rect(), h.addClass(("button" ===
-                                this.className ? "" : "highcharts-label-box") + (this.className ? " highcharts-" + this.className + "-box" : "")), h.add(this)), h = this.getCrispAdjust(), e.x = h, e.y = (this.baseline ? -this.baselineOffset : 0) + h, e.width = Math.round(this.width), e.height = Math.round(this.height), this.box.attr(x(e, this.deferredAttr)), this.deferredAttr = {})
-                    }; f.prototype.updateTextPadding = function () {
-                        var a = this.text; this.updateBoxSize(); var e = this.baseline ? 0 : this.baselineOffset, f = B(this.paddingLeft, this.padding); H(this.widthSetting) && this.bBox &&
-                            ("center" === this.textAlign || "right" === this.textAlign) && (f += { center: .5, right: 1 }[this.textAlign] * (this.widthSetting - this.bBox.width)); if (f !== a.x || e !== a.y) a.attr("x", f), a.hasBoxWidthChanged && (this.bBox = a.getBBox(!0)), "undefined" !== typeof e && a.attr("y", e); a.x = f; a.y = e
-                    }; f.prototype.widthSetter = function (a) { this.widthSetting = y(a) ? a : void 0 }; f.prototype.getPaddedWidth = function () { var a = this.padding, e = B(this.paddingLeft, a); a = B(this.paddingRight, a); return (this.widthSetting || this.bBox.width || 0) + e + a }; f.prototype.xSetter =
-                        function (a) { this.x = a; this.alignFactor && (a -= this.alignFactor * this.getPaddedWidth(), this["forceAnimate:x"] = !0); this.xSetting = Math.round(a); this.attr("translateX", this.xSetting) }; f.prototype.ySetter = function (a) { this.ySetting = this.y = Math.round(a); this.attr("translateY", this.ySetting) }; f.emptyBBox = { width: 0, height: 0, x: 0, y: 0 }; f.textProps = "color direction fontFamily fontSize fontStyle fontWeight lineHeight textAlign textDecoration textOutline textOverflow width".split(" "); return f
-            }(a)
-        }); L(a, "Core/Renderer/SVG/Symbols.js",
-            [a["Core/Utilities.js"]], function (a) {
-                function v(a, q, h, f, c) { var e = []; if (c) { var t = c.start || 0, m = G(c.r, h); h = G(c.r, f || h); var w = (c.end || 0) - .001; f = c.innerR; var n = G(c.open, .001 > Math.abs((c.end || 0) - t - 2 * Math.PI)), l = Math.cos(t), J = Math.sin(t), K = Math.cos(w), A = Math.sin(w); t = G(c.longArc, .001 > w - t - Math.PI ? 0 : 1); e.push(["M", a + m * l, q + h * J], ["A", m, h, 0, t, G(c.clockwise, 1), a + m * K, q + h * A]); x(f) && e.push(n ? ["M", a + f * K, q + f * A] : ["L", a + f * K, q + f * A], ["A", f, f, 0, t, x(c.clockwise) ? 1 - c.clockwise : 0, a + f * l, q + f * J]); n || e.push(["Z"]) } return e } function E(a,
-                    q, h, f, c) { return c && c.r ? H(a, q, h, f, c) : [["M", a, q], ["L", a + h, q], ["L", a + h, q + f], ["L", a, q + f], ["Z"]] } function H(a, q, h, f, c) { c = c && c.r || 0; return [["M", a + c, q], ["L", a + h - c, q], ["C", a + h, q, a + h, q, a + h, q + c], ["L", a + h, q + f - c], ["C", a + h, q + f, a + h, q + f, a + h - c, q + f], ["L", a + c, q + f], ["C", a, q + f, a, q + f, a, q + f - c], ["L", a, q + c], ["C", a, q, a, q, a + c, q]] } var x = a.defined, y = a.isNumber, G = a.pick; return {
-                        arc: v, callout: function (a, q, h, f, c) {
-                            var e = Math.min(c && c.r || 0, h, f), t = e + 6, m = c && c.anchorX; c = c && c.anchorY || 0; var w = H(a, q, h, f, { r: e }); if (!y(m)) return w; a + m >= h ?
-                                c > q + t && c < q + f - t ? w.splice(3, 1, ["L", a + h, c - 6], ["L", a + h + 6, c], ["L", a + h, c + 6], ["L", a + h, q + f - e]) : w.splice(3, 1, ["L", a + h, f / 2], ["L", m, c], ["L", a + h, f / 2], ["L", a + h, q + f - e]) : 0 >= a + m ? c > q + t && c < q + f - t ? w.splice(7, 1, ["L", a, c + 6], ["L", a - 6, c], ["L", a, c - 6], ["L", a, q + e]) : w.splice(7, 1, ["L", a, f / 2], ["L", m, c], ["L", a, f / 2], ["L", a, q + e]) : c && c > f && m > a + t && m < a + h - t ? w.splice(5, 1, ["L", m + 6, q + f], ["L", m, q + f + 6], ["L", m - 6, q + f], ["L", a + e, q + f]) : c && 0 > c && m > a + t && m < a + h - t && w.splice(1, 1, ["L", m - 6, q], ["L", m, q - 6], ["L", m + 6, q], ["L", h - e, q]); return w
-                        }, circle: function (a,
-                            q, h, f) { return v(a + h / 2, q + f / 2, h / 2, f / 2, { start: .5 * Math.PI, end: 2.5 * Math.PI, open: !1 }) }, diamond: function (a, q, h, f) { return [["M", a + h / 2, q], ["L", a + h, q + f / 2], ["L", a + h / 2, q + f], ["L", a, q + f / 2], ["Z"]] }, rect: E, roundedRect: H, square: E, triangle: function (a, q, h, f) { return [["M", a + h / 2, q], ["L", a + h, q + f], ["L", a, q + f], ["Z"]] }, "triangle-down": function (a, q, h, f) { return [["M", a, q], ["L", a + h, q], ["L", a + h / 2, q + f], ["Z"]] }
-                    }
-            }); L(a, "Core/Renderer/SVG/TextBuilder.js", [a["Core/Renderer/HTML/AST.js"], a["Core/Globals.js"], a["Core/Utilities.js"]], function (a,
-                u, E) {
-                    var v = u.doc, x = u.SVG_NS, y = E.attr, G = E.isString, B = E.objectEach, q = E.pick; return function () {
-                        function h(a) { var c = a.styles; this.renderer = a.renderer; this.svgElement = a; this.width = a.textWidth; this.textLineHeight = c && c.lineHeight; this.textOutline = c && c.textOutline; this.ellipsis = !(!c || "ellipsis" !== c.textOverflow); this.noWrap = !(!c || "nowrap" !== c.whiteSpace); this.fontSize = c && c.fontSize } h.prototype.buildSVG = function () {
-                            var f = this.svgElement, c = f.element, e = f.renderer, h = q(f.textStr, "").toString(), m = -1 !== h.indexOf("<"),
-                            w = c.childNodes, n = w.length; e = this.width && !f.added && e.box; var l = /<br.*?>/g; var J = [h, this.ellipsis, this.noWrap, this.textLineHeight, this.textOutline, this.fontSize, this.width].join(); if (J !== f.textCache) {
-                                f.textCache = J; for (delete f.actualWidth; n--;)c.removeChild(w[n]); m || this.ellipsis || this.width || -1 !== h.indexOf(" ") && (!this.noWrap || l.test(h)) ? "" !== h && (e && e.appendChild(c), h = new a(h), this.modifyTree(h.nodes), h.addToDOM(f.element), this.modifyDOM(), this.ellipsis && -1 !== (c.textContent || "").indexOf("\u2026") &&
-                                    f.attr("title", this.unescapeEntities(f.textStr || "", ["&lt;", "&gt;"])), e && e.removeChild(c)) : c.appendChild(v.createTextNode(this.unescapeEntities(h))); G(this.textOutline) && f.applyTextOutline && f.applyTextOutline(this.textOutline)
-                            }
-                        }; h.prototype.modifyDOM = function () {
-                            var a = this, c = this.svgElement, e = y(c.element, "x"); c.firstLineMetrics = void 0;[].forEach.call(c.element.querySelectorAll("tspan.highcharts-br"), function (f, l) {
-                                f.nextSibling && f.previousSibling && (0 === l && 1 === f.previousSibling.nodeType && (c.firstLineMetrics =
-                                    c.renderer.fontMetrics(void 0, f.previousSibling)), y(f, { dy: a.getLineHeight(f.nextSibling), x: e }))
-                            }); var h = this.width || 0; if (h) {
-                                var m = function (f, l) {
-                                    var n = f.textContent || "", w = n.replace(/([^\^])-/g, "$1- ").split(" "), m = !a.noWrap && (1 < w.length || 1 < c.element.childNodes.length), p = a.getLineHeight(l), d = 0, k = c.actualWidth; if (a.ellipsis) n && a.truncate(f, n, void 0, 0, Math.max(0, h - parseInt(a.fontSize || 12, 10)), function (b, d) { return b.substring(0, d) + "\u2026" }); else if (m) {
-                                        n = []; for (m = []; l.firstChild && l.firstChild !== f;)m.push(l.firstChild),
-                                            l.removeChild(l.firstChild); for (; w.length;)w.length && !a.noWrap && 0 < d && (n.push(f.textContent || ""), f.textContent = w.join(" ").replace(/- /g, "-")), a.truncate(f, void 0, w, 0 === d ? k || 0 : 0, h, function (b, d) { return w.slice(0, d).join(" ").replace(/- /g, "-") }), k = c.actualWidth, d++; m.forEach(function (b) { l.insertBefore(b, f) }); n.forEach(function (b) { l.insertBefore(v.createTextNode(b), f); b = v.createElementNS(x, "tspan"); b.textContent = "\u200b"; y(b, { dy: p, x: e }); l.insertBefore(b, f) })
-                                    }
-                                }, w = function (a) {
-                                    [].slice.call(a.childNodes).forEach(function (l) {
-                                        l.nodeType ===
-                                        Node.TEXT_NODE ? m(l, a) : (-1 !== l.className.baseVal.indexOf("highcharts-br") && (c.actualWidth = 0), w(l))
-                                    })
-                                }; w(c.element)
-                            }
-                        }; h.prototype.getLineHeight = function (a) { var c; a = a.nodeType === Node.TEXT_NODE ? a.parentElement : a; this.renderer.styledMode || (c = a && /(px|em)$/.test(a.style.fontSize) ? a.style.fontSize : this.fontSize || this.renderer.style.fontSize || 12); return this.textLineHeight ? parseInt(this.textLineHeight.toString(), 10) : this.renderer.fontMetrics(c, a || this.svgElement.element).h }; h.prototype.modifyTree = function (a) {
-                            var c =
-                                this, e = function (f, h) {
-                                    var w = f.tagName, n = c.renderer.styledMode, l = f.attributes || {}; if ("b" === w || "strong" === w) n ? l["class"] = "highcharts-strong" : l.style = "font-weight:bold;" + (l.style || ""); else if ("i" === w || "em" === w) n ? l["class"] = "highcharts-emphasized" : l.style = "font-style:italic;" + (l.style || ""); G(l.style) && (l.style = l.style.replace(/(;| |^)color([ :])/, "$1fill$2")); "br" === w && (l["class"] = "highcharts-br", f.textContent = "\u200b", (h = a[h + 1]) && h.textContent && (h.textContent = h.textContent.replace(/^ +/gm, ""))); "#text" !==
-                                        w && "a" !== w && (f.tagName = "tspan"); f.attributes = l; f.children && f.children.filter(function (a) { return "#text" !== a.tagName }).forEach(e)
-                                }; for (a.forEach(e); a[0] && "tspan" === a[0].tagName && !a[0].children;)a.splice(0, 1)
-                        }; h.prototype.truncate = function (a, c, e, h, m, w) {
-                            var f = this.svgElement, l = f.renderer, t = f.rotation, K = [], A = e ? 1 : 0, p = (c || e || "").length, d = p, k, b = function (b, d) {
-                                d = d || b; var g = a.parentNode; if (g && "undefined" === typeof K[d]) if (g.getSubStringLength) try { K[d] = h + g.getSubStringLength(0, e ? d + 1 : d) } catch (M) { "" } else l.getSpanWidth &&
-                                    (a.textContent = w(c || e, b), K[d] = h + l.getSpanWidth(f, a)); return K[d]
-                            }; f.rotation = 0; var g = b(a.textContent.length); if (h + g > m) { for (; A <= p;)d = Math.ceil((A + p) / 2), e && (k = w(e, d)), g = b(d, k && k.length - 1), A === p ? A = p + 1 : g > m ? p = d - 1 : A = d; 0 === p ? a.textContent = "" : c && p === c.length - 1 || (a.textContent = k || w(c || e, d)) } e && e.splice(0, d); f.actualWidth = g; f.rotation = t
-                        }; h.prototype.unescapeEntities = function (a, c) { B(this.renderer.escapes, function (e, f) { c && -1 !== c.indexOf(e) || (a = a.toString().replace(new RegExp(e, "g"), f)) }); return a }; return h
-                    }()
+              : !1
+          );
+        v[e] || (v[e] = []);
+        v[e].push({
+          fn: g,
+          order: "number" === typeof c.order ? c.order : Infinity,
+        });
+        v[e].sort(function (b, e) {
+          return b.order - e.order;
+        });
+        return function () {
+          y(b, e, g);
+        };
+      },
+      arrayMax: function (b) {
+        for (var e = b.length, g = b[0]; e--; ) b[e] > g && (g = b[e]);
+        return g;
+      },
+      arrayMin: function (b) {
+        for (var e = b.length, g = b[0]; e--; ) b[e] < g && (g = b[e]);
+        return g;
+      },
+      attr: d,
+      clamp: function (b, e, g) {
+        return b > e ? (b < g ? b : g) : e;
+      },
+      cleanRecursively: A,
+      clearTimeout: function (b) {
+        h(b) && clearTimeout(b);
+      },
+      correctFloat: p,
+      createElement: w,
+      css: f,
+      defined: h,
+      destroyObjectProperties: function (b, e) {
+        r(b, function (g, c) {
+          g && g !== e && g.destroy && g.destroy();
+          delete b[c];
+        });
+      },
+      discardElement: function (b) {
+        g || (g = w("div"));
+        b && g.appendChild(b);
+        g.innerHTML = "";
+      },
+      erase: function (b, e) {
+        for (var g = b.length; g--; )
+          if (b[g] === e) {
+            b.splice(g, 1);
+            break;
+          }
+      },
+      error: u,
+      extend: c,
+      extendClass: function (b, e) {
+        var g = function () {};
+        g.prototype = new b();
+        c(g.prototype, e);
+        return g;
+      },
+      find: e,
+      fireEvent: B,
+      getMagnitude: function (b) {
+        return Math.pow(10, Math.floor(Math.log(b) / Math.LN10));
+      },
+      getNestedProperty: function (e, g) {
+        for (e = e.split("."); e.length && h(g); ) {
+          var c = e.shift();
+          if ("undefined" === typeof c || "__proto__" === c) return;
+          g = g[c];
+          if (
+            !h(g) ||
+            "function" === typeof g ||
+            "number" === typeof g.nodeType ||
+            g === b
+          )
+            return;
+        }
+        return g;
+      },
+      getStyle: K,
+      inArray: function (b, e, g) {
+        u(32, !1, void 0, { "Highcharts.inArray": "use Array.indexOf" });
+        return e.indexOf(b, g);
+      },
+      isArray: C,
+      isClass: q,
+      isDOMElement: z,
+      isFunction: function (b) {
+        return "function" === typeof b;
+      },
+      isNumber: m,
+      isObject: I,
+      isString: x,
+      keys: function (b) {
+        u(32, !1, void 0, { "Highcharts.keys": "use Object.keys" });
+        return Object.keys(b);
+      },
+      merge: function () {
+        var b,
+          e = arguments,
+          g = {},
+          c = function (b, e) {
+            "object" !== typeof b && (b = {});
+            r(e, function (J, g) {
+              "__proto__" !== g &&
+                "constructor" !== g &&
+                (!I(J, !0) || q(J) || z(J)
+                  ? (b[g] = e[g])
+                  : (b[g] = c(b[g] || {}, J)));
             });
-    L(a, "Core/Renderer/SVG/SVGRenderer.js", [a["Core/Renderer/HTML/AST.js"], a["Core/Color/Color.js"], a["Core/Globals.js"], a["Core/Color/Palette.js"], a["Core/Renderer/RendererRegistry.js"], a["Core/Renderer/SVG/SVGElement.js"], a["Core/Renderer/SVG/SVGLabel.js"], a["Core/Renderer/SVG/Symbols.js"], a["Core/Renderer/SVG/TextBuilder.js"], a["Core/Utilities.js"]], function (a, u, E, H, x, y, G, B, q, h) {
-        var f = E.charts, c = E.deg2rad, e = E.doc, t = E.isFirefox, m = E.isMS, w = E.isWebKit, n = E.noop, l = E.SVG_NS, J = E.symbolSizes, K = E.win, A = h.addEvent,
-        p = h.attr, d = h.createElement, k = h.css, b = h.defined, g = h.destroyObjectProperties, r = h.extend, F = h.isArray, D = h.isNumber, M = h.isObject, C = h.isString, O = h.merge, v = h.pick, W = h.pInt, Y = h.uniqueKey, ba; E = function () {
-            function z(b, d, g, a, k, r, c) { this.width = this.url = this.style = this.isSVG = this.imgCount = this.height = this.gradients = this.globalAnimation = this.defs = this.chartIndex = this.cacheKeys = this.cache = this.boxWrapper = this.box = this.alignedObjects = void 0; this.init(b, d, g, a, k, r, c) } z.prototype.init = function (b, d, g, a, r, c, z) {
-                var l =
-                    this.createElement("svg").attr({ version: "1.1", "class": "highcharts-root" }), Q = l.element; z || l.css(this.getStyle(a)); b.appendChild(Q); p(b, "dir", "ltr"); -1 === b.innerHTML.indexOf("xmlns") && p(Q, "xmlns", this.SVG_NS); this.isSVG = !0; this.box = Q; this.boxWrapper = l; this.alignedObjects = []; this.url = this.getReferenceURL(); this.createElement("desc").add().element.appendChild(e.createTextNode("Created with Highcharts 9.1.2")); this.defs = this.createElement("defs").add(); this.allowHTML = c; this.forExport = r; this.styledMode =
-                        z; this.gradients = {}; this.cache = {}; this.cacheKeys = []; this.imgCount = 0; this.setSize(d, g, !1); var I; t && b.getBoundingClientRect && (d = function () { k(b, { left: 0, top: 0 }); I = b.getBoundingClientRect(); k(b, { left: Math.ceil(I.left) - I.left + "px", top: Math.ceil(I.top) - I.top + "px" }) }, d(), this.unSubPixelFix = A(K, "resize", d))
-            }; z.prototype.definition = function (b) { return (new a([b])).addToDOM(this.defs.element) }; z.prototype.getReferenceURL = function () {
-                if ((t || w) && e.getElementsByTagName("base").length) {
-                    if (!b(ba)) {
-                        var d = Y(); d = (new a([{
-                            tagName: "svg",
-                            attributes: { width: 8, height: 8 }, children: [{ tagName: "defs", children: [{ tagName: "clipPath", attributes: { id: d }, children: [{ tagName: "rect", attributes: { width: 4, height: 4 } }] }] }, { tagName: "rect", attributes: { id: "hitme", width: 8, height: 8, "clip-path": "url(#" + d + ")", fill: "rgba(0,0,0,0.001)" } }]
-                        }])).addToDOM(e.body); k(d, { position: "fixed", top: 0, left: 0, zIndex: 9E5 }); var g = e.elementFromPoint(6, 6); ba = "hitme" === (g && g.id); e.body.removeChild(d)
-                    } if (ba) return K.location.href.split("#")[0].replace(/<[^>]*>/g, "").replace(/([\('\)])/g,
-                        "\\$1").replace(/ /g, "%20")
-                } return ""
-            }; z.prototype.getStyle = function (b) { return this.style = r({ fontFamily: '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif', fontSize: "12px" }, b) }; z.prototype.setStyle = function (b) { this.boxWrapper.css(this.getStyle(b)) }; z.prototype.isHidden = function () { return !this.boxWrapper.getBBox().width }; z.prototype.destroy = function () {
-                var b = this.defs; this.box = null; this.boxWrapper = this.boxWrapper.destroy(); g(this.gradients || {}); this.gradients = null; b && (this.defs = b.destroy());
-                this.unSubPixelFix && this.unSubPixelFix(); return this.alignedObjects = null
-            }; z.prototype.createElement = function (b) { var d = new this.Element; d.init(this, b); return d }; z.prototype.getRadialAttr = function (b, d) { return { cx: b[0] - b[2] / 2 + (d.cx || 0) * b[2], cy: b[1] - b[2] / 2 + (d.cy || 0) * b[2], r: (d.r || 0) * b[2] } }; z.prototype.buildText = function (b) { (new q(b)).buildSVG() }; z.prototype.getContrast = function (b) { b = u.parse(b).rgba; b[0] *= 1; b[1] *= 1.2; b[2] *= .5; return 459 < b[0] + b[1] + b[2] ? "#000000" : "#FFFFFF" }; z.prototype.button = function (b, d,
-                g, k, c, z, l, e, f, F) {
-                    var I = this.label(b, d, g, f, void 0, void 0, F, void 0, "button"), Q = this.styledMode, P = 0, h = c ? O(c) : {}; b = h && h.style || {}; h = a.filterUserAttributes(h); I.attr(O({ padding: 8, r: 2 }, h)); if (!Q) {
-                        h = O({ fill: H.neutralColor3, stroke: H.neutralColor20, "stroke-width": 1, style: { color: H.neutralColor80, cursor: "pointer", fontWeight: "normal" } }, { style: b }, h); var D = h.style; delete h.style; z = O(h, { fill: H.neutralColor10 }, a.filterUserAttributes(z || {})); var n = z.style; delete z.style; l = O(h, {
-                            fill: H.highlightColor10, style: {
-                                color: H.neutralColor100,
-                                fontWeight: "bold"
-                            }
-                        }, a.filterUserAttributes(l || {})); var C = l.style; delete l.style; e = O(h, { style: { color: H.neutralColor20 } }, a.filterUserAttributes(e || {})); var N = e.style; delete e.style
-                    } A(I.element, m ? "mouseover" : "mouseenter", function () { 3 !== P && I.setState(1) }); A(I.element, m ? "mouseout" : "mouseleave", function () { 3 !== P && I.setState(P) }); I.setState = function (b) {
-                        1 !== b && (I.state = P = b); I.removeClass(/highcharts-button-(normal|hover|pressed|disabled)/).addClass("highcharts-button-" + ["normal", "hover", "pressed", "disabled"][b ||
-                            0]); Q || I.attr([h, z, l, e][b || 0]).css([D, n, C, N][b || 0])
-                    }; Q || I.attr(h).css(r({ cursor: "default" }, D)); return I.on("touchstart", function (b) { return b.stopPropagation() }).on("click", function (b) { 3 !== P && k.call(I, b) })
-            }; z.prototype.crispLine = function (d, g, a) { void 0 === a && (a = "round"); var k = d[0], r = d[1]; b(k[1]) && k[1] === r[1] && (k[1] = r[1] = Math[a](k[1]) - g % 2 / 2); b(k[2]) && k[2] === r[2] && (k[2] = r[2] = Math[a](k[2]) + g % 2 / 2); return d }; z.prototype.path = function (b) { var d = this.styledMode ? {} : { fill: "none" }; F(b) ? d.d = b : M(b) && r(d, b); return this.createElement("path").attr(d) };
-            z.prototype.circle = function (b, d, g) { b = M(b) ? b : "undefined" === typeof b ? {} : { x: b, y: d, r: g }; d = this.createElement("circle"); d.xSetter = d.ySetter = function (b, d, g) { g.setAttribute("c" + d, b) }; return d.attr(b) }; z.prototype.arc = function (b, d, g, a, k, r) { M(b) ? (a = b, d = a.y, g = a.r, b = a.x) : a = { innerR: a, start: k, end: r }; b = this.symbol("arc", b, d, g, g, a); b.r = g; return b }; z.prototype.rect = function (b, d, g, a, k, r) {
-                k = M(b) ? b.r : k; var c = this.createElement("rect"); b = M(b) ? b : "undefined" === typeof b ? {} : {
-                    x: b, y: d, width: Math.max(g, 0), height: Math.max(a,
-                        0)
-                }; this.styledMode || ("undefined" !== typeof r && (b["stroke-width"] = r, b = c.crisp(b)), b.fill = "none"); k && (b.r = k); c.rSetter = function (b, d, g) { c.r = b; p(g, { rx: b, ry: b }) }; c.rGetter = function () { return c.r || 0 }; return c.attr(b)
-            }; z.prototype.setSize = function (b, d, g) { this.width = b; this.height = d; this.boxWrapper.animate({ width: b, height: d }, { step: function () { this.attr({ viewBox: "0 0 " + this.attr("width") + " " + this.attr("height") }) }, duration: v(g, !0) ? void 0 : 0 }); this.alignElements() }; z.prototype.g = function (b) {
-                var d = this.createElement("g");
-                return b ? d.attr({ "class": "highcharts-" + b }) : d
-            }; z.prototype.image = function (b, d, g, a, k, c) {
-                var z = { preserveAspectRatio: "none" }, l = function (b, d) { b.setAttributeNS ? b.setAttributeNS("http://www.w3.org/1999/xlink", "href", d) : b.setAttribute("hc-svg-href", d) }; 1 < arguments.length && r(z, { x: d, y: g, width: a, height: k }); var I = this.createElement("image").attr(z); z = function (d) { l(I.element, b); c.call(I, d) }; if (c) {
-                    l(I.element, "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="); var e = new K.Image; A(e, "load",
-                        z); e.src = b; e.complete && z({})
-                } else l(I.element, b); return I
-            }; z.prototype.symbol = function (g, a, c, z, l, F) {
-                var I = this, Q = /^url\((.*?)\)$/, h = Q.test(g), D = !h && (this.symbols[g] ? g : "circle"), n = D && this.symbols[D], C; if (n) { "number" === typeof a && (C = n.call(this.symbols, Math.round(a || 0), Math.round(c || 0), z || 0, l || 0, F)); var p = this.path(C); I.styledMode || p.attr("fill", "none"); r(p, { symbolName: D || void 0, x: a, y: c, width: z, height: l }); F && r(p, F) } else if (h) {
-                    var N = g.match(Q)[1]; var w = p = this.image(N); w.imgwidth = v(J[N] && J[N].width, F &&
-                        F.width); w.imgheight = v(J[N] && J[N].height, F && F.height); var m = function (b) { return b.attr({ width: b.width, height: b.height }) };["width", "height"].forEach(function (d) { w[d + "Setter"] = function (d, g) { var a = this["img" + g]; this[g] = d; b(a) && (F && "within" === F.backgroundSize && this.width && this.height && (a = Math.round(a * Math.min(this.width / this.imgwidth, this.height / this.imgheight))), this.element && this.element.setAttribute(g, a), this.alignByTranslate || (d = ((this[g] || 0) - a) / 2, this.attr("width" === g ? { translateX: d } : { translateY: d }))) } });
-                    b(a) && w.attr({ x: a, y: c }); w.isImg = !0; b(w.imgwidth) && b(w.imgheight) ? m(w) : (w.attr({ width: 0, height: 0 }), d("img", { onload: function () { var b = f[I.chartIndex]; 0 === this.width && (k(this, { position: "absolute", top: "-999em" }), e.body.appendChild(this)); J[N] = { width: this.width, height: this.height }; w.imgwidth = this.width; w.imgheight = this.height; w.element && m(w); this.parentNode && this.parentNode.removeChild(this); I.imgCount--; if (!I.imgCount && b && !b.hasLoaded) b.onload() }, src: N }), this.imgCount++)
-                } return p
-            }; z.prototype.clipRect =
-                function (b, d, g, a) { var k = Y() + "-", r = this.createElement("clipPath").attr({ id: k }).add(this.defs); b = this.rect(b, d, g, a, 0).add(r); b.id = k; b.clipPath = r; b.count = 0; return b }; z.prototype.text = function (d, g, a, k) {
-                    var r = {}; if (k && (this.allowHTML || !this.forExport)) return this.html(d, g, a); r.x = Math.round(g || 0); a && (r.y = Math.round(a)); b(d) && (r.text = d); d = this.createElement("text").attr(r); k || (d.xSetter = function (b, d, g) {
-                        for (var a = g.getElementsByTagName("tspan"), k = g.getAttribute(d), r = 0, c; r < a.length; r++)c = a[r], c.getAttribute(d) ===
-                            k && c.setAttribute(d, b); g.setAttribute(d, b)
-                    }); return d
-                }; z.prototype.fontMetrics = function (b, d) { b = !this.styledMode && /px/.test(b) || !K.getComputedStyle ? b || d && d.style && d.style.fontSize || this.style && this.style.fontSize : d && y.prototype.getStyle.call(d, "font-size"); b = /px/.test(b) ? W(b) : 12; d = 24 > b ? b + 3 : Math.round(1.2 * b); return { h: d, b: Math.round(.8 * d), f: b } }; z.prototype.rotCorr = function (b, d, g) { var a = b; d && g && (a = Math.max(a * Math.cos(d * c), 4)); return { x: -b / 3 * Math.sin(d * c), y: a } }; z.prototype.pathToSegments = function (b) {
-                    for (var d =
-                        [], g = [], a = { A: 8, C: 7, H: 2, L: 3, M: 3, Q: 5, S: 5, T: 3, V: 2 }, k = 0; k < b.length; k++)C(g[0]) && D(b[k]) && g.length === a[g[0].toUpperCase()] && b.splice(k, 0, g[0].replace("M", "L").replace("m", "l")), "string" === typeof b[k] && (g.length && d.push(g.slice(0)), g.length = 0), g.push(b[k]); d.push(g.slice(0)); return d
-                }; z.prototype.label = function (b, d, g, a, k, r, c, z, l) { return new G(this, b, d, g, a, k, r, c, z, l) }; z.prototype.alignElements = function () { this.alignedObjects.forEach(function (b) { return b.align() }) }; return z
-        }(); r(E.prototype, {
-            Element: y, SVG_NS: l,
-            escapes: { "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }, symbols: B, draw: n
-        }); x.registerRendererType("svg", E, !0); ""; return E
-    }); L(a, "Core/Renderer/HTML/HTMLElement.js", [a["Core/Globals.js"], a["Core/Renderer/SVG/SVGElement.js"], a["Core/Utilities.js"]], function (a, u, E) {
-        var v = this && this.__extends || function () {
-            var a = function (c, e) { a = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (a, c) { a.__proto__ = c } || function (a, c) { for (var l in c) c.hasOwnProperty(l) && (a[l] = c[l]) }; return a(c, e) }; return function (c,
-                e) { function f() { this.constructor = c } a(c, e); c.prototype = null === e ? Object.create(e) : (f.prototype = e.prototype, new f) }
-        }(), x = a.isFirefox, y = a.isMS, G = a.isWebKit, B = a.win, q = E.css, h = E.defined, f = E.extend, c = E.pick, e = E.pInt; return function (a) {
-            function m() { return null !== a && a.apply(this, arguments) || this } v(m, a); m.compose = function (a) { a = a.prototype; var c = m.prototype; a.getSpanCorrection = c.getSpanCorrection; a.htmlCss = c.htmlCss; a.htmlGetBBox = c.htmlGetBBox; a.htmlUpdateTransform = c.htmlUpdateTransform; a.setSpanRotation = c.setSpanRotation };
-            m.prototype.getSpanCorrection = function (a, c, l) { this.xCorr = -a * l; this.yCorr = -c }; m.prototype.htmlCss = function (a) { var e = "SPAN" === this.element.tagName && a && "width" in a, l = c(e && a.width, void 0); if (e) { delete a.width; this.textWidth = l; var h = !0 } a && "ellipsis" === a.textOverflow && (a.whiteSpace = "nowrap", a.overflow = "hidden"); this.styles = f(this.styles, a); q(this.element, a); h && this.htmlUpdateTransform(); return this }; m.prototype.htmlGetBBox = function () {
-                var a = this.element; return {
-                    x: a.offsetLeft, y: a.offsetTop, width: a.offsetWidth,
-                    height: a.offsetHeight
-                }
-            }; m.prototype.htmlUpdateTransform = function () {
-                if (this.added) {
-                    var a = this.renderer, c = this.element, l = this.translateX || 0, f = this.translateY || 0, m = this.x || 0, t = this.y || 0, p = this.textAlign || "left", d = { left: 0, center: .5, right: 1 }[p], k = this.styles; k = k && k.whiteSpace; q(c, { marginLeft: l, marginTop: f }); !a.styledMode && this.shadows && this.shadows.forEach(function (b) { q(b, { marginLeft: l + 1, marginTop: f + 1 }) }); this.inverted && [].forEach.call(c.childNodes, function (b) { a.invertChild(b, c) }); if ("SPAN" === c.tagName) {
-                        var b =
-                            this.rotation, g = this.textWidth && e(this.textWidth), r = [b, p, c.innerHTML, this.textWidth, this.textAlign].join(), F = void 0; (F = g !== this.oldTextWidth) && !(F = g > this.oldTextWidth) && ((F = this.textPxLength) || (q(c, { width: "", whiteSpace: k || "nowrap" }), F = c.offsetWidth), F = F > g); F && (/[ \-]/.test(c.textContent || c.innerText) || "ellipsis" === c.style.textOverflow) ? (q(c, { width: g + "px", display: "block", whiteSpace: k || "normal" }), this.oldTextWidth = g, this.hasBoxWidthChanged = !0) : this.hasBoxWidthChanged = !1; r !== this.cTT && (F = a.fontMetrics(c.style.fontSize,
-                                c).b, !h(b) || b === (this.oldRotation || 0) && p === this.oldAlign || this.setSpanRotation(b, d, F), this.getSpanCorrection(!h(b) && this.textPxLength || c.offsetWidth, F, d, b, p)); q(c, { left: m + (this.xCorr || 0) + "px", top: t + (this.yCorr || 0) + "px" }); this.cTT = r; this.oldRotation = b; this.oldAlign = p
-                    }
-                } else this.alignOnAdd = !0
-            }; m.prototype.setSpanRotation = function (a, c, l) {
-                var e = {}, f = y && !/Edge/.test(B.navigator.userAgent) ? "-ms-transform" : G ? "-webkit-transform" : x ? "MozTransform" : B.opera ? "-o-transform" : void 0; f && (e[f] = e.transform = "rotate(" +
-                    a + "deg)", e[f + (x ? "Origin" : "-origin")] = e.transformOrigin = 100 * c + "% " + l + "px", q(this.element, e))
-            }; return m
-        }(u)
-    }); L(a, "Core/Renderer/HTML/HTMLRenderer.js", [a["Core/Renderer/HTML/AST.js"], a["Core/Renderer/SVG/SVGElement.js"], a["Core/Renderer/SVG/SVGRenderer.js"], a["Core/Utilities.js"]], function (a, u, E, H) {
-        var v = this && this.__extends || function () {
-            var a = function (f, c) {
-                a = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (a, c) { a.__proto__ = c } || function (a, c) { for (var e in c) c.hasOwnProperty(e) && (a[e] = c[e]) };
-                return a(f, c)
-            }; return function (f, c) { function e() { this.constructor = f } a(f, c); f.prototype = null === c ? Object.create(c) : (e.prototype = c.prototype, new e) }
-        }(), y = H.attr, G = H.createElement, B = H.extend, q = H.pick; return function (h) {
-            function f() { return null !== h && h.apply(this, arguments) || this } v(f, h); f.compose = function (a) { a.prototype.html = f.prototype.html }; f.prototype.html = function (c, e, f) {
-                var h = this.createElement("span"), w = h.element, n = h.renderer, l = n.isSVG, t = function (a, c) {
-                    ["opacity", "visibility"].forEach(function (l) {
-                        a[l +
-                        "Setter"] = function (d, k, b) { var g = a.div ? a.div.style : c; u.prototype[l + "Setter"].call(this, d, k, b); g && (g[k] = d) }
-                    }); a.addedSetters = !0
-                }; h.textSetter = function (c) { c !== this.textStr && (delete this.bBox, delete this.oldTextWidth, a.setElementHTML(this.element, q(c, "")), this.textStr = c, h.doTransform = !0) }; l && t(h, h.element.style); h.xSetter = h.ySetter = h.alignSetter = h.rotationSetter = function (a, c) { "align" === c ? h.alignValue = h.textAlign = a : h[c] = a; h.doTransform = !0 }; h.afterSetters = function () {
-                    this.doTransform && (this.htmlUpdateTransform(),
-                        this.doTransform = !1)
-                }; h.attr({ text: c, x: Math.round(e), y: Math.round(f) }).css({ position: "absolute" }); n.styledMode || h.css({ fontFamily: this.style.fontFamily, fontSize: this.style.fontSize }); w.style.whiteSpace = "nowrap"; h.css = h.htmlCss; l && (h.add = function (a) {
-                    var c = n.box.parentNode, l = []; if (this.parentGroup = a) {
-                        var d = a.div; if (!d) {
-                            for (; a;)l.push(a), a = a.parentGroup; l.reverse().forEach(function (a) {
-                                function b(b, d) { a[d] = b; "translateX" === d ? e.left = b + "px" : e.top = b + "px"; a.doTransform = !0 } var g = y(a.element, "class"), k = a.styles ||
-                                    {}; d = a.div = a.div || G("div", g ? { className: g } : void 0, { position: "absolute", left: (a.translateX || 0) + "px", top: (a.translateY || 0) + "px", display: a.display, opacity: a.opacity, cursor: k.cursor, pointerEvents: k.pointerEvents }, d || c); var e = d.style; B(a, { classSetter: function (b) { return function (d) { this.element.setAttribute("class", d); b.className = d } }(d), on: function () { l[0].div && h.on.apply({ element: l[0].div, onEvents: h.onEvents }, arguments); return a }, translateXSetter: b, translateYSetter: b }); a.addedSetters || t(a)
-                            })
-                        }
-                    } else d = c; d.appendChild(w);
-                    h.added = !0; h.alignOnAdd && h.htmlUpdateTransform(); return h
-                }); return h
-            }; return f
-        }(E)
-    }); L(a, "Core/Foundation.js", [a["Core/Utilities.js"]], function (a) { var v = a.addEvent, E = a.isFunction, H = a.objectEach, x = a.removeEvent; return { registerEventOptions: function (a, u) { a.eventOptions = a.eventOptions || {}; H(u.events, function (u, q) { E(u) && a.eventOptions[q] !== u && (E(a.eventOptions[q]) && x(a, q, a.eventOptions[q]), a.eventOptions[q] = u, v(a, q, u)) }) } } }); L(a, "Core/Axis/AxisDefaults.js", [a["Core/Color/Palette.js"]], function (a) {
-        var v;
-        (function (v) {
-            v.defaultXAxisOptions = {
-                alignTicks: !0, allowDecimals: void 0, panningEnabled: !0, zIndex: 2, zoomEnabled: !0, dateTimeLabelFormats: { millisecond: { main: "%H:%M:%S.%L", range: !1 }, second: { main: "%H:%M:%S", range: !1 }, minute: { main: "%H:%M", range: !1 }, hour: { main: "%H:%M", range: !1 }, day: { main: "%e. %b" }, week: { main: "%e. %b" }, month: { main: "%b '%y" }, year: { main: "%Y" } }, endOnTick: !1, gridLineDashStyle: "Solid", gridZIndex: 1, labels: {
-                    autoRotation: void 0, autoRotationLimit: 80, distance: void 0, enabled: !0, indentation: 10, overflow: "justify",
-                    padding: 5, reserveSpace: void 0, rotation: void 0, staggerLines: 0, step: 0, useHTML: !1, x: 0, zIndex: 7, style: { color: a.neutralColor60, cursor: "default", fontSize: "11px" }
-                }, maxPadding: .01, minorGridLineDashStyle: "Solid", minorTickLength: 2, minorTickPosition: "outside", minPadding: .01, offset: void 0, opposite: !1, reversed: void 0, reversedStacks: !1, showEmpty: !0, showFirstLabel: !0, showLastLabel: !0, startOfWeek: 1, startOnTick: !1, tickLength: 10, tickPixelInterval: 100, tickmarkPlacement: "between", tickPosition: "outside", title: {
-                    align: "middle",
-                    rotation: 0, useHTML: !1, x: 0, y: 0, style: { color: a.neutralColor60 }
-                }, type: "linear", uniqueNames: !0, visible: !0, minorGridLineColor: a.neutralColor5, minorGridLineWidth: 1, minorTickColor: a.neutralColor40, lineColor: a.highlightColor20, lineWidth: 1, gridLineColor: a.neutralColor10, gridLineWidth: void 0, tickColor: a.highlightColor20
-            }; v.defaultYAxisOptions = {
-                reversedStacks: !0, endOnTick: !0, maxPadding: .05, minPadding: .05, tickPixelInterval: 72, showLastLabel: !0, labels: { x: -8 }, startOnTick: !0, title: { rotation: 270, text: "Values" }, stackLabels: {
-                    animation: {},
-                    allowOverlap: !1, enabled: !1, crop: !0, overflow: "justify", formatter: function () { var a = this.axis.chart.numberFormatter; return a(this.total, -1) }, style: { color: a.neutralColor100, fontSize: "11px", fontWeight: "bold", textOutline: "1px contrast" }
-                }, gridLineWidth: 1, lineWidth: 0
-            }; v.defaultLeftAxisOptions = { labels: { x: -15 }, title: { rotation: 270 } }; v.defaultRightAxisOptions = { labels: { x: 15 }, title: { rotation: 90 } }; v.defaultBottomAxisOptions = { labels: { autoRotation: [-45], x: 0 }, margin: 15, title: { rotation: 0 } }; v.defaultTopAxisOptions = {
-                labels: {
-                    autoRotation: [-45],
-                    x: 0
-                }, margin: 15, title: { rotation: 0 }
-            }
-        })(v || (v = {})); return v
-    }); L(a, "Core/Axis/Tick.js", [a["Core/FormatUtilities.js"], a["Core/Globals.js"], a["Core/Utilities.js"]], function (a, u, E) {
-        var v = u.deg2rad, x = E.clamp, y = E.correctFloat, G = E.defined, B = E.destroyObjectProperties, q = E.extend, h = E.fireEvent, f = E.isNumber, c = E.merge, e = E.objectEach, t = E.pick; u = function () {
-            function m(a, c, l, e, f) {
-                this.isNewLabel = this.isNew = !0; this.axis = a; this.pos = c; this.type = l || ""; this.parameters = f || {}; this.tickmarkOffset = this.parameters.tickmarkOffset;
-                this.options = this.parameters.options; h(this, "init"); l || e || this.addLabel()
-            } m.prototype.addLabel = function () {
-                var c = this, e = c.axis, l = e.options, m = e.chart, K = e.categories, A = e.logarithmic, p = e.names, d = c.pos, k = t(c.options && c.options.labels, l.labels), b = e.tickPositions, g = d === b[0], r = d === b[b.length - 1], F = (!k.step || 1 === k.step) && 1 === e.tickInterval; b = b.info; var D = c.label, M; K = this.parameters.category || (K ? t(K[d], p[d], d) : d); A && f(K) && (K = y(A.lin2log(K))); if (e.dateTime && b) {
-                    var C = m.time.resolveDTLFormat(l.dateTimeLabelFormats[!l.grid &&
-                        b.higherRanks[d] || b.unitName]); var O = C.main
-                } c.isFirst = g; c.isLast = r; var v = { axis: e, chart: m, dateTimeLabelFormat: O, isFirst: g, isLast: r, pos: d, tick: c, tickPositionInfo: b, value: K }; h(this, "labelFormat", v); var W = function (b) { return k.formatter ? k.formatter.call(b, b) : k.format ? (b.text = e.defaultLabelFormatter.call(b), a.format(k.format, b, m)) : e.defaultLabelFormatter.call(b, b) }; l = W.call(v, v); var u = C && C.list; c.shortenLabel = u ? function () {
-                    for (M = 0; M < u.length; M++)if (q(v, { dateTimeLabelFormat: u[M] }), D.attr({ text: W.call(v, v) }),
-                        D.getBBox().width < e.getSlotWidth(c) - 2 * k.padding) return; D.attr({ text: "" })
-                } : void 0; F && e._addedPlotLB && c.moveLabel(l, k); G(D) || c.movedLabel ? D && D.textStr !== l && !F && (!D.textWidth || k.style.width || D.styles.width || D.css({ width: null }), D.attr({ text: l }), D.textPxLength = D.getBBox().width) : (c.label = D = c.createLabel({ x: 0, y: 0 }, l, k), c.rotation = 0)
-            }; m.prototype.createLabel = function (a, e, l) {
-                var f = this.axis, h = f.chart; if (a = G(e) && l.enabled ? h.renderer.text(e, a.x, a.y, l.useHTML).add(f.labelGroup) : null) h.styledMode || a.css(c(l.style)),
-                    a.textPxLength = a.getBBox().width; return a
-            }; m.prototype.destroy = function () { B(this, this.axis) }; m.prototype.getPosition = function (a, c, l, e) { var f = this.axis, n = f.chart, p = e && n.oldChartHeight || n.chartHeight; a = { x: a ? y(f.translate(c + l, null, null, e) + f.transB) : f.left + f.offset + (f.opposite ? (e && n.oldChartWidth || n.chartWidth) - f.right - f.left : 0), y: a ? p - f.bottom + f.offset - (f.opposite ? f.height : 0) : y(p - f.translate(c + l, null, null, e) - f.transB) }; a.y = x(a.y, -1E5, 1E5); h(this, "afterGetPosition", { pos: a }); return a }; m.prototype.getLabelPosition =
-                function (a, c, l, e, f, m, p, d) {
-                    var k = this.axis, b = k.transA, g = k.isLinked && k.linkedParent ? k.linkedParent.reversed : k.reversed, r = k.staggerLines, F = k.tickRotCorr || { x: 0, y: 0 }, D = e || k.reserveSpaceDefault ? 0 : -k.labelOffset * ("center" === k.labelAlign ? .5 : 1), n = {}, C = f.y; G(C) || (C = 0 === k.side ? l.rotation ? -8 : -l.getBBox().height : 2 === k.side ? F.y + 8 : Math.cos(l.rotation * v) * (F.y - l.getBBox(!1, 0).height / 2)); a = a + f.x + D + F.x - (m && e ? m * b * (g ? -1 : 1) : 0); c = c + C - (m && !e ? m * b * (g ? 1 : -1) : 0); r && (l = p / (d || 1) % r, k.opposite && (l = r - l - 1), c += k.labelOffset / r * l); n.x =
-                        a; n.y = Math.round(c); h(this, "afterGetLabelPosition", { pos: n, tickmarkOffset: m, index: p }); return n
-                }; m.prototype.getLabelSize = function () { return this.label ? this.label.getBBox()[this.axis.horiz ? "height" : "width"] : 0 }; m.prototype.getMarkPath = function (a, c, l, e, f, h) { return h.crispLine([["M", a, c], ["L", a + (f ? 0 : -l), c + (f ? l : 0)]], e) }; m.prototype.handleOverflow = function (a) {
-                    var c = this.axis, l = c.options.labels, e = a.x, f = c.chart.chartWidth, h = c.chart.spacing, p = t(c.labelLeft, Math.min(c.pos, h[3])); h = t(c.labelRight, Math.max(c.isRadial ?
-                        0 : c.pos + c.len, f - h[1])); var d = this.label, k = this.rotation, b = { left: 0, center: .5, right: 1 }[c.labelAlign || d.attr("align")], g = d.getBBox().width, r = c.getSlotWidth(this), F = {}, D = r, M = 1, C; if (k || "justify" !== l.overflow) 0 > k && e - b * g < p ? C = Math.round(e / Math.cos(k * v) - p) : 0 < k && e + b * g > h && (C = Math.round((f - e) / Math.cos(k * v))); else if (f = e + (1 - b) * g, e - b * g < p ? D = a.x + D * (1 - b) - p : f > h && (D = h - a.x + D * b, M = -1), D = Math.min(r, D), D < r && "center" === c.labelAlign && (a.x += M * (r - D - b * (r - Math.min(g, D)))), g > D || c.autoRotation && (d.styles || {}).width) C = D; C && (this.shortenLabel ?
-                            this.shortenLabel() : (F.width = Math.floor(C) + "px", (l.style || {}).textOverflow || (F.textOverflow = "ellipsis"), d.css(F)))
-                }; m.prototype.moveLabel = function (a, c) {
-                    var l = this, f = l.label, h = l.axis, n = h.reversed, p = !1; f && f.textStr === a ? (l.movedLabel = f, p = !0, delete l.label) : e(h.ticks, function (d) { p || d.isNew || d === l || !d.label || d.label.textStr !== a || (l.movedLabel = d.label, p = !0, d.labelPos = l.movedLabel.xy, delete d.label) }); if (!p && (l.labelPos || f)) {
-                        var d = l.labelPos || f.xy; f = h.horiz ? n ? 0 : h.width + h.left : d.x; h = h.horiz ? d.y : n ? h.width +
-                            h.left : 0; l.movedLabel = l.createLabel({ x: f, y: h }, a, c); l.movedLabel && l.movedLabel.attr({ opacity: 0 })
-                    }
-                }; m.prototype.render = function (a, c, l) { var e = this.axis, f = e.horiz, n = this.pos, p = t(this.tickmarkOffset, e.tickmarkOffset); n = this.getPosition(f, n, p, c); p = n.x; var d = n.y; e = f && p === e.pos + e.len || !f && d === e.pos ? -1 : 1; f = t(l, this.label && this.label.newOpacity, 1); l = t(l, 1); this.isActive = !0; this.renderGridLine(c, l, e); this.renderMark(n, l, e); this.renderLabel(n, c, f, a); this.isNew = !1; h(this, "afterRender") }; m.prototype.renderGridLine =
-                    function (a, c, e) {
-                        var l = this.axis, f = l.options, h = {}, p = this.pos, d = this.type, k = t(this.tickmarkOffset, l.tickmarkOffset), b = l.chart.renderer, g = this.gridLine, r = f.gridLineWidth, F = f.gridLineColor, D = f.gridLineDashStyle; "minor" === this.type && (r = f.minorGridLineWidth, F = f.minorGridLineColor, D = f.minorGridLineDashStyle); g || (l.chart.styledMode || (h.stroke = F, h["stroke-width"] = r || 0, h.dashstyle = D), d || (h.zIndex = 1), a && (c = 0), this.gridLine = g = b.path().attr(h).addClass("highcharts-" + (d ? d + "-" : "") + "grid-line").add(l.gridGroup));
-                        if (g && (e = l.getPlotLinePath({ value: p + k, lineWidth: g.strokeWidth() * e, force: "pass", old: a }))) g[a || this.isNew ? "attr" : "animate"]({ d: e, opacity: c })
-                    }; m.prototype.renderMark = function (a, c, e) {
-                        var l = this.axis, f = l.options, h = l.chart.renderer, p = this.type, d = l.tickSize(p ? p + "Tick" : "tick"), k = a.x; a = a.y; var b = t(f["minor" !== p ? "tickWidth" : "minorTickWidth"], !p && l.isXAxis ? 1 : 0); f = f["minor" !== p ? "tickColor" : "minorTickColor"]; var g = this.mark, r = !g; d && (l.opposite && (d[0] = -d[0]), g || (this.mark = g = h.path().addClass("highcharts-" + (p ? p +
-                            "-" : "") + "tick").add(l.axisGroup), l.chart.styledMode || g.attr({ stroke: f, "stroke-width": b })), g[r ? "attr" : "animate"]({ d: this.getMarkPath(k, a, d[0], g.strokeWidth() * e, l.horiz, h), opacity: c }))
-                    }; m.prototype.renderLabel = function (a, c, e, h) {
-                        var l = this.axis, n = l.horiz, p = l.options, d = this.label, k = p.labels, b = k.step; l = t(this.tickmarkOffset, l.tickmarkOffset); var g = a.x; a = a.y; var r = !0; d && f(g) && (d.xy = a = this.getLabelPosition(g, a, d, n, k, l, h, b), this.isFirst && !this.isLast && !p.showFirstLabel || this.isLast && !this.isFirst && !p.showLastLabel ?
-                            r = !1 : !n || k.step || k.rotation || c || 0 === e || this.handleOverflow(a), b && h % b && (r = !1), r && f(a.y) ? (a.opacity = e, d[this.isNewLabel ? "attr" : "animate"](a), this.isNewLabel = !1) : (d.attr("y", -9999), this.isNewLabel = !0))
-                    }; m.prototype.replaceMovedLabel = function () { var a = this.label, c = this.axis, e = c.reversed; if (a && !this.isNew) { var f = c.horiz ? e ? c.left : c.width + c.left : a.xy.x; e = c.horiz ? a.xy.y : e ? c.width + c.top : c.top; a.animate({ x: f, y: e, opacity: 0 }, void 0, a.destroy); delete this.label } c.isDirty = !0; this.label = this.movedLabel; delete this.movedLabel };
-            return m
-        }(); ""; return u
-    }); L(a, "Core/Axis/Axis.js", [a["Core/Animation/AnimationUtilities.js"], a["Core/Color/Color.js"], a["Core/Color/Palette.js"], a["Core/DefaultOptions.js"], a["Core/Foundation.js"], a["Core/Globals.js"], a["Core/Utilities.js"], a["Core/Axis/AxisDefaults.js"], a["Core/Axis/Tick.js"]], function (a, u, E, H, x, y, G, B, q) {
-        var h = a.animObject, f = x.registerEventOptions, c = y.deg2rad, e = H.defaultOptions, t = G.arrayMax, m = G.arrayMin, w = G.clamp, n = G.correctFloat, l = G.defined, J = G.destroyObjectProperties, v = G.erase,
-        A = G.error, p = G.extend, d = G.fireEvent, k = G.getMagnitude, b = G.isArray, g = G.isNumber, r = G.isString, F = G.merge, D = G.normalizeTickInterval, M = G.objectEach, C = G.pick, O = G.relativeLength, S = G.removeEvent, W = G.splat, Y = G.syncTimeout; a = function () {
-            function a(b, a) {
-                this.zoomEnabled = this.width = this.visible = this.userOptions = this.translationSlope = this.transB = this.transA = this.top = this.ticks = this.tickRotCorr = this.tickPositions = this.tickmarkOffset = this.tickInterval = this.tickAmount = this.side = this.series = this.right = this.positiveValuesOnly =
-                    this.pos = this.pointRangePadding = this.pointRange = this.plotLinesAndBandsGroups = this.plotLinesAndBands = this.paddedTicks = this.overlap = this.options = this.offset = this.names = this.minPixelPadding = this.minorTicks = this.minorTickInterval = this.min = this.maxLabelLength = this.max = this.len = this.left = this.labelFormatter = this.labelEdge = this.isLinked = this.height = this.hasVisibleSeries = this.hasNames = this.eventOptions = this.coll = this.closestPointRange = this.chart = this.categories = this.bottom = this.alternateBands = void 0; this.init(b,
-                        a)
-            } a.prototype.init = function (b, a) {
-                var c = a.isX; this.chart = b; this.horiz = b.inverted && !this.isZAxis ? !c : c; this.isXAxis = c; this.coll = this.coll || (c ? "xAxis" : "yAxis"); d(this, "init", { userOptions: a }); this.opposite = C(a.opposite, this.opposite); this.side = C(a.side, this.side, this.horiz ? this.opposite ? 0 : 2 : this.opposite ? 1 : 3); this.setOptions(a); var k = this.options, r = k.labels, e = k.type; this.userOptions = a; this.minPixelPadding = 0; this.reversed = C(k.reversed, this.reversed); this.visible = k.visible; this.zoomEnabled = k.zoomEnabled;
-                this.hasNames = "category" === e || !0 === k.categories; this.categories = k.categories || this.hasNames; this.names || (this.names = [], this.names.keys = {}); this.plotLinesAndBandsGroups = {}; this.positiveValuesOnly = !!this.logarithmic; this.isLinked = l(k.linkedTo); this.ticks = {}; this.labelEdge = []; this.minorTicks = {}; this.plotLinesAndBands = []; this.alternateBands = {}; this.len = 0; this.minRange = this.userMinRange = k.minRange || k.maxZoom; this.range = k.range; this.offset = k.offset || 0; this.min = this.max = null; a = C(k.crosshair, W(b.options.tooltip.crosshairs)[c ?
-                    0 : 1]); this.crosshair = !0 === a ? {} : a; -1 === b.axes.indexOf(this) && (c ? b.axes.splice(b.xAxis.length, 0, this) : b.axes.push(this), b[this.coll].push(this)); this.series = this.series || []; b.inverted && !this.isZAxis && c && "undefined" === typeof this.reversed && (this.reversed = !0); this.labelRotation = g(r.rotation) ? r.rotation : void 0; f(this, k); d(this, "afterInit")
-            }; a.prototype.setOptions = function (b) {
-                this.options = F(B.defaultXAxisOptions, "yAxis" === this.coll && B.defaultYAxisOptions, [B.defaultTopAxisOptions, B.defaultRightAxisOptions,
-                B.defaultBottomAxisOptions, B.defaultLeftAxisOptions][this.side], F(e[this.coll], b)); d(this, "afterSetOptions", { userOptions: b })
-            }; a.prototype.defaultLabelFormatter = function (b) {
-                var a = this.axis; b = this.chart.numberFormatter; var d = g(this.value) ? this.value : NaN, c = a.chart.time, k = this.dateTimeLabelFormat, r = e.lang, l = r.numericSymbols; r = r.numericSymbolMagnitude || 1E3; var z = a.logarithmic ? Math.abs(d) : a.tickInterval, f = l && l.length; if (a.categories) var h = "" + this.value; else if (k) h = c.dateFormat(k, d); else if (f && 1E3 <= z) for (; f-- &&
-                    "undefined" === typeof h;)a = Math.pow(r, f + 1), z >= a && 0 === 10 * d % a && null !== l[f] && 0 !== d && (h = b(d / a, -1) + l[f]); "undefined" === typeof h && (h = 1E4 <= Math.abs(d) ? b(d, -1) : b(d, -1, void 0, "")); return h
-            }; a.prototype.getSeriesExtremes = function () {
-                var b = this, a = b.chart, k; d(this, "getSeriesExtremes", null, function () {
-                    b.hasVisibleSeries = !1; b.dataMin = b.dataMax = b.threshold = null; b.softThreshold = !b.isXAxis; b.stacking && b.stacking.buildStacks(); b.series.forEach(function (d) {
-                        if (d.visible || !a.options.chart.ignoreHiddenSeries) {
-                            var c = d.options,
-                            r = c.threshold; b.hasVisibleSeries = !0; b.positiveValuesOnly && 0 >= r && (r = null); if (b.isXAxis) { if (c = d.xData, c.length) { c = b.logarithmic ? c.filter(b.validatePositiveValue) : c; k = d.getXExtremes(c); var e = k.min; var z = k.max; g(e) || e instanceof Date || (c = c.filter(g), k = d.getXExtremes(c), e = k.min, z = k.max); c.length && (b.dataMin = Math.min(C(b.dataMin, e), e), b.dataMax = Math.max(C(b.dataMax, z), z)) } } else if (d = d.applyExtremes(), g(d.dataMin) && (e = d.dataMin, b.dataMin = Math.min(C(b.dataMin, e), e)), g(d.dataMax) && (z = d.dataMax, b.dataMax = Math.max(C(b.dataMax,
-                                z), z)), l(r) && (b.threshold = r), !c.softThreshold || b.positiveValuesOnly) b.softThreshold = !1
-                        }
-                    })
-                }); d(this, "afterGetSeriesExtremes")
-            }; a.prototype.translate = function (b, a, d, c, k, r) {
-                var e = this.linkedParent || this, l = c && e.old ? e.old.min : e.min, z = e.minPixelPadding; k = (e.isOrdinal || e.brokenAxis && e.brokenAxis.hasBreaks || e.logarithmic && k) && e.lin2val; var f = 1, I = 0; c = c && e.old ? e.old.transA : e.transA; c || (c = e.transA); d && (f *= -1, I = e.len); e.reversed && (f *= -1, I -= f * (e.sector || e.len)); a ? (b = (b * f + I - z) / c + l, k && (b = e.lin2val(b))) : (k && (b = e.val2lin(b)),
-                    b = g(l) ? f * (b - l) * c + I + f * z + (g(r) ? c * r : 0) : void 0); return b
-            }; a.prototype.toPixels = function (b, a) { return this.translate(b, !1, !this.horiz, null, !0) + (a ? 0 : this.pos) }; a.prototype.toValue = function (b, a) { return this.translate(b - (a ? 0 : this.pos), !0, !this.horiz, null, !0) }; a.prototype.getPlotLinePath = function (b) {
-                function a(b, a, d) { if ("pass" !== M && b < a || b > d) M ? b = w(b, a, d) : Z = !0; return b } var c = this, k = c.chart, r = c.left, e = c.top, l = b.old, f = b.value, z = b.lineWidth, h = l && k.oldChartHeight || k.chartHeight, F = l && k.oldChartWidth || k.chartWidth,
-                    D = c.transB, p = b.translatedValue, M = b.force, n, m, t, q, Z; b = { value: f, lineWidth: z, old: l, force: M, acrossPanes: b.acrossPanes, translatedValue: p }; d(this, "getPlotLinePath", b, function (b) { p = C(p, c.translate(f, null, null, l)); p = w(p, -1E5, 1E5); n = t = Math.round(p + D); m = q = Math.round(h - p - D); g(p) ? c.horiz ? (m = e, q = h - c.bottom, n = t = a(n, r, r + c.width)) : (n = r, t = F - c.right, m = q = a(m, e, e + c.height)) : (Z = !0, M = !1); b.path = Z && !M ? null : k.renderer.crispLine([["M", n, m], ["L", t, q]], z || 1) }); return b.path
-            }; a.prototype.getLinearTickPositions = function (b, a,
-                d) { var g = n(Math.floor(a / b) * b); d = n(Math.ceil(d / b) * b); var c = [], k; n(g + b) === g && (k = 20); if (this.single) return [a]; for (a = g; a <= d;) { c.push(a); a = n(a + b, k); if (a === r) break; var r = a } return c }; a.prototype.getMinorTickInterval = function () { var b = this.options; return !0 === b.minorTicks ? C(b.minorTickInterval, "auto") : !1 === b.minorTicks ? null : b.minorTickInterval }; a.prototype.getMinorTickPositions = function () {
-                    var b = this.options, a = this.tickPositions, d = this.minorTickInterval, g = this.pointRangePadding || 0, c = this.min - g; g = this.max + g;
-                    var k = g - c, r = []; if (k && k / d < this.len / 3) { var e = this.logarithmic; if (e) this.paddedTicks.forEach(function (b, a, g) { a && r.push.apply(r, e.getLogTickPositions(d, g[a - 1], g[a], !0)) }); else if (this.dateTime && "auto" === this.getMinorTickInterval()) r = r.concat(this.getTimeTicks(this.dateTime.normalizeTimeTickInterval(d), c, g, b.startOfWeek)); else for (b = c + (a[0] - c) % d; b <= g && b !== r[0]; b += d)r.push(b) } 0 !== r.length && this.trimTicks(r); return r
-                }; a.prototype.adjustForMinRange = function () {
-                    var b = this.options, a = this.logarithmic, d = this.min,
-                    g = this.max, c = 0, k, r, e, f; this.isXAxis && "undefined" === typeof this.minRange && !a && (l(b.min) || l(b.max) ? this.minRange = null : (this.series.forEach(function (b) { e = b.xData; f = b.xIncrement ? 1 : e.length - 1; if (1 < e.length) for (k = f; 0 < k; k--)if (r = e[k] - e[k - 1], !c || r < c) c = r }), this.minRange = Math.min(5 * c, this.dataMax - this.dataMin))); if (g - d < this.minRange) {
-                        var h = this.dataMax - this.dataMin >= this.minRange; var F = this.minRange; var D = (F - g + d) / 2; D = [d - D, C(b.min, d - D)]; h && (D[2] = this.logarithmic ? this.logarithmic.log2lin(this.dataMin) : this.dataMin);
-                        d = t(D); g = [d + F, C(b.max, d + F)]; h && (g[2] = a ? a.log2lin(this.dataMax) : this.dataMax); g = m(g); g - d < F && (D[0] = g - F, D[1] = C(b.min, g - F), d = t(D))
-                    } this.min = d; this.max = g
-                }; a.prototype.getClosest = function () { var b; this.categories ? b = 1 : this.series.forEach(function (a) { var d = a.closestPointRange, g = a.visible || !a.chart.options.chart.ignoreHiddenSeries; !a.noSharedTooltip && l(d) && g && (b = l(b) ? Math.min(b, d) : d) }); return b }; a.prototype.nameToX = function (a) {
-                    var d = b(this.categories), g = d ? this.categories : this.names, c = a.options.x; a.series.requireSorting =
-                        !1; l(c) || (c = this.options.uniqueNames ? d ? g.indexOf(a.name) : C(g.keys[a.name], -1) : a.series.autoIncrement()); if (-1 === c) { if (!d) var k = g.length } else k = c; "undefined" !== typeof k && (this.names[k] = a.name, this.names.keys[a.name] = k); return k
-                }; a.prototype.updateNames = function () {
-                    var b = this, a = this.names; 0 < a.length && (Object.keys(a.keys).forEach(function (b) { delete a.keys[b] }), a.length = 0, this.minRange = this.userMinRange, (this.series || []).forEach(function (a) {
-                        a.xIncrement = null; if (!a.points || a.isDirtyData) b.max = Math.max(b.max,
-                            a.xData.length - 1), a.processData(), a.generatePoints(); a.data.forEach(function (d, g) { if (d && d.options && "undefined" !== typeof d.name) { var c = b.nameToX(d); "undefined" !== typeof c && c !== d.x && (d.x = c, a.xData[g] = c) } })
-                    }))
-                }; a.prototype.setAxisTranslation = function () {
-                    var b = this, a = b.max - b.min, g = b.linkedParent, c = !!b.categories, k = b.isXAxis, e = b.axisPointRange || 0, l = 0, f = 0, h = b.transA; if (k || c || e) {
-                        var F = b.getClosest(); g ? (l = g.minPointOffset, f = g.pointRangePadding) : b.series.forEach(function (a) {
-                            var d = c ? 1 : k ? C(a.options.pointRange,
-                                F, 0) : b.axisPointRange || 0, g = a.options.pointPlacement; e = Math.max(e, d); if (!b.single || c) a = a.is("xrange") ? !k : k, l = Math.max(l, a && r(g) ? 0 : d / 2), f = Math.max(f, a && "on" === g ? 0 : d)
-                        }); g = b.ordinal && b.ordinal.slope && F ? b.ordinal.slope / F : 1; b.minPointOffset = l *= g; b.pointRangePadding = f *= g; b.pointRange = Math.min(e, b.single && c ? 1 : a); k && (b.closestPointRange = F)
-                    } b.translationSlope = b.transA = h = b.staticScale || b.len / (a + f || 1); b.transB = b.horiz ? b.left : b.bottom; b.minPixelPadding = h * l; d(this, "afterSetAxisTranslation")
-                }; a.prototype.minFromRange =
-                    function () { return this.max - this.range }; a.prototype.setTickInterval = function (b) {
-                        var a = this, c = a.chart, r = a.logarithmic, e = a.options, f = a.isXAxis, h = a.isLinked, F = e.tickPixelInterval, z = a.categories, p = a.softThreshold, M = e.maxPadding, m = e.minPadding, t = e.tickInterval, q = g(a.threshold) ? a.threshold : null; a.dateTime || z || h || this.getTickAmount(); var w = C(a.userMin, e.min); var O = C(a.userMax, e.max); if (h) {
-                            a.linkedParent = c[a.coll][e.linkedTo]; var J = a.linkedParent.getExtremes(); a.min = C(J.min, J.dataMin); a.max = C(J.max, J.dataMax);
-                            e.type !== a.linkedParent.options.type && A(11, 1, c)
-                        } else { if (p && l(q)) if (a.dataMin >= q) J = q, m = 0; else if (a.dataMax <= q) { var v = q; M = 0 } a.min = C(w, J, a.dataMin); a.max = C(O, v, a.dataMax) } r && (a.positiveValuesOnly && !b && 0 >= Math.min(a.min, C(a.dataMin, a.min)) && A(10, 1, c), a.min = n(r.log2lin(a.min), 16), a.max = n(r.log2lin(a.max), 16)); a.range && l(a.max) && (a.userMin = a.min = w = Math.max(a.dataMin, a.minFromRange()), a.userMax = O = a.max, a.range = null); d(a, "foundExtremes"); a.beforePadding && a.beforePadding(); a.adjustForMinRange(); !(z || a.axisPointRange ||
-                            a.stacking && a.stacking.usePercentage || h) && l(a.min) && l(a.max) && (c = a.max - a.min) && (!l(w) && m && (a.min -= c * m), !l(O) && M && (a.max += c * M)); g(a.userMin) || (g(e.softMin) && e.softMin < a.min && (a.min = w = e.softMin), g(e.floor) && (a.min = Math.max(a.min, e.floor))); g(a.userMax) || (g(e.softMax) && e.softMax > a.max && (a.max = O = e.softMax), g(e.ceiling) && (a.max = Math.min(a.max, e.ceiling))); p && l(a.dataMin) && (q = q || 0, !l(w) && a.min < q && a.dataMin >= q ? a.min = a.options.minRange ? Math.min(q, a.max - a.minRange) : q : !l(O) && a.max > q && a.dataMax <= q && (a.max = a.options.minRange ?
-                                Math.max(q, a.min + a.minRange) : q)); g(a.min) && g(a.max) && !this.chart.polar && a.min > a.max && (l(a.options.min) ? a.max = a.min : l(a.options.max) && (a.min = a.max)); a.tickInterval = a.min === a.max || "undefined" === typeof a.min || "undefined" === typeof a.max ? 1 : h && a.linkedParent && !t && F === a.linkedParent.options.tickPixelInterval ? t = a.linkedParent.tickInterval : C(t, this.tickAmount ? (a.max - a.min) / Math.max(this.tickAmount - 1, 1) : void 0, z ? 1 : (a.max - a.min) * F / Math.max(a.len, F)); f && !b && a.series.forEach(function (b) {
-                                    b.processData(a.min !==
-                                        (a.old && a.old.min) || a.max !== (a.old && a.old.max))
-                                }); a.setAxisTranslation(); d(this, "initialAxisTranslation"); a.pointRange && !t && (a.tickInterval = Math.max(a.pointRange, a.tickInterval)); b = C(e.minTickInterval, a.dateTime && !a.series.some(function (b) { return b.noSharedTooltip }) ? a.closestPointRange : 0); !t && a.tickInterval < b && (a.tickInterval = b); a.dateTime || a.logarithmic || t || (a.tickInterval = D(a.tickInterval, void 0, k(a.tickInterval), C(e.allowDecimals, .5 > a.tickInterval || void 0 !== this.tickAmount), !!this.tickAmount));
-                        this.tickAmount || (a.tickInterval = a.unsquish()); this.setTickPositions()
-                    }; a.prototype.setTickPositions = function () {
-                        var b = this.options, a = b.tickPositions, g = this.getMinorTickInterval(), c = this.hasVerticalPanning(), k = "colorAxis" === this.coll, e = (k || !c) && b.startOnTick; c = (k || !c) && b.endOnTick; k = b.tickPositioner; this.tickmarkOffset = this.categories && "between" === b.tickmarkPlacement && 1 === this.tickInterval ? .5 : 0; this.minorTickInterval = "auto" === g && this.tickInterval ? this.tickInterval / 5 : g; this.single = this.min === this.max &&
-                            l(this.min) && !this.tickAmount && (parseInt(this.min, 10) === this.min || !1 !== b.allowDecimals); this.tickPositions = g = a && a.slice(); !g && (this.ordinal && this.ordinal.positions || !((this.max - this.min) / this.tickInterval > Math.max(2 * this.len, 200)) ? g = this.dateTime ? this.getTimeTicks(this.dateTime.normalizeTimeTickInterval(this.tickInterval, b.units), this.min, this.max, b.startOfWeek, this.ordinal && this.ordinal.positions, this.closestPointRange, !0) : this.logarithmic ? this.logarithmic.getLogTickPositions(this.tickInterval, this.min,
-                                this.max) : this.getLinearTickPositions(this.tickInterval, this.min, this.max) : (g = [this.min, this.max], A(19, !1, this.chart)), g.length > this.len && (g = [g[0], g.pop()], g[0] === g[1] && (g.length = 1)), this.tickPositions = g, k && (k = k.apply(this, [this.min, this.max]))) && (this.tickPositions = g = k); this.paddedTicks = g.slice(0); this.trimTicks(g, e, c); this.isLinked || (this.single && 2 > g.length && !this.categories && !this.series.some(function (b) { return b.is("heatmap") && "between" === b.options.pointPlacement }) && (this.min -= .5, this.max += .5),
-                                    a || k || this.adjustTickAmount()); d(this, "afterSetTickPositions")
-                    }; a.prototype.trimTicks = function (b, a, g) { var c = b[0], k = b[b.length - 1], e = !this.isOrdinal && this.minPointOffset || 0; d(this, "trimTicks"); if (!this.isLinked) { if (a && -Infinity !== c) this.min = c; else for (; this.min - e > b[0];)b.shift(); if (g) this.max = k; else for (; this.max + e < b[b.length - 1];)b.pop(); 0 === b.length && l(c) && !this.options.tickPositions && b.push((k + c) / 2) } }; a.prototype.alignToOthers = function () {
-                        var b = {}, a = this.options, d; !1 !== this.chart.options.chart.alignTicks &&
-                            a.alignTicks && !1 !== a.startOnTick && !1 !== a.endOnTick && !this.logarithmic && this.chart[this.coll].forEach(function (a) { var g = a.options; g = [a.horiz ? g.left : g.top, g.width, g.height, g.pane].join(); a.series.length && (b[g] ? d = !0 : b[g] = 1) }); return d
-                    }; a.prototype.getTickAmount = function () {
-                        var b = this.options, a = b.tickPixelInterval, d = b.tickAmount; !l(b.tickInterval) && !d && this.len < a && !this.isRadial && !this.logarithmic && b.startOnTick && b.endOnTick && (d = 2); !d && this.alignToOthers() && (d = Math.ceil(this.len / a) + 1); 4 > d && (this.finalTickAmt =
-                            d, d = 5); this.tickAmount = d
-                    }; a.prototype.adjustTickAmount = function () {
-                        var b = this.options, a = this.tickInterval, d = this.tickPositions, c = this.tickAmount, k = this.finalTickAmt, e = d && d.length, r = C(this.threshold, this.softThreshold ? 0 : null); if (this.hasData() && g(this.min) && g(this.max)) {
-                            if (e < c) {
-                                for (; d.length < c;)d.length % 2 || this.min === r ? d.push(n(d[d.length - 1] + a)) : d.unshift(n(d[0] - a)); this.transA *= (e - 1) / (c - 1); this.min = b.startOnTick ? d[0] : Math.min(this.min, d[0]); this.max = b.endOnTick ? d[d.length - 1] : Math.max(this.max, d[d.length -
-                                    1])
-                            } else e > c && (this.tickInterval *= 2, this.setTickPositions()); if (l(k)) { for (a = b = d.length; a--;)(3 === k && 1 === a % 2 || 2 >= k && 0 < a && a < b - 1) && d.splice(a, 1); this.finalTickAmt = void 0 }
-                        }
-                    }; a.prototype.setScale = function () {
-                        var b = !1, a = !1; this.series.forEach(function (d) { b = b || d.isDirtyData || d.isDirty; a = a || d.xAxis && d.xAxis.isDirty || !1 }); this.setAxisSize(); var g = this.len !== (this.old && this.old.len); g || b || a || this.isLinked || this.forceRedraw || this.userMin !== (this.old && this.old.userMin) || this.userMax !== (this.old && this.old.userMax) ||
-                            this.alignToOthers() ? (this.stacking && this.stacking.resetStacks(), this.forceRedraw = !1, this.getSeriesExtremes(), this.setTickInterval(), this.isDirty || (this.isDirty = g || this.min !== (this.old && this.old.min) || this.max !== (this.old && this.old.max))) : this.stacking && this.stacking.cleanStacks(); b && this.panningState && (this.panningState.isDirty = !0); d(this, "afterSetScale")
-                    }; a.prototype.setExtremes = function (b, a, g, c, k) {
-                        var e = this, r = e.chart; g = C(g, !0); e.series.forEach(function (b) { delete b.kdTree }); k = p(k, { min: b, max: a });
-                        d(e, "setExtremes", k, function () { e.userMin = b; e.userMax = a; e.eventArgs = k; g && r.redraw(c) })
-                    }; a.prototype.zoom = function (b, a) {
-                        var g = this, c = this.dataMin, k = this.dataMax, e = this.options, r = Math.min(c, C(e.min, c)), f = Math.max(k, C(e.max, k)); b = { newMin: b, newMax: a }; d(this, "zoom", b, function (b) {
-                            var a = b.newMin, d = b.newMax; if (a !== g.min || d !== g.max) g.allowZoomOutside || (l(c) && (a < r && (a = r), a > f && (a = f)), l(k) && (d < r && (d = r), d > f && (d = f))), g.displayBtn = "undefined" !== typeof a || "undefined" !== typeof d, g.setExtremes(a, d, !1, void 0, { trigger: "zoom" });
-                            b.zoomed = !0
-                        }); return b.zoomed
-                    }; a.prototype.setAxisSize = function () {
-                        var b = this.chart, a = this.options, d = a.offsets || [0, 0, 0, 0], g = this.horiz, c = this.width = Math.round(O(C(a.width, b.plotWidth - d[3] + d[1]), b.plotWidth)), k = this.height = Math.round(O(C(a.height, b.plotHeight - d[0] + d[2]), b.plotHeight)), e = this.top = Math.round(O(C(a.top, b.plotTop + d[0]), b.plotHeight, b.plotTop)); a = this.left = Math.round(O(C(a.left, b.plotLeft + d[3]), b.plotWidth, b.plotLeft)); this.bottom = b.chartHeight - k - e; this.right = b.chartWidth - c - a; this.len = Math.max(g ?
-                            c : k, 0); this.pos = g ? a : e
-                    }; a.prototype.getExtremes = function () { var b = this.logarithmic; return { min: b ? n(b.lin2log(this.min)) : this.min, max: b ? n(b.lin2log(this.max)) : this.max, dataMin: this.dataMin, dataMax: this.dataMax, userMin: this.userMin, userMax: this.userMax } }; a.prototype.getThreshold = function (b) { var a = this.logarithmic, d = a ? a.lin2log(this.min) : this.min; a = a ? a.lin2log(this.max) : this.max; null === b || -Infinity === b ? b = d : Infinity === b ? b = a : d > b ? b = d : a < b && (b = a); return this.translate(b, 0, 1, 0, 1) }; a.prototype.autoLabelAlign =
-                        function (b) { var a = (C(b, 0) - 90 * this.side + 720) % 360; b = { align: "center" }; d(this, "autoLabelAlign", b, function (b) { 15 < a && 165 > a ? b.align = "right" : 195 < a && 345 > a && (b.align = "left") }); return b.align }; a.prototype.tickSize = function (b) { var a = this.options, g = C(a["tick" === b ? "tickWidth" : "minorTickWidth"], "tick" === b && this.isXAxis && !this.categories ? 1 : 0), c = a["tick" === b ? "tickLength" : "minorTickLength"]; if (g && c) { "inside" === a[b + "Position"] && (c = -c); var k = [c, g] } b = { tickSize: k }; d(this, "afterTickSize", b); return b.tickSize }; a.prototype.labelMetrics =
-                            function () { var b = this.tickPositions && this.tickPositions[0] || 0; return this.chart.renderer.fontMetrics(this.options.labels.style.fontSize, this.ticks[b] && this.ticks[b].label) }; a.prototype.unsquish = function () {
-                                var b = this.options.labels, a = this.horiz, d = this.tickInterval, k = this.len / (((this.categories ? 1 : 0) + this.max - this.min) / d), e = b.rotation, r = this.labelMetrics(), l = Math.max(this.max - this.min, 0), f = function (b) {
-                                    var a = b / (k || 1); a = 1 < a ? Math.ceil(a) : 1; a * d > l && Infinity !== b && Infinity !== k && l && (a = Math.ceil(l / d)); return n(a *
-                                        d)
-                                }, h = d, F, D, p = Number.MAX_VALUE; if (a) { if (!b.staggerLines && !b.step) if (g(e)) var M = [e]; else k < b.autoRotationLimit && (M = b.autoRotation); M && M.forEach(function (b) { if (b === e || b && -90 <= b && 90 >= b) { D = f(Math.abs(r.h / Math.sin(c * b))); var a = D + Math.abs(b / 360); a < p && (p = a, F = b, h = D) } }) } else b.step || (h = f(r.h)); this.autoRotation = M; this.labelRotation = C(F, g(e) ? e : 0); return h
-                            }; a.prototype.getSlotWidth = function (b) {
-                                var a = this.chart, d = this.horiz, c = this.options.labels, k = Math.max(this.tickPositions.length - (this.categories ? 0 : 1), 1), e =
-                                    a.margin[3]; if (b && g(b.slotWidth)) return b.slotWidth; if (d && 2 > c.step) return c.rotation ? 0 : (this.staggerLines || 1) * this.len / k; if (!d) { b = c.style.width; if (void 0 !== b) return parseInt(String(b), 10); if (e) return e - a.spacing[3] } return .33 * a.chartWidth
-                            }; a.prototype.renderUnsquish = function () {
-                                var b = this.chart, a = b.renderer, d = this.tickPositions, g = this.ticks, c = this.options.labels, k = c.style, e = this.horiz, l = this.getSlotWidth(), f = Math.max(1, Math.round(l - 2 * c.padding)), h = {}, F = this.labelMetrics(), D = k.textOverflow, C = 0; r(c.rotation) ||
-                                    (h.rotation = c.rotation || 0); d.forEach(function (b) { b = g[b]; b.movedLabel && b.replaceMovedLabel(); b && b.label && b.label.textPxLength > C && (C = b.label.textPxLength) }); this.maxLabelLength = C; if (this.autoRotation) C > f && C > F.h ? h.rotation = this.labelRotation : this.labelRotation = 0; else if (l) {
-                                        var p = f; if (!D) {
-                                            var M = "clip"; for (f = d.length; !e && f--;) {
-                                                var n = d[f]; if (n = g[n].label) n.styles && "ellipsis" === n.styles.textOverflow ? n.css({ textOverflow: "clip" }) : n.textPxLength > l && n.css({ width: l + "px" }), n.getBBox().height > this.len / d.length -
-                                                    (F.h - F.f) && (n.specificTextOverflow = "ellipsis")
-                                            }
-                                        }
-                                    } h.rotation && (p = C > .5 * b.chartHeight ? .33 * b.chartHeight : C, D || (M = "ellipsis")); if (this.labelAlign = c.align || this.autoLabelAlign(this.labelRotation)) h.align = this.labelAlign; d.forEach(function (b) {
-                                        var a = (b = g[b]) && b.label, d = k.width, c = {}; a && (a.attr(h), b.shortenLabel ? b.shortenLabel() : p && !d && "nowrap" !== k.whiteSpace && (p < a.textPxLength || "SPAN" === a.element.tagName) ? (c.width = p + "px", D || (c.textOverflow = a.specificTextOverflow || M), a.css(c)) : a.styles && a.styles.width && !c.width &&
-                                            !d && a.css({ width: null }), delete a.specificTextOverflow, b.rotation = h.rotation)
-                                    }, this); this.tickRotCorr = a.rotCorr(F.b, this.labelRotation || 0, 0 !== this.side)
-                            }; a.prototype.hasData = function () { return this.series.some(function (b) { return b.hasData() }) || this.options.showEmpty && l(this.min) && l(this.max) }; a.prototype.addTitle = function (b) {
-                                var a = this.chart.renderer, d = this.horiz, g = this.opposite, c = this.options.title, k = this.chart.styledMode, e; this.axisTitle || ((e = c.textAlign) || (e = (d ? { low: "left", middle: "center", high: "right" } :
-                                    { low: g ? "right" : "left", middle: "center", high: g ? "left" : "right" })[c.align]), this.axisTitle = a.text(c.text || "", 0, 0, c.useHTML).attr({ zIndex: 7, rotation: c.rotation, align: e }).addClass("highcharts-axis-title"), k || this.axisTitle.css(F(c.style)), this.axisTitle.add(this.axisGroup), this.axisTitle.isNew = !0); k || c.style.width || this.isRadial || this.axisTitle.css({ width: this.len + "px" }); this.axisTitle[b ? "show" : "hide"](b)
-                            }; a.prototype.generateTick = function (b) { var a = this.ticks; a[b] ? a[b].addLabel() : a[b] = new q(this, b) }; a.prototype.getOffset =
-                                function () {
-                                    var b = this, a = this, g = a.chart, c = g.renderer, k = a.options, e = a.tickPositions, r = a.ticks, f = a.horiz, h = a.side, F = g.inverted && !a.isZAxis ? [1, 0, 3, 2][h] : h, D = a.hasData(), p = k.title, n = k.labels, m = g.axisOffset; g = g.clipOffset; var t = [-1, 1, 1, -1][h], q = k.className, w = a.axisParent, O, Z = 0, ha = 0, A = 0; a.showAxis = O = D || k.showEmpty; a.staggerLines = a.horiz && n.staggerLines || void 0; if (!a.axisGroup) {
-                                        var J = function (a, d, g) {
-                                            return c.g(a).attr({ zIndex: g }).addClass("highcharts-" + b.coll.toLowerCase() + d + " " + (b.isRadial ? "highcharts-radial-axis" +
-                                                d + " " : "") + (q || "")).add(w)
-                                        }; a.gridGroup = J("grid", "-grid", k.gridZIndex); a.axisGroup = J("axis", "", k.zIndex); a.labelGroup = J("axis-labels", "-labels", n.zIndex)
-                                    } D || a.isLinked ? (e.forEach(function (b) { a.generateTick(b) }), a.renderUnsquish(), a.reserveSpaceDefault = 0 === h || 2 === h || { 1: "left", 3: "right" }[h] === a.labelAlign, C(n.reserveSpace, "center" === a.labelAlign ? !0 : null, a.reserveSpaceDefault) && e.forEach(function (b) { A = Math.max(r[b].getLabelSize(), A) }), a.staggerLines && (A *= a.staggerLines), a.labelOffset = A * (a.opposite ? -1 :
-                                        1)) : M(r, function (b, a) { b.destroy(); delete r[a] }); if (p && p.text && !1 !== p.enabled && (a.addTitle(O), O && !1 !== p.reserveSpace)) { a.titleOffset = Z = a.axisTitle.getBBox()[f ? "height" : "width"]; var v = p.offset; ha = l(v) ? 0 : C(p.margin, f ? 5 : 10) } a.renderLine(); a.offset = t * C(k.offset, m[h] ? m[h] + (k.margin || 0) : 0); a.tickRotCorr = a.tickRotCorr || { x: 0, y: 0 }; p = 0 === h ? -a.labelMetrics().h : 2 === h ? a.tickRotCorr.y : 0; D = Math.abs(A) + ha; A && (D = D - p + t * (f ? C(n.y, a.tickRotCorr.y + 8 * t) : n.x)); a.axisTitleMargin = C(v, D); a.getMaxLabelDimensions && (a.maxLabelDimensions =
-                                            a.getMaxLabelDimensions(r, e)); f = this.tickSize("tick"); m[h] = Math.max(m[h], (a.axisTitleMargin || 0) + Z + t * a.offset, D, e && e.length && f ? f[0] + t * a.offset : 0); k = k.offset ? 0 : 2 * Math.floor(a.axisLine.strokeWidth() / 2); g[F] = Math.max(g[F], k); d(this, "afterGetOffset")
-                                }; a.prototype.getLinePath = function (b) {
-                                    var a = this.chart, d = this.opposite, g = this.offset, c = this.horiz, k = this.left + (d ? this.width : 0) + g; g = a.chartHeight - this.bottom - (d ? this.height : 0) + g; d && (b *= -1); return a.renderer.crispLine([["M", c ? this.left : k, c ? g : this.top], ["L", c ?
-                                        a.chartWidth - this.right : k, c ? g : a.chartHeight - this.bottom]], b)
-                                }; a.prototype.renderLine = function () { this.axisLine || (this.axisLine = this.chart.renderer.path().addClass("highcharts-axis-line").add(this.axisGroup), this.chart.styledMode || this.axisLine.attr({ stroke: this.options.lineColor, "stroke-width": this.options.lineWidth, zIndex: 7 })) }; a.prototype.getTitlePosition = function () {
-                                    var b = this.horiz, a = this.left, g = this.top, c = this.len, k = this.options.title, e = b ? a : g, r = this.opposite, l = this.offset, f = k.x, h = k.y, F = this.axisTitle,
-                                    D = this.chart.renderer.fontMetrics(k.style.fontSize, F); F = Math.max(F.getBBox(null, 0).height - D.h - 1, 0); c = { low: e + (b ? 0 : c), middle: e + c / 2, high: e + (b ? c : 0) }[k.align]; a = (b ? g + this.height : a) + (b ? 1 : -1) * (r ? -1 : 1) * this.axisTitleMargin + [-F, F, D.f, -F][this.side]; b = { x: b ? c + f : a + (r ? this.width : 0) + l + f, y: b ? a + h - (r ? this.height : 0) + l : c + h }; d(this, "afterGetTitlePosition", { titlePosition: b }); return b
-                                }; a.prototype.renderMinorTick = function (b, a) {
-                                    var d = this.minorTicks; d[b] || (d[b] = new q(this, b, "minor")); a && d[b].isNew && d[b].render(null, !0);
-                                    d[b].render(null, !1, 1)
-                                }; a.prototype.renderTick = function (b, a, d) { var g = this.ticks; if (!this.isLinked || b >= this.min && b <= this.max || this.grid && this.grid.isColumn) g[b] || (g[b] = new q(this, b)), d && g[b].isNew && g[b].render(a, !0, -1), g[b].render(a) }; a.prototype.render = function () {
-                                    var b = this, a = b.chart, c = b.logarithmic, k = b.options, e = b.isLinked, r = b.tickPositions, l = b.axisTitle, f = b.ticks, F = b.minorTicks, D = b.alternateBands, p = k.stackLabels, C = k.alternateGridColor, n = b.tickmarkOffset, m = b.axisLine, t = b.showAxis, w = h(a.renderer.globalAnimation),
-                                    O, A; b.labelEdge.length = 0; b.overlap = !1;[f, F, D].forEach(function (b) { M(b, function (b) { b.isActive = !1 }) }); if (b.hasData() || e) {
-                                        var Z = b.chart.hasRendered && b.old && g(b.old.min); b.minorTickInterval && !b.categories && b.getMinorTickPositions().forEach(function (a) { b.renderMinorTick(a, Z) }); r.length && (r.forEach(function (a, d) { b.renderTick(a, d, Z) }), n && (0 === b.min || b.single) && (f[-1] || (f[-1] = new q(b, -1, null, !0)), f[-1].render(-1))); C && r.forEach(function (d, g) {
-                                            A = "undefined" !== typeof r[g + 1] ? r[g + 1] + n : b.max - n; 0 === g % 2 && d < b.max &&
-                                                A <= b.max + (a.polar ? -n : n) && (D[d] || (D[d] = new y.PlotLineOrBand(b)), O = d + n, D[d].options = { from: c ? c.lin2log(O) : O, to: c ? c.lin2log(A) : A, color: C, className: "highcharts-alternate-grid" }, D[d].render(), D[d].isActive = !0)
-                                        }); b._addedPlotLB || (b._addedPlotLB = !0, (k.plotLines || []).concat(k.plotBands || []).forEach(function (a) { b.addPlotBandOrLine(a) }))
-                                    } [f, F, D].forEach(function (b) {
-                                        var d = [], g = w.duration; M(b, function (b, a) { b.isActive || (b.render(a, !1, 0), b.isActive = !1, d.push(a)) }); Y(function () {
-                                            for (var a = d.length; a--;)b[d[a]] && !b[d[a]].isActive &&
-                                                (b[d[a]].destroy(), delete b[d[a]])
-                                        }, b !== D && a.hasRendered && g ? g : 0)
-                                    }); m && (m[m.isPlaced ? "animate" : "attr"]({ d: this.getLinePath(m.strokeWidth()) }), m.isPlaced = !0, m[t ? "show" : "hide"](t)); l && t && (k = b.getTitlePosition(), g(k.y) ? (l[l.isNew ? "attr" : "animate"](k), l.isNew = !1) : (l.attr("y", -9999), l.isNew = !0)); p && p.enabled && b.stacking && b.stacking.renderStackTotals(); b.old = { len: b.len, max: b.max, min: b.min, transA: b.transA, userMax: b.userMax, userMin: b.userMin }; b.isDirty = !1; d(this, "afterRender")
-                                }; a.prototype.redraw = function () {
-                                    this.visible &&
-                                    (this.render(), this.plotLinesAndBands.forEach(function (b) { b.render() })); this.series.forEach(function (b) { b.isDirty = !0 })
-                                }; a.prototype.getKeepProps = function () { return this.keepProps || a.keepProps }; a.prototype.destroy = function (b) {
-                                    var a = this, g = a.plotLinesAndBands, c = this.eventOptions; d(this, "destroy", { keepEvents: b }); b || S(a);[a.ticks, a.minorTicks, a.alternateBands].forEach(function (b) { J(b) }); if (g) for (b = g.length; b--;)g[b].destroy(); "axisLine axisTitle axisGroup gridGroup labelGroup cross scrollbar".split(" ").forEach(function (b) {
-                                        a[b] &&
-                                        (a[b] = a[b].destroy())
-                                    }); for (var k in a.plotLinesAndBandsGroups) a.plotLinesAndBandsGroups[k] = a.plotLinesAndBandsGroups[k].destroy(); M(a, function (b, d) { -1 === a.getKeepProps().indexOf(d) && delete a[d] }); this.eventOptions = c
-                                }; a.prototype.drawCrosshair = function (b, a) {
-                                    var g = this.crosshair, c = C(g && g.snap, !0), k = this.chart, e, r = this.cross; d(this, "drawCrosshair", { e: b, point: a }); b || (b = this.cross && this.cross.e); if (g && !1 !== (l(a) || !c)) {
-                                        c ? l(a) && (e = C("colorAxis" !== this.coll ? a.crosshairPos : null, this.isXAxis ? a.plotX : this.len -
-                                            a.plotY)) : e = b && (this.horiz ? b.chartX - this.pos : this.len - b.chartY + this.pos); if (l(e)) { var f = { value: a && (this.isXAxis ? a.x : C(a.stackY, a.y)), translatedValue: e }; k.polar && p(f, { isCrosshair: !0, chartX: b && b.chartX, chartY: b && b.chartY, point: a }); f = this.getPlotLinePath(f) || null } if (!l(f)) { this.hideCrosshair(); return } c = this.categories && !this.isRadial; r || (this.cross = r = k.renderer.path().addClass("highcharts-crosshair highcharts-crosshair-" + (c ? "category " : "thin ") + (g.className || "")).attr({ zIndex: C(g.zIndex, 2) }).add(), k.styledMode ||
-                                                (r.attr({ stroke: g.color || (c ? u.parse(E.highlightColor20).setOpacity(.25).get() : E.neutralColor20), "stroke-width": C(g.width, 1) }).css({ "pointer-events": "none" }), g.dashStyle && r.attr({ dashstyle: g.dashStyle }))); r.show().attr({ d: f }); c && !g.width && r.attr({ "stroke-width": this.transA }); this.cross.e = b
-                                    } else this.hideCrosshair(); d(this, "afterDrawCrosshair", { e: b, point: a })
-                                }; a.prototype.hideCrosshair = function () { this.cross && this.cross.hide(); d(this, "afterHideCrosshair") }; a.prototype.hasVerticalPanning = function () {
-                                    var b =
-                                        this.chart.options.chart.panning; return !!(b && b.enabled && /y/.test(b.type))
-                                }; a.prototype.validatePositiveValue = function (b) { return g(b) && 0 < b }; a.prototype.update = function (b, a) { var d = this.chart; b = F(this.userOptions, b); this.destroy(!0); this.init(d, b); d.isDirtyBox = !0; C(a, !0) && d.redraw() }; a.prototype.remove = function (b) {
-                                    for (var a = this.chart, d = this.coll, g = this.series, c = g.length; c--;)g[c] && g[c].remove(!1); v(a.axes, this); v(a[d], this); a[d].forEach(function (b, a) { b.options.index = b.userOptions.index = a }); this.destroy();
-                                    a.isDirtyBox = !0; C(b, !0) && a.redraw()
-                                }; a.prototype.setTitle = function (b, a) { this.update({ title: b }, a) }; a.prototype.setCategories = function (b, a) { this.update({ categories: b }, a) }; a.defaultOptions = B.defaultXAxisOptions; a.keepProps = "extKey hcEvents names series userMax userMin".split(" "); return a
-        }(); ""; return a
-    }); L(a, "Core/Axis/DateTimeAxis.js", [a["Core/Axis/Axis.js"], a["Core/Utilities.js"]], function (a, u) {
-        var v = u.addEvent, H = u.getMagnitude, x = u.normalizeTickInterval, y = u.timeUnits, G = function () {
-            function a(a) {
-                this.axis =
-                a
-            } a.prototype.normalizeTimeTickInterval = function (a, h) { var f = h || [["millisecond", [1, 2, 5, 10, 20, 25, 50, 100, 200, 500]], ["second", [1, 2, 5, 10, 15, 30]], ["minute", [1, 2, 5, 10, 15, 30]], ["hour", [1, 2, 3, 4, 6, 8, 12]], ["day", [1, 2]], ["week", [1, 2]], ["month", [1, 2, 3, 4, 6]], ["year", null]]; h = f[f.length - 1]; var c = y[h[0]], e = h[1], t; for (t = 0; t < f.length && !(h = f[t], c = y[h[0]], e = h[1], f[t + 1] && a <= (c * e[e.length - 1] + y[f[t + 1][0]]) / 2); t++); c === y.year && a < 5 * c && (e = [1, 2, 5]); a = x(a / c, e, "year" === h[0] ? Math.max(H(a / c), 1) : 1); return { unitRange: c, count: a, unitName: h[0] } };
-            return a
-        }(); u = function () { function a() { } a.compose = function (a) { a.keepProps.push("dateTime"); a.prototype.getTimeTicks = function () { return this.chart.time.getTimeTicks.apply(this.chart.time, arguments) }; v(a, "init", function (a) { "datetime" !== a.userOptions.type ? this.dateTime = void 0 : this.dateTime || (this.dateTime = new G(this)) }) }; a.AdditionsClass = G; return a }(); u.compose(a); return u
-    }); L(a, "Core/Axis/LogarithmicAxis.js", [a["Core/Axis/Axis.js"], a["Core/Utilities.js"]], function (a, u) {
-        var v = u.addEvent, H = u.getMagnitude,
-        x = u.normalizeTickInterval, y = u.pick, G = function () {
-            function a(a) { this.axis = a } a.prototype.getLogTickPositions = function (a, h, f, c) {
-                var e = this.axis, t = e.len, m = e.options, w = []; c || (this.minorAutoInterval = void 0); if (.5 <= a) a = Math.round(a), w = e.getLinearTickPositions(a, h, f); else if (.08 <= a) {
-                    var n = Math.floor(h), l, q = m = void 0; for (t = .3 < a ? [1, 2, 4] : .15 < a ? [1, 2, 4, 6, 8] : [1, 2, 3, 4, 5, 6, 7, 8, 9]; n < f + 1 && !q; n++) {
-                        var v = t.length; for (l = 0; l < v && !q; l++) {
-                            var A = this.log2lin(this.lin2log(n) * t[l]); A > h && (!c || m <= f) && "undefined" !== typeof m && w.push(m);
-                            m > f && (q = !0); m = A
-                        }
-                    }
-                } else h = this.lin2log(h), f = this.lin2log(f), a = c ? e.getMinorTickInterval() : m.tickInterval, a = y("auto" === a ? null : a, this.minorAutoInterval, m.tickPixelInterval / (c ? 5 : 1) * (f - h) / ((c ? t / e.tickPositions.length : t) || 1)), a = x(a, void 0, H(a)), w = e.getLinearTickPositions(a, h, f).map(this.log2lin), c || (this.minorAutoInterval = a / 5); c || (e.tickInterval = a); return w
-            }; a.prototype.lin2log = function (a) { return Math.pow(10, a) }; a.prototype.log2lin = function (a) { return Math.log(a) / Math.LN10 }; return a
-        }(); u = function () {
-            function a() { }
-            a.compose = function (a) { a.keepProps.push("logarithmic"); v(a, "init", function (a) { var f = this.logarithmic; "logarithmic" !== a.userOptions.type ? this.logarithmic = void 0 : f || (this.logarithmic = new G(this)) }); v(a, "afterInit", function () { var a = this.logarithmic; a && (this.lin2val = function (f) { return a.lin2log(f) }, this.val2lin = function (f) { return a.log2lin(f) }) }) }; return a
-        }(); u.compose(a); return u
-    }); L(a, "Core/Axis/PlotLineOrBand.js", [a["Core/Axis/Axis.js"], a["Core/Color/Palette.js"], a["Core/Utilities.js"]], function (a,
-        u, E) {
-            var v = E.arrayMax, x = E.arrayMin, y = E.defined, G = E.destroyObjectProperties, B = E.erase, q = E.extend, h = E.fireEvent, f = E.isNumber, c = E.merge, e = E.objectEach, t = E.pick, m = function () {
-                function a(a, c) { this.axis = a; c && (this.options = c, this.id = c.id) } a.prototype.render = function () {
-                    h(this, "render"); var a = this, l = a.axis, f = l.horiz, m = l.logarithmic, w = a.options, p = w.label, d = a.label, k = w.to, b = w.from, g = w.value, r = y(b) && y(k), F = y(g), D = a.svgElem, M = !D, C = [], q = w.color, v = t(w.zIndex, 0), W = w.events; C = {
-                        "class": "highcharts-plot-" + (r ? "band " :
-                            "line ") + (w.className || "")
-                    }; var B = {}, x = l.chart.renderer, z = r ? "bands" : "lines"; m && (b = m.log2lin(b), k = m.log2lin(k), g = m.log2lin(g)); l.chart.styledMode || (F ? (C.stroke = q || u.neutralColor40, C["stroke-width"] = t(w.width, 1), w.dashStyle && (C.dashstyle = w.dashStyle)) : r && (C.fill = q || u.highlightColor10, w.borderWidth && (C.stroke = w.borderColor, C["stroke-width"] = w.borderWidth))); B.zIndex = v; z += "-" + v; (m = l.plotLinesAndBandsGroups[z]) || (l.plotLinesAndBandsGroups[z] = m = x.g("plot-" + z).attr(B).add()); M && (a.svgElem = D = x.path().attr(C).add(m));
-                    if (F) C = l.getPlotLinePath({ value: g, lineWidth: D.strokeWidth(), acrossPanes: w.acrossPanes }); else if (r) C = l.getPlotBandPath(b, k, w); else return; !a.eventsAdded && W && (e(W, function (b, d) { D.on(d, function (b) { W[d].apply(a, [b]) }) }), a.eventsAdded = !0); (M || !D.d) && C && C.length ? D.attr({ d: C }) : D && (C ? (D.show(!0), D.animate({ d: C })) : D.d && (D.hide(), d && (a.label = d = d.destroy()))); p && (y(p.text) || y(p.formatter)) && C && C.length && 0 < l.width && 0 < l.height && !C.isFlat ? (p = c({
-                        align: f && r && "center", x: f ? !r && 4 : 10, verticalAlign: !f && r && "middle", y: f ?
-                            r ? 16 : 10 : r ? 6 : -4, rotation: f && !r && 90
-                    }, p), this.renderLabel(p, C, r, v)) : d && d.hide(); return a
-                }; a.prototype.renderLabel = function (a, c, e, f) {
-                    var l = this.label, h = this.axis.chart.renderer; l || (l = { align: a.textAlign || a.align, rotation: a.rotation, "class": "highcharts-plot-" + (e ? "band" : "line") + "-label " + (a.className || "") }, l.zIndex = f, f = this.getLabelText(a), this.label = l = h.text(f, 0, 0, a.useHTML).attr(l).add(), this.axis.chart.styledMode || l.css(a.style)); h = c.xBounds || [c[0][1], c[1][1], e ? c[2][1] : c[0][1]]; c = c.yBounds || [c[0][2],
-                    c[1][2], e ? c[2][2] : c[0][2]]; e = x(h); f = x(c); l.align(a, !1, { x: e, y: f, width: v(h) - e, height: v(c) - f }); l.show(!0)
-                }; a.prototype.getLabelText = function (a) { return y(a.formatter) ? a.formatter.call(this) : a.text }; a.prototype.destroy = function () { B(this.axis.plotLinesAndBands, this); delete this.axis; G(this) }; return a
-            }(); q(a.prototype, {
-                getPlotBandPath: function (a, c, e) {
-                    void 0 === e && (e = this.options); var l = this.getPlotLinePath({ value: c, force: !0, acrossPanes: e.acrossPanes }); e = this.getPlotLinePath({ value: a, force: !0, acrossPanes: e.acrossPanes });
-                    var h = [], m = this.horiz, p = 1; a = !f(this.min) || !f(this.max) || a < this.min && c < this.min || a > this.max && c > this.max; if (e && l) { if (a) { var d = e.toString() === l.toString(); p = 0 } for (a = 0; a < e.length; a += 2) { c = e[a]; var k = e[a + 1], b = l[a], g = l[a + 1]; "M" !== c[0] && "L" !== c[0] || "M" !== k[0] && "L" !== k[0] || "M" !== b[0] && "L" !== b[0] || "M" !== g[0] && "L" !== g[0] || (m && b[1] === c[1] ? (b[1] += p, g[1] += p) : m || b[2] !== c[2] || (b[2] += p, g[2] += p), h.push(["M", c[1], c[2]], ["L", k[1], k[2]], ["L", g[1], g[2]], ["L", b[1], b[2]], ["Z"])); h.isFlat = d } } return h
-                }, addPlotBand: function (a) {
-                    return this.addPlotBandOrLine(a,
-                        "plotBands")
-                }, addPlotLine: function (a) { return this.addPlotBandOrLine(a, "plotLines") }, addPlotBandOrLine: function (a, c) { var e = this, f = new m(this, a), h = this.userOptions; this.visible && (f = f.render()); if (f) { this._addedPlotLB || (this._addedPlotLB = !0, (h.plotLines || []).concat(h.plotBands || []).forEach(function (a) { e.addPlotBandOrLine(a) })); if (c) { var t = h[c] || []; t.push(a); h[c] = t } this.plotLinesAndBands.push(f) } return f }, removePlotBandOrLine: function (a) {
-                    var c = this.plotLinesAndBands, e = this.options, f = this.userOptions;
-                    if (c) { for (var h = c.length; h--;)c[h].id === a && c[h].destroy();[e.plotLines || [], f.plotLines || [], e.plotBands || [], f.plotBands || []].forEach(function (c) { for (h = c.length; h--;)(c[h] || {}).id === a && B(c, c[h]) }) }
-                }, removePlotBand: function (a) { this.removePlotBandOrLine(a) }, removePlotLine: function (a) { this.removePlotBandOrLine(a) }
-            }); return m
-    }); L(a, "Core/Tooltip.js", [a["Core/FormatUtilities.js"], a["Core/Globals.js"], a["Core/Color/Palette.js"], a["Core/Renderer/RendererRegistry.js"], a["Core/Utilities.js"]], function (a, u, E,
-        H, x) {
-            var v = a.format, G = u.doc, B = x.clamp, q = x.css, h = x.defined, f = x.discardElement, c = x.extend, e = x.fireEvent, t = x.isArray, m = x.isNumber, w = x.isString, n = x.merge, l = x.pick, J = x.splat, K = x.syncTimeout, A = x.timeUnits; ""; a = function () {
-                function a(a, c) { this.container = void 0; this.crosshairs = []; this.distance = 0; this.isHidden = !0; this.isSticky = !1; this.now = {}; this.options = {}; this.outside = !1; this.chart = a; this.init(a, c) } a.prototype.applyFilter = function () {
-                    var a = this.chart; a.renderer.definition({
-                        tagName: "filter", attributes: {
-                            id: "drop-shadow-" +
-                                a.index, opacity: .5
-                        }, children: [{ tagName: "feGaussianBlur", attributes: { "in": "SourceAlpha", stdDeviation: 1 } }, { tagName: "feOffset", attributes: { dx: 1, dy: 1 } }, { tagName: "feComponentTransfer", children: [{ tagName: "feFuncA", attributes: { type: "linear", slope: .3 } }] }, { tagName: "feMerge", children: [{ tagName: "feMergeNode" }, { tagName: "feMergeNode", attributes: { "in": "SourceGraphic" } }] }]
-                    })
-                }; a.prototype.bodyFormatter = function (a) {
-                    return a.map(function (a) {
-                        var b = a.series.tooltipOptions; return (b[(a.point.formatPrefix || "point") + "Formatter"] ||
-                            a.point.tooltipFormatter).call(a.point, b[(a.point.formatPrefix || "point") + "Format"] || "")
-                    })
-                }; a.prototype.cleanSplit = function (a) { this.chart.series.forEach(function (d) { var b = d && d.tt; b && (!b.isActive || a ? d.tt = b.destroy() : b.isActive = !1) }) }; a.prototype.defaultFormatter = function (a) { var d = this.points || J(this); var b = [a.tooltipFooterHeaderFormatter(d[0])]; b = b.concat(a.bodyFormatter(d)); b.push(a.tooltipFooterHeaderFormatter(d[0], !0)); return b }; a.prototype.destroy = function () {
-                    this.label && (this.label = this.label.destroy());
-                    this.split && this.tt && (this.cleanSplit(this.chart, !0), this.tt = this.tt.destroy()); this.renderer && (this.renderer = this.renderer.destroy(), f(this.container)); x.clearTimeout(this.hideTimer); x.clearTimeout(this.tooltipTimeout)
-                }; a.prototype.getAnchor = function (a, c) {
-                    var b = this.chart; var d = b.pointer; var k = b.inverted, e = b.plotTop, f = b.plotLeft, l = 0, h = 0, p, m; a = J(a); this.followPointer && c ? ("undefined" === typeof c.chartX && (c = d.normalize(c)), d = [c.chartX - f, c.chartY - e]) : a[0].tooltipPos ? d = a[0].tooltipPos : (a.forEach(function (a) {
-                        p =
-                        a.series.yAxis; m = a.series.xAxis; l += a.plotX || 0; h += a.plotLow ? (a.plotLow + (a.plotHigh || 0)) / 2 : a.plotY || 0; m && p && (k ? (l += e + b.plotHeight - m.len - m.pos, h += f + b.plotWidth - p.len - p.pos) : (l += m.pos - f, h += p.pos - e))
-                    }), l /= a.length, h /= a.length, d = [k ? b.plotWidth - h : l, k ? b.plotHeight - l : h], this.shared && 1 < a.length && c && (k ? d[0] = c.chartX - f : d[1] = c.chartY - e)); return d.map(Math.round)
-                }; a.prototype.getDateFormat = function (a, c, b, g) {
-                    var d = this.chart.time, k = d.dateFormat("%m-%d %H:%M:%S.%L", c), e = {
-                        millisecond: 15, second: 12, minute: 9, hour: 6,
-                        day: 3
-                    }, l = "millisecond"; for (f in A) { if (a === A.week && +d.dateFormat("%w", c) === b && "00:00:00.000" === k.substr(6)) { var f = "week"; break } if (A[f] > a) { f = l; break } if (e[f] && k.substr(e[f]) !== "01-01 00:00:00.000".substr(e[f])) break; "week" !== f && (l = f) } if (f) var h = d.resolveDTLFormat(g[f]).main; return h
-                }; a.prototype.getLabel = function () {
-                    var a = this, c = this.chart.renderer, b = this.chart.styledMode, g = this.options, e = "tooltip" + (h(g.className) ? " " + g.className : ""), f = g.style && g.style.pointerEvents || (!this.followPointer && g.stickOnContact ?
-                        "auto" : "none"), l, p = function () { a.inContact = !0 }, C = function () { var b = a.chart.hoverSeries; a.inContact = !1; if (b && b.onMouseOut) b.onMouseOut() }; if (!this.label) {
-                            if (this.outside) {
-                                var m = this.chart.options.chart.style, t = H.getRendererType(); this.container = l = u.doc.createElement("div"); l.className = "highcharts-tooltip-container"; q(l, { position: "absolute", top: "1px", pointerEvents: f, zIndex: Math.max(this.options.style && this.options.style.zIndex || 0, (m && m.zIndex || 0) + 3) }); u.doc.body.appendChild(l); this.renderer = c = new t(l,
-                                    0, 0, m, void 0, void 0, c.styledMode)
-                            } this.split ? this.label = c.g(e) : (this.label = c.label("", 0, 0, g.shape || "callout", null, null, g.useHTML, null, e).attr({ padding: g.padding, r: g.borderRadius }), b || this.label.attr({ fill: g.backgroundColor, "stroke-width": g.borderWidth }).css(g.style).css({ pointerEvents: f }).shadow(g.shadow)); b && g.shadow && (this.applyFilter(), this.label.attr({ filter: "url(#drop-shadow-" + this.chart.index + ")" })); if (a.outside && !a.split) {
-                                var n = this.label, w = n.xSetter, v = n.ySetter; n.xSetter = function (b) {
-                                    w.call(n,
-                                        a.distance); l.style.left = b + "px"
-                                }; n.ySetter = function (b) { v.call(n, a.distance); l.style.top = b + "px" }
-                            } this.label.on("mouseenter", p).on("mouseleave", C).attr({ zIndex: 8 }).add()
-                        } return this.label
-                }; a.prototype.getPosition = function (a, c, b) {
-                    var d = this.chart, k = this.distance, e = {}, f = d.inverted && b.h || 0, h, C = this.outside, p = C ? G.documentElement.clientWidth - 2 * k : d.chartWidth, m = C ? Math.max(G.body.scrollHeight, G.documentElement.scrollHeight, G.body.offsetHeight, G.documentElement.offsetHeight, G.documentElement.clientHeight) :
-                        d.chartHeight, t = d.pointer.getChartPosition(), n = function (g) { var e = "x" === g; return [g, e ? p : m, e ? a : c].concat(C ? [e ? a * t.scaleX : c * t.scaleY, e ? t.left - k + (b.plotX + d.plotLeft) * t.scaleX : t.top - k + (b.plotY + d.plotTop) * t.scaleY, 0, e ? p : m] : [e ? a : c, e ? b.plotX + d.plotLeft : b.plotY + d.plotTop, e ? d.plotLeft : d.plotTop, e ? d.plotLeft + d.plotWidth : d.plotTop + d.plotHeight]) }, q = n("y"), w = n("x"), v = !this.followPointer && l(b.ttBelow, !d.inverted === !!b.negative), A = function (b, a, d, g, c, r, l) {
-                            var h = C ? "y" === b ? k * t.scaleY : k * t.scaleX : k, F = (d - g) / 2, I = g < c - k,
-                            D = c + k + g < a, p = c - h - d + F; c = c + h - F; if (v && D) e[b] = c; else if (!v && I) e[b] = p; else if (I) e[b] = Math.min(l - g, 0 > p - f ? p : p - f); else if (D) e[b] = Math.max(r, c + f + d > a ? c : c + f); else return !1
-                        }, J = function (b, a, d, g, c) { var r; c < k || c > a - k ? r = !1 : e[b] = c < d / 2 ? 1 : c > a - g / 2 ? a - g - 2 : c - d / 2; return r }, u = function (b) { var a = q; q = w; w = a; h = b }, I = function () { !1 !== A.apply(0, q) ? !1 !== J.apply(0, w) || h || (u(!0), I()) : h ? e.x = e.y = 0 : (u(!0), I()) }; (d.inverted || 1 < this.len) && u(); I(); return e
-                }; a.prototype.getXDateFormat = function (a, c, b) {
-                    c = c.dateTimeLabelFormats; var d = b && b.closestPointRange;
-                    return (d ? this.getDateFormat(d, a.x, b.options.startOfWeek, c) : c.day) || c.year
-                }; a.prototype.hide = function (a) { var d = this; x.clearTimeout(this.hideTimer); a = l(a, this.options.hideDelay, 500); this.isHidden || (this.hideTimer = K(function () { d.getLabel().fadeOut(a ? void 0 : a); d.isHidden = !0 }, a)) }; a.prototype.init = function (a, c) {
-                    this.chart = a; this.options = c; this.crosshairs = []; this.now = { x: 0, y: 0 }; this.isHidden = !0; this.split = c.split && !a.inverted && !a.polar; this.shared = c.shared || this.split; this.outside = l(c.outside, !(!a.scrollablePixelsX &&
-                        !a.scrollablePixelsY))
-                }; a.prototype.isStickyOnContact = function () { return !(this.followPointer || !this.options.stickOnContact || !this.inContact) }; a.prototype.move = function (a, k, b, g) {
-                    var d = this, e = d.now, f = !1 !== d.options.animation && !d.isHidden && (1 < Math.abs(a - e.x) || 1 < Math.abs(k - e.y)), l = d.followPointer || 1 < d.len; c(e, { x: f ? (2 * e.x + a) / 3 : a, y: f ? (e.y + k) / 2 : k, anchorX: l ? void 0 : f ? (2 * e.anchorX + b) / 3 : b, anchorY: l ? void 0 : f ? (e.anchorY + g) / 2 : g }); d.getLabel().attr(e); d.drawTracker(); f && (x.clearTimeout(this.tooltipTimeout), this.tooltipTimeout =
-                        setTimeout(function () { d && d.move(a, k, b, g) }, 32))
-                }; a.prototype.refresh = function (a, c) {
-                    var b = this.chart, d = this.options, k = J(a), f = k[0], h = {}, p = [], C = d.formatter || this.defaultFormatter; h = this.shared; var m = b.styledMode; if (d.enabled) {
-                        x.clearTimeout(this.hideTimer); this.followPointer = !this.split && f.series.tooltipOptions.followPointer; var n = this.getAnchor(a, c); var q = n[0]; var w = n[1]; !h || !t(a) && a.series && a.series.noSharedTooltip ? h = f.getLabelConfig() : (b.pointer.applyInactiveState(k), k.forEach(function (b) {
-                            b.setState("hover");
-                            p.push(b.getLabelConfig())
-                        }), h = { x: f.category, y: f.y }, h.points = p); this.len = p.length; a = C.call(h, this); C = f.series; this.distance = l(C.tooltipOptions.distance, 16); if (!1 === a) this.hide(); else {
-                            if (this.split) this.renderSplit(a, k); else if (k = q, h = w, c && b.pointer.isDirectTouch && (k = c.chartX - b.plotLeft, h = c.chartY - b.plotTop), b.polar || !1 === C.options.clip || C.shouldShowTooltip(k, h)) c = this.getLabel(), d.style.width && !m || c.css({ width: this.chart.spacingBox.width + "px" }), c.attr({ text: a && a.join ? a.join("") : a }), c.removeClass(/highcharts-color-[\d]+/g).addClass("highcharts-color-" +
-                                l(f.colorIndex, C.colorIndex)), m || c.attr({ stroke: d.borderColor || f.color || C.color || E.neutralColor60 }), this.updatePosition({ plotX: q, plotY: w, negative: f.negative, ttBelow: f.ttBelow, h: n[2] || 0 }); else { this.hide(); return } this.isHidden && this.label && this.label.attr({ opacity: 1 }).show(); this.isHidden = !1
-                        } e(this, "refresh")
-                    }
-                }; a.prototype.renderSplit = function (a, k) {
-                    function b(b, a, g, c, k) {
-                        void 0 === k && (k = !0); g ? (a = T ? 0 : da, b = B(b - c / 2, N.left, N.right - c - (d.outside ? R : 0))) : (a -= V, b = k ? b - c - x : b + x, b = B(b, k ? b : N.left, N.right)); return {
-                            x: b,
-                            y: a
-                        }
-                    } var d = this, e = d.chart, f = d.chart, h = f.chartWidth, p = f.chartHeight, C = f.plotHeight, m = f.plotLeft, t = f.plotTop, n = f.pointer, q = f.scrollablePixelsY; q = void 0 === q ? 0 : q; var v = f.scrollablePixelsX, A = f.scrollingContainer; A = void 0 === A ? { scrollLeft: 0, scrollTop: 0 } : A; var J = A.scrollLeft; A = A.scrollTop; var K = f.styledMode, x = d.distance, y = d.options, I = d.options.positioner, N = d.outside && "number" !== typeof v ? G.documentElement.getBoundingClientRect() : { left: J, right: J + h, top: A, bottom: A + p }, P = d.getLabel(), U = this.renderer || e.renderer,
-                        T = !(!e.xAxis[0] || !e.xAxis[0].opposite); e = n.getChartPosition(); var R = e.left; e = e.top; var V = t + A, ca = 0, da = C - q; w(a) && (a = [!1, a]); a = a.slice(0, k.length + 1).reduce(function (a, g, c) {
-                            if (!1 !== g && "" !== g) {
-                                c = k[c - 1] || { isHeader: !0, plotX: k[0].plotX, plotY: C, series: {} }; var e = c.isHeader, f = e ? d : c.series; g = g.toString(); var r = f.tt, h = c.isHeader; var F = c.series; var p = "highcharts-color-" + l(c.colorIndex, F.colorIndex, "none"); r || (r = { padding: y.padding, r: y.borderRadius }, K || (r.fill = y.backgroundColor, r["stroke-width"] = y.borderWidth), r =
-                                    U.label("", 0, 0, y[h ? "headerShape" : "shape"] || "callout", void 0, void 0, y.useHTML).addClass((h ? "highcharts-tooltip-header " : "") + "highcharts-tooltip-box " + p).attr(r).add(P)); r.isActive = !0; r.attr({ text: g }); K || r.css(y.style).shadow(y.shadow).attr({ stroke: y.borderColor || c.color || F.color || E.neutralColor80 }); f = f.tt = r; h = f.getBBox(); g = h.width + f.strokeWidth(); e && (ca = h.height, da += ca, T && (V -= ca)); F = c.plotX; F = void 0 === F ? 0 : F; p = c.plotY; p = void 0 === p ? 0 : p; r = c.series; if (c.isHeader) { F = m + F; var D = t + C / 2 } else {
-                                        var n = r.xAxis, M =
-                                            r.yAxis; F = n.pos + B(F, -x, n.len + x); r.shouldShowTooltip(0, M.pos - t + p, { ignoreX: !0 }) && (D = M.pos + p)
-                                    } F = B(F, N.left - x, N.right + x); "number" === typeof D ? (h = h.height + 1, p = I ? I.call(d, g, h, c) : b(F, D, e, g), a.push({ align: I ? 0 : void 0, anchorX: F, anchorY: D, boxWidth: g, point: c, rank: l(p.rank, e ? 1 : 0), size: h, target: p.y, tt: f, x: p.x })) : f.isActive = !1
-                            } return a
-                        }, []); !I && a.some(function (b) { var a = (d.outside ? R : 0) + b.anchorX; return a < N.left && a + b.boxWidth < N.right ? !0 : a < R - N.left + b.boxWidth && N.right - a > a }) && (a = a.map(function (a) {
-                            var d = b(a.anchorX, a.anchorY,
-                                a.point.isHeader, a.boxWidth, !1); return c(a, { target: d.y, x: d.x })
-                        })); d.cleanSplit(); u.distribute(a, da); var H = R, ea = R; a.forEach(function (b) { var a = b.x, g = b.boxWidth; b = b.isHeader; b || (d.outside && R + a < H && (H = R + a), !b && d.outside && H + g > ea && (ea = R + a)) }); a.forEach(function (b) { var a = b.x, g = b.anchorX, c = b.pos, k = b.point.isHeader; c = { visibility: "undefined" === typeof c ? "hidden" : "inherit", x: a, y: c + V, anchorX: g, anchorY: b.anchorY }; if (d.outside && a < g) { var e = R - H; 0 < e && (k || (c.x = a + e, c.anchorX = g + e), k && (c.x = (ea - H) / 2, c.anchorX = g + e)) } b.tt.attr(c) });
-                    a = d.container; q = d.renderer; d.outside && a && q && (f = P.getBBox(), q.setSize(f.width + f.x, f.height + f.y, !1), a.style.left = H + "px", a.style.top = e + "px")
-                }; a.prototype.drawTracker = function () {
-                    if (this.followPointer || !this.options.stickOnContact) this.tracker && this.tracker.destroy(); else {
-                        var a = this.chart, c = this.label, b = this.shared ? a.hoverPoints : a.hoverPoint; if (c && b) {
-                            var g = { x: 0, y: 0, width: 0, height: 0 }; b = this.getAnchor(b); var e = c.getBBox(); b[0] += a.plotLeft - c.translateX; b[1] += a.plotTop - c.translateY; g.x = Math.min(0, b[0]); g.y =
-                                Math.min(0, b[1]); g.width = 0 > b[0] ? Math.max(Math.abs(b[0]), e.width - b[0]) : Math.max(Math.abs(b[0]), e.width); g.height = 0 > b[1] ? Math.max(Math.abs(b[1]), e.height - Math.abs(b[1])) : Math.max(Math.abs(b[1]), e.height); this.tracker ? this.tracker.attr(g) : (this.tracker = c.renderer.rect(g).addClass("highcharts-tracker").add(c), a.styledMode || this.tracker.attr({ fill: "rgba(0,0,0,0)" }))
-                        }
-                    }
-                }; a.prototype.styledModeFormat = function (a) {
-                    return a.replace('style="font-size: 10px"', 'class="highcharts-header"').replace(/style="color:{(point|series)\.color}"/g,
-                        'class="highcharts-color-{$1.colorIndex}"')
-                }; a.prototype.tooltipFooterHeaderFormatter = function (a, c) {
-                    var b = c ? "footer" : "header", d = a.series, k = d.tooltipOptions, f = k.xDateFormat, l = d.xAxis, h = l && "datetime" === l.options.type && m(a.key), p = k[b + "Format"]; c = { isFooter: c, labelConfig: a }; e(this, "headerFormatter", c, function (b) {
-                        h && !f && (f = this.getXDateFormat(a, k, l)); h && f && (a.point && a.point.tooltipDateKeys || ["key"]).forEach(function (b) { p = p.replace("{point." + b + "}", "{point." + b + ":" + f + "}") }); d.chart.styledMode && (p = this.styledModeFormat(p));
-                        b.text = v(p, { point: a, series: d }, this.chart)
-                    }); return c.text
-                }; a.prototype.update = function (a) { this.destroy(); n(!0, this.chart.options.tooltip.userOptions, a); this.init(this.chart, n(!0, this.options, a)) }; a.prototype.updatePosition = function (a) {
-                    var d = this.chart, b = d.pointer, c = this.getLabel(), e = a.plotX + d.plotLeft; d = a.plotY + d.plotTop; b = b.getChartPosition(); a = (this.options.positioner || this.getPosition).call(this, c.width, c.height, a); if (this.outside) {
-                        var f = (this.options.borderWidth || 0) + 2 * this.distance; this.renderer.setSize(c.width +
-                            f, c.height + f, !1); if (1 !== b.scaleX || 1 !== b.scaleY) q(this.container, { transform: "scale(" + b.scaleX + ", " + b.scaleY + ")" }), e *= b.scaleX, d *= b.scaleY; e += b.left - a.x; d += b.top - a.y
-                    } this.move(Math.round(a.x), Math.round(a.y || 0), e, d)
-                }; return a
-            }(); u.Tooltip = a; return u.Tooltip
-    }); L(a, "Core/Pointer.js", [a["Core/Color/Color.js"], a["Core/Globals.js"], a["Core/Color/Palette.js"], a["Core/Tooltip.js"], a["Core/Utilities.js"]], function (a, u, E, H, x) {
-        var v = a.parse, G = u.charts, B = u.noop, q = x.addEvent, h = x.attr, f = x.css, c = x.defined, e = x.extend,
-        t = x.find, m = x.fireEvent, w = x.isNumber, n = x.isObject, l = x.objectEach, J = x.offset, K = x.pick, A = x.splat; a = function () {
-            function a(a, c) { this.lastValidTouch = {}; this.pinchDown = []; this.runChartClick = !1; this.eventsToUnbind = []; this.chart = a; this.hasDragged = !1; this.options = c; this.init(a, c) } a.prototype.applyInactiveState = function (a) {
-                var d = [], b; (a || []).forEach(function (a) { b = a.series; d.push(b); b.linkedParent && d.push(b.linkedParent); b.linkedSeries && (d = d.concat(b.linkedSeries)); b.navigatorSeries && d.push(b.navigatorSeries) });
-                this.chart.series.forEach(function (b) { -1 === d.indexOf(b) ? b.setState("inactive", !0) : b.options.inactiveOtherPoints && b.setAllPointsToState("inactive") })
-            }; a.prototype.destroy = function () { var d = this; this.eventsToUnbind.forEach(function (a) { return a() }); this.eventsToUnbind = []; u.chartCount || (a.unbindDocumentMouseUp && (a.unbindDocumentMouseUp = a.unbindDocumentMouseUp()), a.unbindDocumentTouchEnd && (a.unbindDocumentTouchEnd = a.unbindDocumentTouchEnd())); clearInterval(d.tooltipTimeout); l(d, function (a, b) { d[b] = void 0 }) };
-            a.prototype.drag = function (a) {
-                var d = this.chart, b = d.options.chart, c = this.zoomHor, e = this.zoomVert, f = d.plotLeft, l = d.plotTop, h = d.plotWidth, C = d.plotHeight, p = this.mouseDownX || 0, m = this.mouseDownY || 0, t = n(b.panning) ? b.panning && b.panning.enabled : b.panning, q = b.panKey && a[b.panKey + "Key"], w = a.chartX, A = a.chartY, J = this.selectionMarker; if (!J || !J.touch) if (w < f ? w = f : w > f + h && (w = f + h), A < l ? A = l : A > l + C && (A = l + C), this.hasDragged = Math.sqrt(Math.pow(p - w, 2) + Math.pow(m - A, 2)), 10 < this.hasDragged) {
-                    var u = d.isInsidePlot(p - f, m - l, { visiblePlotOnly: !0 });
-                    d.hasCartesianSeries && (this.zoomX || this.zoomY) && u && !q && !J && (this.selectionMarker = J = d.renderer.rect(f, l, c ? 1 : h, e ? 1 : C, 0).attr({ "class": "highcharts-selection-marker", zIndex: 7 }).add(), d.styledMode || J.attr({ fill: b.selectionMarkerFill || v(E.highlightColor80).setOpacity(.25).get() })); J && c && (c = w - p, J.attr({ width: Math.abs(c), x: (0 < c ? 0 : c) + p })); J && e && (c = A - m, J.attr({ height: Math.abs(c), y: (0 < c ? 0 : c) + m })); u && !J && t && d.pan(a, b.panning)
-                }
-            }; a.prototype.dragStart = function (a) {
-                var d = this.chart; d.mouseIsDown = a.type; d.cancelClick =
-                    !1; d.mouseDownX = this.mouseDownX = a.chartX; d.mouseDownY = this.mouseDownY = a.chartY
-            }; a.prototype.drop = function (a) {
-                var d = this, b = this.chart, g = this.hasPinched; if (this.selectionMarker) {
-                    var r = { originalEvent: a, xAxis: [], yAxis: [] }, l = this.selectionMarker, h = l.attr ? l.attr("x") : l.x, p = l.attr ? l.attr("y") : l.y, C = l.attr ? l.attr("width") : l.width, t = l.attr ? l.attr("height") : l.height, n; if (this.hasDragged || g) b.axes.forEach(function (b) {
-                        if (b.zoomEnabled && c(b.min) && (g || d[{ xAxis: "zoomX", yAxis: "zoomY" }[b.coll]]) && w(h) && w(p)) {
-                            var e =
-                                b.horiz, k = "touchend" === a.type ? b.minPixelPadding : 0, f = b.toValue((e ? h : p) + k); e = b.toValue((e ? h + C : p + t) - k); r[b.coll].push({ axis: b, min: Math.min(f, e), max: Math.max(f, e) }); n = !0
-                        }
-                    }), n && m(b, "selection", r, function (a) { b.zoom(e(a, g ? { animation: !1 } : null)) }); w(b.index) && (this.selectionMarker = this.selectionMarker.destroy()); g && this.scaleGroups()
-                } b && w(b.index) && (f(b.container, { cursor: b._cursor }), b.cancelClick = 10 < this.hasDragged, b.mouseIsDown = this.hasDragged = this.hasPinched = !1, this.pinchDown = [])
-            }; a.prototype.findNearestKDPoint =
-                function (a, c, b) { var d = this.chart, e = d.hoverPoint; d = d.tooltip; if (e && d && d.isStickyOnContact()) return e; var k; a.forEach(function (a) { var d = !(a.noSharedTooltip && c) && 0 > a.options.findNearestPointBy.indexOf("y"); a = a.searchPoint(b, d); if ((d = n(a, !0) && a.series) && !(d = !n(k, !0))) { d = k.distX - a.distX; var g = k.dist - a.dist, e = (a.series.group && a.series.group.zIndex) - (k.series.group && k.series.group.zIndex); d = 0 < (0 !== d && c ? d : 0 !== g ? g : 0 !== e ? e : k.series.index > a.series.index ? -1 : 1) } d && (k = a) }); return k }; a.prototype.getChartCoordinatesFromPoint =
-                    function (a, c) { var b = a.series, d = b.xAxis; b = b.yAxis; var e = a.shapeArgs; if (d && b) { var k = K(a.clientX, a.plotX), f = a.plotY || 0; a.isNode && e && w(e.x) && w(e.y) && (k = e.x, f = e.y); return c ? { chartX: b.len + b.pos - f, chartY: d.len + d.pos - k } : { chartX: k + d.pos, chartY: f + b.pos } } if (e && e.x && e.y) return { chartX: e.x, chartY: e.y } }; a.prototype.getChartPosition = function () {
-                        if (this.chartPosition) return this.chartPosition; var a = this.chart.container, c = J(a); this.chartPosition = { left: c.left, top: c.top, scaleX: 1, scaleY: 1 }; var b = a.offsetWidth; a = a.offsetHeight;
-                        2 < b && 2 < a && (this.chartPosition.scaleX = c.width / b, this.chartPosition.scaleY = c.height / a); return this.chartPosition
-                    }; a.prototype.getCoordinates = function (a) { var d = { xAxis: [], yAxis: [] }; this.chart.axes.forEach(function (b) { d[b.isXAxis ? "xAxis" : "yAxis"].push({ axis: b, value: b.toValue(a[b.horiz ? "chartX" : "chartY"]) }) }); return d }; a.prototype.getHoverData = function (a, c, b, g, e, f) {
-                        var d = []; g = !(!g || !a); var k = { chartX: f ? f.chartX : void 0, chartY: f ? f.chartY : void 0, shared: e }; m(this, "beforeGetHoverData", k); var l = c && !c.stickyTracking ?
-                            [c] : b.filter(function (b) { return k.filter ? k.filter(b) : b.visible && !(!e && b.directTouch) && K(b.options.enableMouseTracking, !0) && b.stickyTracking }); var r = g || !f ? a : this.findNearestKDPoint(l, e, f); c = r && r.series; r && (e && !c.noSharedTooltip ? (l = b.filter(function (b) { return k.filter ? k.filter(b) : b.visible && !(!e && b.directTouch) && K(b.options.enableMouseTracking, !0) && !b.noSharedTooltip }), l.forEach(function (b) { var a = t(b.points, function (b) { return b.x === r.x && !b.isNull }); n(a) && (b.chart.isBoosting && (a = b.getPoint(a)), d.push(a)) })) :
-                                d.push(r)); k = { hoverPoint: r }; m(this, "afterGetHoverData", k); return { hoverPoint: k.hoverPoint, hoverSeries: c, hoverPoints: d }
-                    }; a.prototype.getPointFromEvent = function (a) { a = a.target; for (var d; a && !d;)d = a.point, a = a.parentNode; return d }; a.prototype.onTrackerMouseOut = function (a) { a = a.relatedTarget || a.toElement; var d = this.chart.hoverSeries; this.isDirectTouch = !1; if (!(!d || !a || d.stickyTracking || this.inClass(a, "highcharts-tooltip") || this.inClass(a, "highcharts-series-" + d.index) && this.inClass(a, "highcharts-tracker"))) d.onMouseOut() };
-            a.prototype.inClass = function (a, c) { for (var b; a;) { if (b = h(a, "class")) { if (-1 !== b.indexOf(c)) return !0; if (-1 !== b.indexOf("highcharts-container")) return !1 } a = a.parentNode } }; a.prototype.init = function (a, c) { this.options = c; this.chart = a; this.runChartClick = !(!c.chart.events || !c.chart.events.click); this.pinchDown = []; this.lastValidTouch = {}; H && (a.tooltip = new H(a, c.tooltip), this.followTouchMove = K(c.tooltip.followTouchMove, !0)); this.setDOMEvents() }; a.prototype.normalize = function (a, c) {
-                var b = a.touches, d = b ? b.length ? b.item(0) :
-                    K(b.changedTouches, a.changedTouches)[0] : a; c || (c = this.getChartPosition()); b = d.pageX - c.left; d = d.pageY - c.top; b /= c.scaleX; d /= c.scaleY; return e(a, { chartX: Math.round(b), chartY: Math.round(d) })
-            }; a.prototype.onContainerClick = function (a) {
-                var d = this.chart, b = d.hoverPoint; a = this.normalize(a); var c = d.plotLeft, f = d.plotTop; d.cancelClick || (b && this.inClass(a.target, "highcharts-tracker") ? (m(b.series, "click", e(a, { point: b })), d.hoverPoint && b.firePointEvent("click", a)) : (e(a, this.getCoordinates(a)), d.isInsidePlot(a.chartX -
-                    c, a.chartY - f, { visiblePlotOnly: !0 }) && m(d, "click", a)))
-            }; a.prototype.onContainerMouseDown = function (a) { var d = 1 === ((a.buttons || a.button) & 1); a = this.normalize(a); if (u.isFirefox && 0 !== a.button) this.onContainerMouseMove(a); if ("undefined" === typeof a.button || d) this.zoomOption(a), d && a.preventDefault && a.preventDefault(), this.dragStart(a) }; a.prototype.onContainerMouseLeave = function (d) {
-                var c = G[K(a.hoverChartIndex, -1)], b = this.chart.tooltip; d = this.normalize(d); c && (d.relatedTarget || d.toElement) && (c.pointer.reset(),
-                    c.pointer.chartPosition = void 0); b && !b.isHidden && this.reset()
-            }; a.prototype.onContainerMouseEnter = function (a) { delete this.chartPosition }; a.prototype.onContainerMouseMove = function (a) {
-                var d = this.chart; a = this.normalize(a); this.setHoverChartIndex(); a.preventDefault || (a.returnValue = !1); ("mousedown" === d.mouseIsDown || this.touchSelect(a)) && this.drag(a); d.openMenu || !this.inClass(a.target, "highcharts-tracker") && !d.isInsidePlot(a.chartX - d.plotLeft, a.chartY - d.plotTop, { visiblePlotOnly: !0 }) || (this.inClass(a.target,
-                    "highcharts-no-tooltip") ? this.reset(!1, 0) : this.runPointActions(a))
-            }; a.prototype.onDocumentTouchEnd = function (d) { var c = G[K(a.hoverChartIndex, -1)]; c && c.pointer.drop(d) }; a.prototype.onContainerTouchMove = function (a) { if (this.touchSelect(a)) this.onContainerMouseMove(a); else this.touch(a) }; a.prototype.onContainerTouchStart = function (a) { if (this.touchSelect(a)) this.onContainerMouseDown(a); else this.zoomOption(a), this.touch(a, !0) }; a.prototype.onDocumentMouseMove = function (a) {
-                var d = this.chart, b = this.chartPosition;
-                a = this.normalize(a, b); var c = d.tooltip; !b || c && c.isStickyOnContact() || d.isInsidePlot(a.chartX - d.plotLeft, a.chartY - d.plotTop, { visiblePlotOnly: !0 }) || this.inClass(a.target, "highcharts-tracker") || this.reset()
-            }; a.prototype.onDocumentMouseUp = function (d) { var c = G[K(a.hoverChartIndex, -1)]; c && c.pointer.drop(d) }; a.prototype.pinch = function (a) {
-                var d = this, b = d.chart, c = d.pinchDown, f = a.touches || [], l = f.length, h = d.lastValidTouch, p = d.hasZoom, C = {}, m = 1 === l && (d.inClass(a.target, "highcharts-tracker") && b.runTrackerClick || d.runChartClick),
-                t = {}, n = d.selectionMarker; 1 < l && (d.initiated = !0); p && d.initiated && !m && !1 !== a.cancelable && a.preventDefault();[].map.call(f, function (a) { return d.normalize(a) }); "touchstart" === a.type ? ([].forEach.call(f, function (a, b) { c[b] = { chartX: a.chartX, chartY: a.chartY } }), h.x = [c[0].chartX, c[1] && c[1].chartX], h.y = [c[0].chartY, c[1] && c[1].chartY], b.axes.forEach(function (a) {
-                    if (a.zoomEnabled) {
-                        var d = b.bounds[a.horiz ? "h" : "v"], c = a.minPixelPadding, g = a.toPixels(Math.min(K(a.options.min, a.dataMin), a.dataMin)), e = a.toPixels(Math.max(K(a.options.max,
-                            a.dataMax), a.dataMax)), k = Math.max(g, e); d.min = Math.min(a.pos, Math.min(g, e) - c); d.max = Math.max(a.pos + a.len, k + c)
-                    }
-                }), d.res = !0) : d.followTouchMove && 1 === l ? this.runPointActions(d.normalize(a)) : c.length && (n || (d.selectionMarker = n = e({ destroy: B, touch: !0 }, b.plotBox)), d.pinchTranslate(c, f, C, n, t, h), d.hasPinched = p, d.scaleGroups(C, t), d.res && (d.res = !1, this.reset(!1, 0)))
-            }; a.prototype.pinchTranslate = function (a, c, b, g, e, f) {
-                this.zoomHor && this.pinchTranslateDirection(!0, a, c, b, g, e, f); this.zoomVert && this.pinchTranslateDirection(!1,
-                    a, c, b, g, e, f)
-            }; a.prototype.pinchTranslateDirection = function (a, c, b, g, e, f, l, h) {
-                var d = this.chart, k = a ? "x" : "y", r = a ? "X" : "Y", F = "chart" + r, p = a ? "width" : "height", m = d["plot" + (a ? "Left" : "Top")], D = d.inverted, t = d.bounds[a ? "h" : "v"], n = 1 === c.length, M = c[0][F], q = !n && c[1][F]; c = function () { "number" === typeof v && 20 < Math.abs(M - q) && (P = h || Math.abs(A - v) / Math.abs(M - q)); w = (m - A) / P + M; I = d["plot" + (a ? "Width" : "Height")] / P }; var I, w, P = h || 1, A = b[0][F], v = !n && b[1][F]; c(); b = w; if (b < t.min) { b = t.min; var J = !0 } else b + I > t.max && (b = t.max - I, J = !0); J ? (A -=
-                    .8 * (A - l[k][0]), "number" === typeof v && (v -= .8 * (v - l[k][1])), c()) : l[k] = [A, v]; D || (f[k] = w - m, f[p] = I); f = D ? 1 / P : P; e[p] = I; e[k] = b; g[D ? a ? "scaleY" : "scaleX" : "scale" + r] = P; g["translate" + r] = f * m + (A - f * M)
-            }; a.prototype.reset = function (a, c) {
-                var b = this.chart, d = b.hoverSeries, e = b.hoverPoint, k = b.hoverPoints, f = b.tooltip, l = f && f.shared ? k : e; a && l && A(l).forEach(function (b) { b.series.isCartesian && "undefined" === typeof b.plotX && (a = !1) }); if (a) f && l && A(l).length && (f.refresh(l), f.shared && k ? k.forEach(function (a) {
-                    a.setState(a.state, !0); a.series.isCartesian &&
-                        (a.series.xAxis.crosshair && a.series.xAxis.drawCrosshair(null, a), a.series.yAxis.crosshair && a.series.yAxis.drawCrosshair(null, a))
-                }) : e && (e.setState(e.state, !0), b.axes.forEach(function (a) { a.crosshair && e.series[a.coll] === a && a.drawCrosshair(null, e) }))); else { if (e) e.onMouseOut(); k && k.forEach(function (a) { a.setState() }); if (d) d.onMouseOut(); f && f.hide(c); this.unDocMouseMove && (this.unDocMouseMove = this.unDocMouseMove()); b.axes.forEach(function (a) { a.hideCrosshair() }); this.hoverX = b.hoverPoints = b.hoverPoint = null }
-            };
-            a.prototype.runPointActions = function (d, c) {
-                var b = this.chart, g = b.tooltip && b.tooltip.options.enabled ? b.tooltip : void 0, e = g ? g.shared : !1, f = c || b.hoverPoint, k = f && f.series || b.hoverSeries; c = this.getHoverData(f, k, b.series, (!d || "touchmove" !== d.type) && (!!c || k && k.directTouch && this.isDirectTouch), e, d); f = c.hoverPoint; k = c.hoverSeries; var l = c.hoverPoints; c = k && k.tooltipOptions.followPointer && !k.tooltipOptions.split; e = e && k && !k.noSharedTooltip; if (f && (f !== b.hoverPoint || g && g.isHidden)) {
-                    (b.hoverPoints || []).forEach(function (a) {
-                        -1 ===
-                        l.indexOf(a) && a.setState()
-                    }); if (b.hoverSeries !== k) k.onMouseOver(); this.applyInactiveState(l); (l || []).forEach(function (a) { a.setState("hover") }); b.hoverPoint && b.hoverPoint.firePointEvent("mouseOut"); if (!f.series) return; b.hoverPoints = l; b.hoverPoint = f; f.firePointEvent("mouseOver"); g && g.refresh(e ? l : f, d)
-                } else c && g && !g.isHidden && (f = g.getAnchor([{}], d), b.isInsidePlot(f[0], f[1], { visiblePlotOnly: !0 }) && g.updatePosition({ plotX: f[0], plotY: f[1] })); this.unDocMouseMove || (this.unDocMouseMove = q(b.container.ownerDocument,
-                    "mousemove", function (b) { var d = G[a.hoverChartIndex]; if (d) d.pointer.onDocumentMouseMove(b) }), this.eventsToUnbind.push(this.unDocMouseMove)); b.axes.forEach(function (a) { var c = K((a.crosshair || {}).snap, !0), g; c && ((g = b.hoverPoint) && g.series[a.coll] === a || (g = t(l, function (b) { return b.series[a.coll] === a }))); g || !c ? a.drawCrosshair(d, g) : a.hideCrosshair() })
-            }; a.prototype.scaleGroups = function (a, c) {
-                var b = this.chart; b.series.forEach(function (d) {
-                    var g = a || d.getPlotBox(); d.xAxis && d.xAxis.zoomEnabled && d.group && (d.group.attr(g),
-                        d.markerGroup && (d.markerGroup.attr(g), d.markerGroup.clip(c ? b.clipRect : null)), d.dataLabelsGroup && d.dataLabelsGroup.attr(g))
-                }); b.clipRect.attr(c || b.clipBox)
-            }; a.prototype.setDOMEvents = function () {
-                var d = this, c = this.chart.container, b = c.ownerDocument; c.onmousedown = this.onContainerMouseDown.bind(this); c.onmousemove = this.onContainerMouseMove.bind(this); c.onclick = this.onContainerClick.bind(this); this.eventsToUnbind.push(q(c, "mouseenter", this.onContainerMouseEnter.bind(this))); this.eventsToUnbind.push(q(c, "mouseleave",
-                    this.onContainerMouseLeave.bind(this))); a.unbindDocumentMouseUp || (a.unbindDocumentMouseUp = q(b, "mouseup", this.onDocumentMouseUp.bind(this))); for (var g = this.chart.renderTo.parentElement; g && "BODY" !== g.tagName;)this.eventsToUnbind.push(q(g, "scroll", function () { delete d.chartPosition })), g = g.parentElement; u.hasTouch && (this.eventsToUnbind.push(q(c, "touchstart", this.onContainerTouchStart.bind(this), { passive: !1 })), this.eventsToUnbind.push(q(c, "touchmove", this.onContainerTouchMove.bind(this), { passive: !1 })),
-                        a.unbindDocumentTouchEnd || (a.unbindDocumentTouchEnd = q(b, "touchend", this.onDocumentTouchEnd.bind(this), { passive: !1 })))
-            }; a.prototype.setHoverChartIndex = function () { var d = this.chart, c = u.charts[K(a.hoverChartIndex, -1)]; if (c && c !== d) c.pointer.onContainerMouseLeave({ relatedTarget: !0 }); c && c.mouseIsDown || (a.hoverChartIndex = d.index) }; a.prototype.touch = function (a, c) {
-                var b = this.chart, d; this.setHoverChartIndex(); if (1 === a.touches.length) if (a = this.normalize(a), (d = b.isInsidePlot(a.chartX - b.plotLeft, a.chartY - b.plotTop,
-                    { visiblePlotOnly: !0 })) && !b.openMenu) { c && this.runPointActions(a); if ("touchmove" === a.type) { c = this.pinchDown; var e = c[0] ? 4 <= Math.sqrt(Math.pow(c[0].chartX - a.chartX, 2) + Math.pow(c[0].chartY - a.chartY, 2)) : !1 } K(e, !0) && this.pinch(a) } else c && this.reset(); else 2 === a.touches.length && this.pinch(a)
-            }; a.prototype.touchSelect = function (a) { return !(!this.chart.options.chart.zoomBySingleTouch || !a.touches || 1 !== a.touches.length) }; a.prototype.zoomOption = function (a) {
-                var d = this.chart, b = d.options.chart; d = d.inverted; var c = b.zoomType ||
-                    ""; /touch/.test(a.type) && (c = K(b.pinchType, c)); this.zoomX = a = /x/.test(c); this.zoomY = b = /y/.test(c); this.zoomHor = a && !d || b && d; this.zoomVert = b && !d || a && d; this.hasZoom = a || b
-            }; return a
-        }(); ""; return a
-    }); L(a, "Core/MSPointer.js", [a["Core/Globals.js"], a["Core/Pointer.js"], a["Core/Utilities.js"]], function (a, u, E) {
-        function v() { var a = []; a.item = function (a) { return this[a] }; e(m, function (c) { a.push({ pageX: c.pageX, pageY: c.pageY, target: c.target }) }); return a } function x(a, c, e, f) {
-            var l = G[u.hoverChartIndex || NaN]; "touch" !== a.pointerType &&
-                a.pointerType !== a.MSPOINTER_TYPE_TOUCH || !l || (l = l.pointer, f(a), l[c]({ type: e, target: a.currentTarget, preventDefault: q, touches: v() }))
-        } var y = this && this.__extends || function () { var a = function (c, e) { a = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (a, c) { a.__proto__ = c } || function (a, c) { for (var e in c) c.hasOwnProperty(e) && (a[e] = c[e]) }; return a(c, e) }; return function (c, e) { function f() { this.constructor = c } a(c, e); c.prototype = null === e ? Object.create(e) : (f.prototype = e.prototype, new f) } }(), G = a.charts, B =
-            a.doc, q = a.noop, h = a.win, f = E.addEvent, c = E.css, e = E.objectEach, t = E.removeEvent, m = {}, w = !!h.PointerEvent; return function (e) {
-                function l() { return null !== e && e.apply(this, arguments) || this } y(l, e); l.isRequired = function () { return !(a.hasTouch || !h.PointerEvent && !h.MSPointerEvent) }; l.prototype.batchMSEvents = function (a) {
-                    a(this.chart.container, w ? "pointerdown" : "MSPointerDown", this.onContainerPointerDown); a(this.chart.container, w ? "pointermove" : "MSPointerMove", this.onContainerPointerMove); a(B, w ? "pointerup" : "MSPointerUp",
-                        this.onDocumentPointerUp)
-                }; l.prototype.destroy = function () { this.batchMSEvents(t); e.prototype.destroy.call(this) }; l.prototype.init = function (a, f) { e.prototype.init.call(this, a, f); this.hasZoom && c(a.container, { "-ms-touch-action": "none", "touch-action": "none" }) }; l.prototype.onContainerPointerDown = function (a) { x(a, "onContainerTouchStart", "touchstart", function (a) { m[a.pointerId] = { pageX: a.pageX, pageY: a.pageY, target: a.currentTarget } }) }; l.prototype.onContainerPointerMove = function (a) {
-                    x(a, "onContainerTouchMove", "touchmove",
-                        function (a) { m[a.pointerId] = { pageX: a.pageX, pageY: a.pageY }; m[a.pointerId].target || (m[a.pointerId].target = a.currentTarget) })
-                }; l.prototype.onDocumentPointerUp = function (a) { x(a, "onDocumentTouchEnd", "touchend", function (a) { delete m[a.pointerId] }) }; l.prototype.setDOMEvents = function () { e.prototype.setDOMEvents.call(this); (this.hasZoom || this.followTouchMove) && this.batchMSEvents(f) }; return l
-            }(u)
-    }); L(a, "Core/Series/Point.js", [a["Core/Renderer/HTML/AST.js"], a["Core/Animation/AnimationUtilities.js"], a["Core/FormatUtilities.js"],
-    a["Core/Globals.js"], a["Core/DefaultOptions.js"], a["Core/Utilities.js"]], function (a, u, E, H, x, y) {
-        var v = u.animObject, B = E.format, q = x.defaultOptions, h = y.addEvent, f = y.defined, c = y.erase, e = y.extend, t = y.fireEvent, m = y.getNestedProperty, w = y.isArray, n = y.isFunction, l = y.isNumber, J = y.isObject, K = y.merge, A = y.objectEach, p = y.pick, d = y.syncTimeout, k = y.removeEvent, b = y.uniqueKey; ""; u = function () {
-            function g() {
-                this.colorIndex = this.category = void 0; this.formatPrefix = "point"; this.id = void 0; this.isNull = !1; this.percentage = this.options =
-                    this.name = void 0; this.selected = !1; this.total = this.series = void 0; this.visible = !0; this.x = void 0
-            } g.prototype.animateBeforeDestroy = function () { var a = this, b = { x: a.startXPos, opacity: 0 }, d, c = a.getGraphicalProps(); c.singular.forEach(function (c) { d = "dataLabel" === c; a[c] = a[c].animate(d ? { x: a[c].startXPos, y: a[c].startYPos, opacity: 0 } : b) }); c.plural.forEach(function (b) { a[b].forEach(function (b) { b.element && b.animate(e({ x: a.startXPos }, b.startYPos ? { x: b.startXPos, y: b.startYPos } : {})) }) }) }; g.prototype.applyOptions = function (a,
-                b) {
-                    var d = this.series, c = d.options.pointValKey || d.pointValKey; a = g.prototype.optionsToObject.call(this, a); e(this, a); this.options = this.options ? e(this.options, a) : a; a.group && delete this.group; a.dataLabels && delete this.dataLabels; c && (this.y = g.prototype.getNestedProperty.call(this, c)); this.formatPrefix = (this.isNull = p(this.isValid && !this.isValid(), null === this.x || !l(this.y))) ? "null" : "point"; this.selected && (this.state = "select"); "name" in this && "undefined" === typeof b && d.xAxis && d.xAxis.hasNames && (this.x = d.xAxis.nameToX(this));
-                "undefined" === typeof this.x && d && (this.x = "undefined" === typeof b ? d.autoIncrement(this) : b); return this
-            }; g.prototype.destroy = function () {
-                function a() { if (b.graphic || b.dataLabel || b.dataLabels) k(b), b.destroyElements(); for (h in b) b[h] = null } var b = this, g = b.series, e = g.chart; g = g.options.dataSorting; var f = e.hoverPoints, l = v(b.series.chart.renderer.globalAnimation), h; b.legendItem && e.legend.destroyItem(b); f && (b.setState(), c(f, b), f.length || (e.hoverPoints = null)); if (b === e.hoverPoint) b.onMouseOut(); g && g.enabled ? (this.animateBeforeDestroy(),
-                    d(a, l.duration)) : a(); e.pointCount--
-            }; g.prototype.destroyElements = function (a) { var b = this; a = b.getGraphicalProps(a); a.singular.forEach(function (a) { b[a] = b[a].destroy() }); a.plural.forEach(function (a) { b[a].forEach(function (a) { a.element && a.destroy() }); delete b[a] }) }; g.prototype.firePointEvent = function (a, b, d) {
-                var c = this, g = this.series.options; (g.point.events[a] || c.options && c.options.events && c.options.events[a]) && c.importEvents(); "click" === a && g.allowPointSelect && (d = function (a) {
-                    c.select && c.select(null, a.ctrlKey ||
-                        a.metaKey || a.shiftKey)
-                }); t(c, a, b, d)
-            }; g.prototype.getClassName = function () { return "highcharts-point" + (this.selected ? " highcharts-point-select" : "") + (this.negative ? " highcharts-negative" : "") + (this.isNull ? " highcharts-null-point" : "") + ("undefined" !== typeof this.colorIndex ? " highcharts-color-" + this.colorIndex : "") + (this.options.className ? " " + this.options.className : "") + (this.zone && this.zone.className ? " " + this.zone.className.replace("highcharts-negative", "") : "") }; g.prototype.getGraphicalProps = function (a) {
-                var b =
-                    this, d = [], c, g = { singular: [], plural: [] }; a = a || { graphic: 1, dataLabel: 1 }; a.graphic && d.push("graphic", "upperGraphic", "shadowGroup"); a.dataLabel && d.push("dataLabel", "dataLabelUpper", "connector"); for (c = d.length; c--;) { var e = d[c]; b[e] && g.singular.push(e) } ["dataLabel", "connector"].forEach(function (d) { var c = d + "s"; a[d] && b[c] && g.plural.push(c) }); return g
-            }; g.prototype.getLabelConfig = function () {
-                return {
-                    x: this.category, y: this.y, color: this.color, colorIndex: this.colorIndex, key: this.name || this.category, series: this.series,
-                    point: this, percentage: this.percentage, total: this.total || this.stackTotal
-                }
-            }; g.prototype.getNestedProperty = function (a) { if (a) return 0 === a.indexOf("custom.") ? m(a, this.options) : this[a] }; g.prototype.getZone = function () { var a = this.series, b = a.zones; a = a.zoneAxis || "y"; var d = 0, c; for (c = b[d]; this[a] >= c.value;)c = b[++d]; this.nonZonedColor || (this.nonZonedColor = this.color); this.color = c && c.color && !this.options.color ? c.color : this.nonZonedColor; return c }; g.prototype.hasNewShapeType = function () {
-                return (this.graphic && (this.graphic.symbolName ||
-                    this.graphic.element.nodeName)) !== this.shapeType
-            }; g.prototype.init = function (a, d, c) { this.series = a; this.applyOptions(d, c); this.id = f(this.id) ? this.id : b(); this.resolveColor(); a.chart.pointCount++; t(this, "afterInit"); return this }; g.prototype.optionsToObject = function (a) {
-                var b = {}, d = this.series, c = d.options.keys, e = c || d.pointArrayMap || ["y"], f = e.length, k = 0, h = 0; if (l(a) || null === a) b[e[0]] = a; else if (w(a)) for (!c && a.length > f && (d = typeof a[0], "string" === d ? b.name = a[0] : "number" === d && (b.x = a[0]), k++); h < f;)c && "undefined" ===
-                    typeof a[k] || (0 < e[h].indexOf(".") ? g.prototype.setNestedProperty(b, a[k], e[h]) : b[e[h]] = a[k]), k++, h++; else "object" === typeof a && (b = a, a.dataLabels && (d._hasPointLabels = !0), a.marker && (d._hasPointMarkers = !0)); return b
-            }; g.prototype.resolveColor = function () {
-                var a = this.series; var b = a.chart.options.chart.colorCount; var d = a.chart.styledMode; delete this.nonZonedColor; if (a.options.colorByPoint) {
-                    if (!d) { b = a.options.colors || a.chart.options.colors; var c = b[a.colorCounter]; b = b.length } d = a.colorCounter; a.colorCounter++;
-                    a.colorCounter === b && (a.colorCounter = 0)
-                } else d || (c = a.color), d = a.colorIndex; this.colorIndex = p(this.options.colorIndex, d); this.color = p(this.options.color, c)
-            }; g.prototype.setNestedProperty = function (a, b, d) { d.split(".").reduce(function (a, d, c, g) { a[d] = g.length - 1 === c ? b : J(a[d], !0) ? a[d] : {}; return a[d] }, a); return a }; g.prototype.tooltipFormatter = function (a) {
-                var b = this.series, d = b.tooltipOptions, c = p(d.valueDecimals, ""), g = d.valuePrefix || "", e = d.valueSuffix || ""; b.chart.styledMode && (a = b.chart.tooltip.styledModeFormat(a));
-                (b.pointArrayMap || ["y"]).forEach(function (b) { b = "{point." + b; if (g || e) a = a.replace(RegExp(b + "}", "g"), g + b + "}" + e); a = a.replace(RegExp(b + "}", "g"), b + ":,." + c + "f}") }); return B(a, { point: this, series: this.series }, b.chart)
-            }; g.prototype.update = function (a, b, d, c) {
-                function g() {
-                    e.applyOptions(a); var c = k && e.hasDummyGraphic; c = null === e.y ? !c : c; k && c && (e.graphic = k.destroy(), delete e.hasDummyGraphic); J(a, !0) && (k && k.element && a && a.marker && "undefined" !== typeof a.marker.symbol && (e.graphic = k.destroy()), a && a.dataLabels && e.dataLabel &&
-                        (e.dataLabel = e.dataLabel.destroy()), e.connector && (e.connector = e.connector.destroy())); l = e.index; f.updateParallelArrays(e, l); r.data[l] = J(r.data[l], !0) || J(a, !0) ? e.options : p(a, r.data[l]); f.isDirty = f.isDirtyData = !0; !f.fixedBox && f.hasCartesianSeries && (h.isDirtyBox = !0); "point" === r.legendType && (h.isDirtyLegend = !0); b && h.redraw(d)
-                } var e = this, f = e.series, k = e.graphic, l, h = f.chart, r = f.options; b = p(b, !0); !1 === c ? g() : e.firePointEvent("update", { options: a }, g)
-            }; g.prototype.remove = function (a, b) {
-                this.series.removePoint(this.series.data.indexOf(this),
-                    a, b)
-            }; g.prototype.select = function (a, b) {
-                var d = this, c = d.series, g = c.chart; this.selectedStaging = a = p(a, !d.selected); d.firePointEvent(a ? "select" : "unselect", { accumulate: b }, function () {
-                    d.selected = d.options.selected = a; c.options.data[c.data.indexOf(d)] = d.options; d.setState(a && "select"); b || g.getSelectedPoints().forEach(function (a) {
-                        var b = a.series; a.selected && a !== d && (a.selected = a.options.selected = !1, b.options.data[b.data.indexOf(a)] = a.options, a.setState(g.hoverPoints && b.options.inactiveOtherPoints ? "inactive" : ""),
-                            a.firePointEvent("unselect"))
-                    })
-                }); delete this.selectedStaging
-            }; g.prototype.onMouseOver = function (a) { var b = this.series.chart, d = b.pointer; a = a ? d.normalize(a) : d.getChartCoordinatesFromPoint(this, b.inverted); d.runPointActions(a, this) }; g.prototype.onMouseOut = function () { var a = this.series.chart; this.firePointEvent("mouseOut"); this.series.options.inactiveOtherPoints || (a.hoverPoints || []).forEach(function (a) { a.setState() }); a.hoverPoints = a.hoverPoint = null }; g.prototype.importEvents = function () {
-                if (!this.hasImportedEvents) {
-                    var a =
-                        this, b = K(a.series.options.point, a.options).events; a.events = b; A(b, function (b, d) { n(b) && h(a, d, b) }); this.hasImportedEvents = !0
-                }
-            }; g.prototype.setState = function (b, d) {
-                var c = this.series, g = this.state, f = c.options.states[b || "normal"] || {}, k = q.plotOptions[c.type].marker && c.options.marker, h = k && !1 === k.enabled, r = k && k.states && k.states[b || "normal"] || {}, m = !1 === r.enabled, n = c.stateMarkerGraphic, F = this.marker || {}, w = c.chart, v = c.halo, A, J = k && c.markerAttribs; b = b || ""; if (!(b === this.state && !d || this.selected && "select" !== b || !1 ===
-                    f.enabled || b && (m || h && !1 === r.enabled) || b && F.states && F.states[b] && !1 === F.states[b].enabled)) {
-                        this.state = b; J && (A = c.markerAttribs(this, b)); if (this.graphic && !this.hasDummyGraphic) {
-                            g && this.graphic.removeClass("highcharts-point-" + g); b && this.graphic.addClass("highcharts-point-" + b); if (!w.styledMode) {
-                                var I = c.pointAttribs(this, b); var N = p(w.options.chart.animation, f.animation); c.options.inactiveOtherPoints && l(I.opacity) && ((this.dataLabels || []).forEach(function (a) { a && a.animate({ opacity: I.opacity }, N) }), this.connector &&
-                                    this.connector.animate({ opacity: I.opacity }, N)); this.graphic.animate(I, N)
-                            } A && this.graphic.animate(A, p(w.options.chart.animation, r.animation, k.animation)); n && n.hide()
-                        } else {
-                            if (b && r) { g = F.symbol || c.symbol; n && n.currentSymbol !== g && (n = n.destroy()); if (A) if (n) n[d ? "animate" : "attr"]({ x: A.x, y: A.y }); else g && (c.stateMarkerGraphic = n = w.renderer.symbol(g, A.x, A.y, A.width, A.height).add(c.markerGroup), n.currentSymbol = g); !w.styledMode && n && n.attr(c.pointAttribs(this, b)) } n && (n[b && this.isInside ? "show" : "hide"](), n.element.point =
-                                this)
-                        } f = f.halo; A = (n = this.graphic || n) && n.visibility || "inherit"; f && f.size && n && "hidden" !== A && !this.isCluster ? (v || (c.halo = v = w.renderer.path().add(n.parentGroup)), v.show()[d ? "animate" : "attr"]({ d: this.haloPath(f.size) }), v.attr({ "class": "highcharts-halo highcharts-color-" + p(this.colorIndex, c.colorIndex) + (this.className ? " " + this.className : ""), visibility: A, zIndex: -1 }), v.point = this, w.styledMode || v.attr(e({ fill: this.color || c.color, "fill-opacity": f.opacity }, a.filterUserAttributes(f.attributes || {})))) : v && v.point &&
-                            v.point.haloPath && v.animate({ d: v.point.haloPath(0) }, null, v.hide); t(this, "afterSetState", { state: b })
-                }
-            }; g.prototype.haloPath = function (a) { return this.series.chart.renderer.symbols.circle(Math.floor(this.plotX) - a, this.plotY - a, 2 * a, 2 * a) }; return g
-        }(); return H.Point = u
-    }); L(a, "Core/Legend.js", [a["Core/Animation/AnimationUtilities.js"], a["Core/FormatUtilities.js"], a["Core/Globals.js"], a["Core/Series/Point.js"], a["Core/Utilities.js"]], function (a, u, E, H, x) {
-        var v = a.animObject, G = a.setAnimation, B = u.format; a = E.isFirefox;
-        var q = E.marginNames; u = E.win; var h = x.addEvent, f = x.createElement, c = x.css, e = x.defined, t = x.discardElement, m = x.find, w = x.fireEvent, n = x.isNumber, l = x.merge, J = x.pick, K = x.relativeLength, A = x.stableSort, p = x.syncTimeout; x = x.wrap; var d = function () {
-            function a(a, d) {
-                this.allItems = []; this.contentGroup = this.box = void 0; this.display = !1; this.group = void 0; this.offsetWidth = this.maxLegendWidth = this.maxItemWidth = this.legendWidth = this.legendHeight = this.lastLineHeight = this.lastItemY = this.itemY = this.itemX = this.itemMarginTop = this.itemMarginBottom =
-                    this.itemHeight = this.initialItemY = 0; this.options = {}; this.padding = 0; this.pages = []; this.proximate = !1; this.scrollGroup = void 0; this.widthOption = this.totalItemWidth = this.titleHeight = this.symbolWidth = this.symbolHeight = 0; this.chart = a; this.init(a, d)
-            } a.prototype.init = function (a, d) {
-                this.chart = a; this.setOptions(d); d.enabled && (this.render(), h(this.chart, "endResize", function () { this.legend.positionCheckboxes() }), this.proximate ? this.unchartrender = h(this.chart, "render", function () {
-                    this.legend.proximatePositions();
-                    this.legend.positionItems()
-                }) : this.unchartrender && this.unchartrender())
-            }; a.prototype.setOptions = function (a) { var b = J(a.padding, 8); this.options = a; this.chart.styledMode || (this.itemStyle = a.itemStyle, this.itemHiddenStyle = l(this.itemStyle, a.itemHiddenStyle)); this.itemMarginTop = a.itemMarginTop || 0; this.itemMarginBottom = a.itemMarginBottom || 0; this.padding = b; this.initialItemY = b - 5; this.symbolWidth = J(a.symbolWidth, 16); this.pages = []; this.proximate = "proximate" === a.layout && !this.chart.inverted; this.baseline = void 0 };
-            a.prototype.update = function (a, d) { var b = this.chart; this.setOptions(l(!0, this.options, a)); this.destroy(); b.isDirtyLegend = b.isDirtyBox = !0; J(d, !0) && b.redraw(); w(this, "afterUpdate") }; a.prototype.colorizeItem = function (a, d) {
-                a.legendGroup[d ? "removeClass" : "addClass"]("highcharts-legend-item-hidden"); if (!this.chart.styledMode) {
-                    var b = this.options, c = a.legendItem, g = a.legendLine, e = a.legendSymbol, f = this.itemHiddenStyle.color; b = d ? b.itemStyle.color : f; var k = d ? a.color || f : f, l = a.options && a.options.marker, h = { fill: k }; c &&
-                        c.css({ fill: b, color: b }); g && g.attr({ stroke: k }); e && (l && e.isMarker && (h = a.pointAttribs(), d || (h.stroke = h.fill = f)), e.attr(h))
-                } w(this, "afterColorizeItem", { item: a, visible: d })
-            }; a.prototype.positionItems = function () { this.allItems.forEach(this.positionItem, this); this.chart.isResizing || this.positionCheckboxes() }; a.prototype.positionItem = function (a) {
-                var b = this, d = this.options, c = d.symbolPadding, f = !d.rtl, k = a._legendItemPos; d = k[0]; k = k[1]; var l = a.checkbox, h = a.legendGroup; h && h.element && (c = {
-                    translateX: f ? d : this.legendWidth -
-                        d - 2 * c - 4, translateY: k
-                }, f = function () { w(b, "afterPositionItem", { item: a }) }, e(h.translateY) ? h.animate(c, void 0, f) : (h.attr(c), f())); l && (l.x = d, l.y = k)
-            }; a.prototype.destroyItem = function (a) { var b = a.checkbox;["legendItem", "legendLine", "legendSymbol", "legendGroup"].forEach(function (b) { a[b] && (a[b] = a[b].destroy()) }); b && t(a.checkbox) }; a.prototype.destroy = function () {
-                function a(a) { this[a] && (this[a] = this[a].destroy()) } this.getAllItems().forEach(function (b) { ["legendItem", "legendGroup"].forEach(a, b) }); "clipRect up down pager nav box title group".split(" ").forEach(a,
-                    this); this.display = null
-            }; a.prototype.positionCheckboxes = function () { var a = this.group && this.group.alignAttr, d = this.clipHeight || this.legendHeight, e = this.titleHeight; if (a) { var f = a.translateY; this.allItems.forEach(function (b) { var g = b.checkbox; if (g) { var k = f + e + g.y + (this.scrollOffset || 0) + 3; c(g, { left: a.translateX + b.checkboxOffset + g.x - 20 + "px", top: k + "px", display: this.proximate || k > f - 6 && k < f + d - 6 ? "" : "none" }) } }, this) } }; a.prototype.renderTitle = function () {
-                var a = this.options, d = this.padding, c = a.title, e = 0; c.text && (this.title ||
-                    (this.title = this.chart.renderer.label(c.text, d - 3, d - 4, null, null, null, a.useHTML, null, "legend-title").attr({ zIndex: 1 }), this.chart.styledMode || this.title.css(c.style), this.title.add(this.group)), c.width || this.title.css({ width: this.maxLegendWidth + "px" }), a = this.title.getBBox(), e = a.height, this.offsetWidth = a.width, this.contentGroup.attr({ translateY: e })); this.titleHeight = e
-            }; a.prototype.setText = function (a) { var b = this.options; a.legendItem.attr({ text: b.labelFormat ? B(b.labelFormat, a, this.chart) : b.labelFormatter.call(a) }) };
-            a.prototype.renderItem = function (a) {
-                var b = this.chart, d = b.renderer, c = this.options, e = this.symbolWidth, f = c.symbolPadding || 0, k = this.itemStyle, h = this.itemHiddenStyle, p = "horizontal" === c.layout ? J(c.itemDistance, 20) : 0, m = !c.rtl, t = a.legendItem, n = !a.series, q = !n && a.series.drawLegendSymbol ? a.series : a, w = q.options, v = this.createCheckboxForItem && w && w.showCheckbox; w = e + f + p + (v ? 20 : 0); var A = c.useHTML, u = a.options.className; t || (a.legendGroup = d.g("legend-item").addClass("highcharts-" + q.type + "-series highcharts-color-" + a.colorIndex +
-                    (u ? " " + u : "") + (n ? " highcharts-series-" + a.index : "")).attr({ zIndex: 1 }).add(this.scrollGroup), a.legendItem = t = d.text("", m ? e + f : -f, this.baseline || 0, A), b.styledMode || t.css(l(a.visible ? k : h)), t.attr({ align: m ? "left" : "right", zIndex: 2 }).add(a.legendGroup), this.baseline || (this.fontMetrics = d.fontMetrics(b.styledMode ? 12 : k.fontSize, t), this.baseline = this.fontMetrics.f + 3 + this.itemMarginTop, t.attr("y", this.baseline), this.symbolHeight = c.symbolHeight || this.fontMetrics.f, c.squareSymbol && (this.symbolWidth = J(c.symbolWidth,
-                        Math.max(this.symbolHeight, 16)), w = this.symbolWidth + f + p + (v ? 20 : 0), m && t.attr("x", this.symbolWidth + f))), q.drawLegendSymbol(this, a), this.setItemEvents && this.setItemEvents(a, t, A)); v && !a.checkbox && this.createCheckboxForItem && this.createCheckboxForItem(a); this.colorizeItem(a, a.visible); !b.styledMode && k.width || t.css({ width: (c.itemWidth || this.widthOption || b.spacingBox.width) - w + "px" }); this.setText(a); b = t.getBBox(); a.itemWidth = a.checkboxOffset = c.itemWidth || a.legendItemWidth || b.width + w; this.maxItemWidth = Math.max(this.maxItemWidth,
-                            a.itemWidth); this.totalItemWidth += a.itemWidth; this.itemHeight = a.itemHeight = Math.round(a.legendItemHeight || b.height || this.symbolHeight)
-            }; a.prototype.layoutItem = function (a) {
-                var b = this.options, d = this.padding, c = "horizontal" === b.layout, e = a.itemHeight, f = this.itemMarginBottom, k = this.itemMarginTop, l = c ? J(b.itemDistance, 20) : 0, h = this.maxLegendWidth; b = b.alignColumns && this.totalItemWidth > h ? this.maxItemWidth : a.itemWidth; c && this.itemX - d + b > h && (this.itemX = d, this.lastLineHeight && (this.itemY += k + this.lastLineHeight +
-                    f), this.lastLineHeight = 0); this.lastItemY = k + this.itemY + f; this.lastLineHeight = Math.max(e, this.lastLineHeight); a._legendItemPos = [this.itemX, this.itemY]; c ? this.itemX += b : (this.itemY += k + e + f, this.lastLineHeight = e); this.offsetWidth = this.widthOption || Math.max((c ? this.itemX - d - (a.checkbox ? 0 : l) : b) + d, this.offsetWidth)
-            }; a.prototype.getAllItems = function () {
-                var a = []; this.chart.series.forEach(function (b) {
-                    var d = b && b.options; b && J(d.showInLegend, e(d.linkedTo) ? !1 : void 0, !0) && (a = a.concat(b.legendItems || ("point" === d.legendType ?
-                        b.data : b)))
-                }); w(this, "afterGetAllItems", { allItems: a }); return a
-            }; a.prototype.getAlignment = function () { var a = this.options; return this.proximate ? a.align.charAt(0) + "tv" : a.floating ? "" : a.align.charAt(0) + a.verticalAlign.charAt(0) + a.layout.charAt(0) }; a.prototype.adjustMargins = function (a, d) {
-                var b = this.chart, c = this.options, g = this.getAlignment(); g && [/(lth|ct|rth)/, /(rtv|rm|rbv)/, /(rbh|cb|lbh)/, /(lbv|lm|ltv)/].forEach(function (f, k) {
-                    f.test(g) && !e(a[k]) && (b[q[k]] = Math.max(b[q[k]], b.legend[(k + 1) % 2 ? "legendHeight" :
-                        "legendWidth"] + [1, -1, -1, 1][k] * c[k % 2 ? "x" : "y"] + J(c.margin, 12) + d[k] + (b.titleOffset[k] || 0)))
-                })
-            }; a.prototype.proximatePositions = function () {
-                var a = this.chart, d = [], c = "left" === this.options.align; this.allItems.forEach(function (b) {
-                    var e; var g = c; if (b.yAxis) {
-                        b.xAxis.options.reversed && (g = !g); b.points && (e = m(g ? b.points : b.points.slice(0).reverse(), function (a) { return n(a.plotY) })); g = this.itemMarginTop + b.legendItem.getBBox().height + this.itemMarginBottom; var f = b.yAxis.top - a.plotTop; b.visible ? (e = e ? e.plotY : b.yAxis.height,
-                            e += f - .3 * g) : e = f + b.yAxis.height; d.push({ target: e, size: g, item: b })
-                    }
-                }, this); E.distribute(d, a.plotHeight); d.forEach(function (b) { b.item._legendItemPos[1] = a.plotTop - a.spacing[0] + b.pos })
-            }; a.prototype.render = function () {
-                var a = this.chart, d = a.renderer, c = this.group, e = this.box, f = this.options, k = this.padding; this.itemX = k; this.itemY = this.initialItemY; this.lastItemY = this.offsetWidth = 0; this.widthOption = K(f.width, a.spacingBox.width - k); var l = a.spacingBox.width - 2 * k - f.x; -1 < ["rm", "lm"].indexOf(this.getAlignment().substring(0,
-                    2)) && (l /= 2); this.maxLegendWidth = this.widthOption || l; c || (this.group = c = d.g("legend").addClass(f.className || "").attr({ zIndex: 7 }).add(), this.contentGroup = d.g().attr({ zIndex: 1 }).add(c), this.scrollGroup = d.g().add(this.contentGroup)); this.renderTitle(); var h = this.getAllItems(); A(h, function (a, b) { return (a.options && a.options.legendIndex || 0) - (b.options && b.options.legendIndex || 0) }); f.reversed && h.reverse(); this.allItems = h; this.display = l = !!h.length; this.itemHeight = this.totalItemWidth = this.maxItemWidth = this.lastLineHeight =
-                        0; h.forEach(this.renderItem, this); h.forEach(this.layoutItem, this); h = (this.widthOption || this.offsetWidth) + k; var m = this.lastItemY + this.lastLineHeight + this.titleHeight; m = this.handleOverflow(m); m += k; e || (this.box = e = d.rect().addClass("highcharts-legend-box").attr({ r: f.borderRadius }).add(c), e.isNew = !0); a.styledMode || e.attr({ stroke: f.borderColor, "stroke-width": f.borderWidth || 0, fill: f.backgroundColor || "none" }).shadow(f.shadow); 0 < h && 0 < m && (e[e.isNew ? "attr" : "animate"](e.crisp.call({}, { x: 0, y: 0, width: h, height: m },
-                            e.strokeWidth())), e.isNew = !1); e[l ? "show" : "hide"](); a.styledMode && "none" === c.getStyle("display") && (h = m = 0); this.legendWidth = h; this.legendHeight = m; l && this.align(); this.proximate || this.positionItems(); w(this, "afterRender")
-            }; a.prototype.align = function (a) {
-                void 0 === a && (a = this.chart.spacingBox); var b = this.chart, d = this.options, c = a.y; /(lth|ct|rth)/.test(this.getAlignment()) && 0 < b.titleOffset[0] ? c += b.titleOffset[0] : /(lbh|cb|rbh)/.test(this.getAlignment()) && 0 < b.titleOffset[2] && (c -= b.titleOffset[2]); c !== a.y && (a =
-                    l(a, { y: c })); this.group.align(l(d, { width: this.legendWidth, height: this.legendHeight, verticalAlign: this.proximate ? "top" : d.verticalAlign }), !0, a)
-            }; a.prototype.handleOverflow = function (a) {
-                var b = this, d = this.chart, c = d.renderer, e = this.options, f = e.y, k = this.padding; f = d.spacingBox.height + ("top" === e.verticalAlign ? -f : f) - k; var l = e.maxHeight, h, m = this.clipRect, p = e.navigation, t = J(p.animation, !0), n = p.arrowSize || 12, w = this.nav, q = this.pages, v, A = this.allItems, I = function (a) {
-                    "number" === typeof a ? m.attr({ height: a }) : m && (b.clipRect =
-                        m.destroy(), b.contentGroup.clip()); b.contentGroup.div && (b.contentGroup.div.style.clip = a ? "rect(" + k + "px,9999px," + (k + a) + "px,0)" : "auto")
-                }, N = function (a) { b[a] = c.circle(0, 0, 1.3 * n).translate(n / 2, n / 2).add(w); d.styledMode || b[a].attr("fill", "rgba(0,0,0,0.0001)"); return b[a] }; "horizontal" !== e.layout || "middle" === e.verticalAlign || e.floating || (f /= 2); l && (f = Math.min(f, l)); q.length = 0; a && 0 < f && a > f && !1 !== p.enabled ? (this.clipHeight = h = Math.max(f - 20 - this.titleHeight - k, 0), this.currentPage = J(this.currentPage, 1), this.fullHeight =
-                    a, A.forEach(function (a, b) { var d = a._legendItemPos[1], c = Math.round(a.legendItem.getBBox().height), e = q.length; if (!e || d - q[e - 1] > h && (v || d) !== q[e - 1]) q.push(v || d), e++; a.pageIx = e - 1; v && (A[b - 1].pageIx = e - 1); b === A.length - 1 && d + c - q[e - 1] > h && d !== v && (q.push(d), a.pageIx = e); d !== v && (v = d) }), m || (m = b.clipRect = c.clipRect(0, k, 9999, 0), b.contentGroup.clip(m)), I(h), w || (this.nav = w = c.g().attr({ zIndex: 1 }).add(this.group), this.up = c.symbol("triangle", 0, 0, n, n).add(w), N("upTracker").on("click", function () { b.scroll(-1, t) }), this.pager =
-                        c.text("", 15, 10).addClass("highcharts-legend-navigation"), d.styledMode || this.pager.css(p.style), this.pager.add(w), this.down = c.symbol("triangle-down", 0, 0, n, n).add(w), N("downTracker").on("click", function () { b.scroll(1, t) })), b.scroll(0), a = f) : w && (I(), this.nav = w.destroy(), this.scrollGroup.attr({ translateY: 1 }), this.clipHeight = 0); return a
-            }; a.prototype.scroll = function (a, d) {
-                var b = this, c = this.chart, e = this.pages, g = e.length, f = this.currentPage + a; a = this.clipHeight; var k = this.options.navigation, l = this.pager, h = this.padding;
-                f > g && (f = g); 0 < f && ("undefined" !== typeof d && G(d, c), this.nav.attr({ translateX: h, translateY: a + this.padding + 7 + this.titleHeight, visibility: "visible" }), [this.up, this.upTracker].forEach(function (a) { a.attr({ "class": 1 === f ? "highcharts-legend-nav-inactive" : "highcharts-legend-nav-active" }) }), l.attr({ text: f + "/" + g }), [this.down, this.downTracker].forEach(function (a) { a.attr({ x: 18 + this.pager.getBBox().width, "class": f === g ? "highcharts-legend-nav-inactive" : "highcharts-legend-nav-active" }) }, this), c.styledMode || (this.up.attr({
-                    fill: 1 ===
-                        f ? k.inactiveColor : k.activeColor
-                }), this.upTracker.css({ cursor: 1 === f ? "default" : "pointer" }), this.down.attr({ fill: f === g ? k.inactiveColor : k.activeColor }), this.downTracker.css({ cursor: f === g ? "default" : "pointer" })), this.scrollOffset = -e[f - 1] + this.initialItemY, this.scrollGroup.animate({ translateY: this.scrollOffset }), this.currentPage = f, this.positionCheckboxes(), d = v(J(d, c.renderer.globalAnimation, !0)), p(function () { w(b, "afterScroll", { currentPage: f }) }, d.duration))
-            }; a.prototype.setItemEvents = function (a, d, c) {
-                var b =
-                    this, e = b.chart.renderer.boxWrapper, g = a instanceof H, f = "highcharts-legend-" + (g ? "point" : "series") + "-active", k = b.chart.styledMode; (c ? [d, a.legendSymbol] : [a.legendGroup]).forEach(function (c) {
-                        if (c) c.on("mouseover", function () { a.visible && b.allItems.forEach(function (b) { a !== b && b.setState("inactive", !g) }); a.setState("hover"); a.visible && e.addClass(f); k || d.css(b.options.itemHoverStyle) }).on("mouseout", function () {
-                            b.chart.styledMode || d.css(l(a.visible ? b.itemStyle : b.itemHiddenStyle)); b.allItems.forEach(function (b) {
-                                a !==
-                                b && b.setState("", !g)
-                            }); e.removeClass(f); a.setState()
-                        }).on("click", function (d) { var c = function () { a.setVisible && a.setVisible(); b.allItems.forEach(function (b) { a !== b && b.setState(a.visible ? "inactive" : "", !g) }) }; e.removeClass(f); d = { browserEvent: d }; a.firePointEvent ? a.firePointEvent("legendItemClick", d, c) : w(a, "legendItemClick", d, c) })
-                    })
-            }; a.prototype.createCheckboxForItem = function (a) {
-                a.checkbox = f("input", { type: "checkbox", className: "highcharts-legend-checkbox", checked: a.selected, defaultChecked: a.selected }, this.options.itemCheckboxStyle,
-                    this.chart.container); h(a.checkbox, "click", function (b) { w(a.series || a, "checkboxClick", { checked: b.target.checked, item: a }, function () { a.select() }) })
-            }; return a
-        }(); (/Trident\/7\.0/.test(u.navigator && u.navigator.userAgent) || a) && x(d.prototype, "positionItem", function (a, b) { var d = this, c = function () { b._legendItemPos && a.call(d, b) }; c(); d.bubbleLegend || setTimeout(c) }); E.Legend = d; return E.Legend
-    }); L(a, "Core/Series/SeriesRegistry.js", [a["Core/Globals.js"], a["Core/DefaultOptions.js"], a["Core/Series/Point.js"], a["Core/Utilities.js"]],
-        function (a, u, E, H) {
-            var v = u.defaultOptions, y = H.error, G = H.extendClass, B = H.merge, q; (function (h) {
-                function f(a, e) { var c = v.plotOptions || {}, f = e.defaultOptions; e.prototype.pointClass || (e.prototype.pointClass = E); e.prototype.type = a; f && (c[a] = f); h.seriesTypes[a] = e } h.seriesTypes = a.seriesTypes; h.getSeries = function (a, e) { void 0 === e && (e = {}); var c = a.options.chart; c = e.type || c.type || c.defaultSeriesType || ""; var f = h.seriesTypes[c]; h || y(17, !0, a, { missingModuleFor: c }); c = new f; "function" === typeof c.init && c.init(a, e); return c };
-                h.registerSeriesType = f; h.seriesType = function (a, e, t, m, w) { var c = v.plotOptions || {}; e = e || ""; c[a] = B(c[e], t); f(a, G(h.seriesTypes[e] || function () { }, m)); h.seriesTypes[a].prototype.type = a; w && (h.seriesTypes[a].prototype.pointClass = G(E, w)); return h.seriesTypes[a] }
-            })(q || (q = {})); a.seriesType = q.seriesType; return q
-        }); L(a, "Core/Chart/Chart.js", [a["Core/Animation/AnimationUtilities.js"], a["Core/Axis/Axis.js"], a["Core/FormatUtilities.js"], a["Core/Foundation.js"], a["Core/Globals.js"], a["Core/Legend.js"], a["Core/MSPointer.js"],
-        a["Core/DefaultOptions.js"], a["Core/Color/Palette.js"], a["Core/Pointer.js"], a["Core/Renderer/RendererRegistry.js"], a["Core/Series/SeriesRegistry.js"], a["Core/Time.js"], a["Core/Utilities.js"], a["Core/Renderer/HTML/AST.js"]], function (a, u, E, H, x, y, G, B, q, h, f, c, e, t, m) {
-            var w = a.animate, n = a.animObject, l = a.setAnimation, v = E.numberFormat, K = H.registerEventOptions, A = x.charts, p = x.doc, d = x.marginNames, k = x.win, b = B.defaultOptions, g = B.defaultTime, r = c.seriesTypes, F = t.addEvent, D = t.attr, M = t.cleanRecursively, C = t.createElement,
-            O = t.css, S = t.defined, W = t.discardElement, Y = t.erase, ba = t.error, z = t.extend, Q = t.find, L = t.fireEvent, aa = t.getStyle, ja = t.isArray, I = t.isNumber, N = t.isObject, P = t.isString, U = t.merge, T = t.objectEach, R = t.pick, V = t.pInt, ca = t.relativeLength, da = t.removeEvent, fa = t.splat, ea = t.syncTimeout, ka = t.uniqueKey; a = function () {
-                function a(a, b, d) {
-                    this.series = this.renderTo = this.renderer = this.pointer = this.pointCount = this.plotWidth = this.plotTop = this.plotLeft = this.plotHeight = this.plotBox = this.options = this.numberFormatter = this.margin = this.legend =
-                        this.labelCollectors = this.isResizing = this.index = this.eventOptions = this.container = this.colorCounter = this.clipBox = this.chartWidth = this.chartHeight = this.bounds = this.axisOffset = this.axes = void 0; this.sharedClips = {}; this.yAxis = this.xAxis = this.userOptions = this.titleOffset = this.time = this.symbolCounter = this.spacingBox = this.spacing = void 0; this.getArgs(a, b, d)
-                } a.chart = function (b, d, c) { return new a(b, d, c) }; a.prototype.getArgs = function (a, b, d) { P(a) || a.nodeName ? (this.renderTo = a, this.init(b, d)) : this.init(a, b) }; a.prototype.init =
-                    function (a, d) {
-                        var c = a.plotOptions || {}; L(this, "init", { args: arguments }, function () {
-                            var g = U(b, a), f = g.chart; T(g.plotOptions, function (a, b) { N(a) && (a.tooltip = c[b] && U(c[b].tooltip) || void 0) }); g.tooltip.userOptions = a.chart && a.chart.forExport && a.tooltip.userOptions || a.tooltip; this.userOptions = a; this.margin = []; this.spacing = []; this.bounds = { h: {}, v: {} }; this.labelCollectors = []; this.callback = d; this.isResizing = 0; this.options = g; this.axes = []; this.series = []; this.time = a.time && Object.keys(a.time).length ? new e(a.time) : x.time;
-                            this.numberFormatter = f.numberFormatter || v; this.styledMode = f.styledMode; this.hasCartesianSeries = f.showAxes; this.index = A.length; A.push(this); x.chartCount++; K(this, f); this.xAxis = []; this.yAxis = []; this.pointCount = this.colorCounter = this.symbolCounter = 0; L(this, "afterInit"); this.firstRender()
-                        })
-                    }; a.prototype.initSeries = function (a) { var b = this.options.chart; b = a.type || b.type || b.defaultSeriesType; var d = r[b]; d || ba(17, !0, this, { missingModuleFor: b }); b = new d; "function" === typeof b.init && b.init(this, a); return b }; a.prototype.setSeriesData =
-                        function () { this.getSeriesOrderByLinks().forEach(function (a) { a.points || a.data || !a.enabledDataSorting || a.setData(a.options.data, !1) }) }; a.prototype.getSeriesOrderByLinks = function () { return this.series.concat().sort(function (a, b) { return a.linkedSeries.length || b.linkedSeries.length ? b.linkedSeries.length - a.linkedSeries.length : 0 }) }; a.prototype.orderSeries = function (a) { var b = this.series; a = a || 0; for (var d = b.length; a < d; ++a)b[a] && (b[a].index = a, b[a].name = b[a].getName()) }; a.prototype.isInsidePlot = function (a, b, d) {
-                            void 0 ===
-                            d && (d = {}); var c = this.inverted, e = this.plotBox, g = this.plotLeft, f = this.plotTop, k = this.scrollablePlotBox, l = 0; var h = 0; d.visiblePlotOnly && this.scrollingContainer && (h = this.scrollingContainer, l = h.scrollLeft, h = h.scrollTop); var I = d.series; e = d.visiblePlotOnly && k || e; k = d.inverted ? b : a; b = d.inverted ? a : b; a = { x: k, y: b, isInsidePlot: !0 }; if (!d.ignoreX) { var r = I && (c ? I.yAxis : I.xAxis) || { pos: g, len: Infinity }; k = d.paneCoordinates ? r.pos + k : g + k; k >= Math.max(l + g, r.pos) && k <= Math.min(l + g + e.width, r.pos + r.len) || (a.isInsidePlot = !1) } !d.ignoreY &&
-                                a.isInsidePlot && (c = I && (c ? I.xAxis : I.yAxis) || { pos: f, len: Infinity }, d = d.paneCoordinates ? c.pos + b : f + b, d >= Math.max(h + f, c.pos) && d <= Math.min(h + f + e.height, c.pos + c.len) || (a.isInsidePlot = !1)); L(this, "afterIsInsidePlot", a); return a.isInsidePlot
-                        }; a.prototype.redraw = function (a) {
-                            L(this, "beforeRedraw"); var b = this.hasCartesianSeries ? this.axes : this.colorAxis || [], d = this.series, c = this.pointer, e = this.legend, g = this.userOptions.legend, f = this.renderer, k = f.isHidden(), h = [], I = this.isDirtyBox, r = this.isDirtyLegend; this.setResponsive &&
-                                this.setResponsive(!1); l(this.hasRendered ? a : !1, this); k && this.temporaryDisplay(); this.layOutTitles(); for (a = d.length; a--;) { var m = d[a]; if (m.options.stacking || m.options.centerInCategory) { var p = !0; if (m.isDirty) { var t = !0; break } } } if (t) for (a = d.length; a--;)m = d[a], m.options.stacking && (m.isDirty = !0); d.forEach(function (a) { a.isDirty && ("point" === a.options.legendType ? ("function" === typeof a.updateTotals && a.updateTotals(), r = !0) : g && (g.labelFormatter || g.labelFormat) && (r = !0)); a.isDirtyData && L(a, "updatedData") }); r && e &&
-                                    e.options.enabled && (e.render(), this.isDirtyLegend = !1); p && this.getStacks(); b.forEach(function (a) { a.updateNames(); a.setScale() }); this.getMargins(); b.forEach(function (a) { a.isDirty && (I = !0) }); b.forEach(function (a) { var b = a.min + "," + a.max; a.extKey !== b && (a.extKey = b, h.push(function () { L(a, "afterSetExtremes", z(a.eventArgs, a.getExtremes())); delete a.eventArgs })); (I || p) && a.redraw() }); I && this.drawChartBox(); L(this, "predraw"); d.forEach(function (a) { (I || a.isDirty) && a.visible && a.redraw(); a.isDirtyData = !1 }); c && c.reset(!0);
-                            f.draw(); L(this, "redraw"); L(this, "render"); k && this.temporaryDisplay(!0); h.forEach(function (a) { a.call() })
-                        }; a.prototype.get = function (a) { function b(b) { return b.id === a || b.options && b.options.id === a } for (var d = this.series, c = Q(this.axes, b) || Q(this.series, b), e = 0; !c && e < d.length; e++)c = Q(d[e].points || [], b); return c }; a.prototype.getAxes = function () {
-                            var a = this, b = this.options, d = b.xAxis = fa(b.xAxis || {}); b = b.yAxis = fa(b.yAxis || {}); L(this, "getAxes"); d.forEach(function (a, b) { a.index = b; a.isX = !0 }); b.forEach(function (a, b) {
-                                a.index =
-                                b
-                            }); d.concat(b).forEach(function (b) { new u(a, b) }); L(this, "afterGetAxes")
-                        }; a.prototype.getSelectedPoints = function () { var a = []; this.series.forEach(function (b) { a = a.concat(b.getPointsCollection().filter(function (a) { return R(a.selectedStaging, a.selected) })) }); return a }; a.prototype.getSelectedSeries = function () { return this.series.filter(function (a) { return a.selected }) }; a.prototype.setTitle = function (a, b, d) {
-                            this.applyDescription("title", a); this.applyDescription("subtitle", b); this.applyDescription("caption",
-                                void 0); this.layOutTitles(d)
-                        }; a.prototype.applyDescription = function (a, b) {
-                            var d = this, c = "title" === a ? { color: q.neutralColor80, fontSize: this.options.isStock ? "16px" : "18px" } : { color: q.neutralColor60 }; c = this.options[a] = U(!this.styledMode && { style: c }, this.options[a], b); var e = this[a]; e && b && (this[a] = e = e.destroy()); c && !e && (e = this.renderer.text(c.text, 0, 0, c.useHTML).attr({ align: c.align, "class": "highcharts-" + a, zIndex: c.zIndex || 4 }).add(), e.update = function (b) { d[{ title: "setTitle", subtitle: "setSubtitle", caption: "setCaption" }[a]](b) },
-                                this.styledMode || e.css(c.style), this[a] = e)
-                        }; a.prototype.layOutTitles = function (a) {
-                            var b = [0, 0, 0], d = this.renderer, c = this.spacingBox;["title", "subtitle", "caption"].forEach(function (a) {
-                                var e = this[a], g = this.options[a], f = g.verticalAlign || "top"; a = "title" === a ? "top" === f ? -3 : 0 : "top" === f ? b[0] + 2 : 0; var k; if (e) {
-                                    this.styledMode || (k = g.style && g.style.fontSize); k = d.fontMetrics(k, e).b; e.css({ width: (g.width || c.width + (g.widthAdjust || 0)) + "px" }); var l = Math.round(e.getBBox(g.useHTML).height); e.align(z({
-                                        y: "bottom" === f ? k : a +
-                                            k, height: l
-                                    }, g), !1, "spacingBox"); g.floating || ("top" === f ? b[0] = Math.ceil(b[0] + l) : "bottom" === f && (b[2] = Math.ceil(b[2] + l)))
-                                }
-                            }, this); b[0] && "top" === (this.options.title.verticalAlign || "top") && (b[0] += this.options.title.margin); b[2] && "bottom" === this.options.caption.verticalAlign && (b[2] += this.options.caption.margin); var e = !this.titleOffset || this.titleOffset.join(",") !== b.join(","); this.titleOffset = b; L(this, "afterLayOutTitles"); !this.isDirtyBox && e && (this.isDirtyBox = this.isDirtyLegend = e, this.hasRendered && R(a, !0) &&
-                                this.isDirtyBox && this.redraw())
-                        }; a.prototype.getChartSize = function () { var a = this.options.chart, b = a.width; a = a.height; var d = this.renderTo; S(b) || (this.containerWidth = aa(d, "width")); S(a) || (this.containerHeight = aa(d, "height")); this.chartWidth = Math.max(0, b || this.containerWidth || 600); this.chartHeight = Math.max(0, ca(a, this.chartWidth) || (1 < this.containerHeight ? this.containerHeight : 400)) }; a.prototype.temporaryDisplay = function (a) {
-                            var b = this.renderTo; if (a) for (; b && b.style;)b.hcOrigStyle && (O(b, b.hcOrigStyle), delete b.hcOrigStyle),
-                                b.hcOrigDetached && (p.body.removeChild(b), b.hcOrigDetached = !1), b = b.parentNode; else for (; b && b.style;) { p.body.contains(b) || b.parentNode || (b.hcOrigDetached = !0, p.body.appendChild(b)); if ("none" === aa(b, "display", !1) || b.hcOricDetached) b.hcOrigStyle = { display: b.style.display, height: b.style.height, overflow: b.style.overflow }, a = { display: "block", overflow: "hidden" }, b !== this.renderTo && (a.height = 0), O(b, a), b.offsetWidth || b.style.setProperty("display", "block", "important"); b = b.parentNode; if (b === p.body) break }
-                        }; a.prototype.setClassName =
-                            function (a) { this.container.className = "highcharts-container " + (a || "") }; a.prototype.getContainer = function () {
-                                var a = this.options, b = a.chart, d = ka(), c, e = this.renderTo; e || (this.renderTo = e = b.renderTo); P(e) && (this.renderTo = e = p.getElementById(e)); e || ba(13, !0, this); var g = V(D(e, "data-highcharts-chart")); I(g) && A[g] && A[g].hasRendered && A[g].destroy(); D(e, "data-highcharts-chart", this.index); e.innerHTML = ""; b.skipClone || e.offsetWidth || this.temporaryDisplay(); this.getChartSize(); g = this.chartWidth; var k = this.chartHeight;
-                                O(e, { overflow: "hidden" }); this.styledMode || (c = z({ position: "relative", overflow: "hidden", width: g + "px", height: k + "px", textAlign: "left", lineHeight: "normal", zIndex: 0, "-webkit-tap-highlight-color": "rgba(0,0,0,0)", userSelect: "none", "touch-action": "manipulation", outline: "none" }, b.style || {})); this.container = d = C("div", { id: d }, c, e); this._cursor = d.style.cursor; this.renderer = new (f.getRendererType(b.renderer))(d, g, k, void 0, b.forExport, a.exporting && a.exporting.allowHTML, this.styledMode); l(void 0, this); this.setClassName(b.className);
-                                if (this.styledMode) for (var h in a.defs) this.renderer.definition(a.defs[h]); else this.renderer.setStyle(b.style); this.renderer.chartIndex = this.index; L(this, "afterGetContainer")
-                            }; a.prototype.getMargins = function (a) {
-                                var b = this.spacing, d = this.margin, c = this.titleOffset; this.resetMargins(); c[0] && !S(d[0]) && (this.plotTop = Math.max(this.plotTop, c[0] + b[0])); c[2] && !S(d[2]) && (this.marginBottom = Math.max(this.marginBottom, c[2] + b[2])); this.legend && this.legend.display && this.legend.adjustMargins(d, b); L(this, "getMargins");
-                                a || this.getAxisMargins()
-                            }; a.prototype.getAxisMargins = function () { var a = this, b = a.axisOffset = [0, 0, 0, 0], c = a.colorAxis, e = a.margin, g = function (a) { a.forEach(function (a) { a.visible && a.getOffset() }) }; a.hasCartesianSeries ? g(a.axes) : c && c.length && g(c); d.forEach(function (d, c) { S(e[c]) || (a[d] += b[c]) }); a.setChartSize() }; a.prototype.reflow = function (a) {
-                                var b = this, d = b.options.chart, c = b.renderTo, e = S(d.width) && S(d.height), g = d.width || aa(c, "width"); d = d.height || aa(c, "height"); c = a ? a.target : k; delete b.pointer.chartPosition;
-                                if (!e && !b.isPrinting && g && d && (c === k || c === p)) { if (g !== b.containerWidth || d !== b.containerHeight) t.clearTimeout(b.reflowTimeout), b.reflowTimeout = ea(function () { b.container && b.setSize(void 0, void 0, !1) }, a ? 100 : 0); b.containerWidth = g; b.containerHeight = d }
-                            }; a.prototype.setReflow = function (a) { var b = this; !1 === a || this.unbindReflow ? !1 === a && this.unbindReflow && (this.unbindReflow = this.unbindReflow()) : (this.unbindReflow = F(k, "resize", function (a) { b.options && b.reflow(a) }), F(this, "destroy", this.unbindReflow)) }; a.prototype.setSize =
-                                function (a, b, d) {
-                                    var c = this, e = c.renderer; c.isResizing += 1; l(d, c); d = e.globalAnimation; c.oldChartHeight = c.chartHeight; c.oldChartWidth = c.chartWidth; "undefined" !== typeof a && (c.options.chart.width = a); "undefined" !== typeof b && (c.options.chart.height = b); c.getChartSize(); c.styledMode || (d ? w : O)(c.container, { width: c.chartWidth + "px", height: c.chartHeight + "px" }, d); c.setChartSize(!0); e.setSize(c.chartWidth, c.chartHeight, d); c.axes.forEach(function (a) { a.isDirty = !0; a.setScale() }); c.isDirtyLegend = !0; c.isDirtyBox = !0; c.layOutTitles();
-                                    c.getMargins(); c.redraw(d); c.oldChartHeight = null; L(c, "resize"); ea(function () { c && L(c, "endResize", null, function () { --c.isResizing }) }, n(d).duration)
-                                }; a.prototype.setChartSize = function (a) {
-                                    var b = this.inverted, d = this.renderer, c = this.chartWidth, e = this.chartHeight, g = this.options.chart, f = this.spacing, k = this.clipOffset, l, h, I, r; this.plotLeft = l = Math.round(this.plotLeft); this.plotTop = h = Math.round(this.plotTop); this.plotWidth = I = Math.max(0, Math.round(c - l - this.marginRight)); this.plotHeight = r = Math.max(0, Math.round(e -
-                                        h - this.marginBottom)); this.plotSizeX = b ? r : I; this.plotSizeY = b ? I : r; this.plotBorderWidth = g.plotBorderWidth || 0; this.spacingBox = d.spacingBox = { x: f[3], y: f[0], width: c - f[3] - f[1], height: e - f[0] - f[2] }; this.plotBox = d.plotBox = { x: l, y: h, width: I, height: r }; b = 2 * Math.floor(this.plotBorderWidth / 2); c = Math.ceil(Math.max(b, k[3]) / 2); e = Math.ceil(Math.max(b, k[0]) / 2); this.clipBox = { x: c, y: e, width: Math.floor(this.plotSizeX - Math.max(b, k[1]) / 2 - c), height: Math.max(0, Math.floor(this.plotSizeY - Math.max(b, k[2]) / 2 - e)) }; a || (this.axes.forEach(function (a) {
-                                            a.setAxisSize();
-                                            a.setAxisTranslation()
-                                        }), d.alignElements()); L(this, "afterSetChartSize", { skipAxes: a })
-                                }; a.prototype.resetMargins = function () { L(this, "resetMargins"); var a = this, b = a.options.chart;["margin", "spacing"].forEach(function (d) { var c = b[d], e = N(c) ? c : [c, c, c, c];["Top", "Right", "Bottom", "Left"].forEach(function (c, g) { a[d][g] = R(b[d + c], e[g]) }) }); d.forEach(function (b, d) { a[b] = R(a.margin[d], a.spacing[d]) }); a.axisOffset = [0, 0, 0, 0]; a.clipOffset = [0, 0, 0, 0] }; a.prototype.drawChartBox = function () {
-                                    var a = this.options.chart, b = this.renderer,
-                                    d = this.chartWidth, c = this.chartHeight, e = this.styledMode, g = this.plotBGImage, f = a.backgroundColor, k = a.plotBackgroundColor, l = a.plotBackgroundImage, h = this.plotLeft, I = this.plotTop, r = this.plotWidth, m = this.plotHeight, p = this.plotBox, t = this.clipRect, n = this.clipBox, P = this.chartBackground, w = this.plotBackground, q = this.plotBorder, A, v = "animate"; P || (this.chartBackground = P = b.rect().addClass("highcharts-background").add(), v = "attr"); if (e) var N = A = P.strokeWidth(); else {
-                                        N = a.borderWidth || 0; A = N + (a.shadow ? 8 : 0); f = { fill: f || "none" };
-                                        if (N || P["stroke-width"]) f.stroke = a.borderColor, f["stroke-width"] = N; P.attr(f).shadow(a.shadow)
-                                    } P[v]({ x: A / 2, y: A / 2, width: d - A - N % 2, height: c - A - N % 2, r: a.borderRadius }); v = "animate"; w || (v = "attr", this.plotBackground = w = b.rect().addClass("highcharts-plot-background").add()); w[v](p); e || (w.attr({ fill: k || "none" }).shadow(a.plotShadow), l && (g ? (l !== g.attr("href") && g.attr("href", l), g.animate(p)) : this.plotBGImage = b.image(l, h, I, r, m).add())); t ? t.animate({ width: n.width, height: n.height }) : this.clipRect = b.clipRect(n); v = "animate";
-                                    q || (v = "attr", this.plotBorder = q = b.rect().addClass("highcharts-plot-border").attr({ zIndex: 1 }).add()); e || q.attr({ stroke: a.plotBorderColor, "stroke-width": a.plotBorderWidth || 0, fill: "none" }); q[v](q.crisp({ x: h, y: I, width: r, height: m }, -q.strokeWidth())); this.isDirtyBox = !1; L(this, "afterDrawChartBox")
-                                }; a.prototype.propFromSeries = function () {
-                                    var a = this, b = a.options.chart, d = a.options.series, c, e, g;["inverted", "angular", "polar"].forEach(function (f) {
-                                        e = r[b.type || b.defaultSeriesType]; g = b[f] || e && e.prototype[f]; for (c = d &&
-                                            d.length; !g && c--;)(e = r[d[c].type]) && e.prototype[f] && (g = !0); a[f] = g
-                                    })
-                                }; a.prototype.linkSeries = function () { var a = this, b = a.series; b.forEach(function (a) { a.linkedSeries.length = 0 }); b.forEach(function (b) { var d = b.options.linkedTo; P(d) && (d = ":previous" === d ? a.series[b.index - 1] : a.get(d)) && d.linkedParent !== b && (d.linkedSeries.push(b), b.linkedParent = d, d.enabledDataSorting && b.setDataSortingOptions(), b.visible = R(b.options.visible, d.options.visible, b.visible)) }); L(this, "afterLinkSeries") }; a.prototype.renderSeries = function () {
-                                    this.series.forEach(function (a) {
-                                        a.translate();
-                                        a.render()
-                                    })
-                                }; a.prototype.renderLabels = function () { var a = this, b = a.options.labels; b.items && b.items.forEach(function (d) { var c = z(b.style, d.style), e = V(c.left) + a.plotLeft, g = V(c.top) + a.plotTop + 12; delete c.left; delete c.top; a.renderer.text(d.html, e, g).attr({ zIndex: 2 }).css(c).add() }) }; a.prototype.render = function () {
-                                    var a = this.axes, b = this.colorAxis, d = this.renderer, c = this.options, e = function (a) { a.forEach(function (a) { a.visible && a.render() }) }, g = 0; this.setTitle(); this.legend = new y(this, c.legend); this.getStacks &&
-                                        this.getStacks(); this.getMargins(!0); this.setChartSize(); c = this.plotWidth; a.some(function (a) { if (a.horiz && a.visible && a.options.labels.enabled && a.series.length) return g = 21, !0 }); var f = this.plotHeight = Math.max(this.plotHeight - g, 0); a.forEach(function (a) { a.setScale() }); this.getAxisMargins(); var k = 1.1 < c / this.plotWidth, l = 1.05 < f / this.plotHeight; if (k || l) a.forEach(function (a) { (a.horiz && k || !a.horiz && l) && a.setTickInterval(!0) }), this.getMargins(); this.drawChartBox(); this.hasCartesianSeries ? e(a) : b && b.length && e(b);
-                                    this.seriesGroup || (this.seriesGroup = d.g("series-group").attr({ zIndex: 3 }).add()); this.renderSeries(); this.renderLabels(); this.addCredits(); this.setResponsive && this.setResponsive(); this.hasRendered = !0
-                                }; a.prototype.addCredits = function (a) {
-                                    var b = this, d = U(!0, this.options.credits, a); d.enabled && !this.credits && (this.credits = this.renderer.text(d.text + (this.mapCredits || ""), 0, 0).addClass("highcharts-credits").on("click", function () { d.href && (k.location.href = d.href) }).attr({ align: d.position.align, zIndex: 8 }), b.styledMode ||
-                                        this.credits.css(d.style), this.credits.add().align(d.position), this.credits.update = function (a) { b.credits = b.credits.destroy(); b.addCredits(a) })
-                                }; a.prototype.destroy = function () {
-                                    var a = this, b = a.axes, d = a.series, c = a.container, e = c && c.parentNode, g; L(a, "destroy"); a.renderer.forExport ? Y(A, a) : A[a.index] = void 0; x.chartCount--; a.renderTo.removeAttribute("data-highcharts-chart"); da(a); for (g = b.length; g--;)b[g] = b[g].destroy(); this.scroller && this.scroller.destroy && this.scroller.destroy(); for (g = d.length; g--;)d[g] =
-                                        d[g].destroy(); "title subtitle chartBackground plotBackground plotBGImage plotBorder seriesGroup clipRect credits pointer rangeSelector legend resetZoomButton tooltip renderer".split(" ").forEach(function (b) { var d = a[b]; d && d.destroy && (a[b] = d.destroy()) }); c && (c.innerHTML = "", da(c), e && W(c)); T(a, function (b, d) { delete a[d] })
-                                }; a.prototype.firstRender = function () {
-                                    var a = this, b = a.options; if (!a.isReadyToRender || a.isReadyToRender()) {
-                                        a.getContainer(); a.resetMargins(); a.setChartSize(); a.propFromSeries(); a.getAxes();
-                                        (ja(b.series) ? b.series : []).forEach(function (b) { a.initSeries(b) }); a.linkSeries(); a.setSeriesData(); L(a, "beforeRender"); h && (G.isRequired() ? a.pointer = new G(a, b) : a.pointer = new h(a, b)); a.render(); a.pointer.getChartPosition(); if (!a.renderer.imgCount && !a.hasLoaded) a.onload(); a.temporaryDisplay(!0)
-                                    }
-                                }; a.prototype.onload = function () {
-                                    this.callbacks.concat([this.callback]).forEach(function (a) { a && "undefined" !== typeof this.index && a.apply(this, [this]) }, this); L(this, "load"); L(this, "render"); S(this.index) && this.setReflow(this.options.chart.reflow);
-                                    this.hasLoaded = !0
-                                }; a.prototype.addSeries = function (a, b, d) { var c = this, e; a && (b = R(b, !0), L(c, "addSeries", { options: a }, function () { e = c.initSeries(a); c.isDirtyLegend = !0; c.linkSeries(); e.enabledDataSorting && e.setData(a.data, !1); L(c, "afterAddSeries", { series: e }); b && c.redraw(d) })); return e }; a.prototype.addAxis = function (a, b, d, c) { return this.createAxis(b ? "xAxis" : "yAxis", { axis: a, redraw: d, animation: c }) }; a.prototype.addColorAxis = function (a, b, d) { return this.createAxis("colorAxis", { axis: a, redraw: b, animation: d }) }; a.prototype.createAxis =
-                                    function (a, b) { var d = "colorAxis" === a, c = b.redraw, e = b.animation; a = U(b.axis, { index: this[a].length, isX: "xAxis" === a }); a = d ? new x.ColorAxis(this, a) : new u(this, a); d && (this.isDirtyLegend = !0, this.axes.forEach(function (a) { a.series = [] }), this.series.forEach(function (a) { a.bindAxes(); a.isDirtyData = !0 })); R(c, !0) && this.redraw(e); return a }; a.prototype.showLoading = function (a) {
-                                        var b = this, d = b.options, c = d.loading, e = function () { g && O(g, { left: b.plotLeft + "px", top: b.plotTop + "px", width: b.plotWidth + "px", height: b.plotHeight + "px" }) },
-                                        g = b.loadingDiv, f = b.loadingSpan; g || (b.loadingDiv = g = C("div", { className: "highcharts-loading highcharts-loading-hidden" }, null, b.container)); f || (b.loadingSpan = f = C("span", { className: "highcharts-loading-inner" }, null, g), F(b, "redraw", e)); g.className = "highcharts-loading"; m.setElementHTML(f, R(a, d.lang.loading, "")); b.styledMode || (O(g, z(c.style, { zIndex: 10 })), O(f, c.labelStyle), b.loadingShown || (O(g, { opacity: 0, display: "" }), w(g, { opacity: c.style.opacity || .5 }, { duration: c.showDuration || 0 }))); b.loadingShown = !0; e()
-                                    }; a.prototype.hideLoading =
-                                        function () { var a = this.options, b = this.loadingDiv; b && (b.className = "highcharts-loading highcharts-loading-hidden", this.styledMode || w(b, { opacity: 0 }, { duration: a.loading.hideDuration || 100, complete: function () { O(b, { display: "none" }) } })); this.loadingShown = !1 }; a.prototype.update = function (a, b, d, c) {
-                                            var f = this, k = { credits: "addCredits", title: "setTitle", subtitle: "setSubtitle", caption: "setCaption" }, l = a.isResponsiveOptions, h = [], r, m; L(f, "update", { options: a }); l || f.setResponsive(!1, !0); a = M(a, f.options); f.userOptions = U(f.userOptions,
-                                                a); var p = a.chart; if (p) { U(!0, f.options.chart, p); "className" in p && f.setClassName(p.className); "reflow" in p && f.setReflow(p.reflow); if ("inverted" in p || "polar" in p || "type" in p) { f.propFromSeries(); var t = !0 } "alignTicks" in p && (t = !0); "events" in p && K(this, p); T(p, function (a, b) { -1 !== f.propsRequireUpdateSeries.indexOf("chart." + b) && (r = !0); -1 !== f.propsRequireDirtyBox.indexOf(b) && (f.isDirtyBox = !0); -1 !== f.propsRequireReflow.indexOf(b) && (l ? f.isDirtyBox = !0 : m = !0) }); !f.styledMode && "style" in p && f.renderer.setStyle(p.style) } !f.styledMode &&
-                                                    a.colors && (this.options.colors = a.colors); a.time && (this.time === g && (this.time = new e(a.time)), U(!0, f.options.time, a.time)); T(a, function (b, d) { if (f[d] && "function" === typeof f[d].update) f[d].update(b, !1); else if ("function" === typeof f[k[d]]) f[k[d]](b); else "colors" !== d && -1 === f.collectionsWithUpdate.indexOf(d) && U(!0, f.options[d], a[d]); "chart" !== d && -1 !== f.propsRequireUpdateSeries.indexOf(d) && (r = !0) }); this.collectionsWithUpdate.forEach(function (b) {
-                                                        if (a[b]) {
-                                                            var c = []; f[b].forEach(function (a, b) {
-                                                                a.options.isInternal ||
-                                                                c.push(R(a.options.index, b))
-                                                            }); fa(a[b]).forEach(function (a, e) { var g = S(a.id), k; g && (k = f.get(a.id)); !k && f[b] && (k = f[b][c ? c[e] : e]) && g && S(k.options.id) && (k = void 0); k && k.coll === b && (k.update(a, !1), d && (k.touched = !0)); !k && d && f.collectionsWithInit[b] && (f.collectionsWithInit[b][0].apply(f, [a].concat(f.collectionsWithInit[b][1] || []).concat([!1])).touched = !0) }); d && f[b].forEach(function (a) { a.touched || a.options.isInternal ? delete a.touched : h.push(a) })
-                                                        }
-                                                    }); h.forEach(function (a) { a.chart && a.remove(!1) }); t && f.axes.forEach(function (a) {
-                                                        a.update({},
-                                                            !1)
-                                                    }); r && f.getSeriesOrderByLinks().forEach(function (a) { a.chart && a.update({}, !1) }, this); t = p && p.width; p = p && (P(p.height) ? ca(p.height, t || f.chartWidth) : p.height); m || I(t) && t !== f.chartWidth || I(p) && p !== f.chartHeight ? f.setSize(t, p, c) : R(b, !0) && f.redraw(c); L(f, "afterUpdate", { options: a, redraw: b, animation: c })
-                                        }; a.prototype.setSubtitle = function (a, b) { this.applyDescription("subtitle", a); this.layOutTitles(b) }; a.prototype.setCaption = function (a, b) { this.applyDescription("caption", a); this.layOutTitles(b) }; a.prototype.showResetZoom =
-                                            function () { function a() { d.zoomOut() } var d = this, c = b.lang, e = d.options.chart.resetZoomButton, g = e.theme, f = g.states, k = "chart" === e.relativeTo || "spacingBox" === e.relativeTo ? null : "scrollablePlotBox"; L(this, "beforeShowResetZoom", null, function () { d.resetZoomButton = d.renderer.button(c.resetZoom, null, null, a, g, f && f.hover).attr({ align: e.position.align, title: c.resetZoomTitle }).addClass("highcharts-reset-zoom").add().align(e.position, !1, k) }); L(this, "afterShowResetZoom") }; a.prototype.zoomOut = function () {
-                                                L(this, "selection",
-                                                    { resetSelection: !0 }, this.zoom)
-                                            }; a.prototype.zoom = function (a) {
-                                                var b = this, d = b.pointer, c = b.inverted ? d.mouseDownX : d.mouseDownY, e = !1, g; !a || a.resetSelection ? (b.axes.forEach(function (a) { g = a.zoom() }), d.initiated = !1) : a.xAxis.concat(a.yAxis).forEach(function (a) { var f = a.axis, k = b.inverted ? f.left : f.top, l = b.inverted ? k + f.width : k + f.height, h = f.isXAxis, I = !1; if (!h && c >= k && c <= l || h || !S(c)) I = !0; d[h ? "zoomX" : "zoomY"] && I && (g = f.zoom(a.min, a.max), f.displayBtn && (e = !0)) }); var f = b.resetZoomButton; e && !f ? b.showResetZoom() : !e && N(f) &&
-                                                    (b.resetZoomButton = f.destroy()); g && b.redraw(R(b.options.chart.animation, a && a.animation, 100 > b.pointCount))
-                                            }; a.prototype.pan = function (a, b) {
-                                                var d = this, c = d.hoverPoints; b = "object" === typeof b ? b : { enabled: b, type: "x" }; var e = d.options.chart, g = d.options.mapNavigation && d.options.mapNavigation.enabled; e && e.panning && (e.panning = b); var f = b.type, k; L(this, "pan", { originalEvent: a }, function () {
-                                                    c && c.forEach(function (a) { a.setState() }); var b = d.xAxis; "xy" === f ? b = b.concat(d.yAxis) : "y" === f && (b = d.yAxis); var e = {}; b.forEach(function (b) {
-                                                        if (b.options.panningEnabled &&
-                                                            !b.options.isInternal) {
-                                                                var c = b.horiz, l = a[c ? "chartX" : "chartY"]; c = c ? "mouseDownX" : "mouseDownY"; var h = d[c], r = b.minPointOffset || 0, p = b.reversed && !d.inverted || !b.reversed && d.inverted ? -1 : 1, m = b.getExtremes(), t = b.toValue(h - l, !0) + r * p, n = b.toValue(h + b.len - l, !0) - (r * p || b.isXAxis && b.pointRangePadding || 0), P = n < t; p = b.hasVerticalPanning(); h = P ? n : t; t = P ? t : n; var q = b.panningState; !p || b.isXAxis || q && !q.isDirty || b.series.forEach(function (a) {
-                                                                    var b = a.getProcessedData(!0); b = a.getExtremes(b.yData, !0); q || (q = {
-                                                                        startMin: Number.MAX_VALUE,
-                                                                        startMax: -Number.MAX_VALUE
-                                                                    }); I(b.dataMin) && I(b.dataMax) && (q.startMin = Math.min(R(a.options.threshold, Infinity), b.dataMin, q.startMin), q.startMax = Math.max(R(a.options.threshold, -Infinity), b.dataMax, q.startMax))
-                                                                }); p = Math.min(R(q && q.startMin, m.dataMin), r ? m.min : b.toValue(b.toPixels(m.min) - b.minPixelPadding)); n = Math.max(R(q && q.startMax, m.dataMax), r ? m.max : b.toValue(b.toPixels(m.max) + b.minPixelPadding)); b.panningState = q; b.isOrdinal || (r = p - h, 0 < r && (t += r, h = p), r = t - n, 0 < r && (t = n, h -= r), b.series.length && h !== m.min &&
-                                                                    t !== m.max && h >= p && t <= n && (b.setExtremes(h, t, !1, !1, { trigger: "pan" }), d.resetZoomButton || g || h === p || t === n || !f.match("y") || (d.showResetZoom(), b.displayBtn = !1), k = !0), e[c] = l)
-                                                        }
-                                                    }); T(e, function (a, b) { d[b] = a }); k && d.redraw(!1); O(d.container, { cursor: "move" })
-                                                })
-                                            }; return a
-            }(); z(a.prototype, {
-                callbacks: [], collectionsWithInit: { xAxis: [a.prototype.addAxis, [!0]], yAxis: [a.prototype.addAxis, [!1]], series: [a.prototype.addSeries] }, collectionsWithUpdate: ["xAxis", "yAxis", "zAxis", "series"], propsRequireDirtyBox: "backgroundColor borderColor borderWidth borderRadius plotBackgroundColor plotBackgroundImage plotBorderColor plotBorderWidth plotShadow shadow".split(" "),
-                propsRequireReflow: "margin marginTop marginRight marginBottom marginLeft spacing spacingTop spacingRight spacingBottom spacingLeft".split(" "), propsRequireUpdateSeries: "chart.inverted chart.polar chart.ignoreHiddenSeries chart.type colors plotOptions time tooltip".split(" ")
-            }); ""; return a
-        }); L(a, "Mixins/LegendSymbol.js", [a["Core/Globals.js"], a["Core/Utilities.js"]], function (a, u) {
-            var v = u.merge, H = u.pick; return a.LegendSymbolMixin = {
-                drawRectangle: function (a, v) {
-                    var u = a.symbolHeight, B = a.options.squareSymbol;
-                    v.legendSymbol = this.chart.renderer.rect(B ? (a.symbolWidth - u) / 2 : 0, a.baseline - u + 1, B ? u : a.symbolWidth, u, H(a.options.symbolRadius, u / 2)).addClass("highcharts-point").attr({ zIndex: 3 }).add(v.legendGroup)
-                }, drawLineMarker: function (a) {
-                    var u = this.options, x = u.marker, B = a.symbolWidth, q = a.symbolHeight, h = q / 2, f = this.chart.renderer, c = this.legendGroup; a = a.baseline - Math.round(.3 * a.fontMetrics.b); var e = {}; this.chart.styledMode || (e = { "stroke-width": u.lineWidth || 0 }, u.dashStyle && (e.dashstyle = u.dashStyle)); this.legendLine = f.path([["M",
-                        0, a], ["L", B, a]]).addClass("highcharts-graph").attr(e).add(c); x && !1 !== x.enabled && B && (u = Math.min(H(x.radius, h), h), 0 === this.symbol.indexOf("url") && (x = v(x, { width: q, height: q }), u = 0), this.legendSymbol = x = f.symbol(this.symbol, B / 2 - u, a - u, 2 * u, 2 * u, x).addClass("highcharts-point").add(c), x.isMarker = !0)
-                }
-            }
-        }); L(a, "Core/Series/Series.js", [a["Core/Animation/AnimationUtilities.js"], a["Core/Foundation.js"], a["Core/Globals.js"], a["Mixins/LegendSymbol.js"], a["Core/DefaultOptions.js"], a["Core/Color/Palette.js"], a["Core/Series/Point.js"],
-        a["Core/Series/SeriesRegistry.js"], a["Core/Renderer/SVG/SVGElement.js"], a["Core/Utilities.js"]], function (a, u, E, H, x, y, G, B, q, h) {
-            var f = a.animObject, c = a.setAnimation, e = u.registerEventOptions, t = E.hasTouch, m = E.svg, w = E.win, n = x.defaultOptions, l = B.seriesTypes, v = h.addEvent, K = h.arrayMax, A = h.arrayMin, p = h.clamp, d = h.cleanRecursively, k = h.correctFloat, b = h.defined, g = h.erase, r = h.error, F = h.extend, D = h.find, M = h.fireEvent, C = h.getNestedProperty, O = h.isArray, S = h.isNumber, W = h.isString, Y = h.merge, L = h.objectEach, z = h.pick, Q = h.removeEvent,
-            ia = h.splat, aa = h.syncTimeout; a = function () {
-                function a() { this.zones = this.yAxis = this.xAxis = this.userOptions = this.tooltipOptions = this.processedYData = this.processedXData = this.points = this.options = this.linkedSeries = this.index = this.eventsToUnbind = this.eventOptions = this.data = this.chart = this._i = void 0 } a.prototype.init = function (a, b) {
-                    M(this, "init", { options: b }); var d = this, c = a.series; this.eventsToUnbind = []; d.chart = a; d.options = d.setOptions(b); b = d.options; d.linkedSeries = []; d.bindAxes(); F(d, {
-                        name: b.name, state: "", visible: !1 !==
-                            b.visible, selected: !0 === b.selected
-                    }); e(this, b); var g = b.events; if (g && g.click || b.point && b.point.events && b.point.events.click || b.allowPointSelect) a.runTrackerClick = !0; d.getColor(); d.getSymbol(); d.parallelArrays.forEach(function (a) { d[a + "Data"] || (d[a + "Data"] = []) }); d.isCartesian && (a.hasCartesianSeries = !0); var f; c.length && (f = c[c.length - 1]); d._i = z(f && f._i, -1) + 1; d.opacity = d.options.opacity; a.orderSeries(this.insert(c)); b.dataSorting && b.dataSorting.enabled ? d.setDataSortingOptions() : d.points || d.data || d.setData(b.data,
-                        !1); M(this, "afterInit")
-                }; a.prototype.is = function (a) { return l[a] && this instanceof l[a] }; a.prototype.insert = function (a) { var b = this.options.index, d; if (S(b)) { for (d = a.length; d--;)if (b >= z(a[d].options.index, a[d]._i)) { a.splice(d + 1, 0, this); break } -1 === d && a.unshift(this); d += 1 } else a.push(this); return z(d, a.length - 1) }; a.prototype.bindAxes = function () {
-                    var a = this, b = a.options, d = a.chart, c; M(this, "bindAxes", null, function () {
-                        (a.axisTypes || []).forEach(function (e) {
-                            var g = 0; d[e].forEach(function (d) {
-                                c = d.options; if (b[e] ===
-                                    g && !c.isInternal || "undefined" !== typeof b[e] && b[e] === c.id || "undefined" === typeof b[e] && 0 === c.index) a.insert(d.series), a[e] = d, d.isDirty = !0; c.isInternal || g++
-                            }); a[e] || a.optionalAxis === e || r(18, !0, d)
-                        })
-                    }); M(this, "afterBindAxes")
-                }; a.prototype.updateParallelArrays = function (a, b) { var d = a.series, c = arguments, e = S(b) ? function (c) { var e = "y" === c && d.toYData ? d.toYData(a) : a[c]; d[c + "Data"][b] = e } : function (a) { Array.prototype[b].apply(d[a + "Data"], Array.prototype.slice.call(c, 2)) }; d.parallelArrays.forEach(e) }; a.prototype.hasData =
-                    function () { return this.visible && "undefined" !== typeof this.dataMax && "undefined" !== typeof this.dataMin || this.visible && this.yData && 0 < this.yData.length }; a.prototype.autoIncrement = function () {
-                        var a = this.options, b = this.xIncrement, d, c = a.pointIntervalUnit, e = this.chart.time; b = z(b, a.pointStart, 0); this.pointInterval = d = z(this.pointInterval, a.pointInterval, 1); c && (a = new e.Date(b), "day" === c ? e.set("Date", a, e.get("Date", a) + d) : "month" === c ? e.set("Month", a, e.get("Month", a) + d) : "year" === c && e.set("FullYear", a, e.get("FullYear",
-                            a) + d), d = a.getTime() - b); this.xIncrement = b + d; return b
-                    }; a.prototype.setDataSortingOptions = function () { var a = this.options; F(this, { requireSorting: !1, sorted: !1, enabledDataSorting: !0, allowDG: !1 }); b(a.pointRange) || (a.pointRange = 1) }; a.prototype.setOptions = function (a) {
-                        var d = this.chart, c = d.options, e = c.plotOptions, g = d.userOptions || {}; a = Y(a); d = d.styledMode; var f = { plotOptions: e, userOptions: a }; M(this, "setOptions", f); var k = f.plotOptions[this.type], l = g.plotOptions || {}; this.userOptions = f.userOptions; g = Y(k, e.series,
-                            g.plotOptions && g.plotOptions[this.type], a); this.tooltipOptions = Y(n.tooltip, n.plotOptions.series && n.plotOptions.series.tooltip, n.plotOptions[this.type].tooltip, c.tooltip.userOptions, e.series && e.series.tooltip, e[this.type].tooltip, a.tooltip); this.stickyTracking = z(a.stickyTracking, l[this.type] && l[this.type].stickyTracking, l.series && l.series.stickyTracking, this.tooltipOptions.shared && !this.noSharedTooltip ? !0 : g.stickyTracking); null === k.marker && delete g.marker; this.zoneAxis = g.zoneAxis; c = this.zones = (g.zones ||
-                                []).slice(); !g.negativeColor && !g.negativeFillColor || g.zones || (e = { value: g[this.zoneAxis + "Threshold"] || g.threshold || 0, className: "highcharts-negative" }, d || (e.color = g.negativeColor, e.fillColor = g.negativeFillColor), c.push(e)); c.length && b(c[c.length - 1].value) && c.push(d ? {} : { color: this.color, fillColor: this.fillColor }); M(this, "afterSetOptions", { options: g }); return g
-                    }; a.prototype.getName = function () { return z(this.options.name, "Series " + (this.index + 1)) }; a.prototype.getCyclic = function (a, d, c) {
-                        var e = this.chart, g =
-                            this.userOptions, f = a + "Index", k = a + "Counter", l = c ? c.length : z(e.options.chart[a + "Count"], e[a + "Count"]); if (!d) { var h = z(g[f], g["_" + f]); b(h) || (e.series.length || (e[k] = 0), g["_" + f] = h = e[k] % l, e[k] += 1); c && (d = c[h]) } "undefined" !== typeof h && (this[f] = h); this[a] = d
-                    }; a.prototype.getColor = function () { this.chart.styledMode ? this.getCyclic("color") : this.options.colorByPoint ? this.color = y.neutralColor20 : this.getCyclic("color", this.options.color || n.plotOptions[this.type].color, this.chart.options.colors) }; a.prototype.getPointsCollection =
-                        function () { return (this.hasGroupedData ? this.points : this.data) || [] }; a.prototype.getSymbol = function () { this.getCyclic("symbol", this.options.marker.symbol, this.chart.options.symbols) }; a.prototype.findPointIndex = function (a, b) {
-                            var d = a.id, c = a.x, e = this.points, g, f = this.options.dataSorting; if (d) var k = this.chart.get(d); else if (this.linkedParent || this.enabledDataSorting) { var l = f && f.matchByName ? "name" : "index"; k = D(e, function (b) { return !b.touched && b[l] === a[l] }); if (!k) return } if (k) {
-                                var h = k && k.index; "undefined" !== typeof h &&
-                                    (g = !0)
-                            } "undefined" === typeof h && S(c) && (h = this.xData.indexOf(c, b)); -1 !== h && "undefined" !== typeof h && this.cropped && (h = h >= this.cropStart ? h - this.cropStart : h); !g && e[h] && e[h].touched && (h = void 0); return h
-                        }; a.prototype.updateData = function (a, d) {
-                            var c = this.options, e = c.dataSorting, g = this.points, f = [], k, l, h, r = this.requireSorting, p = a.length === g.length, m = !0; this.xIncrement = null; a.forEach(function (a, d) {
-                                var l = b(a) && this.pointClass.prototype.optionsToObject.call({ series: this }, a) || {}; var m = l.x; if (l.id || S(m)) {
-                                    if (m = this.findPointIndex(l,
-                                        h), -1 === m || "undefined" === typeof m ? f.push(a) : g[m] && a !== c.data[m] ? (g[m].update(a, !1, null, !1), g[m].touched = !0, r && (h = m + 1)) : g[m] && (g[m].touched = !0), !p || d !== m || e && e.enabled || this.hasDerivedData) k = !0
-                                } else f.push(a)
-                            }, this); if (k) for (a = g.length; a--;)(l = g[a]) && !l.touched && l.remove && l.remove(!1, d); else !p || e && e.enabled ? m = !1 : (a.forEach(function (a, b) { a !== g[b].y && g[b].update && g[b].update(a, !1, null, !1) }), f.length = 0); g.forEach(function (a) { a && (a.touched = !1) }); if (!m) return !1; f.forEach(function (a) {
-                                this.addPoint(a, !1,
-                                    null, null, !1)
-                            }, this); null === this.xIncrement && this.xData && this.xData.length && (this.xIncrement = K(this.xData), this.autoIncrement()); return !0
-                        }; a.prototype.setData = function (a, b, d, c) {
-                            var e = this, g = e.points, f = g && g.length || 0, k, l = e.options, h = e.chart, p = l.dataSorting, m = null, t = e.xAxis; m = l.turboThreshold; var I = this.xData, n = this.yData, q = (k = e.pointArrayMap) && k.length, w = l.keys, A = 0, v = 1, C; a = a || []; k = a.length; b = z(b, !0); p && p.enabled && (a = this.sortData(a)); !1 !== c && k && f && !e.cropped && !e.hasGroupedData && e.visible && !e.isSeriesBoosting &&
-                                (C = this.updateData(a, d)); if (!C) {
-                                    e.xIncrement = null; e.colorCounter = 0; this.parallelArrays.forEach(function (a) { e[a + "Data"].length = 0 }); if (m && k > m) if (m = e.getFirstValidPoint(a), S(m)) for (d = 0; d < k; d++)I[d] = this.autoIncrement(), n[d] = a[d]; else if (O(m)) if (q) for (d = 0; d < k; d++)c = a[d], I[d] = c[0], n[d] = c.slice(1, q + 1); else for (w && (A = w.indexOf("x"), v = w.indexOf("y"), A = 0 <= A ? A : 0, v = 0 <= v ? v : 1), d = 0; d < k; d++)c = a[d], I[d] = c[A], n[d] = c[v]; else r(12, !1, h); else for (d = 0; d < k; d++)"undefined" !== typeof a[d] && (c = { series: e }, e.pointClass.prototype.applyOptions.apply(c,
-                                        [a[d]]), e.updateParallelArrays(c, d)); n && W(n[0]) && r(14, !0, h); e.data = []; e.options.data = e.userOptions.data = a; for (d = f; d--;)g[d] && g[d].destroy && g[d].destroy(); t && (t.minRange = t.userMinRange); e.isDirty = h.isDirtyBox = !0; e.isDirtyData = !!g; d = !1
-                                } "point" === l.legendType && (this.processData(), this.generatePoints()); b && h.redraw(d)
-                        }; a.prototype.sortData = function (a) {
-                            var d = this, c = d.options.dataSorting.sortKey || "y", e = function (a, d) { return b(d) && a.pointClass.prototype.optionsToObject.call({ series: a }, d) || {} }; a.forEach(function (b,
-                                c) { a[c] = e(d, b); a[c].index = c }, this); a.concat().sort(function (a, b) { a = C(c, a); b = C(c, b); return b < a ? -1 : b > a ? 1 : 0 }).forEach(function (a, b) { a.x = b }, this); d.linkedSeries && d.linkedSeries.forEach(function (b) { var d = b.options, c = d.data; d.dataSorting && d.dataSorting.enabled || !c || (c.forEach(function (d, g) { c[g] = e(b, d); a[g] && (c[g].x = a[g].x, c[g].index = g) }), b.setData(c, !1)) }); return a
-                        }; a.prototype.getProcessedData = function (a) {
-                            var b = this.xData, d = this.yData, c = b.length; var e = 0; var g = this.xAxis, f = this.options; var k = f.cropThreshold;
-                            var l = a || this.getExtremesFromAll || f.getExtremesFromAll, h = this.isCartesian; a = g && g.val2lin; f = !(!g || !g.logarithmic); var m = this.requireSorting; if (g) { g = g.getExtremes(); var p = g.min; var t = g.max } if (h && this.sorted && !l && (!k || c > k || this.forceCrop)) if (b[c - 1] < p || b[0] > t) b = [], d = []; else if (this.yData && (b[0] < p || b[c - 1] > t)) { e = this.cropData(this.xData, this.yData, p, t); b = e.xData; d = e.yData; e = e.start; var I = !0 } for (k = b.length || 1; --k;)if (c = f ? a(b[k]) - a(b[k - 1]) : b[k] - b[k - 1], 0 < c && ("undefined" === typeof n || c < n)) var n = c; else 0 > c &&
-                                m && (r(15, !1, this.chart), m = !1); return { xData: b, yData: d, cropped: I, cropStart: e, closestPointRange: n }
-                        }; a.prototype.processData = function (a) { var b = this.xAxis; if (this.isCartesian && !this.isDirty && !b.isDirty && !this.yAxis.isDirty && !a) return !1; a = this.getProcessedData(); this.cropped = a.cropped; this.cropStart = a.cropStart; this.processedXData = a.xData; this.processedYData = a.yData; this.closestPointRange = this.basePointRange = a.closestPointRange }; a.prototype.cropData = function (a, b, d, c, e) {
-                            var g = a.length, f = 0, k = g, l; e = z(e, this.cropShoulder);
-                            for (l = 0; l < g; l++)if (a[l] >= d) { f = Math.max(0, l - e); break } for (d = l; d < g; d++)if (a[d] > c) { k = d + e; break } return { xData: a.slice(f, k), yData: b.slice(f, k), start: f, end: k }
-                        }; a.prototype.generatePoints = function () {
-                            var a = this.options, b = a.data, d = this.data, c, e = this.processedXData, g = this.processedYData, f = this.pointClass, k = e.length, l = this.cropStart || 0, h = this.hasGroupedData, r = a.keys, m = [], p; a = a.dataGrouping && a.dataGrouping.groupAll ? l : 0; d || h || (d = [], d.length = b.length, d = this.data = d); r && h && (this.options.keys = !1); for (p = 0; p < k; p++) {
-                                var t =
-                                    l + p; if (h) { var n = (new f).init(this, [e[p]].concat(ia(g[p]))); n.dataGroup = this.groupMap[a + p]; n.dataGroup.options && (n.options = n.dataGroup.options, F(n, n.dataGroup.options), delete n.dataLabels) } else (n = d[t]) || "undefined" === typeof b[t] || (d[t] = n = (new f).init(this, b[t], e[p])); n && (n.index = h ? a + p : t, m[p] = n)
-                            } this.options.keys = r; if (d && (k !== (c = d.length) || h)) for (p = 0; p < c; p++)p !== l || h || (p += k), d[p] && (d[p].destroyElements(), d[p].plotX = void 0); this.data = d; this.points = m; M(this, "afterGeneratePoints")
-                        }; a.prototype.getXExtremes =
-                            function (a) { return { min: A(a), max: K(a) } }; a.prototype.getExtremes = function (a, b) {
-                                var d = this.xAxis, c = this.yAxis, e = this.processedXData || this.xData, g = [], f = 0, k = 0; var l = 0; var h = this.requireSorting ? this.cropShoulder : 0, p = c ? c.positiveValuesOnly : !1, r; a = a || this.stackedYData || this.processedYData || []; c = a.length; d && (l = d.getExtremes(), k = l.min, l = l.max); for (r = 0; r < c; r++) {
-                                    var m = e[r]; var t = a[r]; var n = (S(t) || O(t)) && (t.length || 0 < t || !p); m = b || this.getExtremesFromAll || this.options.getExtremesFromAll || this.cropped || !d || (e[r +
-                                        h] || m) >= k && (e[r - h] || m) <= l; if (n && m) if (n = t.length) for (; n--;)S(t[n]) && (g[f++] = t[n]); else g[f++] = t
-                                } a = { dataMin: A(g), dataMax: K(g) }; M(this, "afterGetExtremes", { dataExtremes: a }); return a
-                            }; a.prototype.applyExtremes = function () { var a = this.getExtremes(); this.dataMin = a.dataMin; this.dataMax = a.dataMax; return a }; a.prototype.getFirstValidPoint = function (a) { for (var b = null, d = a.length, c = 0; null === b && c < d;)b = a[c], c++; return b }; a.prototype.translate = function () {
-                                this.processedXData || this.processData(); this.generatePoints();
-                                var a = this.options, d = a.stacking, c = this.xAxis, e = c.categories, g = this.enabledDataSorting, f = this.yAxis, l = this.points, h = l.length, r = !!this.modifyValue, m, t = this.pointPlacementToXValue(), n = !!t, q = a.threshold, w = a.startFromThreshold ? q : 0, A, v = this.zoneAxis || "y", C = Number.MAX_VALUE; for (m = 0; m < h; m++) {
-                                    var u = l[m], F = u.x, D = u.y, J = u.low, B = d && f.stacking && f.stacking.stacks[(this.negStacks && D < (w ? 0 : q) ? "-" : "") + this.stackKey], x = void 0, K = void 0; if (f.positiveValuesOnly && !f.validatePositiveValue(D) || c.positiveValuesOnly && !c.validatePositiveValue(F)) u.isNull =
-                                        !0; u.plotX = A = k(p(c.translate(F, 0, 0, 0, 1, t, "flags" === this.type), -1E5, 1E5)); if (d && this.visible && B && B[F]) { var y = this.getStackIndicator(y, F, this.index); u.isNull || (x = B[F], K = x.points[y.key]) } O(K) && (J = K[0], D = K[1], J === w && y.key === B[F].base && (J = z(S(q) && q, f.min)), f.positiveValuesOnly && 0 >= J && (J = null), u.total = u.stackTotal = x.total, u.percentage = x.total && u.y / x.total * 100, u.stackY = D, this.irregularWidths || x.setOffset(this.pointXOffset || 0, this.barW || 0)); u.yBottom = b(J) ? p(f.translate(J, 0, 1, 0, 1), -1E5, 1E5) : null; r && (D = this.modifyValue(D,
-                                            u)); u.plotY = void 0; S(D) && (D = f.translate(D, !1, !0, !1, !0), "undefined" !== typeof D && (u.plotY = p(D, -1E5, 1E5))); u.isInside = this.isPointInside(u); u.clientX = n ? k(c.translate(F, 0, 0, 0, 1, t)) : A; u.negative = u[v] < (a[v + "Threshold"] || q || 0); u.category = e && "undefined" !== typeof e[u.x] ? e[u.x] : u.x; if (!u.isNull && !1 !== u.visible) { "undefined" !== typeof E && (C = Math.min(C, Math.abs(A - E))); var E = A } u.zone = this.zones.length && u.getZone(); !u.graphic && this.group && g && (u.isNew = !0)
-                                } this.closestPointRangePx = C; M(this, "afterTranslate")
-                            }; a.prototype.getValidPoints =
-                                function (a, b, d) { var c = this.chart; return (a || this.points || []).filter(function (a) { return b && !c.isInsidePlot(a.plotX, a.plotY, { inverted: c.inverted }) ? !1 : !1 !== a.visible && (d || !a.isNull) }) }; a.prototype.getClipBox = function (a, b) {
-                                    var d = this.options, c = this.chart, e = c.inverted, g = this.xAxis, f = g && this.yAxis, k = c.options.chart.scrollablePlotArea || {}; a && !1 === d.clip && f ? a = e ? { y: -c.chartWidth + f.len + f.pos, height: c.chartWidth, width: c.chartHeight, x: -c.chartHeight + g.len + g.pos } : {
-                                        y: -f.pos, height: c.chartHeight, width: c.chartWidth,
-                                        x: -g.pos
-                                    } : (a = this.clipBox || c.clipBox, b && (a.width = c.plotSizeX, a.x = (c.scrollablePixelsX || 0) * (k.scrollPositionX || 0))); return b ? { width: a.width, x: a.x } : a
-                                }; a.prototype.getSharedClipKey = function (a) { if (this.sharedClipKey) return this.sharedClipKey; var b = [a && a.duration, a && a.easing, a && a.defer, this.getClipBox(a).height, this.options.xAxis, this.options.yAxis].join(); if (!1 !== this.options.clip || a) this.sharedClipKey = b; return b }; a.prototype.setClip = function (a) {
-                                    var b = this.chart, d = this.options, c = b.renderer, e = b.inverted,
-                                    g = this.clipBox, f = this.getClipBox(a), k = this.getSharedClipKey(a), l = b.sharedClips[k], h = b.sharedClips[k + "m"]; a && (f.width = 0, e && (f.x = b.plotHeight + (!1 !== d.clip ? 0 : b.plotTop))); l ? b.hasLoaded || l.attr(f) : (a && (b.sharedClips[k + "m"] = h = c.clipRect(e ? (b.plotSizeX || 0) + 99 : -99, e ? -b.plotLeft : -b.plotTop, 99, e ? b.chartWidth : b.chartHeight)), b.sharedClips[k] = l = c.clipRect(f), l.count = { length: 0 }); a && !l.count[this.index] && (l.count[this.index] = !0, l.count.length += 1); if (!1 !== d.clip || a) this.group.clip(a || g ? l : b.clipRect), this.markerGroup.clip(h);
-                                    a || (l.count[this.index] && (delete l.count[this.index], --l.count.length), 0 === l.count.length && (g || (b.sharedClips[k] = l.destroy()), h && (b.sharedClips[k + "m"] = h.destroy())))
-                                }; a.prototype.animate = function (a) { var b = this.chart, d = f(this.options.animation), c = this.sharedClipKey; if (a) this.setClip(d); else if (c) { a = b.sharedClips[c]; c = b.sharedClips[c + "m"]; var e = this.getClipBox(d, !0); a && a.animate(e, d); c && c.animate({ width: e.width + 99, x: e.x - (b.inverted ? 0 : 99) }, d) } }; a.prototype.afterAnimate = function () {
-                                    this.setClip(); M(this,
-                                        "afterAnimate"); this.finishedAnimating = !0
-                                }; a.prototype.drawPoints = function () {
-                                    var a = this.points, b = this.chart, d, c, e = this.options.marker, g = this[this.specialGroup] || this.markerGroup, f = this.xAxis, k = z(e.enabled, !f || f.isRadial ? !0 : null, this.closestPointRangePx >= e.enabledThreshold * e.radius); if (!1 !== e.enabled || this._hasPointMarkers) for (d = 0; d < a.length; d++) {
-                                        var l = a[d]; var h = (c = l.graphic) ? "animate" : "attr"; var p = l.marker || {}; var r = !!l.marker; if ((k && "undefined" === typeof p.enabled || p.enabled) && !l.isNull && !1 !== l.visible) {
-                                            var m =
-                                                z(p.symbol, this.symbol, "rect"); var t = this.markerAttribs(l, l.selected && "select"); this.enabledDataSorting && (l.startXPos = f.reversed ? -(t.width || 0) : f.width); var n = !1 !== l.isInside; c ? c[n ? "show" : "hide"](n).animate(t) : n && (0 < (t.width || 0) || l.hasImage) && (l.graphic = c = b.renderer.symbol(m, t.x, t.y, t.width, t.height, r ? p : e).add(g), this.enabledDataSorting && b.hasRendered && (c.attr({ x: l.startXPos }), h = "animate")); c && "animate" === h && c[n ? "show" : "hide"](n).animate(t); if (c && !b.styledMode) c[h](this.pointAttribs(l, l.selected &&
-                                                    "select")); c && c.addClass(l.getClassName(), !0)
-                                        } else c && (l.graphic = c.destroy())
-                                    }
-                                }; a.prototype.markerAttribs = function (a, b) { var d = this.options, c = d.marker, e = a.marker || {}, g = e.symbol || c.symbol, f = z(e.radius, c.radius); b && (c = c.states[b], b = e.states && e.states[b], f = z(b && b.radius, c && c.radius, f + (c && c.radiusPlus || 0))); a.hasImage = g && 0 === g.indexOf("url"); a.hasImage && (f = 0); a = { x: d.crisp ? Math.floor(a.plotX - f) : a.plotX - f, y: a.plotY - f }; f && (a.width = a.height = 2 * f); return a }; a.prototype.pointAttribs = function (a, b) {
-                                    var d = this.options.marker,
-                                    c = a && a.options, e = c && c.marker || {}, g = this.color, f = c && c.color, k = a && a.color; c = z(e.lineWidth, d.lineWidth); var l = a && a.zone && a.zone.color; a = 1; g = f || l || k || g; f = e.fillColor || d.fillColor || g; g = e.lineColor || d.lineColor || g; b = b || "normal"; d = d.states[b]; b = e.states && e.states[b] || {}; c = z(b.lineWidth, d.lineWidth, c + z(b.lineWidthPlus, d.lineWidthPlus, 0)); f = b.fillColor || d.fillColor || f; g = b.lineColor || d.lineColor || g; a = z(b.opacity, d.opacity, a); return { stroke: g, "stroke-width": c, fill: f, opacity: a }
-                                }; a.prototype.destroy = function (a) {
-                                    var b =
-                                        this, d = b.chart, c = /AppleWebKit\/533/.test(w.navigator.userAgent), e, f, k = b.data || [], l, p; M(b, "destroy"); this.removeEvents(a); (b.axisTypes || []).forEach(function (a) { (p = b[a]) && p.series && (g(p.series, b), p.isDirty = p.forceRedraw = !0) }); b.legendItem && b.chart.legend.destroyItem(b); for (f = k.length; f--;)(l = k[f]) && l.destroy && l.destroy(); b.clips && b.clips.forEach(function (a) { return a.destroy() }); h.clearTimeout(b.animationTimeout); L(b, function (a, b) { a instanceof q && !a.survive && (e = c && "group" === b ? "hide" : "destroy", a[e]()) });
-                                    d.hoverSeries === b && (d.hoverSeries = void 0); g(d.series, b); d.orderSeries(); L(b, function (d, c) { a && "hcEvents" === c || delete b[c] })
-                                }; a.prototype.applyZones = function () {
-                                    var a = this, b = this.chart, d = b.renderer, c = this.zones, e, g, f = this.clips || [], k, l = this.graph, h = this.area, r = Math.max(b.chartWidth, b.chartHeight), m = this[(this.zoneAxis || "y") + "Axis"], t = b.inverted, n, q, w, A = !1, v, u; if (c.length && (l || h) && m && "undefined" !== typeof m.min) {
-                                        var C = m.reversed; var F = m.horiz; l && !this.showLine && l.hide(); h && h.hide(); var D = m.getExtremes();
-                                        c.forEach(function (c, I) {
-                                            e = C ? F ? b.plotWidth : 0 : F ? 0 : m.toPixels(D.min) || 0; e = p(z(g, e), 0, r); g = p(Math.round(m.toPixels(z(c.value, D.max), !0) || 0), 0, r); A && (e = g = m.toPixels(D.max)); n = Math.abs(e - g); q = Math.min(e, g); w = Math.max(e, g); m.isXAxis ? (k = { x: t ? w : q, y: 0, width: n, height: r }, F || (k.x = b.plotHeight - k.x)) : (k = { x: 0, y: t ? w : q, width: r, height: n }, F && (k.y = b.plotWidth - k.y)); t && d.isVML && (k = m.isXAxis ? { x: 0, y: C ? q : w, height: k.width, width: b.chartWidth } : { x: k.y - b.plotLeft - b.spacingBox.x, y: 0, width: k.height, height: b.chartHeight }); f[I] ? f[I].animate(k) :
-                                                f[I] = d.clipRect(k); v = a["zone-area-" + I]; u = a["zone-graph-" + I]; l && u && u.clip(f[I]); h && v && v.clip(f[I]); A = c.value > D.max; a.resetZones && 0 === g && (g = void 0)
-                                        }); this.clips = f
-                                    } else a.visible && (l && l.show(!0), h && h.show(!0))
-                                }; a.prototype.invertGroups = function (a) {
-                                    function b() { ["group", "markerGroup"].forEach(function (b) { d[b] && (c.renderer.isVML && d[b].attr({ width: d.yAxis.len, height: d.xAxis.len }), d[b].width = d.yAxis.len, d[b].height = d.xAxis.len, d[b].invert(d.isRadialSeries ? !1 : a)) }) } var d = this, c = d.chart; d.xAxis && (d.eventsToUnbind.push(v(c,
-                                        "resize", b)), b(), d.invertGroups = b)
-                                }; a.prototype.plotGroup = function (a, d, c, e, g) {
-                                    var f = this[a], k = !f; c = { visibility: c, zIndex: e || .1 }; "undefined" === typeof this.opacity || this.chart.styledMode || "inactive" === this.state || (c.opacity = this.opacity); k && (this[a] = f = this.chart.renderer.g().add(g)); f.addClass("highcharts-" + d + " highcharts-series-" + this.index + " highcharts-" + this.type + "-series " + (b(this.colorIndex) ? "highcharts-color-" + this.colorIndex + " " : "") + (this.options.className || "") + (f.hasClass("highcharts-tracker") ?
-                                        " highcharts-tracker" : ""), !0); f.attr(c)[k ? "attr" : "animate"](this.getPlotBox()); return f
-                                }; a.prototype.getPlotBox = function () { var a = this.chart, b = this.xAxis, d = this.yAxis; a.inverted && (b = d, d = this.xAxis); return { translateX: b ? b.left : a.plotLeft, translateY: d ? d.top : a.plotTop, scaleX: 1, scaleY: 1 } }; a.prototype.removeEvents = function (a) { a || Q(this); this.eventsToUnbind.length && (this.eventsToUnbind.forEach(function (a) { a() }), this.eventsToUnbind.length = 0) }; a.prototype.render = function () {
-                                    var a = this, b = a.chart, d = a.options,
-                                    c = f(d.animation), e = !a.finishedAnimating && b.renderer.isSVG && c.duration, g = a.visible ? "inherit" : "hidden", k = d.zIndex, l = a.hasRendered, h = b.seriesGroup, p = b.inverted; M(this, "render"); var m = a.plotGroup("group", "series", g, k, h); a.markerGroup = a.plotGroup("markerGroup", "markers", g, k, h); e && a.animate && a.animate(!0); m.inverted = z(a.invertible, a.isCartesian) ? p : !1; a.drawGraph && (a.drawGraph(), a.applyZones()); a.visible && a.drawPoints(); a.drawDataLabels && a.drawDataLabels(); a.redrawPoints && a.redrawPoints(); a.drawTracker &&
-                                        !1 !== a.options.enableMouseTracking && a.drawTracker(); a.invertGroups(p); !1 === d.clip || a.sharedClipKey || l || m.clip(b.clipRect); e && a.animate && a.animate(); l || (e && c.defer && (e += c.defer), a.animationTimeout = aa(function () { a.afterAnimate() }, e || 0)); a.isDirty = !1; a.hasRendered = !0; M(a, "afterRender")
-                                }; a.prototype.redraw = function () {
-                                    var a = this.chart, b = this.isDirty || this.isDirtyData, d = this.group, c = this.xAxis, e = this.yAxis; d && (a.inverted && d.attr({ width: a.plotWidth, height: a.plotHeight }), d.animate({
-                                        translateX: z(c && c.left,
-                                            a.plotLeft), translateY: z(e && e.top, a.plotTop)
-                                    })); this.translate(); this.render(); b && delete this.kdTree
-                                }; a.prototype.searchPoint = function (a, b) { var d = this.xAxis, c = this.yAxis, e = this.chart.inverted; return this.searchKDTree({ clientX: e ? d.len - a.chartY + d.pos : a.chartX - d.pos, plotY: e ? c.len - a.chartX + c.pos : a.chartY - c.pos }, b, a) }; a.prototype.buildKDTree = function (a) {
-                                    function b(a, c, e) {
-                                        var g; if (g = a && a.length) {
-                                            var f = d.kdAxisArray[c % e]; a.sort(function (a, b) { return a[f] - b[f] }); g = Math.floor(g / 2); return {
-                                                point: a[g], left: b(a.slice(0,
-                                                    g), c + 1, e), right: b(a.slice(g + 1), c + 1, e)
-                                            }
-                                        }
-                                    } this.buildingKdTree = !0; var d = this, c = -1 < d.options.findNearestPointBy.indexOf("y") ? 2 : 1; delete d.kdTree; aa(function () { d.kdTree = b(d.getValidPoints(null, !d.directTouch), c, c); d.buildingKdTree = !1 }, d.options.kdNow || a && "touchstart" === a.type ? 0 : 1)
-                                }; a.prototype.searchKDTree = function (a, d, c) {
-                                    function e(a, d, c, h) {
-                                        var p = d.point, m = g.kdAxisArray[c % h], r = p; var t = b(a[f]) && b(p[f]) ? Math.pow(a[f] - p[f], 2) : null; var n = b(a[k]) && b(p[k]) ? Math.pow(a[k] - p[k], 2) : null; n = (t || 0) + (n || 0); p.dist =
-                                            b(n) ? Math.sqrt(n) : Number.MAX_VALUE; p.distX = b(t) ? Math.sqrt(t) : Number.MAX_VALUE; m = a[m] - p[m]; n = 0 > m ? "left" : "right"; t = 0 > m ? "right" : "left"; d[n] && (n = e(a, d[n], c + 1, h), r = n[l] < r[l] ? n : p); d[t] && Math.sqrt(m * m) < r[l] && (a = e(a, d[t], c + 1, h), r = a[l] < r[l] ? a : r); return r
-                                    } var g = this, f = this.kdAxisArray[0], k = this.kdAxisArray[1], l = d ? "distX" : "dist"; d = -1 < g.options.findNearestPointBy.indexOf("y") ? 2 : 1; this.kdTree || this.buildingKdTree || this.buildKDTree(c); if (this.kdTree) return e(a, this.kdTree, d, d)
-                                }; a.prototype.pointPlacementToXValue =
-                                    function () { var a = this.options, b = a.pointRange, d = this.xAxis; a = a.pointPlacement; "between" === a && (a = d.reversed ? -.5 : .5); return S(a) ? a * (b || d.pointRange) : 0 }; a.prototype.isPointInside = function (a) { return "undefined" !== typeof a.plotY && "undefined" !== typeof a.plotX && 0 <= a.plotY && a.plotY <= this.yAxis.len && 0 <= a.plotX && a.plotX <= this.xAxis.len }; a.prototype.drawTracker = function () {
-                                        var a = this, b = a.options, d = b.trackByArea, c = [].concat(d ? a.areaPath : a.graphPath), e = a.chart, g = e.pointer, f = e.renderer, k = e.options.tooltip.snap, l =
-                                            a.tracker, h = function (b) { if (e.hoverSeries !== a) a.onMouseOver() }, p = "rgba(192,192,192," + (m ? .0001 : .002) + ")"; l ? l.attr({ d: c }) : a.graph && (a.tracker = f.path(c).attr({ visibility: a.visible ? "visible" : "hidden", zIndex: 2 }).addClass(d ? "highcharts-tracker-area" : "highcharts-tracker-line").add(a.group), e.styledMode || a.tracker.attr({ "stroke-linecap": "round", "stroke-linejoin": "round", stroke: p, fill: d ? p : "none", "stroke-width": a.graph.strokeWidth() + (d ? 0 : 2 * k) }), [a.tracker, a.markerGroup, a.dataLabelsGroup].forEach(function (a) {
-                                                if (a &&
-                                                    (a.addClass("highcharts-tracker").on("mouseover", h).on("mouseout", function (a) { g.onTrackerMouseOut(a) }), b.cursor && !e.styledMode && a.css({ cursor: b.cursor }), t)) a.on("touchstart", h)
-                                            })); M(this, "afterDrawTracker")
-                                    }; a.prototype.addPoint = function (a, b, d, c, e) {
-                                        var g = this.options, f = this.data, k = this.chart, l = this.xAxis; l = l && l.hasNames && l.names; var h = g.data, p = this.xData, m; b = z(b, !0); var r = { series: this }; this.pointClass.prototype.applyOptions.apply(r, [a]); var t = r.x; var n = p.length; if (this.requireSorting && t < p[n - 1]) for (m =
-                                            !0; n && p[n - 1] > t;)n--; this.updateParallelArrays(r, "splice", n, 0, 0); this.updateParallelArrays(r, n); l && r.name && (l[t] = r.name); h.splice(n, 0, a); m && (this.data.splice(n, 0, null), this.processData()); "point" === g.legendType && this.generatePoints(); d && (f[0] && f[0].remove ? f[0].remove(!1) : (f.shift(), this.updateParallelArrays(r, "shift"), h.shift())); !1 !== e && M(this, "addPoint", { point: r }); this.isDirtyData = this.isDirty = !0; b && k.redraw(c)
-                                    }; a.prototype.removePoint = function (a, b, d) {
-                                        var e = this, g = e.data, f = g[a], k = e.points, l = e.chart,
-                                        h = function () { k && k.length === g.length && k.splice(a, 1); g.splice(a, 1); e.options.data.splice(a, 1); e.updateParallelArrays(f || { series: e }, "splice", a, 1); f && f.destroy(); e.isDirty = !0; e.isDirtyData = !0; b && l.redraw() }; c(d, l); b = z(b, !0); f ? f.firePointEvent("remove", null, h) : h()
-                                    }; a.prototype.remove = function (a, b, d, c) { function e() { g.destroy(c); f.isDirtyLegend = f.isDirtyBox = !0; f.linkSeries(); z(a, !0) && f.redraw(b) } var g = this, f = g.chart; !1 !== d ? M(g, "remove", null, e) : e() }; a.prototype.update = function (a, b) {
-                                        a = d(a, this.userOptions);
-                                        M(this, "update", { options: a }); var c = this, e = c.chart, g = c.userOptions, f = c.initialType || c.type, k = e.options.plotOptions, h = a.type || g.type || e.options.chart.type, p = !(this.hasDerivedData || h && h !== this.type || "undefined" !== typeof a.pointStart || "undefined" !== typeof a.pointInterval || c.hasOptionChanged("dataGrouping") || c.hasOptionChanged("pointStart") || c.hasOptionChanged("pointInterval") || c.hasOptionChanged("pointIntervalUnit") || c.hasOptionChanged("keys")), m = l[f].prototype, t, n = ["eventOptions", "navigatorSeries", "baseSeries"],
-                                            q = c.finishedAnimating && { animation: !1 }, w = {}; h = h || f; p && (n.push("data", "isDirtyData", "points", "processedXData", "processedYData", "xIncrement", "cropped", "_hasPointMarkers", "_hasPointLabels", "clips", "nodes", "layout", "mapMap", "mapData", "minY", "maxY", "minX", "maxX"), !1 !== a.visible && n.push("area", "graph"), c.parallelArrays.forEach(function (a) { n.push(a + "Data") }), a.data && (a.dataSorting && F(c.options.dataSorting, a.dataSorting), this.setData(a.data, !1))); a = Y(g, q, {
-                                                index: "undefined" === typeof g.index ? c.index : g.index,
-                                                pointStart: z(k && k.series && k.series.pointStart, g.pointStart, c.xData[0])
-                                            }, !p && { data: c.options.data }, a); p && a.data && (a.data = c.options.data); n = ["group", "markerGroup", "dataLabelsGroup", "transformGroup"].concat(n); n.forEach(function (a) { n[a] = c[a]; delete c[a] }); g = !1; if (l[h]) { if (g = h !== c.type, c.remove(!1, !1, !1, !0), g) if (Object.setPrototypeOf) Object.setPrototypeOf(c, l[h].prototype); else { k = Object.hasOwnProperty.call(c, "hcEvents") && c.hcEvents; for (t in m) c[t] = void 0; F(c, l[h].prototype); k ? c.hcEvents = k : delete c.hcEvents } } else r(17,
-                                                !0, e, { missingModuleFor: h }); n.forEach(function (a) { c[a] = n[a] }); c.init(e, a); if (p && this.points) { var A = c.options; !1 === A.visible ? (w.graphic = 1, w.dataLabel = 1) : c._hasPointLabels || (a = A.marker, h = A.dataLabels, a && (!1 === a.enabled || "symbol" in a) && (w.graphic = 1), h && !1 === h.enabled && (w.dataLabel = 1)); this.points.forEach(function (a) { a && a.series && (a.resolveColor(), Object.keys(w).length && a.destroyElements(w), !1 === A.showInLegend && a.legendItem && e.legend.destroyItem(a)) }, this) } c.initialType = f; e.linkSeries(); g && c.linkedSeries.length &&
-                                                    (c.isDirtyData = !0); M(this, "afterUpdate"); z(b, !0) && e.redraw(p ? void 0 : !1)
-                                    }; a.prototype.setName = function (a) { this.name = this.options.name = this.userOptions.name = a; this.chart.isDirtyLegend = !0 }; a.prototype.hasOptionChanged = function (a) { var b = this.options[a], d = this.chart.options.plotOptions, c = this.userOptions[a]; return c ? b !== c : b !== z(d && d[this.type] && d[this.type][a], d && d.series && d.series[a], b) }; a.prototype.onMouseOver = function () {
-                                        var a = this.chart, b = a.hoverSeries; a.pointer.setHoverChartIndex(); if (b && b !== this) b.onMouseOut();
-                                        this.options.events.mouseOver && M(this, "mouseOver"); this.setState("hover"); a.hoverSeries = this
-                                    }; a.prototype.onMouseOut = function () { var a = this.options, b = this.chart, d = b.tooltip, c = b.hoverPoint; b.hoverSeries = null; if (c) c.onMouseOut(); this && a.events.mouseOut && M(this, "mouseOut"); !d || this.stickyTracking || d.shared && !this.noSharedTooltip || d.hide(); b.series.forEach(function (a) { a.setState("", !0) }) }; a.prototype.setState = function (a, b) {
-                                        var d = this, c = d.options, e = d.graph, g = c.inactiveOtherPoints, f = c.states, k = c.lineWidth,
-                                        l = c.opacity, h = z(f[a || "normal"] && f[a || "normal"].animation, d.chart.options.chart.animation); c = 0; a = a || ""; if (d.state !== a && ([d.group, d.markerGroup, d.dataLabelsGroup].forEach(function (b) { b && (d.state && b.removeClass("highcharts-series-" + d.state), a && b.addClass("highcharts-series-" + a)) }), d.state = a, !d.chart.styledMode)) {
-                                            if (f[a] && !1 === f[a].enabled) return; a && (k = f[a].lineWidth || k + (f[a].lineWidthPlus || 0), l = z(f[a].opacity, l)); if (e && !e.dashstyle) for (f = { "stroke-width": k }, e.animate(f, h); d["zone-graph-" + c];)d["zone-graph-" +
-                                                c].animate(f, h), c += 1; g || [d.group, d.markerGroup, d.dataLabelsGroup, d.labelBySeries].forEach(function (a) { a && a.animate({ opacity: l }, h) })
-                                        } b && g && d.points && d.setAllPointsToState(a || void 0)
-                                    }; a.prototype.setAllPointsToState = function (a) { this.points.forEach(function (b) { b.setState && b.setState(a) }) }; a.prototype.setVisible = function (a, b) {
-                                        var d = this, c = d.chart, e = d.legendItem, g = c.options.chart.ignoreHiddenSeries, f = d.visible; var k = (d.visible = a = d.options.visible = d.userOptions.visible = "undefined" === typeof a ? !f : a) ? "show" :
-                                            "hide";["group", "dataLabelsGroup", "markerGroup", "tracker", "tt"].forEach(function (a) { if (d[a]) d[a][k]() }); if (c.hoverSeries === d || (c.hoverPoint && c.hoverPoint.series) === d) d.onMouseOut(); e && c.legend.colorizeItem(d, a); d.isDirty = !0; d.options.stacking && c.series.forEach(function (a) { a.options.stacking && a.visible && (a.isDirty = !0) }); d.linkedSeries.forEach(function (b) { b.setVisible(a, !1) }); g && (c.isDirtyBox = !0); M(d, k); !1 !== b && c.redraw()
-                                    }; a.prototype.show = function () { this.setVisible(!0) }; a.prototype.hide = function () { this.setVisible(!1) };
-                a.prototype.select = function (a) { this.selected = a = this.options.selected = "undefined" === typeof a ? !this.selected : a; this.checkbox && (this.checkbox.checked = a); M(this, a ? "select" : "unselect") }; a.prototype.shouldShowTooltip = function (a, b, d) { void 0 === d && (d = {}); d.series = this; d.visiblePlotOnly = !0; return this.chart.isInsidePlot(a, b, d) }; a.defaultOptions = {
-                    lineWidth: 2, allowPointSelect: !1, crisp: !0, showCheckbox: !1, animation: { duration: 1E3 }, events: {}, marker: {
-                        enabledThreshold: 2, lineColor: y.backgroundColor, lineWidth: 0, radius: 4,
-                        states: { normal: { animation: !0 }, hover: { animation: { duration: 50 }, enabled: !0, radiusPlus: 2, lineWidthPlus: 1 }, select: { fillColor: y.neutralColor20, lineColor: y.neutralColor100, lineWidth: 2 } }
-                    }, point: { events: {} }, dataLabels: { animation: {}, align: "center", defer: !0, formatter: function () { var a = this.series.chart.numberFormatter; return "number" !== typeof this.y ? "" : a(this.y, -1) }, padding: 5, style: { fontSize: "11px", fontWeight: "bold", color: "contrast", textOutline: "1px contrast" }, verticalAlign: "bottom", x: 0, y: 0 }, cropThreshold: 300,
-                    opacity: 1, pointRange: 0, softThreshold: !0, states: { normal: { animation: !0 }, hover: { animation: { duration: 50 }, lineWidthPlus: 1, marker: {}, halo: { size: 10, opacity: .25 } }, select: { animation: { duration: 0 } }, inactive: { animation: { duration: 50 }, opacity: .2 } }, stickyTracking: !0, turboThreshold: 1E3, findNearestPointBy: "x"
-                }; return a
-            }(); F(a.prototype, {
-                axisTypes: ["xAxis", "yAxis"], coll: "series", colorCounter: 0, cropShoulder: 1, directTouch: !1, drawLegendSymbol: H.drawLineMarker, isCartesian: !0, kdAxisArray: ["clientX", "plotY"], parallelArrays: ["x",
-                    "y"], pointClass: G, requireSorting: !0, sorted: !0
-            }); B.series = a; ""; ""; return a
-        }); L(a, "Extensions/ScrollablePlotArea.js", [a["Core/Animation/AnimationUtilities.js"], a["Core/Axis/Axis.js"], a["Core/Chart/Chart.js"], a["Core/Series/Series.js"], a["Core/Renderer/RendererRegistry.js"], a["Core/Utilities.js"]], function (a, u, E, H, x, y) {
-            var v = a.stop, B = y.addEvent, q = y.createElement, h = y.merge, f = y.pick; B(E, "afterSetChartSize", function (a) {
-                var c = this.options.chart.scrollablePlotArea, f = c && c.minWidth; c = c && c.minHeight; if (!this.renderer.forExport) {
-                    if (f) {
-                        if (this.scrollablePixelsX =
-                            f = Math.max(0, f - this.chartWidth)) { this.scrollablePlotBox = this.renderer.scrollablePlotBox = h(this.plotBox); this.plotBox.width = this.plotWidth += f; this.inverted ? this.clipBox.height += f : this.clipBox.width += f; var m = { 1: { name: "right", value: f } } }
-                    } else c && (this.scrollablePixelsY = f = Math.max(0, c - this.chartHeight)) && (this.scrollablePlotBox = this.renderer.scrollablePlotBox = h(this.plotBox), this.plotBox.height = this.plotHeight += f, this.inverted ? this.clipBox.width += f : this.clipBox.height += f, m = { 2: { name: "bottom", value: f } });
-                    m && !a.skipAxes && this.axes.forEach(function (a) { m[a.side] ? a.getPlotLinePath = function () { var c = m[a.side].name, e = this[c]; this[c] = e - m[a.side].value; var f = u.prototype.getPlotLinePath.apply(this, arguments); this[c] = e; return f } : (a.setAxisSize(), a.setAxisTranslation()) })
-                }
-            }); B(E, "render", function () { this.scrollablePixelsX || this.scrollablePixelsY ? (this.setUpScrolling && this.setUpScrolling(), this.applyFixed()) : this.fixedDiv && this.applyFixed() }); E.prototype.setUpScrolling = function () {
-                var a = this, e = {
-                    WebkitOverflowScrolling: "touch",
-                    overflowX: "hidden", overflowY: "hidden"
-                }; this.scrollablePixelsX && (e.overflowX = "auto"); this.scrollablePixelsY && (e.overflowY = "auto"); this.scrollingParent = q("div", { className: "highcharts-scrolling-parent" }, { position: "relative" }, this.renderTo); this.scrollingContainer = q("div", { className: "highcharts-scrolling" }, e, this.scrollingParent); B(this.scrollingContainer, "scroll", function () { a.pointer && delete a.pointer.chartPosition }); this.innerContainer = q("div", { className: "highcharts-inner-container" }, null, this.scrollingContainer);
-                this.innerContainer.appendChild(this.container); this.setUpScrolling = null
-            }; E.prototype.moveFixedElements = function () {
-                var a = this.container, e = this.fixedRenderer, f = ".highcharts-contextbutton .highcharts-credits .highcharts-legend .highcharts-legend-checkbox .highcharts-navigator-series .highcharts-navigator-xaxis .highcharts-navigator-yaxis .highcharts-navigator .highcharts-reset-zoom .highcharts-drillup-button .highcharts-scrollbar .highcharts-subtitle .highcharts-title".split(" "), h; this.scrollablePixelsX &&
-                    !this.inverted ? h = ".highcharts-yaxis" : this.scrollablePixelsX && this.inverted ? h = ".highcharts-xaxis" : this.scrollablePixelsY && !this.inverted ? h = ".highcharts-xaxis" : this.scrollablePixelsY && this.inverted && (h = ".highcharts-yaxis"); h && f.push(h + ":not(.highcharts-radial-axis)", h + "-labels:not(.highcharts-radial-axis-labels)"); f.forEach(function (c) { [].forEach.call(a.querySelectorAll(c), function (a) { (a.namespaceURI === e.SVG_NS ? e.box : e.box.parentNode).appendChild(a); a.style.pointerEvents = "auto" }) })
-            }; E.prototype.applyFixed =
-                function () {
-                    var a = !this.fixedDiv, e = this.options.chart, h = e.scrollablePlotArea, m = x.getRendererType(); a ? (this.fixedDiv = q("div", { className: "highcharts-fixed" }, { position: "absolute", overflow: "hidden", pointerEvents: "none", zIndex: (e.style && e.style.zIndex || 0) + 2, top: 0 }, null, !0), this.scrollingContainer && this.scrollingContainer.parentNode.insertBefore(this.fixedDiv, this.scrollingContainer), this.renderTo.style.overflow = "visible", this.fixedRenderer = e = new m(this.fixedDiv, this.chartWidth, this.chartHeight, this.options.chart.style),
-                        this.scrollableMask = e.path().attr({ fill: this.options.chart.backgroundColor || "#fff", "fill-opacity": f(h.opacity, .85), zIndex: -1 }).addClass("highcharts-scrollable-mask").add(), B(this, "afterShowResetZoom", this.moveFixedElements), B(this, "afterDrilldown", this.moveFixedElements), B(this, "afterLayOutTitles", this.moveFixedElements)) : this.fixedRenderer.setSize(this.chartWidth, this.chartHeight); if (this.scrollableDirty || a) this.scrollableDirty = !1, this.moveFixedElements(); e = this.chartWidth + (this.scrollablePixelsX ||
-                            0); m = this.chartHeight + (this.scrollablePixelsY || 0); v(this.container); this.container.style.width = e + "px"; this.container.style.height = m + "px"; this.renderer.boxWrapper.attr({ width: e, height: m, viewBox: [0, 0, e, m].join(" ") }); this.chartBackground.attr({ width: e, height: m }); this.scrollingContainer.style.height = this.chartHeight + "px"; a && (h.scrollPositionX && (this.scrollingContainer.scrollLeft = this.scrollablePixelsX * h.scrollPositionX), h.scrollPositionY && (this.scrollingContainer.scrollTop = this.scrollablePixelsY * h.scrollPositionY));
-                    m = this.axisOffset; a = this.plotTop - m[0] - 1; h = this.plotLeft - m[3] - 1; e = this.plotTop + this.plotHeight + m[2] + 1; m = this.plotLeft + this.plotWidth + m[1] + 1; var w = this.plotLeft + this.plotWidth - (this.scrollablePixelsX || 0), n = this.plotTop + this.plotHeight - (this.scrollablePixelsY || 0); a = this.scrollablePixelsX ? [["M", 0, a], ["L", this.plotLeft - 1, a], ["L", this.plotLeft - 1, e], ["L", 0, e], ["Z"], ["M", w, a], ["L", this.chartWidth, a], ["L", this.chartWidth, e], ["L", w, e], ["Z"]] : this.scrollablePixelsY ? [["M", h, 0], ["L", h, this.plotTop - 1], ["L", m, this.plotTop -
-                        1], ["L", m, 0], ["Z"], ["M", h, n], ["L", h, this.chartHeight], ["L", m, this.chartHeight], ["L", m, n], ["Z"]] : [["M", 0, 0]]; "adjustHeight" !== this.redrawTrigger && this.scrollableMask.attr({ d: a })
-                }; B(u, "afterInit", function () { this.chart.scrollableDirty = !0 }); B(H, "show", function () { this.chart.scrollableDirty = !0 }); ""
-        }); L(a, "Core/Axis/StackingAxis.js", [a["Core/Animation/AnimationUtilities.js"], a["Core/Utilities.js"]], function (a, u) {
-            var v = a.getDeferredAnimation, H = u.addEvent, x = u.destroyObjectProperties, y = u.fireEvent, G = u.isNumber,
-            B = u.objectEach, q = function () {
-                function a(a) { this.oldStacks = {}; this.stacks = {}; this.stacksTouched = 0; this.axis = a } a.prototype.buildStacks = function () { var a = this.axis, c = a.series, e = a.options.reversedStacks, h = c.length, m; if (!a.isXAxis) { this.usePercentage = !1; for (m = h; m--;) { var q = c[e ? m : h - m - 1]; q.setStackedPoints(); q.setGroupedPoints() } for (m = 0; m < h; m++)c[m].modifyStacks(); y(a, "afterBuildStacks") } }; a.prototype.cleanStacks = function () {
-                    if (!this.axis.isXAxis) {
-                        if (this.oldStacks) var a = this.stacks = this.oldStacks; B(a, function (a) {
-                            B(a,
-                                function (a) { a.cumulative = a.total })
-                        })
-                    }
-                }; a.prototype.resetStacks = function () { var a = this, c = this.stacks; this.axis.isXAxis || B(c, function (c) { B(c, function (e, f) { G(e.touched) && e.touched < a.stacksTouched ? (e.destroy(), delete c[f]) : (e.total = null, e.cumulative = null) }) }) }; a.prototype.renderStackTotals = function () {
-                    var a = this.axis, c = a.chart, e = c.renderer, h = this.stacks; a = v(c, a.options.stackLabels && a.options.stackLabels.animation || !1); var m = this.stackTotalGroup = this.stackTotalGroup || e.g("stack-labels").attr({
-                        visibility: "visible",
-                        zIndex: 6, opacity: 0
-                    }).add(); m.translate(c.plotLeft, c.plotTop); B(h, function (a) { B(a, function (a) { a.render(m) }) }); m.animate({ opacity: 1 }, a)
-                }; return a
-            }(); return function () { function a() { } a.compose = function (f) { H(f, "init", a.onInit); H(f, "destroy", a.onDestroy) }; a.onDestroy = function () { var a = this.stacking; if (a) { var c = a.stacks; B(c, function (a, f) { x(a); c[f] = null }); a && a.stackTotalGroup && a.stackTotalGroup.destroy() } }; a.onInit = function () { this.stacking || (this.stacking = new q(this)) }; return a }()
-        }); L(a, "Extensions/Stacking.js",
-            [a["Core/Axis/Axis.js"], a["Core/Chart/Chart.js"], a["Core/FormatUtilities.js"], a["Core/Globals.js"], a["Core/Series/Series.js"], a["Core/Axis/StackingAxis.js"], a["Core/Utilities.js"]], function (a, u, E, H, x, y, G) {
-                var v = E.format, q = G.correctFloat, h = G.defined, f = G.destroyObjectProperties, c = G.isArray, e = G.isNumber, t = G.objectEach, m = G.pick, w = function () {
-                    function a(a, c, e, f, h) {
-                        var d = a.chart.inverted; this.axis = a; this.isNegative = e; this.options = c = c || {}; this.x = f; this.total = null; this.points = {}; this.hasValidPoints = !1; this.stack =
-                            h; this.rightCliff = this.leftCliff = 0; this.alignOptions = { align: c.align || (d ? e ? "left" : "right" : "center"), verticalAlign: c.verticalAlign || (d ? "middle" : e ? "bottom" : "top"), y: c.y, x: c.x }; this.textAlign = c.textAlign || (d ? e ? "right" : "left" : "center")
-                    } a.prototype.destroy = function () { f(this, this.axis) }; a.prototype.render = function (a) {
-                        var c = this.axis.chart, e = this.options, f = e.format; f = f ? v(f, this, c) : e.formatter.call(this); this.label ? this.label.attr({ text: f, visibility: "hidden" }) : (this.label = c.renderer.label(f, null, null, e.shape,
-                            null, null, e.useHTML, !1, "stack-labels"), f = { r: e.borderRadius || 0, text: f, rotation: e.rotation, padding: m(e.padding, 5), visibility: "hidden" }, c.styledMode || (f.fill = e.backgroundColor, f.stroke = e.borderColor, f["stroke-width"] = e.borderWidth, this.label.css(e.style)), this.label.attr(f), this.label.added || this.label.add(a)); this.label.labelrank = c.plotSizeY
-                    }; a.prototype.setOffset = function (a, c, f, n, p) {
-                        var d = this.axis, k = d.chart; n = d.translate(d.stacking.usePercentage ? 100 : n ? n : this.total, 0, 0, 0, 1); f = d.translate(f ? f : 0); f =
-                            h(n) && Math.abs(n - f); a = m(p, k.xAxis[0].translate(this.x)) + a; d = h(n) && this.getStackBox(k, this, a, n, c, f, d); c = this.label; f = this.isNegative; a = "justify" === m(this.options.overflow, "justify"); var b = this.textAlign; c && d && (p = c.getBBox(), n = c.padding, b = "left" === b ? k.inverted ? -n : n : "right" === b ? p.width : k.inverted && "center" === b ? p.width / 2 : k.inverted ? f ? p.width + n : -n : p.width / 2, f = k.inverted ? p.height / 2 : f ? -n : p.height, this.alignOptions.x = m(this.options.x, 0), this.alignOptions.y = m(this.options.y, 0), d.x -= b, d.y -= f, c.align(this.alignOptions,
-                                null, d), k.isInsidePlot(c.alignAttr.x + b - this.alignOptions.x, c.alignAttr.y + f - this.alignOptions.y) ? c.show() : (c.alignAttr.y = -9999, a = !1), a && x.prototype.justifyDataLabel.call(this.axis, c, this.alignOptions, c.alignAttr, p, d), c.attr({ x: c.alignAttr.x, y: c.alignAttr.y }), m(!a && this.options.crop, !0) && ((k = e(c.x) && e(c.y) && k.isInsidePlot(c.x - n + c.width, c.y) && k.isInsidePlot(c.x + n, c.y)) || c.hide()))
-                    }; a.prototype.getStackBox = function (a, c, e, f, h, d, k) {
-                        var b = c.axis.reversed, g = a.inverted, l = k.height + k.pos - (g ? a.plotLeft : a.plotTop);
-                        c = c.isNegative && !b || !c.isNegative && b; return { x: g ? c ? f - k.right : f - d + k.pos - a.plotLeft : e + a.xAxis[0].transB - a.plotLeft, y: g ? k.height - e - h : c ? l - f - d : l - f, width: g ? d : h, height: g ? h : d }
-                    }; return a
-                }(); u.prototype.getStacks = function () {
-                    var a = this, c = a.inverted; a.yAxis.forEach(function (a) { a.stacking && a.stacking.stacks && a.hasVisibleSeries && (a.stacking.oldStacks = a.stacking.stacks) }); a.series.forEach(function (e) {
-                        var f = e.xAxis && e.xAxis.options || {}; !e.options.stacking || !0 !== e.visible && !1 !== a.options.chart.ignoreHiddenSeries ||
-                            (e.stackKey = [e.type, m(e.options.stack, ""), c ? f.top : f.left, c ? f.height : f.width].join())
-                    })
-                }; y.compose(a); x.prototype.setGroupedPoints = function () { var a = this.yAxis.stacking; this.options.centerInCategory && (this.is("column") || this.is("columnrange")) && !this.options.stacking && 1 < this.chart.series.length ? x.prototype.setStackedPoints.call(this, "group") : a && t(a.stacks, function (c, e) { "group" === e.slice(-5) && (t(c, function (a) { return a.destroy() }), delete a.stacks[e]) }) }; x.prototype.setStackedPoints = function (a) {
-                    var e =
-                        a || this.options.stacking; if (e && (!0 === this.visible || !1 === this.chart.options.chart.ignoreHiddenSeries)) {
-                            var f = this.processedXData, n = this.processedYData, t = [], p = n.length, d = this.options, k = d.threshold, b = m(d.startFromThreshold && k, 0); d = d.stack; a = a ? this.type + "," + e : this.stackKey; var g = "-" + a, r = this.negStacks, v = this.yAxis, u = v.stacking.stacks, B = v.stacking.oldStacks, C, x; v.stacking.stacksTouched += 1; for (x = 0; x < p; x++) {
-                                var y = f[x]; var E = n[x]; var G = this.getStackIndicator(G, y, this.index); var H = G.key; var z = (C = r && E < (b ? 0 :
-                                    k)) ? g : a; u[z] || (u[z] = {}); u[z][y] || (B[z] && B[z][y] ? (u[z][y] = B[z][y], u[z][y].total = null) : u[z][y] = new w(v, v.options.stackLabels, C, y, d)); z = u[z][y]; null !== E ? (z.points[H] = z.points[this.index] = [m(z.cumulative, b)], h(z.cumulative) || (z.base = H), z.touched = v.stacking.stacksTouched, 0 < G.index && !1 === this.singleStacks && (z.points[H][0] = z.points[this.index + "," + y + ",0"][0])) : z.points[H] = z.points[this.index] = null; "percent" === e ? (C = C ? a : g, r && u[C] && u[C][y] ? (C = u[C][y], z.total = C.total = Math.max(C.total, z.total) + Math.abs(E) || 0) :
-                                        z.total = q(z.total + (Math.abs(E) || 0))) : "group" === e ? (c(E) && (E = E[0]), null !== E && (z.total = (z.total || 0) + 1)) : z.total = q(z.total + (E || 0)); z.cumulative = "group" === e ? (z.total || 1) - 1 : m(z.cumulative, b) + (E || 0); null !== E && (z.points[H].push(z.cumulative), t[x] = z.cumulative, z.hasValidPoints = !0)
-                            } "percent" === e && (v.stacking.usePercentage = !0); "group" !== e && (this.stackedYData = t); v.stacking.oldStacks = {}
-                        }
-                }; x.prototype.modifyStacks = function () {
-                    var a = this, c = a.stackKey, e = a.yAxis.stacking.stacks, f = a.processedXData, h, p = a.options.stacking;
-                    a[p + "Stacker"] && [c, "-" + c].forEach(function (d) { for (var c = f.length, b, g; c--;)if (b = f[c], h = a.getStackIndicator(h, b, a.index, d), g = (b = e[d] && e[d][b]) && b.points[h.key]) a[p + "Stacker"](g, b, c) })
-                }; x.prototype.percentStacker = function (a, c, e) { c = c.total ? 100 / c.total : 0; a[0] = q(a[0] * c); a[1] = q(a[1] * c); this.stackedYData[e] = a[1] }; x.prototype.getStackIndicator = function (a, c, e, f) { !h(a) || a.x !== c || f && a.key !== f ? a = { x: c, index: 0, key: f } : a.index++; a.key = [e, c, a.index].join(); return a }; H.StackItem = w; ""; return H.StackItem
-            }); L(a, "Series/Line/LineSeries.js",
-                [a["Core/Color/Palette.js"], a["Core/Series/Series.js"], a["Core/Series/SeriesRegistry.js"], a["Core/Utilities.js"]], function (a, u, E, H) {
-                    var v = this && this.__extends || function () { var a = function (q, h) { a = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (a, c) { a.__proto__ = c } || function (a, c) { for (var e in c) c.hasOwnProperty(e) && (a[e] = c[e]) }; return a(q, h) }; return function (q, h) { function f() { this.constructor = q } a(q, h); q.prototype = null === h ? Object.create(h) : (f.prototype = h.prototype, new f) } }(), y = H.defined,
-                    G = H.merge; H = function (B) {
-                        function q() { var a = null !== B && B.apply(this, arguments) || this; a.data = void 0; a.options = void 0; a.points = void 0; return a } v(q, B); q.prototype.drawGraph = function () {
-                            var h = this, f = this.options, c = (this.gappedPath || this.getGraphPath).call(this), e = this.chart.styledMode, t = [["graph", "highcharts-graph"]]; e || t[0].push(f.lineColor || this.color || a.neutralColor20, f.dashStyle); t = h.getZonesGraphs(t); t.forEach(function (a, t) {
-                                var m = a[0], l = h[m], q = l ? "animate" : "attr"; l ? (l.endX = h.preventGraphAnimation ? null :
-                                    c.xMap, l.animate({ d: c })) : c.length && (h[m] = l = h.chart.renderer.path(c).addClass(a[1]).attr({ zIndex: 1 }).add(h.group)); l && !e && (m = { stroke: a[2], "stroke-width": f.lineWidth, fill: h.fillGraph && h.color || "none" }, a[3] ? m.dashstyle = a[3] : "square" !== f.linecap && (m["stroke-linecap"] = m["stroke-linejoin"] = "round"), l[q](m).shadow(2 > t && f.shadow)); l && (l.startX = c.xMap, l.isArea = c.isArea)
-                            })
-                        }; q.prototype.getGraphPath = function (a, f, c) {
-                            var e = this, h = e.options, m = h.step, q, n = [], l = [], v; a = a || e.points; (q = a.reversed) && a.reverse(); (m = {
-                                right: 1,
-                                center: 2
-                            }[m] || m && 3) && q && (m = 4 - m); a = this.getValidPoints(a, !1, !(h.connectNulls && !f && !c)); a.forEach(function (t, q) {
-                                var p = t.plotX, d = t.plotY, k = a[q - 1]; (t.leftCliff || k && k.rightCliff) && !c && (v = !0); t.isNull && !y(f) && 0 < q ? v = !h.connectNulls : t.isNull && !f ? v = !0 : (0 === q || v ? q = [["M", t.plotX, t.plotY]] : e.getPointSpline ? q = [e.getPointSpline(a, t, q)] : m ? (q = 1 === m ? [["L", k.plotX, d]] : 2 === m ? [["L", (k.plotX + p) / 2, k.plotY], ["L", (k.plotX + p) / 2, d]] : [["L", p, k.plotY]], q.push(["L", p, d])) : q = [["L", p, d]], l.push(t.x), m && (l.push(t.x), 2 === m && l.push(t.x)),
-                                    n.push.apply(n, q), v = !1)
-                            }); n.xMap = l; return e.graphPath = n
-                        }; q.prototype.getZonesGraphs = function (a) { this.zones.forEach(function (f, c) { c = ["zone-graph-" + c, "highcharts-graph highcharts-zone-graph-" + c + " " + (f.className || "")]; this.chart.styledMode || c.push(f.color || this.color, f.dashStyle || this.options.dashStyle); a.push(c) }, this); return a }; q.defaultOptions = G(u.defaultOptions, {}); return q
-                    }(u); E.registerSeriesType("line", H); ""; return H
-                }); L(a, "Series/Area/AreaSeries.js", [a["Core/Color/Color.js"], a["Mixins/LegendSymbol.js"],
-                a["Core/Series/SeriesRegistry.js"], a["Core/Utilities.js"]], function (a, u, E, H) {
-                    var v = this && this.__extends || function () { var a = function (c, e) { a = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (a, c) { a.__proto__ = c } || function (a, c) { for (var e in c) c.hasOwnProperty(e) && (a[e] = c[e]) }; return a(c, e) }; return function (c, e) { function f() { this.constructor = c } a(c, e); c.prototype = null === e ? Object.create(e) : (f.prototype = e.prototype, new f) } }(), y = a.parse, G = E.seriesTypes.line; a = H.extend; var B = H.merge, q = H.objectEach,
-                        h = H.pick; H = function (a) {
-                            function c() { var c = null !== a && a.apply(this, arguments) || this; c.data = void 0; c.options = void 0; c.points = void 0; return c } v(c, a); c.prototype.drawGraph = function () {
-                                this.areaPath = []; a.prototype.drawGraph.apply(this); var c = this, f = this.areaPath, m = this.options, q = [["area", "highcharts-area", this.color, m.fillColor]]; this.zones.forEach(function (a, e) { q.push(["zone-area-" + e, "highcharts-area highcharts-zone-area-" + e + " " + a.className, a.color || c.color, a.fillColor || m.fillColor]) }); q.forEach(function (a) {
-                                    var e =
-                                        a[0], t = c[e], n = t ? "animate" : "attr", q = {}; t ? (t.endX = c.preventGraphAnimation ? null : f.xMap, t.animate({ d: f })) : (q.zIndex = 0, t = c[e] = c.chart.renderer.path(f).addClass(a[1]).add(c.group), t.isArea = !0); c.chart.styledMode || (q.fill = h(a[3], y(a[2]).setOpacity(h(m.fillOpacity, .75)).get())); t[n](q); t.startX = f.xMap; t.shiftUnit = m.step ? 2 : 1
-                                })
-                            }; c.prototype.getGraphPath = function (a) {
-                                var c = G.prototype.getGraphPath, e = this.options, f = e.stacking, n = this.yAxis, l, q = [], v = [], u = this.index, p = n.stacking.stacks[this.stackKey], d = e.threshold,
-                                k = Math.round(n.getThreshold(e.threshold)); e = h(e.connectNulls, "percent" === f); var b = function (b, c, e) { var g = a[b]; b = f && p[g.x].points[u]; var h = g[e + "Null"] || 0; e = g[e + "Cliff"] || 0; g = !0; if (e || h) { var l = (h ? b[0] : b[1]) + e; var m = b[0] + e; g = !!h } else !f && a[c] && a[c].isNull && (l = m = d); "undefined" !== typeof l && (v.push({ plotX: r, plotY: null === l ? k : n.getThreshold(l), isNull: g, isCliff: !0 }), q.push({ plotX: r, plotY: null === m ? k : n.getThreshold(m), doCurve: !1 })) }; a = a || this.points; f && (a = this.getStackPoints(a)); for (l = 0; l < a.length; l++) {
-                                    f || (a[l].leftCliff =
-                                        a[l].rightCliff = a[l].leftNull = a[l].rightNull = void 0); var g = a[l].isNull; var r = h(a[l].rectPlotX, a[l].plotX); var F = f ? h(a[l].yBottom, k) : k; if (!g || e) e || b(l, l - 1, "left"), g && !f && e || (v.push(a[l]), q.push({ x: l, plotX: r, plotY: F })), e || b(l, l + 1, "right")
-                                } l = c.call(this, v, !0, !0); q.reversed = !0; g = c.call(this, q, !0, !0); (F = g[0]) && "M" === F[0] && (g[0] = ["L", F[1], F[2]]); g = l.concat(g); g.length && g.push(["Z"]); c = c.call(this, v, !1, e); g.xMap = l.xMap; this.areaPath = g; return c
-                            }; c.prototype.getStackPoints = function (a) {
-                                var c = this, e = [], f = [],
-                                n = this.xAxis, l = this.yAxis, v = l.stacking.stacks[this.stackKey], u = {}, A = l.series, p = A.length, d = l.options.reversedStacks ? 1 : -1, k = A.indexOf(c); a = a || this.points; if (this.options.stacking) {
-                                    for (var b = 0; b < a.length; b++)a[b].leftNull = a[b].rightNull = void 0, u[a[b].x] = a[b]; q(v, function (a, b) { null !== a.total && f.push(b) }); f.sort(function (a, b) { return a - b }); var g = A.map(function (a) { return a.visible }); f.forEach(function (a, b) {
-                                        var r = 0, m, t; if (u[a] && !u[a].isNull) e.push(u[a]), [-1, 1].forEach(function (e) {
-                                            var h = 1 === e ? "rightNull" :
-                                                "leftNull", l = 0, r = v[f[b + e]]; if (r) for (var n = k; 0 <= n && n < p;) { var q = A[n].index; m = r.points[q]; m || (q === c.index ? u[a][h] = !0 : g[n] && (t = v[a].points[q]) && (l -= t[1] - t[0])); n += d } u[a][1 === e ? "rightCliff" : "leftCliff"] = l
-                                        }); else { for (var q = k; 0 <= q && q < p;) { if (m = v[a].points[A[q].index]) { r = m[1]; break } q += d } r = h(r, 0); r = l.translate(r, 0, 1, 0, 1); e.push({ isNull: !0, plotX: n.translate(a, 0, 0, 0, 1), x: a, plotY: r, yBottom: r }) }
-                                    })
-                                } return e
-                            }; c.defaultOptions = B(G.defaultOptions, { threshold: 0 }); return c
-                        }(G); a(H.prototype, { singleStacks: !1, drawLegendSymbol: u.drawRectangle });
-                    E.registerSeriesType("area", H); ""; return H
-                }); L(a, "Series/Spline/SplineSeries.js", [a["Core/Series/SeriesRegistry.js"], a["Core/Utilities.js"]], function (a, u) {
-                    var v = this && this.__extends || function () {
-                        var a = function (v, q) { a = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (a, f) { a.__proto__ = f } || function (a, f) { for (var c in f) f.hasOwnProperty(c) && (a[c] = f[c]) }; return a(v, q) }; return function (v, q) {
-                            function h() { this.constructor = v } a(v, q); v.prototype = null === q ? Object.create(q) : (h.prototype = q.prototype,
-                                new h)
-                        }
-                    }(), H = a.seriesTypes.line, x = u.merge, y = u.pick; u = function (a) {
-                        function u() { var q = null !== a && a.apply(this, arguments) || this; q.data = void 0; q.options = void 0; q.points = void 0; return q } v(u, a); u.prototype.getPointSpline = function (a, h, f) {
-                            var c = h.plotX || 0, e = h.plotY || 0, t = a[f - 1]; f = a[f + 1]; if (t && !t.isNull && !1 !== t.doCurve && !h.isCliff && f && !f.isNull && !1 !== f.doCurve && !h.isCliff) {
-                                a = t.plotY || 0; var m = f.plotX || 0; f = f.plotY || 0; var q = 0; var n = (1.5 * c + (t.plotX || 0)) / 2.5; var l = (1.5 * e + a) / 2.5; m = (1.5 * c + m) / 2.5; var v = (1.5 * e + f) / 2.5;
-                                m !== n && (q = (v - l) * (m - c) / (m - n) + e - v); l += q; v += q; l > a && l > e ? (l = Math.max(a, e), v = 2 * e - l) : l < a && l < e && (l = Math.min(a, e), v = 2 * e - l); v > f && v > e ? (v = Math.max(f, e), l = 2 * e - v) : v < f && v < e && (v = Math.min(f, e), l = 2 * e - v); h.rightContX = m; h.rightContY = v
-                            } h = ["C", y(t.rightContX, t.plotX, 0), y(t.rightContY, t.plotY, 0), y(n, c, 0), y(l, e, 0), c, e]; t.rightContX = t.rightContY = void 0; return h
-                        }; u.defaultOptions = x(H.defaultOptions); return u
-                    }(H); a.registerSeriesType("spline", u); ""; return u
-                }); L(a, "Series/AreaSpline/AreaSplineSeries.js", [a["Series/Area/AreaSeries.js"],
-                a["Series/Spline/SplineSeries.js"], a["Mixins/LegendSymbol.js"], a["Core/Series/SeriesRegistry.js"], a["Core/Utilities.js"]], function (a, u, E, H, x) {
-                    var v = this && this.__extends || function () { var a = function (f, c) { a = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (a, c) { a.__proto__ = c } || function (a, c) { for (var e in c) c.hasOwnProperty(e) && (a[e] = c[e]) }; return a(f, c) }; return function (f, c) { function e() { this.constructor = f } a(f, c); f.prototype = null === c ? Object.create(c) : (e.prototype = c.prototype, new e) } }(), G =
-                        a.prototype, B = x.extend, q = x.merge; x = function (h) { function f() { var a = null !== h && h.apply(this, arguments) || this; a.data = void 0; a.points = void 0; a.options = void 0; return a } v(f, h); f.defaultOptions = q(u.defaultOptions, a.defaultOptions); return f }(u); B(x.prototype, { getGraphPath: G.getGraphPath, getStackPoints: G.getStackPoints, drawGraph: G.drawGraph, drawLegendSymbol: E.drawRectangle }); H.registerSeriesType("areaspline", x); ""; return x
-                }); L(a, "Series/Column/ColumnSeries.js", [a["Core/Animation/AnimationUtilities.js"], a["Core/Color/Color.js"],
-                a["Core/Globals.js"], a["Mixins/LegendSymbol.js"], a["Core/Color/Palette.js"], a["Core/Series/Series.js"], a["Core/Series/SeriesRegistry.js"], a["Core/Utilities.js"]], function (a, u, E, H, x, y, G, B) {
-                    var q = this && this.__extends || function () {
-                        var a = function (d, b) { a = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (a, b) { a.__proto__ = b } || function (a, b) { for (var d in b) b.hasOwnProperty(d) && (a[d] = b[d]) }; return a(d, b) }; return function (d, b) {
-                            function c() { this.constructor = d } a(d, b); d.prototype = null === b ? Object.create(b) :
-                                (c.prototype = b.prototype, new c)
-                        }
-                    }(), h = a.animObject, f = u.parse, c = E.hasTouch; a = E.noop; var e = B.clamp, t = B.css, m = B.defined, v = B.extend, n = B.fireEvent, l = B.isArray, J = B.isNumber, K = B.merge, A = B.pick, p = B.objectEach; B = function (a) {
-                        function d() { var b = null !== a && a.apply(this, arguments) || this; b.borderWidth = void 0; b.data = void 0; b.group = void 0; b.options = void 0; b.points = void 0; return b } q(d, a); d.prototype.animate = function (a) {
-                            var b = this, d = this.yAxis, c = b.options, f = this.chart.inverted, k = {}, l = f ? "translateX" : "translateY"; if (a) k.scaleY =
-                                .001, a = e(d.toPixels(c.threshold), d.pos, d.pos + d.len), f ? k.translateX = a - d.len : k.translateY = a, b.clipBox && b.setClip(), b.group.attr(k); else { var p = Number(b.group.attr(l)); b.group.animate({ scaleY: 1 }, v(h(b.options.animation), { step: function (a, c) { b.group && (k[l] = p + c.pos * (d.pos - p), b.group.attr(k)) } })) }
-                        }; d.prototype.init = function (b, d) { a.prototype.init.apply(this, arguments); var c = this; b = c.chart; b.hasRendered && b.series.forEach(function (a) { a.type === c.type && (a.isDirty = !0) }) }; d.prototype.getColumnMetrics = function () {
-                            var a =
-                                this, d = a.options, c = a.xAxis, e = a.yAxis, f = c.options.reversedStacks; f = c.reversed && !f || !c.reversed && f; var k, l = {}, h = 0; !1 === d.grouping ? h = 1 : a.chart.series.forEach(function (b) { var d = b.yAxis, c = b.options; if (b.type === a.type && (b.visible || !a.chart.options.chart.ignoreHiddenSeries) && e.len === d.len && e.pos === d.pos) { if (c.stacking && "group" !== c.stacking) { k = b.stackKey; "undefined" === typeof l[k] && (l[k] = h++); var f = l[k] } else !1 !== c.grouping && (f = h++); b.columnIndex = f } }); var p = Math.min(Math.abs(c.transA) * (c.ordinal && c.ordinal.slope ||
-                                    d.pointRange || c.closestPointRange || c.tickInterval || 1), c.len), m = p * d.groupPadding, t = (p - 2 * m) / (h || 1); d = Math.min(d.maxPointWidth || c.len, A(d.pointWidth, t * (1 - 2 * d.pointPadding))); a.columnMetrics = { width: d, offset: (t - d) / 2 + (m + ((a.columnIndex || 0) + (f ? 1 : 0)) * t - p / 2) * (f ? -1 : 1), paddedWidth: t, columnCount: h }; return a.columnMetrics
-                        }; d.prototype.crispCol = function (a, d, c, e) {
-                            var b = this.chart, f = this.borderWidth, g = -(f % 2 ? .5 : 0); f = f % 2 ? .5 : 1; b.inverted && b.renderer.isVML && (f += 1); this.options.crisp && (c = Math.round(a + c) + g, a = Math.round(a) +
-                                g, c -= a); e = Math.round(d + e) + f; g = .5 >= Math.abs(d) && .5 < e; d = Math.round(d) + f; e -= d; g && e && (--d, e += 1); return { x: a, y: d, width: c, height: e }
-                        }; d.prototype.adjustForMissingColumns = function (a, d, c, e) {
-                            var b = this, f = this.options.stacking; if (!c.isNull && 1 < e.columnCount) {
-                                var g = 0, k = 0; p(this.yAxis.stacking && this.yAxis.stacking.stacks, function (a) { if ("number" === typeof c.x && (a = a[c.x.toString()])) { var d = a.points[b.index], e = a.total; f ? (d && (g = k), a.hasValidPoints && k++) : l(d) && (g = d[1], k = e || 0) } }); a = (c.plotX || 0) + ((k - 1) * e.paddedWidth + d) /
-                                    2 - d - g * e.paddedWidth
-                            } return a
-                        }; d.prototype.translate = function () {
-                            var a = this, d = a.chart, c = a.options, f = a.dense = 2 > a.closestPointRange * a.xAxis.transA; f = a.borderWidth = A(c.borderWidth, f ? 0 : 1); var k = a.xAxis, l = a.yAxis, h = c.threshold, p = a.translatedThreshold = l.getThreshold(h), t = A(c.minPointLength, 5), n = a.getColumnMetrics(), q = n.width, v = a.barW = Math.max(q, 1 + 2 * f), u = a.pointXOffset = n.offset, w = a.dataMin, x = a.dataMax; d.inverted && (p -= .5); c.pointPadding && (v = Math.ceil(v)); y.prototype.translate.apply(a); a.points.forEach(function (b) {
-                                var f =
-                                    A(b.yBottom, p), g = 999 + Math.abs(f), r = q, C = b.plotX || 0; g = e(b.plotY, -g, l.len + g); C += u; var F = v, D = Math.min(g, f), z = Math.max(g, f) - D; if (t && Math.abs(z) < t) { z = t; var B = !l.reversed && !b.negative || l.reversed && b.negative; J(h) && J(x) && b.y === h && x <= h && (l.min || 0) < h && (w !== x || (l.max || 0) <= h) && (B = !B); D = Math.abs(D - p) > t ? f - t : p - (B ? t : 0) } m(b.options.pointWidth) && (r = F = Math.ceil(b.options.pointWidth), C -= Math.round((r - q) / 2)); c.centerInCategory && (C = a.adjustForMissingColumns(C, r, b, n)); b.barX = C; b.pointWidth = r; b.tooltipPos = d.inverted ? [e(l.len +
-                                        l.pos - d.plotLeft - g, l.pos - d.plotLeft, l.len + l.pos - d.plotLeft), k.len + k.pos - d.plotTop - C - F / 2, z] : [k.left - d.plotLeft + C + F / 2, e(g + l.pos - d.plotTop, l.pos - d.plotTop, l.len + l.pos - d.plotTop), z]; b.shapeType = a.pointClass.prototype.shapeType || "rect"; b.shapeArgs = a.crispCol.apply(a, b.isNull ? [C, p, F, 0] : [C, D, F, z])
-                            })
-                        }; d.prototype.drawGraph = function () { this.group[this.dense ? "addClass" : "removeClass"]("highcharts-dense-data") }; d.prototype.pointAttribs = function (a, d) {
-                            var b = this.options, c = this.pointAttrToOptions || {}; var e = c.stroke ||
-                                "borderColor"; var g = c["stroke-width"] || "borderWidth", k = a && a.color || this.color, l = a && a[e] || b[e] || k, h = a && a[g] || b[g] || this[g] || 0; c = a && a.options.dashStyle || b.dashStyle; var p = A(a && a.opacity, b.opacity, 1); if (a && this.zones.length) { var m = a.getZone(); k = a.options.color || m && (m.color || a.nonZonedColor) || this.color; m && (l = m.borderColor || l, c = m.dashStyle || c, h = m.borderWidth || h) } d && a && (a = K(b.states[d], a.options.states && a.options.states[d] || {}), d = a.brightness, k = a.color || "undefined" !== typeof d && f(k).brighten(a.brightness).get() ||
-                                    k, l = a[e] || l, h = a[g] || h, c = a.dashStyle || c, p = A(a.opacity, p)); e = { fill: k, stroke: l, "stroke-width": h, opacity: p }; c && (e.dashstyle = c); return e
-                        }; d.prototype.drawPoints = function () {
-                            var a = this, d = this.chart, c = a.options, e = d.renderer, f = c.animationLimit || 250, k; a.points.forEach(function (b) {
-                                var g = b.graphic, l = !!g, h = g && d.pointCount < f ? "animate" : "attr"; if (J(b.plotY) && null !== b.y) {
-                                    k = b.shapeArgs; g && b.hasNewShapeType() && (g = g.destroy()); a.enabledDataSorting && (b.startXPos = a.xAxis.reversed ? -(k ? k.width || 0 : 0) : a.xAxis.width); g || (b.graphic =
-                                        g = e[b.shapeType](k).add(b.group || a.group)) && a.enabledDataSorting && d.hasRendered && d.pointCount < f && (g.attr({ x: b.startXPos }), l = !0, h = "animate"); if (g && l) g[h](K(k)); if (c.borderRadius) g[h]({ r: c.borderRadius }); d.styledMode || g[h](a.pointAttribs(b, b.selected && "select")).shadow(!1 !== b.allowShadow && c.shadow, null, c.stacking && !c.borderRadius); g && (g.addClass(b.getClassName(), !0), g.attr({ visibility: b.visible ? "inherit" : "hidden" }))
-                                } else g && (b.graphic = g.destroy())
-                            })
-                        }; d.prototype.drawTracker = function () {
-                            var a = this, d =
-                                a.chart, e = d.pointer, f = function (a) { var b = e.getPointFromEvent(a); "undefined" !== typeof b && (e.isDirectTouch = !0, b.onMouseOver(a)) }, k; a.points.forEach(function (a) { k = l(a.dataLabels) ? a.dataLabels : a.dataLabel ? [a.dataLabel] : []; a.graphic && (a.graphic.element.point = a); k.forEach(function (b) { b.div ? b.div.point = a : b.element.point = a }) }); a._hasTracking || (a.trackerGroups.forEach(function (b) {
-                                    if (a[b]) {
-                                        a[b].addClass("highcharts-tracker").on("mouseover", f).on("mouseout", function (a) { e.onTrackerMouseOut(a) }); if (c) a[b].on("touchstart",
-                                            f); !d.styledMode && a.options.cursor && a[b].css(t).css({ cursor: a.options.cursor })
-                                    }
-                                }), a._hasTracking = !0); n(this, "afterDrawTracker")
-                        }; d.prototype.remove = function () { var a = this, d = a.chart; d.hasRendered && d.series.forEach(function (b) { b.type === a.type && (b.isDirty = !0) }); y.prototype.remove.apply(a, arguments) }; d.defaultOptions = K(y.defaultOptions, {
-                            borderRadius: 0, centerInCategory: !1, groupPadding: .2, marker: null, pointPadding: .1, minPointLength: 0, cropThreshold: 50, pointRange: null, states: {
-                                hover: { halo: !1, brightness: .1 },
-                                select: { color: x.neutralColor20, borderColor: x.neutralColor100 }
-                            }, dataLabels: { align: void 0, verticalAlign: void 0, y: void 0 }, startFromThreshold: !0, stickyTracking: !1, tooltip: { distance: 6 }, threshold: 0, borderColor: x.backgroundColor
-                        }); return d
-                    }(y); v(B.prototype, { cropShoulder: 0, directTouch: !0, drawLegendSymbol: H.drawRectangle, getSymbol: a, negStacks: !0, trackerGroups: ["group", "dataLabelsGroup"] }); G.registerSeriesType("column", B); ""; ""; return B
-                }); L(a, "Series/Bar/BarSeries.js", [a["Series/Column/ColumnSeries.js"], a["Core/Series/SeriesRegistry.js"],
-                a["Core/Utilities.js"]], function (a, u, E) {
-                    var v = this && this.__extends || function () { var a = function (v, q) { a = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (a, f) { a.__proto__ = f } || function (a, f) { for (var c in f) f.hasOwnProperty(c) && (a[c] = f[c]) }; return a(v, q) }; return function (v, q) { function h() { this.constructor = v } a(v, q); v.prototype = null === q ? Object.create(q) : (h.prototype = q.prototype, new h) } }(), x = E.extend, y = E.merge; E = function (u) {
-                        function x() {
-                            var a = null !== u && u.apply(this, arguments) || this; a.data = void 0;
-                            a.options = void 0; a.points = void 0; return a
-                        } v(x, u); x.defaultOptions = y(a.defaultOptions, {}); return x
-                    }(a); x(E.prototype, { inverted: !0 }); u.registerSeriesType("bar", E); ""; return E
-                }); L(a, "Series/Scatter/ScatterSeries.js", [a["Series/Column/ColumnSeries.js"], a["Series/Line/LineSeries.js"], a["Core/Series/SeriesRegistry.js"], a["Core/Utilities.js"]], function (a, u, E, H) {
-                    var v = this && this.__extends || function () {
-                        var a = function (h, f) {
-                            a = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (a, e) { a.__proto__ = e } ||
-                            function (a, e) { for (var c in e) e.hasOwnProperty(c) && (a[c] = e[c]) }; return a(h, f)
-                        }; return function (h, f) { function c() { this.constructor = h } a(h, f); h.prototype = null === f ? Object.create(f) : (c.prototype = f.prototype, new c) }
-                    }(), y = H.addEvent, G = H.extend, B = H.merge; H = function (a) {
-                        function h() { var f = null !== a && a.apply(this, arguments) || this; f.data = void 0; f.options = void 0; f.points = void 0; return f } v(h, a); h.prototype.applyJitter = function () {
-                            var a = this, c = this.options.jitter, e = this.points.length; c && this.points.forEach(function (f,
-                                h) { ["x", "y"].forEach(function (m, t) { var l = "plot" + m.toUpperCase(); if (c[m] && !f.isNull) { var n = a[m + "Axis"]; var q = c[m] * n.transA; if (n && !n.isLog) { var v = Math.max(0, f[l] - q); n = Math.min(n.len, f[l] + q); t = 1E4 * Math.sin(h + t * e); f[l] = v + (n - v) * (t - Math.floor(t)); "x" === m && (f.clientX = f.plotX) } } }) })
-                        }; h.prototype.drawGraph = function () { this.options.lineWidth ? a.prototype.drawGraph.call(this) : this.graph && (this.graph = this.graph.destroy()) }; h.defaultOptions = B(u.defaultOptions, {
-                            lineWidth: 0, findNearestPointBy: "xy", jitter: { x: 0, y: 0 },
-                            marker: { enabled: !0 }, tooltip: { headerFormat: '<span style="color:{point.color}">\u25cf</span> <span style="font-size: 10px"> {series.name}</span><br/>', pointFormat: "x: <b>{point.x}</b><br/>y: <b>{point.y}</b><br/>" }
-                        }); return h
-                    }(u); G(H.prototype, { drawTracker: a.prototype.drawTracker, sorted: !1, requireSorting: !1, noSharedTooltip: !0, trackerGroups: ["group", "markerGroup", "dataLabelsGroup"], takeOrdinalPosition: !1 }); y(H, "afterTranslate", function () { this.applyJitter() }); E.registerSeriesType("scatter", H); ""; return H
-                });
-    L(a, "Mixins/CenteredSeries.js", [a["Core/Globals.js"], a["Core/Series/Series.js"], a["Core/Utilities.js"]], function (a, u, E) {
-        var v = E.isNumber, x = E.pick, y = E.relativeLength, G = a.deg2rad; return a.CenteredSeriesMixin = {
-            getCenter: function () {
-                var a = this.options, q = this.chart, h = 2 * (a.slicedOffset || 0), f = q.plotWidth - 2 * h, c = q.plotHeight - 2 * h, e = a.center, t = Math.min(f, c), m = a.size, v = a.innerSize || 0; "string" === typeof m && (m = parseFloat(m)); "string" === typeof v && (v = parseFloat(v)); a = [x(e[0], "50%"), x(e[1], "50%"), x(m && 0 > m ? void 0 : a.size,
-                    "100%"), x(v && 0 > v ? void 0 : a.innerSize || 0, "0%")]; !q.angular || this instanceof u || (a[3] = 0); for (e = 0; 4 > e; ++e)m = a[e], q = 2 > e || 2 === e && /%$/.test(m), a[e] = y(m, [f, c, t, a[2]][e]) + (q ? h : 0); a[3] > a[2] && (a[3] = a[2]); return a
-            }, getStartAndEndRadians: function (a, q) { a = v(a) ? a : 0; q = v(q) && q > a && 360 > q - a ? q : a + 360; return { start: G * (a + -90), end: G * (q + -90) } }
+            return b;
+          };
+        !0 === e[0] && ((g = e[1]), (e = Array.prototype.slice.call(e, 2)));
+        var k = e.length;
+        for (b = 0; b < k; b++) g = c(g, e[b]);
+        return g;
+      },
+      normalizeTickInterval: function (b, e, g, c, k) {
+        var d = b;
+        g = l(g, 1);
+        var v = b / g;
+        e ||
+          ((e = k
+            ? [1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10]
+            : [1, 2, 2.5, 5, 10]),
+          !1 === c &&
+            (1 === g
+              ? (e = e.filter(function (b) {
+                  return 0 === b % 1;
+                }))
+              : 0.1 >= g && (e = [1 / g])));
+        for (
+          c = 0;
+          c < e.length &&
+          !((d = e[c]),
+          (k && d * g >= b) || (!k && v <= (e[c] + (e[c + 1] || e[c])) / 2));
+          c++
+        );
+        return (d = p(d * g, -Math.round(Math.log(0.001) / Math.LN10)));
+      },
+      objectEach: r,
+      offset: function (e) {
+        var g = k.documentElement;
+        e =
+          e.parentElement || e.parentNode
+            ? e.getBoundingClientRect()
+            : { top: 0, left: 0, width: 0, height: 0 };
+        return {
+          top: e.top + (b.pageYOffset || g.scrollTop) - (g.clientTop || 0),
+          left: e.left + (b.pageXOffset || g.scrollLeft) - (g.clientLeft || 0),
+          width: e.width,
+          height: e.height,
+        };
+      },
+      pad: function (b, e, g) {
+        return (
+          Array((e || 2) + 1 - String(b).replace("-", "").length).join(
+            g || "0"
+          ) + b
+        );
+      },
+      pick: l,
+      pInt: G,
+      relativeLength: function (b, e, g) {
+        return /%$/.test(b)
+          ? (e * parseFloat(b)) / 100 + (g || 0)
+          : parseFloat(b);
+      },
+      removeEvent: y,
+      splat: function (b) {
+        return C(b) ? b : [b];
+      },
+      stableSort: function (b, e) {
+        var g = b.length,
+          c,
+          k;
+        for (k = 0; k < g; k++) b[k].safeI = k;
+        b.sort(function (b, g) {
+          c = e(b, g);
+          return 0 === c ? b.safeI - g.safeI : c;
+        });
+        for (k = 0; k < g; k++) delete b[k].safeI;
+      },
+      syncTimeout: function (b, e, g) {
+        if (0 < e) return setTimeout(b, e, g);
+        b.call(0, g);
+        return -1;
+      },
+      timeUnits: {
+        millisecond: 1,
+        second: 1e3,
+        minute: 6e4,
+        hour: 36e5,
+        day: 864e5,
+        week: 6048e5,
+        month: 24192e5,
+        year: 314496e5,
+      },
+      uniqueKey: H,
+      useSerialIds: function (b) {
+        return (D = l(b, D));
+      },
+      wrap: function (b, e, g) {
+        var c = b[e];
+        b[e] = function () {
+          var b = Array.prototype.slice.call(arguments),
+            e = arguments,
+            k = this;
+          k.proceed = function () {
+            c.apply(k, arguments.length ? arguments : e);
+          };
+          b.unshift(c);
+          b = g.apply(this, b);
+          k.proceed = null;
+          return b;
+        };
+      },
+    };
+    ("");
+    return e;
+  });
+  L(a, "Core/Chart/ChartDefaults.js", [], function () {
+    return {
+      panning: { enabled: !1, type: "x" },
+      styledMode: !1,
+      borderRadius: 0,
+      colorCount: 10,
+      defaultSeriesType: "line",
+      ignoreHiddenSeries: !0,
+      spacing: [10, 10, 15, 10],
+      resetZoomButton: {
+        theme: { zIndex: 6 },
+        position: { align: "right", x: -10, y: 10 },
+      },
+      zoomBySingleTouch: !1,
+      width: null,
+      height: null,
+      borderColor: "#335cad",
+      backgroundColor: "#ffffff",
+      plotBorderColor: "#cccccc",
+    };
+  });
+  L(
+    a,
+    "Core/Color/Color.js",
+    [a["Core/Globals.js"], a["Core/Utilities.js"]],
+    function (a, t) {
+      var u = t.isNumber,
+        G = t.merge,
+        x = t.pInt;
+      t = (function () {
+        function t(u) {
+          this.rgba = [NaN, NaN, NaN, NaN];
+          this.input = u;
+          var z = a.Color;
+          if (z && z !== t) return new z(u);
+          if (!(this instanceof t)) return new t(u);
+          this.init(u);
         }
-    }); L(a, "Series/Pie/PiePoint.js", [a["Core/Animation/AnimationUtilities.js"], a["Core/Series/Point.js"], a["Core/Utilities.js"]], function (a, u, E) {
-        var v = this && this.__extends || function () {
-            var a =
-                function (c, e) { a = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (a, c) { a.__proto__ = c } || function (a, c) { for (var e in c) c.hasOwnProperty(e) && (a[e] = c[e]) }; return a(c, e) }; return function (c, e) { function f() { this.constructor = c } a(c, e); c.prototype = null === e ? Object.create(e) : (f.prototype = e.prototype, new f) }
-        }(), x = a.setAnimation, y = E.addEvent, G = E.defined; a = E.extend; var B = E.isNumber, q = E.pick, h = E.relativeLength; E = function (a) {
-            function c() {
-                var c = null !== a && a.apply(this, arguments) || this; c.labelDistance = void 0;
-                c.options = void 0; c.series = void 0; return c
-            } v(c, a); c.prototype.getConnectorPath = function () { var a = this.labelPosition, c = this.series.options.dataLabels, f = c.connectorShape, h = this.connectorShapes; h[f] && (f = h[f]); return f.call(this, { x: a.final.x, y: a.final.y, alignment: a.alignment }, a.connectorPosition, c) }; c.prototype.getTranslate = function () { return this.sliced ? this.slicedTranslation : { translateX: 0, translateY: 0 } }; c.prototype.haloPath = function (a) {
-                var c = this.shapeArgs; return this.sliced || !this.visible ? [] : this.series.chart.renderer.symbols.arc(c.x,
-                    c.y, c.r + a, c.r + a, { innerR: c.r - 1, start: c.start, end: c.end })
-            }; c.prototype.init = function () { u.prototype.init.apply(this, arguments); var a = this; a.name = q(a.name, "Slice"); var c = function (c) { a.slice("select" === c.type) }; y(a, "select", c); y(a, "unselect", c); return a }; c.prototype.isValid = function () { return B(this.y) && 0 <= this.y }; c.prototype.setVisible = function (a, c) {
-                var e = this, f = e.series, h = f.chart, l = f.options.ignoreHiddenPoint; c = q(c, l); a !== e.visible && (e.visible = e.options.visible = a = "undefined" === typeof a ? !e.visible : a, f.options.data[f.data.indexOf(e)] =
-                    e.options, ["graphic", "dataLabel", "connector", "shadowGroup"].forEach(function (c) { if (e[c]) e[c][a ? "show" : "hide"](a) }), e.legendItem && h.legend.colorizeItem(e, a), a || "hover" !== e.state || e.setState(""), l && (f.isDirty = !0), c && h.redraw())
-            }; c.prototype.slice = function (a, c, f) { var e = this.series; x(f, e.chart); q(c, !0); this.sliced = this.options.sliced = G(a) ? a : !this.sliced; e.options.data[e.data.indexOf(this)] = this.options; this.graphic && this.graphic.animate(this.getTranslate()); this.shadowGroup && this.shadowGroup.animate(this.getTranslate()) };
-            return c
-        }(u); a(E.prototype, {
-            connectorShapes: {
-                fixedOffset: function (a, c, e) { var f = c.breakAt; c = c.touchingSliceAt; return [["M", a.x, a.y], e.softConnector ? ["C", a.x + ("left" === a.alignment ? -5 : 5), a.y, 2 * f.x - c.x, 2 * f.y - c.y, f.x, f.y] : ["L", f.x, f.y], ["L", c.x, c.y]] }, straight: function (a, c) { c = c.touchingSliceAt; return [["M", a.x, a.y], ["L", c.x, c.y]] }, crookedLine: function (a, c, e) {
-                    c = c.touchingSliceAt; var f = this.series, m = f.center[0], q = f.chart.plotWidth, n = f.chart.plotLeft; f = a.alignment; var l = this.shapeArgs.r; e = h(e.crookDistance,
-                        1); q = "left" === f ? m + l + (q + n - m - l) * (1 - e) : n + (m - l) * e; e = ["L", q, a.y]; m = !0; if ("left" === f ? q > a.x || q < c.x : q < a.x || q > c.x) m = !1; a = [["M", a.x, a.y]]; m && a.push(e); a.push(["L", c.x, c.y]); return a
+        t.parse = function (a) {
+          return a ? new t(a) : t.None;
+        };
+        t.prototype.init = function (a) {
+          var z;
+          if ("object" === typeof a && "undefined" !== typeof a.stops)
+            this.stops = a.stops.map(function (d) {
+              return new t(d[1]);
+            });
+          else if ("string" === typeof a) {
+            this.input = a = t.names[a.toLowerCase()] || a;
+            if ("#" === a.charAt(0)) {
+              var q = a.length;
+              var m = parseInt(a.substr(1), 16);
+              7 === q
+                ? (z = [(m & 16711680) >> 16, (m & 65280) >> 8, m & 255, 1])
+                : 4 === q &&
+                  (z = [
+                    ((m & 3840) >> 4) | ((m & 3840) >> 8),
+                    ((m & 240) >> 4) | (m & 240),
+                    ((m & 15) << 4) | (m & 15),
+                    1,
+                  ]);
+            }
+            if (!z)
+              for (m = t.parsers.length; m-- && !z; ) {
+                var h = t.parsers[m];
+                (q = h.regex.exec(a)) && (z = h.parse(q));
+              }
+          }
+          z && (this.rgba = z);
+        };
+        t.prototype.get = function (a) {
+          var z = this.input,
+            q = this.rgba;
+          if ("object" === typeof z && "undefined" !== typeof this.stops) {
+            var m = G(z);
+            m.stops = [].slice.call(m.stops);
+            this.stops.forEach(function (h, d) {
+              m.stops[d] = [m.stops[d][0], h.get(a)];
+            });
+            return m;
+          }
+          return q && u(q[0])
+            ? "rgb" === a || (!a && 1 === q[3])
+              ? "rgb(" + q[0] + "," + q[1] + "," + q[2] + ")"
+              : "a" === a
+              ? "" + q[3]
+              : "rgba(" + q.join(",") + ")"
+            : z;
+        };
+        t.prototype.brighten = function (a) {
+          var z = this.rgba;
+          if (this.stops)
+            this.stops.forEach(function (m) {
+              m.brighten(a);
+            });
+          else if (u(a) && 0 !== a)
+            for (var q = 0; 3 > q; q++)
+              (z[q] += x(255 * a)),
+                0 > z[q] && (z[q] = 0),
+                255 < z[q] && (z[q] = 255);
+          return this;
+        };
+        t.prototype.setOpacity = function (a) {
+          this.rgba[3] = a;
+          return this;
+        };
+        t.prototype.tweenTo = function (a, z) {
+          var q = this.rgba,
+            m = a.rgba;
+          if (!u(q[0]) || !u(m[0])) return a.input || "none";
+          a = 1 !== m[3] || 1 !== q[3];
+          return (
+            (a ? "rgba(" : "rgb(") +
+            Math.round(m[0] + (q[0] - m[0]) * (1 - z)) +
+            "," +
+            Math.round(m[1] + (q[1] - m[1]) * (1 - z)) +
+            "," +
+            Math.round(m[2] + (q[2] - m[2]) * (1 - z)) +
+            (a ? "," + (m[3] + (q[3] - m[3]) * (1 - z)) : "") +
+            ")"
+          );
+        };
+        t.names = { white: "#ffffff", black: "#000000" };
+        t.parsers = [
+          {
+            regex:
+              /rgba\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]?(?:\.[0-9]+)?)\s*\)/,
+            parse: function (a) {
+              return [x(a[1]), x(a[2]), x(a[3]), parseFloat(a[4], 10)];
+            },
+          },
+          {
+            regex:
+              /rgb\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*\)/,
+            parse: function (a) {
+              return [x(a[1]), x(a[2]), x(a[3]), 1];
+            },
+          },
+        ];
+        t.None = new t("");
+        return t;
+      })();
+      ("");
+      return t;
+    }
+  );
+  L(a, "Core/Color/Palettes.js", [], function () {
+    return {
+      colors:
+        "#7cb5ec #434348 #90ed7d #f7a35c #8085e9 #f15c80 #e4d354 #2b908f #f45b5b #91e8e1".split(
+          " "
+        ),
+    };
+  });
+  L(
+    a,
+    "Core/Time.js",
+    [a["Core/Globals.js"], a["Core/Utilities.js"]],
+    function (a, t) {
+      var u = a.win,
+        G = t.defined,
+        x = t.error,
+        C = t.extend,
+        I = t.isObject,
+        z = t.merge,
+        q = t.objectEach,
+        m = t.pad,
+        h = t.pick,
+        d = t.splat,
+        c = t.timeUnits,
+        l = a.isSafari && u.Intl && u.Intl.DateTimeFormat.prototype.formatRange,
+        f =
+          a.isSafari && u.Intl && !u.Intl.DateTimeFormat.prototype.formatRange;
+      t = (function () {
+        function w(c) {
+          this.options = {};
+          this.variableTimezone = this.useUTC = !1;
+          this.Date = u.Date;
+          this.getTimezoneOffset = this.timezoneOffsetFunction();
+          this.update(c);
+        }
+        w.prototype.get = function (c, d) {
+          if (this.variableTimezone || this.timezoneOffset) {
+            var p = d.getTime(),
+              l = p - this.getTimezoneOffset(d);
+            d.setTime(l);
+            c = d["getUTC" + c]();
+            d.setTime(p);
+            return c;
+          }
+          return this.useUTC ? d["getUTC" + c]() : d["get" + c]();
+        };
+        w.prototype.set = function (c, d, r) {
+          if (this.variableTimezone || this.timezoneOffset) {
+            if (
+              "Milliseconds" === c ||
+              "Seconds" === c ||
+              ("Minutes" === c && 0 === this.getTimezoneOffset(d) % 36e5)
+            )
+              return d["setUTC" + c](r);
+            var p = this.getTimezoneOffset(d);
+            p = d.getTime() - p;
+            d.setTime(p);
+            d["setUTC" + c](r);
+            c = this.getTimezoneOffset(d);
+            p = d.getTime() + c;
+            return d.setTime(p);
+          }
+          return this.useUTC || (l && "FullYear" === c)
+            ? d["setUTC" + c](r)
+            : d["set" + c](r);
+        };
+        w.prototype.update = function (c) {
+          var d = h(c && c.useUTC, !0);
+          this.options = c = z(!0, this.options || {}, c);
+          this.Date = c.Date || u.Date || Date;
+          this.timezoneOffset = (this.useUTC = d) && c.timezoneOffset;
+          this.getTimezoneOffset = this.timezoneOffsetFunction();
+          this.variableTimezone = d && !(!c.getTimezoneOffset && !c.timezone);
+        };
+        w.prototype.makeTime = function (c, d, r, l, B, n) {
+          if (this.useUTC) {
+            var k = this.Date.UTC.apply(0, arguments);
+            var b = this.getTimezoneOffset(k);
+            k += b;
+            var g = this.getTimezoneOffset(k);
+            b !== g
+              ? (k += g - b)
+              : b - 36e5 !== this.getTimezoneOffset(k - 36e5) ||
+                f ||
+                (k -= 36e5);
+          } else
+            k = new this.Date(
+              c,
+              d,
+              h(r, 1),
+              h(l, 0),
+              h(B, 0),
+              h(n, 0)
+            ).getTime();
+          return k;
+        };
+        w.prototype.timezoneOffsetFunction = function () {
+          var c = this,
+            d = this.options,
+            r = d.moment || u.moment;
+          if (!this.useUTC)
+            return function (c) {
+              return 6e4 * new Date(c.toString()).getTimezoneOffset();
+            };
+          if (d.timezone) {
+            if (r)
+              return function (c) {
+                return 6e4 * -r.tz(c, d.timezone).utcOffset();
+              };
+            x(25);
+          }
+          return this.useUTC && d.getTimezoneOffset
+            ? function (c) {
+                return 6e4 * d.getTimezoneOffset(c.valueOf());
+              }
+            : function () {
+                return 6e4 * (c.timezoneOffset || 0);
+              };
+        };
+        w.prototype.dateFormat = function (c, d, r) {
+          if (!G(d) || isNaN(d))
+            return (
+              (a.defaultOptions.lang && a.defaultOptions.lang.invalidDate) || ""
+            );
+          c = h(c, "%Y-%m-%d %H:%M:%S");
+          var p = this,
+            l = new this.Date(d),
+            n = this.get("Hours", l),
+            k = this.get("Day", l),
+            b = this.get("Date", l),
+            g = this.get("Month", l),
+            e = this.get("FullYear", l),
+            D = a.defaultOptions.lang,
+            f = D && D.weekdays,
+            v = D && D.shortWeekdays;
+          l = C(
+            {
+              a: v ? v[k] : f[k].substr(0, 3),
+              A: f[k],
+              d: m(b),
+              e: m(b, 2, " "),
+              w: k,
+              b: D.shortMonths[g],
+              B: D.months[g],
+              m: m(g + 1),
+              o: g + 1,
+              y: e.toString().substr(2, 2),
+              Y: e,
+              H: m(n),
+              k: n,
+              I: m(n % 12 || 12),
+              l: n % 12 || 12,
+              M: m(this.get("Minutes", l)),
+              p: 12 > n ? "AM" : "PM",
+              P: 12 > n ? "am" : "pm",
+              S: m(l.getSeconds()),
+              L: m(Math.floor(d % 1e3), 3),
+            },
+            a.dateFormats
+          );
+          q(l, function (b, e) {
+            for (; -1 !== c.indexOf("%" + e); )
+              c = c.replace(
+                "%" + e,
+                "function" === typeof b ? b.call(p, d) : b
+              );
+          });
+          return r ? c.substr(0, 1).toUpperCase() + c.substr(1) : c;
+        };
+        w.prototype.resolveDTLFormat = function (c) {
+          return I(c, !0)
+            ? c
+            : ((c = d(c)), { main: c[0], from: c[1], to: c[2] });
+        };
+        w.prototype.getTimeTicks = function (d, l, r, f) {
+          var p = this,
+            n = [],
+            k = {},
+            b = new p.Date(l),
+            g = d.unitRange,
+            e = d.count || 1,
+            D;
+          f = h(f, 1);
+          if (G(l)) {
+            p.set(
+              "Milliseconds",
+              b,
+              g >= c.second ? 0 : e * Math.floor(p.get("Milliseconds", b) / e)
+            );
+            g >= c.second &&
+              p.set(
+                "Seconds",
+                b,
+                g >= c.minute ? 0 : e * Math.floor(p.get("Seconds", b) / e)
+              );
+            g >= c.minute &&
+              p.set(
+                "Minutes",
+                b,
+                g >= c.hour ? 0 : e * Math.floor(p.get("Minutes", b) / e)
+              );
+            g >= c.hour &&
+              p.set(
+                "Hours",
+                b,
+                g >= c.day ? 0 : e * Math.floor(p.get("Hours", b) / e)
+              );
+            g >= c.day &&
+              p.set(
+                "Date",
+                b,
+                g >= c.month
+                  ? 1
+                  : Math.max(1, e * Math.floor(p.get("Date", b) / e))
+              );
+            if (g >= c.month) {
+              p.set(
+                "Month",
+                b,
+                g >= c.year ? 0 : e * Math.floor(p.get("Month", b) / e)
+              );
+              var H = p.get("FullYear", b);
+            }
+            g >= c.year && p.set("FullYear", b, H - (H % e));
+            g === c.week &&
+              ((H = p.get("Day", b)),
+              p.set("Date", b, p.get("Date", b) - H + f + (H < f ? -7 : 0)));
+            H = p.get("FullYear", b);
+            f = p.get("Month", b);
+            var v = p.get("Date", b),
+              w = p.get("Hours", b);
+            l = b.getTime();
+            (!p.variableTimezone && p.useUTC) ||
+              !G(r) ||
+              (D =
+                r - l > 4 * c.month ||
+                p.getTimezoneOffset(l) !== p.getTimezoneOffset(r));
+            l = b.getTime();
+            for (b = 1; l < r; )
+              n.push(l),
+                (l =
+                  g === c.year
+                    ? p.makeTime(H + b * e, 0)
+                    : g === c.month
+                    ? p.makeTime(H, f + b * e)
+                    : !D || (g !== c.day && g !== c.week)
+                    ? D && g === c.hour && 1 < e
+                      ? p.makeTime(H, f, v, w + b * e)
+                      : l + g * e
+                    : p.makeTime(H, f, v + b * e * (g === c.day ? 1 : 7))),
+                b++;
+            n.push(l);
+            g <= c.hour &&
+              1e4 > n.length &&
+              n.forEach(function (b) {
+                0 === b % 18e5 &&
+                  "000000000" === p.dateFormat("%H%M%S%L", b) &&
+                  (k[b] = "day");
+              });
+          }
+          n.info = C(d, { higherRanks: k, totalRange: g * e });
+          return n;
+        };
+        w.prototype.getDateFormat = function (d, l, f, h) {
+          var p = this.dateFormat("%m-%d %H:%M:%S.%L", l),
+            n = { millisecond: 15, second: 12, minute: 9, hour: 6, day: 3 },
+            k = "millisecond";
+          for (b in c) {
+            if (
+              d === c.week &&
+              +this.dateFormat("%w", l) === f &&
+              "00:00:00.000" === p.substr(6)
+            ) {
+              var b = "week";
+              break;
+            }
+            if (c[b] > d) {
+              b = k;
+              break;
+            }
+            if (n[b] && p.substr(n[b]) !== "01-01 00:00:00.000".substr(n[b]))
+              break;
+            "week" !== b && (k = b);
+          }
+          if (b) var g = this.resolveDTLFormat(h[b]).main;
+          return g;
+        };
+        return w;
+      })();
+      ("");
+      return t;
+    }
+  );
+  L(
+    a,
+    "Core/DefaultOptions.js",
+    [
+      a["Core/Chart/ChartDefaults.js"],
+      a["Core/Color/Color.js"],
+      a["Core/Globals.js"],
+      a["Core/Color/Palettes.js"],
+      a["Core/Time.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G, x, C) {
+      t = t.parse;
+      var u = C.merge,
+        z = {
+          colors: G.colors,
+          symbols: ["circle", "diamond", "square", "triangle", "triangle-down"],
+          lang: {
+            loading: "Loading...",
+            months:
+              "January February March April May June July August September October November December".split(
+                " "
+              ),
+            shortMonths:
+              "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(" "),
+            weekdays:
+              "Sunday Monday Tuesday Wednesday Thursday Friday Saturday".split(
+                " "
+              ),
+            decimalPoint: ".",
+            numericSymbols: "kMGTPE".split(""),
+            resetZoom: "Reset zoom",
+            resetZoomTitle: "Reset zoom level 1:1",
+            thousandsSep: " ",
+          },
+          global: {},
+          time: {
+            Date: void 0,
+            getTimezoneOffset: void 0,
+            timezone: void 0,
+            timezoneOffset: 0,
+            useUTC: !0,
+          },
+          chart: a,
+          title: {
+            text: "Chart title",
+            align: "center",
+            margin: 15,
+            widthAdjust: -44,
+          },
+          subtitle: { text: "", align: "center", widthAdjust: -44 },
+          caption: {
+            margin: 15,
+            text: "",
+            align: "left",
+            verticalAlign: "bottom",
+          },
+          plotOptions: {},
+          labels: { style: { position: "absolute", color: "#333333" } },
+          legend: {
+            enabled: !0,
+            align: "center",
+            alignColumns: !0,
+            className: "highcharts-no-tooltip",
+            layout: "horizontal",
+            labelFormatter: function () {
+              return this.name;
+            },
+            borderColor: "#999999",
+            borderRadius: 0,
+            navigation: { activeColor: "#003399", inactiveColor: "#cccccc" },
+            itemStyle: {
+              color: "#333333",
+              cursor: "pointer",
+              fontSize: "12px",
+              fontWeight: "bold",
+              textOverflow: "ellipsis",
+            },
+            itemHoverStyle: { color: "#000000" },
+            itemHiddenStyle: { color: "#cccccc" },
+            shadow: !1,
+            itemCheckboxStyle: {
+              position: "absolute",
+              width: "13px",
+              height: "13px",
+            },
+            squareSymbol: !0,
+            symbolPadding: 5,
+            verticalAlign: "bottom",
+            x: 0,
+            y: 0,
+            title: { style: { fontWeight: "bold" } },
+          },
+          loading: {
+            labelStyle: {
+              fontWeight: "bold",
+              position: "relative",
+              top: "45%",
+            },
+            style: {
+              position: "absolute",
+              backgroundColor: "#ffffff",
+              opacity: 0.5,
+              textAlign: "center",
+            },
+          },
+          tooltip: {
+            enabled: !0,
+            animation: A.svg,
+            borderRadius: 3,
+            dateTimeLabelFormats: {
+              millisecond: "%A, %b %e, %H:%M:%S.%L",
+              second: "%A, %b %e, %H:%M:%S",
+              minute: "%A, %b %e, %H:%M",
+              hour: "%A, %b %e, %H:%M",
+              day: "%A, %b %e, %Y",
+              week: "Week from %A, %b %e, %Y",
+              month: "%B %Y",
+              year: "%Y",
+            },
+            footerFormat: "",
+            headerShape: "callout",
+            hideDelay: 500,
+            padding: 8,
+            shape: "callout",
+            shared: !1,
+            snap: A.isTouchDevice ? 25 : 10,
+            headerFormat:
+              '<span style="font-size: 10px">{point.key}</span><br/>',
+            pointFormat:
+              '<span style="color:{point.color}">\u25cf</span> {series.name}: <b>{point.y}</b><br/>',
+            backgroundColor: t("#f7f7f7").setOpacity(0.85).get(),
+            borderWidth: 1,
+            shadow: !0,
+            stickOnContact: !1,
+            style: {
+              color: "#333333",
+              cursor: "default",
+              fontSize: "12px",
+              whiteSpace: "nowrap",
+            },
+            useHTML: !1,
+          },
+          credits: {
+            enabled: !0,
+            href: "https://www.highcharts.com?credits",
+            position: {
+              align: "right",
+              x: -10,
+              verticalAlign: "bottom",
+              y: -5,
+            },
+            style: { cursor: "pointer", color: "#999999", fontSize: "9px" },
+            text: "Highcharts.com",
+          },
+        };
+      z.chart.styledMode = !1;
+      ("");
+      var q = new x(u(z.global, z.time));
+      a = {
+        defaultOptions: z,
+        defaultTime: q,
+        getOptions: function () {
+          return z;
+        },
+        setOptions: function (m) {
+          u(!0, z, m);
+          if (m.time || m.global)
+            A.time
+              ? A.time.update(u(z.global, z.time, m.global, m.time))
+              : (A.time = q);
+          return z;
+        },
+      };
+      ("");
+      return a;
+    }
+  );
+  L(
+    a,
+    "Core/Animation/Fx.js",
+    [a["Core/Color/Color.js"], a["Core/Globals.js"], a["Core/Utilities.js"]],
+    function (a, t, A) {
+      var u = a.parse,
+        x = t.win,
+        C = A.isNumber,
+        I = A.objectEach;
+      return (function () {
+        function a(a, m, h) {
+          this.pos = NaN;
+          this.options = m;
+          this.elem = a;
+          this.prop = h;
+        }
+        a.prototype.dSetter = function () {
+          var a = this.paths,
+            m = a && a[0];
+          a = a && a[1];
+          var h = this.now || 0,
+            d = [];
+          if (1 !== h && m && a)
+            if (m.length === a.length && 1 > h)
+              for (var c = 0; c < a.length; c++) {
+                for (var l = m[c], f = a[c], w = [], p = 0; p < f.length; p++) {
+                  var K = l[p],
+                    r = f[p];
+                  C(K) && C(r) && ("A" !== f[0] || (4 !== p && 5 !== p))
+                    ? (w[p] = K + h * (r - K))
+                    : (w[p] = r);
                 }
+                d.push(w);
+              }
+            else d = a;
+          else d = this.toD || [];
+          this.elem.attr("d", d, void 0, !0);
+        };
+        a.prototype.update = function () {
+          var a = this.elem,
+            m = this.prop,
+            h = this.now,
+            d = this.options.step;
+          if (this[m + "Setter"]) this[m + "Setter"]();
+          else
+            a.attr
+              ? a.element && a.attr(m, h, null, !0)
+              : (a.style[m] = h + this.unit);
+          d && d.call(a, h, this);
+        };
+        a.prototype.run = function (q, m, h) {
+          var d = this,
+            c = d.options,
+            l = function (c) {
+              return l.stopped ? !1 : d.step(c);
+            },
+            f =
+              x.requestAnimationFrame ||
+              function (c) {
+                setTimeout(c, 13);
+              },
+            w = function () {
+              for (var c = 0; c < a.timers.length; c++)
+                a.timers[c]() || a.timers.splice(c--, 1);
+              a.timers.length && f(w);
+            };
+          q !== m || this.elem["forceAnimate:" + this.prop]
+            ? ((this.startTime = +new Date()),
+              (this.start = q),
+              (this.end = m),
+              (this.unit = h),
+              (this.now = this.start),
+              (this.pos = 0),
+              (l.elem = this.elem),
+              (l.prop = this.prop),
+              l() && 1 === a.timers.push(l) && f(w))
+            : (delete c.curAnim[this.prop],
+              c.complete &&
+                0 === Object.keys(c.curAnim).length &&
+                c.complete.call(this.elem));
+        };
+        a.prototype.step = function (a) {
+          var m = +new Date(),
+            h = this.options,
+            d = this.elem,
+            c = h.complete,
+            l = h.duration,
+            f = h.curAnim;
+          if (d.attr && !d.element) a = !1;
+          else if (a || m >= l + this.startTime) {
+            this.now = this.end;
+            this.pos = 1;
+            this.update();
+            var w = (f[this.prop] = !0);
+            I(f, function (c) {
+              !0 !== c && (w = !1);
+            });
+            w && c && c.call(d);
+            a = !1;
+          } else
+            (this.pos = h.easing((m - this.startTime) / l)),
+              (this.now = this.start + (this.end - this.start) * this.pos),
+              this.update(),
+              (a = !0);
+          return a;
+        };
+        a.prototype.initPath = function (a, m, h) {
+          function d(c, d) {
+            for (; c.length < y; ) {
+              var k = c[0],
+                b = d[y - c.length];
+              b &&
+                "M" === k[0] &&
+                (c[0] =
+                  "C" === b[0]
+                    ? ["C", k[1], k[2], k[1], k[2], k[1], k[2]]
+                    : ["L", k[1], k[2]]);
+              c.unshift(k);
+              w && ((k = c.pop()), c.push(c[c.length - 1], k));
             }
-        }); return E
-    }); L(a, "Series/Pie/PieSeries.js", [a["Mixins/CenteredSeries.js"], a["Series/Column/ColumnSeries.js"], a["Core/Globals.js"], a["Mixins/LegendSymbol.js"], a["Core/Color/Palette.js"], a["Series/Pie/PiePoint.js"], a["Core/Series/Series.js"], a["Core/Series/SeriesRegistry.js"], a["Core/Renderer/SVG/Symbols.js"], a["Core/Utilities.js"]],
-        function (a, u, E, H, x, y, G, B, q, h) {
-            var f = this && this.__extends || function () { var a = function (c, e) { a = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (a, c) { a.__proto__ = c } || function (a, c) { for (var d in c) c.hasOwnProperty(d) && (a[d] = c[d]) }; return a(c, e) }; return function (c, e) { function f() { this.constructor = c } a(c, e); c.prototype = null === e ? Object.create(e) : (f.prototype = e.prototype, new f) } }(), c = a.getStartAndEndRadians; E = E.noop; var e = h.clamp, t = h.extend, m = h.fireEvent, v = h.merge, n = h.pick, l = h.relativeLength; h =
-                function (a) {
-                    function h() { var c = null !== a && a.apply(this, arguments) || this; c.center = void 0; c.data = void 0; c.maxLabelDistance = void 0; c.options = void 0; c.points = void 0; return c } f(h, a); h.prototype.animate = function (a) { var c = this, d = c.points, e = c.startAngleRad; a || d.forEach(function (a) { var b = a.graphic, d = a.shapeArgs; b && d && (b.attr({ r: n(a.startR, c.center && c.center[3] / 2), start: e, end: e }), b.animate({ r: d.r, start: d.start, end: d.end }, c.options.animation)) }) }; h.prototype.drawEmpty = function () {
-                        var a = this.startAngleRad, c = this.endAngleRad,
-                        d = this.options; if (0 === this.total && this.center) { var e = this.center[0]; var b = this.center[1]; this.graph || (this.graph = this.chart.renderer.arc(e, b, this.center[1] / 2, 0, a, c).addClass("highcharts-empty-series").add(this.group)); this.graph.attr({ d: q.arc(e, b, this.center[2] / 2, 0, { start: a, end: c, innerR: this.center[3] / 2 }) }); this.chart.styledMode || this.graph.attr({ "stroke-width": d.borderWidth, fill: d.fillColor || "none", stroke: d.color || x.neutralColor20 }) } else this.graph && (this.graph = this.graph.destroy())
-                    }; h.prototype.drawPoints =
-                        function () { var a = this.chart.renderer; this.points.forEach(function (c) { c.graphic && c.hasNewShapeType() && (c.graphic = c.graphic.destroy()); c.graphic || (c.graphic = a[c.shapeType](c.shapeArgs).add(c.series.group), c.delayedRendering = !0) }) }; h.prototype.generatePoints = function () { a.prototype.generatePoints.call(this); this.updateTotals() }; h.prototype.getX = function (a, c, d) {
-                            var f = this.center, b = this.radii ? this.radii[d.index] || 0 : f[2] / 2; a = Math.asin(e((a - f[1]) / (b + d.labelDistance), -1, 1)); return f[0] + (c ? -1 : 1) * Math.cos(a) *
-                                (b + d.labelDistance) + (0 < d.labelDistance ? (c ? -1 : 1) * this.options.dataLabels.padding : 0)
-                        }; h.prototype.hasData = function () { return !!this.processedXData.length }; h.prototype.redrawPoints = function () {
-                            var a = this, c = a.chart, d = c.renderer, e, b, f, h, l = a.options.shadow; this.drawEmpty(); !l || a.shadowGroup || c.styledMode || (a.shadowGroup = d.g("shadow").attr({ zIndex: -1 }).add(a.group)); a.points.forEach(function (g) {
-                                var k = {}; b = g.graphic; if (!g.isNull && b) {
-                                    var p = void 0; h = g.shapeArgs; e = g.getTranslate(); c.styledMode || (p = g.shadowGroup,
-                                        l && !p && (p = g.shadowGroup = d.g("shadow").add(a.shadowGroup)), p && p.attr(e), f = a.pointAttribs(g, g.selected && "select")); g.delayedRendering ? (b.setRadialReference(a.center).attr(h).attr(e), c.styledMode || b.attr(f).attr({ "stroke-linejoin": "round" }).shadow(l, p), g.delayedRendering = !1) : (b.setRadialReference(a.center), c.styledMode || v(!0, k, f), v(!0, k, h, e), b.animate(k)); b.attr({ visibility: g.visible ? "inherit" : "hidden" }); b.addClass(g.getClassName(), !0)
-                                } else b && (g.graphic = b.destroy())
-                            })
-                        }; h.prototype.sortByAngle = function (a,
-                            c) { a.sort(function (a, e) { return "undefined" !== typeof a.angle && (e.angle - a.angle) * c }) }; h.prototype.translate = function (a) {
-                                this.generatePoints(); var e = 0, d = this.options, f = d.slicedOffset, b = f + (d.borderWidth || 0), g = c(d.startAngle, d.endAngle), h = this.startAngleRad = g.start; g = (this.endAngleRad = g.end) - h; var q = this.points, t = d.dataLabels.distance; d = d.ignoreHiddenPoint; var v, u = q.length; a || (this.center = a = this.getCenter()); for (v = 0; v < u; v++) {
-                                    var w = q[v]; var A = h + e * g; !w.isValid() || d && !w.visible || (e += w.percentage / 100); var x =
-                                        h + e * g; var y = { x: a[0], y: a[1], r: a[2] / 2, innerR: a[3] / 2, start: Math.round(1E3 * A) / 1E3, end: Math.round(1E3 * x) / 1E3 }; w.shapeType = "arc"; w.shapeArgs = y; w.labelDistance = n(w.options.dataLabels && w.options.dataLabels.distance, t); w.labelDistance = l(w.labelDistance, y.r); this.maxLabelDistance = Math.max(this.maxLabelDistance || 0, w.labelDistance); x = (x + A) / 2; x > 1.5 * Math.PI ? x -= 2 * Math.PI : x < -Math.PI / 2 && (x += 2 * Math.PI); w.slicedTranslation = { translateX: Math.round(Math.cos(x) * f), translateY: Math.round(Math.sin(x) * f) }; y = Math.cos(x) * a[2] /
-                                            2; var B = Math.sin(x) * a[2] / 2; w.tooltipPos = [a[0] + .7 * y, a[1] + .7 * B]; w.half = x < -Math.PI / 2 || x > Math.PI / 2 ? 1 : 0; w.angle = x; A = Math.min(b, w.labelDistance / 5); w.labelPosition = { natural: { x: a[0] + y + Math.cos(x) * w.labelDistance, y: a[1] + B + Math.sin(x) * w.labelDistance }, "final": {}, alignment: 0 > w.labelDistance ? "center" : w.half ? "right" : "left", connectorPosition: { breakAt: { x: a[0] + y + Math.cos(x) * A, y: a[1] + B + Math.sin(x) * A }, touchingSliceAt: { x: a[0] + y, y: a[1] + B } } }
-                                } m(this, "afterTranslate")
-                            }; h.prototype.updateTotals = function () {
-                                var a, c = 0, d = this.points,
-                                e = d.length, b = this.options.ignoreHiddenPoint; for (a = 0; a < e; a++) { var f = d[a]; !f.isValid() || b && !f.visible || (c += f.y) } this.total = c; for (a = 0; a < e; a++)f = d[a], f.percentage = 0 < c && (f.visible || !b) ? f.y / c * 100 : 0, f.total = c
-                            }; h.defaultOptions = v(G.defaultOptions, {
-                                center: [null, null], clip: !1, colorByPoint: !0, dataLabels: { allowOverlap: !0, connectorPadding: 5, connectorShape: "fixedOffset", crookDistance: "70%", distance: 30, enabled: !0, formatter: function () { return this.point.isNull ? void 0 : this.point.name }, softConnector: !0, x: 0 }, fillColor: void 0,
-                                ignoreHiddenPoint: !0, inactiveOtherPoints: !0, legendType: "point", marker: null, size: null, showInLegend: !1, slicedOffset: 10, stickyTracking: !1, tooltip: { followPointer: !0 }, borderColor: x.backgroundColor, borderWidth: 1, lineWidth: void 0, states: { hover: { brightness: .1 } }
-                            }); return h
-                }(G); t(h.prototype, {
-                    axisTypes: [], directTouch: !0, drawGraph: void 0, drawLegendSymbol: H.drawRectangle, drawTracker: u.prototype.drawTracker, getCenter: a.getCenter, getSymbol: E, isCartesian: !1, noSharedTooltip: !0, pointAttribs: u.prototype.pointAttribs,
-                    pointClass: y, requireSorting: !1, searchPoint: E, trackerGroups: ["group", "dataLabelsGroup"]
-                }); B.registerSeriesType("pie", h); ""; return h
-        }); L(a, "Core/Series/DataLabels.js", [a["Core/Animation/AnimationUtilities.js"], a["Core/FormatUtilities.js"], a["Core/Globals.js"], a["Core/Color/Palette.js"], a["Core/Series/Series.js"], a["Core/Series/SeriesRegistry.js"], a["Core/Utilities.js"]], function (a, u, E, H, x, y, G) {
-            var v = a.getDeferredAnimation, q = u.format; a = E.noop; y = y.seriesTypes; var h = G.arrayMax, f = G.clamp, c = G.defined, e =
-                G.extend, t = G.fireEvent, m = G.isArray, w = G.merge, n = G.objectEach, l = G.pick, J = G.relativeLength, K = G.splat, A = G.stableSort; ""; E.distribute = function (a, c, e) {
-                    function b(a, b) { return a.target - b.target } var d, k = !0, h = a, m = []; var p = 0; var n = h.reducedLen || c; for (d = a.length; d--;)p += a[d].size; if (p > n) { A(a, function (a, b) { return (b.rank || 0) - (a.rank || 0) }); for (p = d = 0; p <= n;)p += a[d].size, d++; m = a.splice(d - 1, a.length) } A(a, b); for (a = a.map(function (a) { return { size: a.size, targets: [a.target], align: l(a.align, .5) } }); k;) {
-                        for (d = a.length; d--;)k =
-                            a[d], p = (Math.min.apply(0, k.targets) + Math.max.apply(0, k.targets)) / 2, k.pos = f(p - k.size * k.align, 0, c - k.size); d = a.length; for (k = !1; d--;)0 < d && a[d - 1].pos + a[d - 1].size > a[d].pos && (a[d - 1].size += a[d].size, a[d - 1].targets = a[d - 1].targets.concat(a[d].targets), a[d - 1].align = .5, a[d - 1].pos + a[d - 1].size > c && (a[d - 1].pos = c - a[d - 1].size), a.splice(d, 1), k = !0)
-                    } h.push.apply(h, m); d = 0; a.some(function (a) {
-                        var b = 0; if (a.targets.some(function () {
-                            h[d].pos = a.pos + b; if ("undefined" !== typeof e && Math.abs(h[d].pos - h[d].target) > e) return h.slice(0,
-                                d + 1).forEach(function (a) { delete a.pos }), h.reducedLen = (h.reducedLen || c) - .1 * c, h.reducedLen > .1 * c && E.distribute(h, c, e), !0; b += h[d].size; d++
-                        })) return !0
-                    }); A(h, b)
-                }; x.prototype.drawDataLabels = function () {
-                    function a(a, b) { var c = b.filter; return c ? (b = c.operator, a = a[c.property], c = c.value, ">" === b && a > c || "<" === b && a < c || ">=" === b && a >= c || "<=" === b && a <= c || "==" === b && a == c || "===" === b && a === c ? !0 : !1) : !0 } function d(a, b) {
-                        var c = [], d; if (m(a) && !m(b)) c = a.map(function (a) { return w(a, b) }); else if (m(b) && !m(a)) c = b.map(function (b) {
-                            return w(a,
-                                b)
-                        }); else if (m(a) || m(b)) for (d = Math.max(a.length, b.length); d--;)c[d] = w(a[d], b[d]); else c = w(a, b); return c
-                    } var e = this, b = e.chart, f = e.options, h = f.dataLabels, u = e.points, x, A = e.hasRendered || 0, C = h.animation; C = h.defer ? v(b, C, e) : { defer: 0, duration: 0 }; var y = b.renderer; h = d(d(b.options.plotOptions && b.options.plotOptions.series && b.options.plotOptions.series.dataLabels, b.options.plotOptions && b.options.plotOptions[e.type] && b.options.plotOptions[e.type].dataLabels), h); t(this, "drawDataLabels"); if (m(h) || h.enabled || e._hasPointLabels) {
-                        var B =
-                            e.plotGroup("dataLabelsGroup", "data-labels", A ? "inherit" : "hidden", h.zIndex || 6); B.attr({ opacity: +A }); !A && (A = e.dataLabelsGroup) && (e.visible && B.show(!0), A[f.animation ? "animate" : "attr"]({ opacity: 1 }, C)); u.forEach(function (g) {
-                                x = K(d(h, g.dlOptions || g.options && g.options.dataLabels)); x.forEach(function (d, k) {
-                                    var h = d.enabled && (!g.isNull || g.dataLabelOnNull) && a(g, d), m = g.dataLabels ? g.dataLabels[k] : g.dataLabel, p = g.connectors ? g.connectors[k] : g.connector, r = l(d.distance, g.labelDistance), t = !m; if (h) {
-                                        var v = g.getLabelConfig();
-                                        var u = l(d[g.formatPrefix + "Format"], d.format); v = c(u) ? q(u, v, b) : (d[g.formatPrefix + "Formatter"] || d.formatter).call(v, d); u = d.style; var w = d.rotation; b.styledMode || (u.color = l(d.color, u.color, e.color, H.neutralColor100), "contrast" === u.color ? (g.contrastColor = y.getContrast(g.color || e.color), u.color = !c(r) && d.inside || 0 > r || f.stacking ? g.contrastColor : H.neutralColor100) : delete g.contrastColor, f.cursor && (u.cursor = f.cursor)); var x = { r: d.borderRadius || 0, rotation: w, padding: d.padding, zIndex: 1 }; b.styledMode || (x.fill = d.backgroundColor,
-                                            x.stroke = d.borderColor, x["stroke-width"] = d.borderWidth); n(x, function (a, b) { "undefined" === typeof a && delete x[b] })
-                                    } !m || h && c(v) ? h && c(v) && (m ? x.text = v : (g.dataLabels = g.dataLabels || [], m = g.dataLabels[k] = w ? y.text(v, 0, -9999, d.useHTML).addClass("highcharts-data-label") : y.label(v, 0, -9999, d.shape, null, null, d.useHTML, null, "data-label"), k || (g.dataLabel = m), m.addClass(" highcharts-data-label-color-" + g.colorIndex + " " + (d.className || "") + (d.useHTML ? " highcharts-tracker" : ""))), m.options = d, m.attr(x), b.styledMode || m.css(u).shadow(d.shadow),
-                                        m.added || m.add(B), d.textPath && !d.useHTML && (m.setTextPath(g.getDataLabelPath && g.getDataLabelPath(m) || g.graphic, d.textPath), g.dataLabelPath && !d.textPath.enabled && (g.dataLabelPath = g.dataLabelPath.destroy())), e.alignDataLabel(g, m, d, null, t)) : (g.dataLabel = g.dataLabel && g.dataLabel.destroy(), g.dataLabels && (1 === g.dataLabels.length ? delete g.dataLabels : delete g.dataLabels[k]), k || delete g.dataLabel, p && (g.connector = g.connector.destroy(), g.connectors && (1 === g.connectors.length ? delete g.connectors : delete g.connectors[k])))
-                                })
-                            })
-                    } t(this,
-                        "afterDrawDataLabels")
-                }; x.prototype.alignDataLabel = function (a, c, f, b, g) {
-                    var d = this, k = this.chart, h = this.isCartesian && k.inverted, m = this.enabledDataSorting, p = l(a.dlBox && a.dlBox.centerX, a.plotX, -9999), n = l(a.plotY, -9999), q = c.getBBox(), t = f.rotation, v = f.align, u = k.isInsidePlot(p, Math.round(n), { inverted: h, paneCoordinates: !0, series: d }), w = "justify" === l(f.overflow, m ? "none" : "justify"), x = this.visible && !1 !== a.visible && (a.series.forceDL || m && !w || u || l(f.inside, !!this.options.stacking) && b && k.isInsidePlot(p, h ? b.x + 1 : b.y +
-                        b.height - 1, { inverted: h, paneCoordinates: !0, series: d })); var A = function (b) { m && d.xAxis && !w && d.setDataLabelStartPos(a, c, g, u, b) }; if (x) {
-                            var y = k.renderer.fontMetrics(k.styledMode ? void 0 : f.style.fontSize, c).b; b = e({ x: h ? this.yAxis.len - n : p, y: Math.round(h ? this.xAxis.len - p : n), width: 0, height: 0 }, b); e(f, { width: q.width, height: q.height }); t ? (w = !1, p = k.renderer.rotCorr(y, t), p = { x: b.x + (f.x || 0) + b.width / 2 + p.x, y: b.y + (f.y || 0) + { top: 0, middle: .5, bottom: 1 }[f.verticalAlign] * b.height }, A(p), c[g ? "attr" : "animate"](p).attr({ align: v }),
-                                A = (t + 720) % 360, A = 180 < A && 360 > A, "left" === v ? p.y -= A ? q.height : 0 : "center" === v ? (p.x -= q.width / 2, p.y -= q.height / 2) : "right" === v && (p.x -= q.width, p.y -= A ? 0 : q.height), c.placed = !0, c.alignAttr = p) : (A(b), c.align(f, void 0, b), p = c.alignAttr); w && 0 <= b.height ? this.justifyDataLabel(c, f, p, q, b, g) : l(f.crop, !0) && (x = k.isInsidePlot(p.x, p.y, { paneCoordinates: !0, series: d }) && k.isInsidePlot(p.x + q.width, p.y + q.height, { paneCoordinates: !0, series: d })); if (f.shape && !t) c[g ? "attr" : "animate"]({
-                                    anchorX: h ? k.plotWidth - a.plotY : a.plotX, anchorY: h ? k.plotHeight -
-                                        a.plotX : a.plotY
-                                })
-                        } g && m && (c.placed = !1); x || m && !w || (c.hide(!0), c.placed = !1)
-                }; x.prototype.setDataLabelStartPos = function (a, c, e, b, f) {
-                    var d = this.chart, g = d.inverted, k = this.xAxis, h = k.reversed, l = g ? c.height / 2 : c.width / 2; a = (a = a.pointWidth) ? a / 2 : 0; k = g ? f.x : h ? -l - a : k.width - l + a; f = g ? h ? this.yAxis.height - l + a : -l - a : f.y; c.startXPos = k; c.startYPos = f; b ? "hidden" === c.visibility && (c.show(), c.attr({ opacity: 0 }).animate({ opacity: 1 })) : c.attr({ opacity: 1 }).animate({ opacity: 0 }, void 0, c.hide); d.hasRendered && (e && c.attr({ x: c.startXPos, y: c.startYPos }),
-                        c.placed = !0)
-                }; x.prototype.justifyDataLabel = function (a, c, e, b, f, h) {
-                    var d = this.chart, g = c.align, k = c.verticalAlign, l = a.box ? 0 : a.padding || 0, m = c.x; m = void 0 === m ? 0 : m; var p = c.y; var n = void 0 === p ? 0 : p; p = (e.x || 0) + l; if (0 > p) { "right" === g && 0 <= m ? (c.align = "left", c.inside = !0) : m -= p; var r = !0 } p = (e.x || 0) + b.width - l; p > d.plotWidth && ("left" === g && 0 >= m ? (c.align = "right", c.inside = !0) : m += d.plotWidth - p, r = !0); p = e.y + l; 0 > p && ("bottom" === k && 0 <= n ? (c.verticalAlign = "top", c.inside = !0) : n -= p, r = !0); p = (e.y || 0) + b.height - l; p > d.plotHeight && ("top" ===
-                        k && 0 >= n ? (c.verticalAlign = "bottom", c.inside = !0) : n += d.plotHeight - p, r = !0); r && (c.x = m, c.y = n, a.placed = !h, a.align(c, void 0, f)); return r
-                }; y.pie && (y.pie.prototype.dataLabelPositioners = {
-                    radialDistributionY: function (a) { return a.top + a.distributeBox.pos }, radialDistributionX: function (a, c, e, b) { return a.getX(e < c.top + 2 || e > c.bottom - 2 ? b : e, c.half, c) }, justify: function (a, c, e) { return e[0] + (a.half ? -1 : 1) * (c + a.labelDistance) }, alignToPlotEdges: function (a, c, e, b) { a = a.getBBox().width; return c ? a + b : e - a - b }, alignToConnectors: function (a,
-                        c, e, b) { var d = 0, f; a.forEach(function (a) { f = a.dataLabel.getBBox().width; f > d && (d = f) }); return c ? d + b : e - d - b }
-                }, y.pie.prototype.drawDataLabels = function () {
-                    var a = this, d = a.data, e, b = a.chart, f = a.options.dataLabels || {}, m = f.connectorPadding, n, q = b.plotWidth, t = b.plotHeight, v = b.plotLeft, u = Math.round(b.chartWidth / 3), A, y = a.center, B = y[2] / 2, G = y[1], z, J, K, L, X = [[], []], I, N, P, U, T = [0, 0, 0, 0], R = a.dataLabelPositioners, V; a.visible && (f.enabled || a._hasPointLabels) && (d.forEach(function (a) {
-                        a.dataLabel && a.visible && a.dataLabel.shortened &&
-                        (a.dataLabel.attr({ width: "auto" }).css({ width: "auto", textOverflow: "clip" }), a.dataLabel.shortened = !1)
-                    }), x.prototype.drawDataLabels.apply(a), d.forEach(function (a) {
-                        a.dataLabel && (a.visible ? (X[a.half].push(a), a.dataLabel._pos = null, !c(f.style.width) && !c(a.options.dataLabels && a.options.dataLabels.style && a.options.dataLabels.style.width) && a.dataLabel.getBBox().width > u && (a.dataLabel.css({ width: Math.round(.7 * u) + "px" }), a.dataLabel.shortened = !0)) : (a.dataLabel = a.dataLabel.destroy(), a.dataLabels && 1 === a.dataLabels.length &&
-                            delete a.dataLabels))
-                    }), X.forEach(function (d, g) {
-                        var h = d.length, k = [], p; if (h) {
-                            a.sortByAngle(d, g - .5); if (0 < a.maxLabelDistance) {
-                                var n = Math.max(0, G - B - a.maxLabelDistance); var r = Math.min(G + B + a.maxLabelDistance, b.plotHeight); d.forEach(function (a) { 0 < a.labelDistance && a.dataLabel && (a.top = Math.max(0, G - B - a.labelDistance), a.bottom = Math.min(G + B + a.labelDistance, b.plotHeight), p = a.dataLabel.getBBox().height || 21, a.distributeBox = { target: a.labelPosition.natural.y - a.top + p / 2, size: p, rank: a.y }, k.push(a.distributeBox)) }); n =
-                                    r + p - n; E.distribute(k, n, n / 5)
-                            } for (U = 0; U < h; U++) {
-                                e = d[U]; K = e.labelPosition; z = e.dataLabel; P = !1 === e.visible ? "hidden" : "inherit"; N = n = K.natural.y; k && c(e.distributeBox) && ("undefined" === typeof e.distributeBox.pos ? P = "hidden" : (L = e.distributeBox.size, N = R.radialDistributionY(e))); delete e.positionIndex; if (f.justify) I = R.justify(e, B, y); else switch (f.alignTo) { case "connectors": I = R.alignToConnectors(d, g, q, v); break; case "plotEdges": I = R.alignToPlotEdges(z, g, q, v); break; default: I = R.radialDistributionX(a, e, N, n) }z._attr = {
-                                    visibility: P,
-                                    align: K.alignment
-                                }; V = e.options.dataLabels || {}; z._pos = { x: I + l(V.x, f.x) + ({ left: m, right: -m }[K.alignment] || 0), y: N + l(V.y, f.y) - 10 }; K.final.x = I; K.final.y = N; l(f.crop, !0) && (J = z.getBBox().width, n = null, I - J < m && 1 === g ? (n = Math.round(J - I + m), T[3] = Math.max(n, T[3])) : I + J > q - m && 0 === g && (n = Math.round(I + J - q + m), T[1] = Math.max(n, T[1])), 0 > N - L / 2 ? T[0] = Math.max(Math.round(-N + L / 2), T[0]) : N + L / 2 > t && (T[2] = Math.max(Math.round(N + L / 2 - t), T[2])), z.sideOverflow = n)
-                            }
+          }
+          function c(c, d) {
+            for (; c.length < y; )
+              if (
+                ((d = c[Math.floor(c.length / p) - 1].slice()),
+                "C" === d[0] && ((d[1] = d[5]), (d[2] = d[6])),
+                w)
+              ) {
+                var k = c[Math.floor(c.length / p)].slice();
+                c.splice(c.length / 2, 0, d, k);
+              } else c.push(d);
+          }
+          var l = a.startX,
+            f = a.endX;
+          h = h.slice();
+          var w = a.isArea,
+            p = w ? 2 : 1;
+          m = m && m.slice();
+          if (!m) return [h, h];
+          if (l && f && f.length) {
+            for (a = 0; a < l.length; a++)
+              if (l[a] === f[0]) {
+                var K = a;
+                break;
+              } else if (l[0] === f[f.length - l.length + a]) {
+                K = a;
+                var r = !0;
+                break;
+              } else if (l[l.length - 1] === f[f.length - l.length + a]) {
+                K = l.length - a;
+                break;
+              }
+            "undefined" === typeof K && (m = []);
+          }
+          if (m.length && C(K)) {
+            var y = h.length + K * p;
+            r ? (d(m, h), c(h, m)) : (d(h, m), c(m, h));
+          }
+          return [m, h];
+        };
+        a.prototype.fillSetter = function () {
+          a.prototype.strokeSetter.apply(this, arguments);
+        };
+        a.prototype.strokeSetter = function () {
+          this.elem.attr(
+            this.prop,
+            u(this.start).tweenTo(u(this.end), this.pos),
+            null,
+            !0
+          );
+        };
+        a.timers = [];
+        return a;
+      })();
+    }
+  );
+  L(
+    a,
+    "Core/Animation/AnimationUtilities.js",
+    [a["Core/Animation/Fx.js"], a["Core/Utilities.js"]],
+    function (a, t) {
+      function u(c) {
+        return q(c)
+          ? m({ duration: 500, defer: 0 }, c)
+          : { duration: c ? 500 : 0, defer: 0 };
+      }
+      function G(c, d) {
+        for (var l = a.timers.length; l--; )
+          a.timers[l].elem !== c ||
+            (d && d !== a.timers[l].prop) ||
+            (a.timers[l].stopped = !0);
+      }
+      var x = t.defined,
+        C = t.getStyle,
+        I = t.isArray,
+        z = t.isNumber,
+        q = t.isObject,
+        m = t.merge,
+        h = t.objectEach,
+        d = t.pick;
+      return {
+        animate: function (c, d, f) {
+          var l,
+            p = "",
+            K,
+            r;
+          if (!q(f)) {
+            var y = arguments;
+            f = { duration: y[2], easing: y[3], complete: y[4] };
+          }
+          z(f.duration) || (f.duration = 400);
+          f.easing =
+            "function" === typeof f.easing
+              ? f.easing
+              : Math[f.easing] || Math.easeInOutSine;
+          f.curAnim = m(d);
+          h(d, function (h, n) {
+            G(c, n);
+            r = new a(c, f, n);
+            K = void 0;
+            "d" === n && I(d.d)
+              ? ((r.paths = r.initPath(c, c.pathArray, d.d)),
+                (r.toD = d.d),
+                (l = 0),
+                (K = 1))
+              : c.attr
+              ? (l = c.attr(n))
+              : ((l = parseFloat(C(c, n)) || 0), "opacity" !== n && (p = "px"));
+            K || (K = h);
+            "string" === typeof K &&
+              K.match("px") &&
+              (K = K.replace(/px/g, ""));
+            r.run(l, K, p);
+          });
+        },
+        animObject: u,
+        getDeferredAnimation: function (c, d, f) {
+          var l = u(d),
+            p = 0,
+            a = 0;
+          (f ? [f] : c.series).forEach(function (c) {
+            c = u(c.options.animation);
+            p = d && x(d.defer) ? l.defer : Math.max(p, c.duration + c.defer);
+            a = Math.min(l.duration, c.duration);
+          });
+          c.renderer.forExport && (p = 0);
+          return { defer: Math.max(0, p - a), duration: Math.min(p, a) };
+        },
+        setAnimation: function (c, l) {
+          l.renderer.globalAnimation = d(c, l.options.chart.animation, !0);
+        },
+        stop: G,
+      };
+    }
+  );
+  L(
+    a,
+    "Core/Renderer/HTML/AST.js",
+    [a["Core/Globals.js"], a["Core/Utilities.js"]],
+    function (a, t) {
+      var u = a.SVG_NS,
+        G = t.attr,
+        x = t.createElement,
+        C = t.discardElement,
+        I = t.error,
+        z = t.isString,
+        q = t.objectEach,
+        m = t.splat;
+      try {
+        var h = !!new DOMParser().parseFromString("", "text/html");
+      } catch (d) {
+        h = !1;
+      }
+      t = (function () {
+        function d(c) {
+          this.nodes = "string" === typeof c ? this.parseMarkup(c) : c;
+        }
+        d.filterUserAttributes = function (c) {
+          q(c, function (l, f) {
+            var a = !0;
+            -1 === d.allowedAttributes.indexOf(f) && (a = !1);
+            -1 !==
+              ["background", "dynsrc", "href", "lowsrc", "src"].indexOf(f) &&
+              (a =
+                z(l) &&
+                d.allowedReferences.some(function (c) {
+                  return 0 === l.indexOf(c);
+                }));
+            a ||
+              (I("Highcharts warning: Invalid attribute '" + f + "' in config"),
+              delete c[f]);
+          });
+          return c;
+        };
+        d.setElementHTML = function (c, l) {
+          c.innerHTML = "";
+          l && new d(l).addToDOM(c);
+        };
+        d.prototype.addToDOM = function (c) {
+          function l(c, h) {
+            var p;
+            m(c).forEach(function (c) {
+              var f = c.tagName,
+                w = c.textContent
+                  ? a.doc.createTextNode(c.textContent)
+                  : void 0;
+              if (f)
+                if ("#text" === f) var m = w;
+                else if (-1 !== d.allowedTags.indexOf(f)) {
+                  f = a.doc.createElementNS(
+                    "svg" === f ? u : h.namespaceURI || u,
+                    f
+                  );
+                  var n = c.attributes || {};
+                  q(c, function (c, b) {
+                    "tagName" !== b &&
+                      "attributes" !== b &&
+                      "children" !== b &&
+                      "textContent" !== b &&
+                      (n[b] = c);
+                  });
+                  G(f, d.filterUserAttributes(n));
+                  w && f.appendChild(w);
+                  l(c.children || [], f);
+                  m = f;
+                } else
+                  I(
+                    "Highcharts warning: Invalid tagName '" + f + "' in config"
+                  );
+              m && h.appendChild(m);
+              p = m;
+            });
+            return p;
+          }
+          return l(this.nodes, c);
+        };
+        d.prototype.parseMarkup = function (c) {
+          var d = [];
+          c = c.trim();
+          if (h) c = new DOMParser().parseFromString(c, "text/html");
+          else {
+            var f = x("div");
+            f.innerHTML = c;
+            c = { body: f };
+          }
+          var a = function (c, d) {
+            var l = c.nodeName.toLowerCase(),
+              p = { tagName: l };
+            "#text" === l && (p.textContent = c.textContent || "");
+            if ((l = c.attributes)) {
+              var f = {};
+              [].forEach.call(l, function (c) {
+                f[c.name] = c.value;
+              });
+              p.attributes = f;
+            }
+            if (c.childNodes.length) {
+              var n = [];
+              [].forEach.call(c.childNodes, function (c) {
+                a(c, n);
+              });
+              n.length && (p.children = n);
+            }
+            d.push(p);
+          };
+          [].forEach.call(c.body.childNodes, function (c) {
+            return a(c, d);
+          });
+          f && C(f);
+          return d;
+        };
+        d.allowedAttributes =
+          "aria-controls aria-describedby aria-expanded aria-haspopup aria-hidden aria-label aria-labelledby aria-live aria-pressed aria-readonly aria-roledescription aria-selected class clip-path color colspan cx cy d dx dy disabled fill height href id in markerHeight markerWidth offset opacity orient padding paddingLeft paddingRight patternUnits r refX refY role scope slope src startOffset stdDeviation stroke stroke-linecap stroke-width style tableValues result rowspan summary target tabindex text-align textAnchor textLength title type valign width x x1 x2 y y1 y2 zIndex".split(
+            " "
+          );
+        d.allowedReferences = "https:// http:// mailto: / ../ ./ #".split(" ");
+        d.allowedTags =
+          "a abbr b br button caption circle clipPath code dd defs div dl dt em feComponentTransfer feFuncA feFuncB feFuncG feFuncR feGaussianBlur feOffset feMerge feMergeNode filter h1 h2 h3 h4 h5 h6 hr i img li linearGradient marker ol p path pattern pre rect small span stop strong style sub sup svg table text thead tbody tspan td th tr u ul #text".split(
+            " "
+          );
+        return d;
+      })();
+      ("");
+      return t;
+    }
+  );
+  L(
+    a,
+    "Core/FormatUtilities.js",
+    [a["Core/DefaultOptions.js"], a["Core/Utilities.js"]],
+    function (a, t) {
+      function u(a, h, d, c) {
+        a = +a || 0;
+        h = +h;
+        var l = G.lang,
+          f = (a.toString().split(".")[1] || "").split("e")[0].length,
+          w = a.toString().split("e"),
+          p = h;
+        if (-1 === h) h = Math.min(f, 20);
+        else if (!I(h)) h = 2;
+        else if (h && w[1] && 0 > w[1]) {
+          var m = h + +w[1];
+          0 <= m
+            ? ((w[0] = (+w[0]).toExponential(m).split("e")[0]), (h = m))
+            : ((w[0] = w[0].split(".")[0] || 0),
+              (a = 20 > h ? (w[0] * Math.pow(10, w[1])).toFixed(h) : 0),
+              (w[1] = 0));
+        }
+        m = (
+          Math.abs(w[1] ? w[0] : a) + Math.pow(10, -Math.max(h, f) - 1)
+        ).toFixed(h);
+        f = String(q(m));
+        var r = 3 < f.length ? f.length % 3 : 0;
+        d = z(d, l.decimalPoint);
+        c = z(c, l.thousandsSep);
+        a = (0 > a ? "-" : "") + (r ? f.substr(0, r) + c : "");
+        a =
+          0 > +w[1] && !p
+            ? "0"
+            : a + f.substr(r).replace(/(\d{3})(?=\d)/g, "$1" + c);
+        h && (a += d + m.slice(-h));
+        w[1] && 0 !== +a && (a += "e" + w[1]);
+        return a;
+      }
+      var G = a.defaultOptions,
+        x = a.defaultTime,
+        C = t.getNestedProperty,
+        I = t.isNumber,
+        z = t.pick,
+        q = t.pInt;
+      return {
+        dateFormat: function (a, h, d) {
+          return x.dateFormat(a, h, d);
+        },
+        format: function (a, h, d) {
+          var c = "{",
+            l = !1,
+            f = /f$/,
+            w = /\.([0-9])/,
+            p = G.lang,
+            m = (d && d.time) || x;
+          d = (d && d.numberFormatter) || u;
+          for (var r = []; a; ) {
+            var y = a.indexOf(c);
+            if (-1 === y) break;
+            var B = a.slice(0, y);
+            if (l) {
+              B = B.split(":");
+              c = C(B.shift() || "", h);
+              if (B.length && "number" === typeof c)
+                if (((B = B.join(":")), f.test(B))) {
+                  var n = parseInt((B.match(w) || ["", "-1"])[1], 10);
+                  null !== c &&
+                    (c = d(
+                      c,
+                      n,
+                      p.decimalPoint,
+                      -1 < B.indexOf(",") ? p.thousandsSep : ""
+                    ));
+                } else c = m.dateFormat(B, c);
+              r.push(c);
+            } else r.push(B);
+            a = a.slice(y + 1);
+            c = (l = !l) ? "}" : "{";
+          }
+          r.push(a);
+          return r.join("");
+        },
+        numberFormat: u,
+      };
+    }
+  );
+  L(
+    a,
+    "Core/Renderer/RendererUtilities.js",
+    [a["Core/Utilities.js"]],
+    function (a) {
+      var u = a.clamp,
+        A = a.pick,
+        G = a.stableSort,
+        x;
+      (function (a) {
+        function t(a, q, m) {
+          var h = a,
+            d = h.reducedLen || q,
+            c = function (c, d) {
+              return (d.rank || 0) - (c.rank || 0);
+            },
+            l = function (c, d) {
+              return c.target - d.target;
+            },
+            f,
+            w = !0,
+            p = [],
+            K = 0;
+          for (f = a.length; f--; ) K += a[f].size;
+          if (K > d) {
+            G(a, c);
+            for (K = f = 0; K <= d; ) (K += a[f].size), f++;
+            p = a.splice(f - 1, a.length);
+          }
+          G(a, l);
+          for (
+            a = a.map(function (c) {
+              return {
+                size: c.size,
+                targets: [c.target],
+                align: A(c.align, 0.5),
+              };
+            });
+            w;
+
+          ) {
+            for (f = a.length; f--; )
+              (d = a[f]),
+                (c =
+                  (Math.min.apply(0, d.targets) +
+                    Math.max.apply(0, d.targets)) /
+                  2),
+                (d.pos = u(c - d.size * d.align, 0, q - d.size));
+            f = a.length;
+            for (w = !1; f--; )
+              0 < f &&
+                a[f - 1].pos + a[f - 1].size > a[f].pos &&
+                ((a[f - 1].size += a[f].size),
+                (a[f - 1].targets = a[f - 1].targets.concat(a[f].targets)),
+                (a[f - 1].align = 0.5),
+                a[f - 1].pos + a[f - 1].size > q &&
+                  (a[f - 1].pos = q - a[f - 1].size),
+                a.splice(f, 1),
+                (w = !0));
+          }
+          h.push.apply(h, p);
+          f = 0;
+          a.some(function (c) {
+            var d = 0;
+            return (c.targets || []).some(function () {
+              h[f].pos = c.pos + d;
+              if (
+                "undefined" !== typeof m &&
+                Math.abs(h[f].pos - h[f].target) > m
+              )
+                return (
+                  h.slice(0, f + 1).forEach(function (c) {
+                    return delete c.pos;
+                  }),
+                  (h.reducedLen = (h.reducedLen || q) - 0.1 * q),
+                  h.reducedLen > 0.1 * q && t(h, q, m),
+                  !0
+                );
+              d += h[f].size;
+              f++;
+              return !1;
+            });
+          });
+          G(h, l);
+          return h;
+        }
+        a.distribute = t;
+      })(x || (x = {}));
+      return x;
+    }
+  );
+  L(
+    a,
+    "Core/Renderer/SVG/SVGElement.js",
+    [
+      a["Core/Animation/AnimationUtilities.js"],
+      a["Core/Renderer/HTML/AST.js"],
+      a["Core/Color/Color.js"],
+      a["Core/Globals.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G, x) {
+      var u = a.animate,
+        I = a.animObject,
+        z = a.stop,
+        q = G.deg2rad,
+        m = G.doc,
+        h = G.noop,
+        d = G.svg,
+        c = G.SVG_NS,
+        l = G.win,
+        f = x.addEvent,
+        w = x.attr,
+        p = x.createElement,
+        K = x.css,
+        r = x.defined,
+        y = x.erase,
+        B = x.extend,
+        n = x.fireEvent,
+        k = x.isArray,
+        b = x.isFunction,
+        g = x.isNumber,
+        e = x.isString,
+        D = x.merge,
+        H = x.objectEach,
+        v = x.pick,
+        E = x.pInt,
+        O = x.syncTimeout,
+        S = x.uniqueKey;
+      a = (function () {
+        function a() {
+          this.element = void 0;
+          this.onEvents = {};
+          this.opacity = 1;
+          this.renderer = void 0;
+          this.SVG_NS = c;
+          this.symbolCustomAttribs =
+            "x y width height r start end innerR anchorX anchorY rounded".split(
+              " "
+            );
+        }
+        a.prototype._defaultGetter = function (b) {
+          b = v(
+            this[b + "Value"],
+            this[b],
+            this.element ? this.element.getAttribute(b) : null,
+            0
+          );
+          /^[\-0-9\.]+$/.test(b) && (b = parseFloat(b));
+          return b;
+        };
+        a.prototype._defaultSetter = function (b, e, c) {
+          c.setAttribute(e, b);
+        };
+        a.prototype.add = function (b) {
+          var e = this.renderer,
+            c = this.element;
+          b && (this.parentGroup = b);
+          this.parentInverted = b && b.inverted;
+          "undefined" !== typeof this.textStr &&
+            "text" === this.element.nodeName &&
+            e.buildText(this);
+          this.added = !0;
+          if (!b || b.handleZ || this.zIndex) var g = this.zIndexSetter();
+          g || (b ? b.element : e.box).appendChild(c);
+          if (this.onAdd) this.onAdd();
+          return this;
+        };
+        a.prototype.addClass = function (b, e) {
+          var c = e ? "" : this.attr("class") || "";
+          b = (b || "")
+            .split(/ /g)
+            .reduce(
+              function (b, e) {
+                -1 === c.indexOf(e) && b.push(e);
+                return b;
+              },
+              c ? [c] : []
+            )
+            .join(" ");
+          b !== c && this.attr("class", b);
+          return this;
+        };
+        a.prototype.afterSetters = function () {
+          this.doTransform && (this.updateTransform(), (this.doTransform = !1));
+        };
+        a.prototype.align = function (b, c, g) {
+          var J = {},
+            d = this.renderer,
+            a = d.alignedObjects,
+            k,
+            n,
+            F;
+          if (b) {
+            if (
+              ((this.alignOptions = b), (this.alignByTranslate = c), !g || e(g))
+            )
+              (this.alignTo = k = g || "renderer"),
+                y(a, this),
+                a.push(this),
+                (g = void 0);
+          } else
+            (b = this.alignOptions),
+              (c = this.alignByTranslate),
+              (k = this.alignTo);
+          g = v(g, d[k], "scrollablePlotBox" === k ? d.plotBox : void 0, d);
+          k = b.align;
+          var D = b.verticalAlign;
+          d = (g.x || 0) + (b.x || 0);
+          a = (g.y || 0) + (b.y || 0);
+          "right" === k ? (n = 1) : "center" === k && (n = 2);
+          n && (d += (g.width - (b.width || 0)) / n);
+          J[c ? "translateX" : "x"] = Math.round(d);
+          "bottom" === D ? (F = 1) : "middle" === D && (F = 2);
+          F && (a += (g.height - (b.height || 0)) / F);
+          J[c ? "translateY" : "y"] = Math.round(a);
+          this[this.placed ? "animate" : "attr"](J);
+          this.placed = !0;
+          this.alignAttr = J;
+          return this;
+        };
+        a.prototype.alignSetter = function (b) {
+          var e = { left: "start", center: "middle", right: "end" };
+          e[b] &&
+            ((this.alignValue = b),
+            this.element.setAttribute("text-anchor", e[b]));
+        };
+        a.prototype.animate = function (b, e, c) {
+          var g = this,
+            J = I(v(e, this.renderer.globalAnimation, !0));
+          e = J.defer;
+          v(m.hidden, m.msHidden, m.webkitHidden, !1) && (J.duration = 0);
+          0 !== J.duration
+            ? (c && (J.complete = c),
+              O(function () {
+                g.element && u(g, b, J);
+              }, e))
+            : (this.attr(b, void 0, c),
+              H(
+                b,
+                function (b, e) {
+                  J.step &&
+                    J.step.call(this, b, { prop: e, pos: 1, elem: this });
+                },
+                this
+              ));
+          return this;
+        };
+        a.prototype.applyTextOutline = function (b) {
+          var e = this.element;
+          -1 !== b.indexOf("contrast") &&
+            (b = b.replace(
+              /contrast/g,
+              this.renderer.getContrast(e.style.fill)
+            ));
+          var g = b.split(" ");
+          b = g[g.length - 1];
+          if ((g = g[0]) && "none" !== g && G.svg) {
+            this.fakeTS = !0;
+            this.ySetter = this.xSetter;
+            g = g.replace(/(^[\d\.]+)(.*?)$/g, function (b, e, c) {
+              return 2 * Number(e) + c;
+            });
+            this.removeTextOutline();
+            var d = m.createElementNS(c, "tspan");
+            w(d, {
+              class: "highcharts-text-outline",
+              fill: b,
+              stroke: b,
+              "stroke-width": g,
+              "stroke-linejoin": "round",
+            });
+            [].forEach.call(e.childNodes, function (b) {
+              var e = b.cloneNode(!0);
+              e.removeAttribute &&
+                ["fill", "stroke", "stroke-width", "stroke"].forEach(function (
+                  b
+                ) {
+                  return e.removeAttribute(b);
+                });
+              d.appendChild(e);
+            });
+            var a = m.createElementNS(c, "tspan");
+            a.textContent = "\u200b";
+            ["x", "y"].forEach(function (b) {
+              var c = e.getAttribute(b);
+              c && a.setAttribute(b, c);
+            });
+            d.appendChild(a);
+            e.insertBefore(d, e.firstChild);
+          }
+        };
+        a.prototype.attr = function (b, e, c, g) {
+          var d = this.element,
+            J = this.symbolCustomAttribs,
+            a,
+            M = this,
+            F,
+            k;
+          if ("string" === typeof b && "undefined" !== typeof e) {
+            var n = b;
+            b = {};
+            b[n] = e;
+          }
+          "string" === typeof b
+            ? (M = (this[b + "Getter"] || this._defaultGetter).call(this, b, d))
+            : (H(
+                b,
+                function (e, c) {
+                  F = !1;
+                  g || z(this, c);
+                  this.symbolName &&
+                    -1 !== J.indexOf(c) &&
+                    (a || (this.symbolAttr(b), (a = !0)), (F = !0));
+                  !this.rotation ||
+                    ("x" !== c && "y" !== c) ||
+                    (this.doTransform = !0);
+                  F ||
+                    ((k = this[c + "Setter"] || this._defaultSetter),
+                    k.call(this, e, c, d),
+                    !this.styledMode &&
+                      this.shadows &&
+                      /^(width|height|visibility|x|y|d|transform|cx|cy|r)$/.test(
+                        c
+                      ) &&
+                      this.updateShadows(c, e, k));
+                },
+                this
+              ),
+              this.afterSetters());
+          c && c.call(this);
+          return M;
+        };
+        a.prototype.clip = function (b) {
+          return this.attr(
+            "clip-path",
+            b ? "url(" + this.renderer.url + "#" + b.id + ")" : "none"
+          );
+        };
+        a.prototype.crisp = function (b, e) {
+          e = e || b.strokeWidth || 0;
+          var c = (Math.round(e) % 2) / 2;
+          b.x = Math.floor(b.x || this.x || 0) + c;
+          b.y = Math.floor(b.y || this.y || 0) + c;
+          b.width = Math.floor((b.width || this.width || 0) - 2 * c);
+          b.height = Math.floor((b.height || this.height || 0) - 2 * c);
+          r(b.strokeWidth) && (b.strokeWidth = e);
+          return b;
+        };
+        a.prototype.complexColor = function (b, e, c) {
+          var g = this.renderer,
+            d,
+            J,
+            a,
+            v,
+            F,
+            l,
+            p,
+            f,
+            h,
+            w,
+            E = [],
+            m;
+          n(this.renderer, "complexColor", { args: arguments }, function () {
+            b.radialGradient
+              ? (J = "radialGradient")
+              : b.linearGradient && (J = "linearGradient");
+            if (J) {
+              a = b[J];
+              F = g.gradients;
+              l = b.stops;
+              h = c.radialReference;
+              k(a) &&
+                (b[J] = a =
+                  {
+                    x1: a[0],
+                    y1: a[1],
+                    x2: a[2],
+                    y2: a[3],
+                    gradientUnits: "userSpaceOnUse",
+                  });
+              "radialGradient" === J &&
+                h &&
+                !r(a.gradientUnits) &&
+                ((v = a),
+                (a = D(a, g.getRadialAttr(h, v), {
+                  gradientUnits: "userSpaceOnUse",
+                })));
+              H(a, function (b, e) {
+                "id" !== e && E.push(e, b);
+              });
+              H(l, function (b) {
+                E.push(b);
+              });
+              E = E.join(",");
+              if (F[E]) w = F[E].attr("id");
+              else {
+                a.id = w = S();
+                var M = (F[E] = g.createElement(J).attr(a).add(g.defs));
+                M.radAttr = v;
+                M.stops = [];
+                l.forEach(function (b) {
+                  0 === b[1].indexOf("rgba")
+                    ? ((d = A.parse(b[1])),
+                      (p = d.get("rgb")),
+                      (f = d.get("a")))
+                    : ((p = b[1]), (f = 1));
+                  b = g
+                    .createElement("stop")
+                    .attr({ offset: b[0], "stop-color": p, "stop-opacity": f })
+                    .add(M);
+                  M.stops.push(b);
+                });
+              }
+              m = "url(" + g.url + "#" + w + ")";
+              c.setAttribute(e, m);
+              c.gradient = E;
+              b.toString = function () {
+                return m;
+              };
+            }
+          });
+        };
+        a.prototype.css = function (b) {
+          var e = this.styles,
+            c = {},
+            g = this.element,
+            a = ["textOutline", "textOverflow", "width"],
+            k = "",
+            n = !e;
+          b && b.color && (b.fill = b.color);
+          e &&
+            H(b, function (b, g) {
+              e && e[g] !== b && ((c[g] = b), (n = !0));
+            });
+          if (n) {
+            e && (b = B(e, c));
+            if (b)
+              if (null === b.width || "auto" === b.width) delete this.textWidth;
+              else if ("text" === g.nodeName.toLowerCase() && b.width)
+                var v = (this.textWidth = E(b.width));
+            this.styles = b;
+            v && !d && this.renderer.forExport && delete b.width;
+            if (g.namespaceURI === this.SVG_NS) {
+              var F = function (b, e) {
+                return "-" + e.toLowerCase();
+              };
+              H(b, function (b, e) {
+                -1 === a.indexOf(e) &&
+                  (k += e.replace(/([A-Z])/g, F) + ":" + b + ";");
+              });
+              k && w(g, "style", k);
+            } else K(g, b);
+            this.added &&
+              ("text" === this.element.nodeName &&
+                this.renderer.buildText(this),
+              b && b.textOutline && this.applyTextOutline(b.textOutline));
+          }
+          return this;
+        };
+        a.prototype.dashstyleSetter = function (b) {
+          var e = this["stroke-width"];
+          "inherit" === e && (e = 1);
+          if ((b = b && b.toLowerCase())) {
+            var c = b
+              .replace("shortdashdotdot", "3,1,1,1,1,1,")
+              .replace("shortdashdot", "3,1,1,1")
+              .replace("shortdot", "1,1,")
+              .replace("shortdash", "3,1,")
+              .replace("longdash", "8,3,")
+              .replace(/dot/g, "1,3,")
+              .replace("dash", "4,3,")
+              .replace(/,$/, "")
+              .split(",");
+            for (b = c.length; b--; ) c[b] = "" + E(c[b]) * v(e, NaN);
+            b = c.join(",").replace(/NaN/g, "none");
+            this.element.setAttribute("stroke-dasharray", b);
+          }
+        };
+        a.prototype.destroy = function () {
+          var b = this,
+            e = b.element || {},
+            c = b.renderer,
+            g = e.ownerSVGElement,
+            d = (c.isSVG && "SPAN" === e.nodeName && b.parentGroup) || void 0;
+          e.onclick =
+            e.onmouseout =
+            e.onmouseover =
+            e.onmousemove =
+            e.point =
+              null;
+          z(b);
+          if (b.clipPath && g) {
+            var a = b.clipPath;
+            [].forEach.call(
+              g.querySelectorAll("[clip-path],[CLIP-PATH]"),
+              function (b) {
+                -1 < b.getAttribute("clip-path").indexOf(a.element.id) &&
+                  b.removeAttribute("clip-path");
+              }
+            );
+            b.clipPath = a.destroy();
+          }
+          if (b.stops) {
+            for (g = 0; g < b.stops.length; g++) b.stops[g].destroy();
+            b.stops.length = 0;
+            b.stops = void 0;
+          }
+          b.safeRemoveChild(e);
+          for (
+            c.styledMode || b.destroyShadows();
+            d && d.div && 0 === d.div.childNodes.length;
+
+          )
+            (e = d.parentGroup),
+              b.safeRemoveChild(d.div),
+              delete d.div,
+              (d = e);
+          b.alignTo && y(c.alignedObjects, b);
+          H(b, function (e, c) {
+            b[c] && b[c].parentGroup === b && b[c].destroy && b[c].destroy();
+            delete b[c];
+          });
+        };
+        a.prototype.destroyShadows = function () {
+          (this.shadows || []).forEach(function (b) {
+            this.safeRemoveChild(b);
+          }, this);
+          this.shadows = void 0;
+        };
+        a.prototype.destroyTextPath = function (b, e) {
+          var c = b.getElementsByTagName("text")[0];
+          if (c) {
+            if (
+              (c.removeAttribute("dx"),
+              c.removeAttribute("dy"),
+              e.element.setAttribute("id", ""),
+              this.textPathWrapper && c.getElementsByTagName("textPath").length)
+            ) {
+              for (b = this.textPathWrapper.element.childNodes; b.length; )
+                c.appendChild(b[0]);
+              c.removeChild(this.textPathWrapper.element);
+            }
+          } else if (b.getAttribute("dx") || b.getAttribute("dy"))
+            b.removeAttribute("dx"), b.removeAttribute("dy");
+          this.textPathWrapper &&
+            (this.textPathWrapper = this.textPathWrapper.destroy());
+        };
+        a.prototype.dSetter = function (b, e, c) {
+          k(b) &&
+            ("string" === typeof b[0] && (b = this.renderer.pathToSegments(b)),
+            (this.pathArray = b),
+            (b = b.reduce(function (b, e, c) {
+              return e && e.join
+                ? (c ? b + " " : "") + e.join(" ")
+                : (e || "").toString();
+            }, "")));
+          /(NaN| {2}|^$)/.test(b) && (b = "M 0 0");
+          this[e] !== b && (c.setAttribute(e, b), (this[e] = b));
+        };
+        a.prototype.fadeOut = function (b) {
+          var e = this;
+          e.animate(
+            { opacity: 0 },
+            {
+              duration: v(b, 150),
+              complete: function () {
+                e.attr({ y: -9999 }).hide();
+              },
+            }
+          );
+        };
+        a.prototype.fillSetter = function (b, e, c) {
+          "string" === typeof b
+            ? c.setAttribute(e, b)
+            : b && this.complexColor(b, e, c);
+        };
+        a.prototype.getBBox = function (e, c) {
+          var g = this.renderer,
+            d = this.element,
+            k = this.styles,
+            n = this.textStr,
+            D = g.cache,
+            l = g.cacheKeys,
+            F = d.namespaceURI === this.SVG_NS;
+          c = v(c, this.rotation, 0);
+          var p = g.styledMode
+              ? d && a.prototype.getStyle.call(d, "font-size")
+              : k && k.fontSize,
+            f;
+          if (r(n)) {
+            var H = n.toString();
+            -1 === H.indexOf("<") && (H = H.replace(/[0-9]/g, "0"));
+            H += [
+              "",
+              c,
+              p,
+              this.textWidth,
+              k && k.textOverflow,
+              k && k.fontWeight,
+            ].join();
+          }
+          H && !e && (f = D[H]);
+          if (!f) {
+            if (F || g.forExport) {
+              try {
+                var h =
+                  this.fakeTS &&
+                  function (b) {
+                    var e = d.querySelector(".highcharts-text-outline");
+                    e && K(e, { display: b });
+                  };
+                b(h) && h("none");
+                f = d.getBBox
+                  ? B({}, d.getBBox())
+                  : { width: d.offsetWidth, height: d.offsetHeight };
+                b(h) && h("");
+              } catch (X) {
+                ("");
+              }
+              if (!f || 0 > f.width) f = { width: 0, height: 0 };
+            } else f = this.htmlGetBBox();
+            g.isSVG &&
+              ((e = f.width),
+              (g = f.height),
+              F &&
+                (f.height = g =
+                  { "11px,17": 14, "13px,20": 16 }[
+                    k && k.fontSize + "," + Math.round(g)
+                  ] || g),
+              c &&
+                ((k = c * q),
+                (f.width =
+                  Math.abs(g * Math.sin(k)) + Math.abs(e * Math.cos(k))),
+                (f.height =
+                  Math.abs(g * Math.cos(k)) + Math.abs(e * Math.sin(k)))));
+            if (H && ("" === n || 0 < f.height)) {
+              for (; 250 < l.length; ) delete D[l.shift()];
+              D[H] || l.push(H);
+              D[H] = f;
+            }
+          }
+          return f;
+        };
+        a.prototype.getStyle = function (b) {
+          return l
+            .getComputedStyle(this.element || this, "")
+            .getPropertyValue(b);
+        };
+        a.prototype.hasClass = function (b) {
+          return -1 !== ("" + this.attr("class")).split(" ").indexOf(b);
+        };
+        a.prototype.hide = function (b) {
+          b ? this.attr({ y: -9999 }) : this.attr({ visibility: "hidden" });
+          return this;
+        };
+        a.prototype.htmlGetBBox = function () {
+          return { height: 0, width: 0, x: 0, y: 0 };
+        };
+        a.prototype.init = function (b, e) {
+          this.element =
+            "span" === e ? p(e) : m.createElementNS(this.SVG_NS, e);
+          this.renderer = b;
+          n(this, "afterInit");
+        };
+        a.prototype.invert = function (b) {
+          this.inverted = b;
+          this.updateTransform();
+          return this;
+        };
+        a.prototype.on = function (b, e) {
+          var c = this.onEvents;
+          if (c[b]) c[b]();
+          c[b] = f(this.element, b, e);
+          return this;
+        };
+        a.prototype.opacitySetter = function (b, e, c) {
+          this.opacity = b = Number(Number(b).toFixed(3));
+          c.setAttribute(e, b);
+        };
+        a.prototype.removeClass = function (b) {
+          return this.attr(
+            "class",
+            ("" + this.attr("class"))
+              .replace(e(b) ? new RegExp("(^| )" + b + "( |$)") : b, " ")
+              .replace(/ +/g, " ")
+              .trim()
+          );
+        };
+        a.prototype.removeTextOutline = function () {
+          var b = this.element.querySelector("tspan.highcharts-text-outline");
+          b && this.safeRemoveChild(b);
+        };
+        a.prototype.safeRemoveChild = function (b) {
+          var e = b.parentNode;
+          e && e.removeChild(b);
+        };
+        a.prototype.setRadialReference = function (b) {
+          var e =
+            this.element.gradient &&
+            this.renderer.gradients[this.element.gradient];
+          this.element.radialReference = b;
+          e &&
+            e.radAttr &&
+            e.animate(this.renderer.getRadialAttr(b, e.radAttr));
+          return this;
+        };
+        a.prototype.setTextPath = function (b, e) {
+          var c = this.element,
+            d = this.text ? this.text.element : c,
+            a = { textAnchor: "text-anchor" },
+            k = !1,
+            n = this.textPathWrapper,
+            v = !n;
+          e = D(
+            !0,
+            {
+              enabled: !0,
+              attributes: { dy: -5, startOffset: "50%", textAnchor: "middle" },
+            },
+            e
+          );
+          var F = t.filterUserAttributes(e.attributes);
+          if (b && e && e.enabled) {
+            n && null === n.element.parentNode
+              ? ((v = !0), (n = n.destroy()))
+              : n && this.removeTextOutline.call(n.parentGroup);
+            this.options &&
+              this.options.padding &&
+              (F.dx = -this.options.padding);
+            n ||
+              ((this.textPathWrapper = n =
+                this.renderer.createElement("textPath")),
+              (k = !0));
+            var f = n.element;
+            (e = b.element.getAttribute("id")) ||
+              b.element.setAttribute("id", (e = S()));
+            if (v)
+              for (
+                d.setAttribute("y", 0),
+                  g(F.dx) && d.setAttribute("x", -F.dx),
+                  b = [].slice.call(d.childNodes),
+                  v = 0;
+                v < b.length;
+                v++
+              ) {
+                var p = b[v];
+                (p.nodeType !== l.Node.TEXT_NODE && "tspan" !== p.nodeName) ||
+                  f.appendChild(p);
+              }
+            k && n && n.add({ element: d });
+            f.setAttributeNS(
+              "http://www.w3.org/1999/xlink",
+              "href",
+              this.renderer.url + "#" + e
+            );
+            r(F.dy) && (f.parentNode.setAttribute("dy", F.dy), delete F.dy);
+            r(F.dx) && (f.parentNode.setAttribute("dx", F.dx), delete F.dx);
+            H(F, function (b, e) {
+              f.setAttribute(a[e] || e, b);
+            });
+            c.removeAttribute("transform");
+            this.removeTextOutline.call(n);
+            this.text &&
+              !this.renderer.styledMode &&
+              this.attr({ fill: "none", "stroke-width": 0 });
+            this.applyTextOutline = this.updateTransform = h;
+          } else
+            n &&
+              (delete this.updateTransform,
+              delete this.applyTextOutline,
+              this.destroyTextPath(c, b),
+              this.updateTransform(),
+              this.options &&
+                this.options.rotation &&
+                this.applyTextOutline(this.options.style.textOutline));
+          return this;
+        };
+        a.prototype.shadow = function (b, e, c) {
+          var g = [],
+            d = this.element,
+            a = this.oldShadowOptions,
+            k = {
+              color: "#000000",
+              offsetX: this.parentInverted ? -1 : 1,
+              offsetY: this.parentInverted ? -1 : 1,
+              opacity: 0.15,
+              width: 3,
+            },
+            J = !1,
+            F;
+          !0 === b ? (F = k) : "object" === typeof b && (F = B(k, b));
+          F &&
+            (F &&
+              a &&
+              H(F, function (b, e) {
+                b !== a[e] && (J = !0);
+              }),
+            J && this.destroyShadows(),
+            (this.oldShadowOptions = F));
+          if (!F) this.destroyShadows();
+          else if (!this.shadows) {
+            var n = F.opacity / F.width;
+            var v = this.parentInverted
+              ? "translate(" + F.offsetY + ", " + F.offsetX + ")"
+              : "translate(" + F.offsetX + ", " + F.offsetY + ")";
+            for (k = 1; k <= F.width; k++) {
+              var f = d.cloneNode(!1);
+              var D = 2 * F.width + 1 - 2 * k;
+              w(f, {
+                stroke: b.color || "#000000",
+                "stroke-opacity": n * k,
+                "stroke-width": D,
+                transform: v,
+                fill: "none",
+              });
+              f.setAttribute(
+                "class",
+                (f.getAttribute("class") || "") + " highcharts-shadow"
+              );
+              c &&
+                (w(f, "height", Math.max(w(f, "height") - D, 0)),
+                (f.cutHeight = D));
+              e
+                ? e.element.appendChild(f)
+                : d.parentNode && d.parentNode.insertBefore(f, d);
+              g.push(f);
+            }
+            this.shadows = g;
+          }
+          return this;
+        };
+        a.prototype.show = function (b) {
+          return this.attr({ visibility: b ? "inherit" : "visible" });
+        };
+        a.prototype.strokeSetter = function (b, e, c) {
+          this[e] = b;
+          this.stroke && this["stroke-width"]
+            ? (a.prototype.fillSetter.call(this, this.stroke, "stroke", c),
+              c.setAttribute("stroke-width", this["stroke-width"]),
+              (this.hasStroke = !0))
+            : "stroke-width" === e && 0 === b && this.hasStroke
+            ? (c.removeAttribute("stroke"), (this.hasStroke = !1))
+            : this.renderer.styledMode &&
+              this["stroke-width"] &&
+              (c.setAttribute("stroke-width", this["stroke-width"]),
+              (this.hasStroke = !0));
+        };
+        a.prototype.strokeWidth = function () {
+          if (!this.renderer.styledMode) return this["stroke-width"] || 0;
+          var b = this.getStyle("stroke-width"),
+            e = 0;
+          if (b.indexOf("px") === b.length - 2) e = E(b);
+          else if ("" !== b) {
+            var g = m.createElementNS(c, "rect");
+            w(g, { width: b, "stroke-width": 0 });
+            this.element.parentNode.appendChild(g);
+            e = g.getBBox().width;
+            g.parentNode.removeChild(g);
+          }
+          return e;
+        };
+        a.prototype.symbolAttr = function (b) {
+          var e = this;
+          "x y r start end width height innerR anchorX anchorY clockwise"
+            .split(" ")
+            .forEach(function (c) {
+              e[c] = v(b[c], e[c]);
+            });
+          e.attr({
+            d: e.renderer.symbols[e.symbolName](e.x, e.y, e.width, e.height, e),
+          });
+        };
+        a.prototype.textSetter = function (b) {
+          b !== this.textStr &&
+            (delete this.textPxLength,
+            (this.textStr = b),
+            this.added && this.renderer.buildText(this));
+        };
+        a.prototype.titleSetter = function (b) {
+          var e = this.element,
+            c =
+              e.getElementsByTagName("title")[0] ||
+              m.createElementNS(this.SVG_NS, "title");
+          e.insertBefore ? e.insertBefore(c, e.firstChild) : e.appendChild(c);
+          c.textContent = String(v(b, ""))
+            .replace(/<[^>]*>/g, "")
+            .replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">");
+        };
+        a.prototype.toFront = function () {
+          var b = this.element;
+          b.parentNode.appendChild(b);
+          return this;
+        };
+        a.prototype.translate = function (b, e) {
+          return this.attr({ translateX: b, translateY: e });
+        };
+        a.prototype.updateShadows = function (b, e, c) {
+          var g = this.shadows;
+          if (g)
+            for (var d = g.length; d--; )
+              c.call(
+                g[d],
+                "height" === b
+                  ? Math.max(e - (g[d].cutHeight || 0), 0)
+                  : "d" === b
+                  ? this.d
+                  : e,
+                b,
+                g[d]
+              );
+        };
+        a.prototype.updateTransform = function () {
+          var b = this.scaleX,
+            e = this.scaleY,
+            c = this.inverted,
+            g = this.rotation,
+            d = this.matrix,
+            a = this.element,
+            k = this.translateX || 0,
+            n = this.translateY || 0;
+          c && ((k += this.width), (n += this.height));
+          k = ["translate(" + k + "," + n + ")"];
+          r(d) && k.push("matrix(" + d.join(",") + ")");
+          c
+            ? k.push("rotate(90) scale(-1,1)")
+            : g &&
+              k.push(
+                "rotate(" +
+                  g +
+                  " " +
+                  v(this.rotationOriginX, a.getAttribute("x"), 0) +
+                  " " +
+                  v(this.rotationOriginY, a.getAttribute("y") || 0) +
+                  ")"
+              );
+          (r(b) || r(e)) && k.push("scale(" + v(b, 1) + " " + v(e, 1) + ")");
+          k.length && a.setAttribute("transform", k.join(" "));
+        };
+        a.prototype.visibilitySetter = function (b, e, c) {
+          "inherit" === b
+            ? c.removeAttribute(e)
+            : this[e] !== b && c.setAttribute(e, b);
+          this[e] = b;
+        };
+        a.prototype.xGetter = function (b) {
+          "circle" === this.element.nodeName &&
+            ("x" === b ? (b = "cx") : "y" === b && (b = "cy"));
+          return this._defaultGetter(b);
+        };
+        a.prototype.zIndexSetter = function (b, e) {
+          var c = this.renderer,
+            g = this.parentGroup,
+            d = (g || c).element || c.box,
+            a = this.element;
+          c = d === c.box;
+          var k = !1;
+          var n = this.added;
+          var F;
+          r(b)
+            ? (a.setAttribute("data-z-index", b),
+              (b = +b),
+              this[e] === b && (n = !1))
+            : r(this[e]) && a.removeAttribute("data-z-index");
+          this[e] = b;
+          if (n) {
+            (b = this.zIndex) && g && (g.handleZ = !0);
+            e = d.childNodes;
+            for (F = e.length - 1; 0 <= F && !k; F--) {
+              g = e[F];
+              n = g.getAttribute("data-z-index");
+              var v = !r(n);
+              if (g !== a)
+                if (0 > b && v && !c && !F) d.insertBefore(a, e[F]), (k = !0);
+                else if (E(n) <= b || (v && (!r(b) || 0 <= b)))
+                  d.insertBefore(a, e[F + 1] || null), (k = !0);
+            }
+            k || (d.insertBefore(a, e[c ? 3 : 0] || null), (k = !0));
+          }
+          return k;
+        };
+        return a;
+      })();
+      a.prototype["stroke-widthSetter"] = a.prototype.strokeSetter;
+      a.prototype.yGetter = a.prototype.xGetter;
+      a.prototype.matrixSetter =
+        a.prototype.rotationOriginXSetter =
+        a.prototype.rotationOriginYSetter =
+        a.prototype.rotationSetter =
+        a.prototype.scaleXSetter =
+        a.prototype.scaleYSetter =
+        a.prototype.translateXSetter =
+        a.prototype.translateYSetter =
+        a.prototype.verticalAlignSetter =
+          function (b, e) {
+            this[e] = b;
+            this.doTransform = !0;
+          };
+      ("");
+      return a;
+    }
+  );
+  L(
+    a,
+    "Core/Renderer/RendererRegistry.js",
+    [a["Core/Globals.js"]],
+    function (a) {
+      var u;
+      (function (u) {
+        u.rendererTypes = {};
+        var t;
+        u.getRendererType = function (a) {
+          void 0 === a && (a = t);
+          return u.rendererTypes[a] || u.rendererTypes[t];
+        };
+        u.registerRendererType = function (x, A, I) {
+          u.rendererTypes[x] = A;
+          if (!t || I) (t = x), (a.Renderer = A);
+        };
+      })(u || (u = {}));
+      return u;
+    }
+  );
+  L(
+    a,
+    "Core/Renderer/SVG/SVGLabel.js",
+    [a["Core/Renderer/SVG/SVGElement.js"], a["Core/Utilities.js"]],
+    function (a, t) {
+      var u =
+          (this && this.__extends) ||
+          (function () {
+            var a = function (h, d) {
+              a =
+                Object.setPrototypeOf ||
+                ({ __proto__: [] } instanceof Array &&
+                  function (c, d) {
+                    c.__proto__ = d;
+                  }) ||
+                function (c, d) {
+                  for (var a in d) d.hasOwnProperty(a) && (c[a] = d[a]);
+                };
+              return a(h, d);
+            };
+            return function (h, d) {
+              function c() {
+                this.constructor = h;
+              }
+              a(h, d);
+              h.prototype =
+                null === d
+                  ? Object.create(d)
+                  : ((c.prototype = d.prototype), new c());
+            };
+          })(),
+        G = t.defined,
+        x = t.extend,
+        C = t.isNumber,
+        I = t.merge,
+        z = t.pick,
+        q = t.removeEvent;
+      return (function (m) {
+        function h(d, c, a, f, w, p, K, r, y, B) {
+          var n = m.call(this) || this;
+          n.paddingLeftSetter = n.paddingSetter;
+          n.paddingRightSetter = n.paddingSetter;
+          n.init(d, "g");
+          n.textStr = c;
+          n.x = a;
+          n.y = f;
+          n.anchorX = p;
+          n.anchorY = K;
+          n.baseline = y;
+          n.className = B;
+          n.addClass(
+            "button" === B ? "highcharts-no-tooltip" : "highcharts-label"
+          );
+          B && n.addClass("highcharts-" + B);
+          n.text = d.text(void 0, 0, 0, r).attr({ zIndex: 1 });
+          var k;
+          "string" === typeof w &&
+            ((k = /^url\((.*?)\)$/.test(w)) || n.renderer.symbols[w]) &&
+            (n.symbolKey = w);
+          n.bBox = h.emptyBBox;
+          n.padding = 3;
+          n.baselineOffset = 0;
+          n.needsBox = d.styledMode || k;
+          n.deferredAttr = {};
+          n.alignFactor = 0;
+          return n;
+        }
+        u(h, m);
+        h.prototype.alignSetter = function (d) {
+          d = { left: 0, center: 0.5, right: 1 }[d];
+          d !== this.alignFactor &&
+            ((this.alignFactor = d),
+            this.bBox && C(this.xSetting) && this.attr({ x: this.xSetting }));
+        };
+        h.prototype.anchorXSetter = function (d, c) {
+          this.anchorX = d;
+          this.boxAttr(
+            c,
+            Math.round(d) - this.getCrispAdjust() - this.xSetting
+          );
+        };
+        h.prototype.anchorYSetter = function (d, c) {
+          this.anchorY = d;
+          this.boxAttr(c, d - this.ySetting);
+        };
+        h.prototype.boxAttr = function (d, c) {
+          this.box ? this.box.attr(d, c) : (this.deferredAttr[d] = c);
+        };
+        h.prototype.css = function (d) {
+          if (d) {
+            var c = {};
+            d = I(d);
+            h.textProps.forEach(function (a) {
+              "undefined" !== typeof d[a] && ((c[a] = d[a]), delete d[a]);
+            });
+            this.text.css(c);
+            var l = "width" in c;
+            "fontSize" in c || "fontWeight" in c
+              ? this.updateTextPadding()
+              : l && this.updateBoxSize();
+          }
+          return a.prototype.css.call(this, d);
+        };
+        h.prototype.destroy = function () {
+          q(this.element, "mouseenter");
+          q(this.element, "mouseleave");
+          this.text && this.text.destroy();
+          this.box && (this.box = this.box.destroy());
+          a.prototype.destroy.call(this);
+        };
+        h.prototype.fillSetter = function (d, c) {
+          d && (this.needsBox = !0);
+          this.fill = d;
+          this.boxAttr(c, d);
+        };
+        h.prototype.getBBox = function () {
+          this.textStr &&
+            0 === this.bBox.width &&
+            0 === this.bBox.height &&
+            this.updateBoxSize();
+          var d = this.padding,
+            c = z(this.paddingLeft, d);
+          return {
+            width: this.width,
+            height: this.height,
+            x: this.bBox.x - c,
+            y: this.bBox.y - d,
+          };
+        };
+        h.prototype.getCrispAdjust = function () {
+          return this.renderer.styledMode && this.box
+            ? (this.box.strokeWidth() % 2) / 2
+            : ((this["stroke-width"] ? parseInt(this["stroke-width"], 10) : 0) %
+                2) /
+                2;
+        };
+        h.prototype.heightSetter = function (d) {
+          this.heightSetting = d;
+        };
+        h.prototype.onAdd = function () {
+          var d = this.textStr;
+          this.text.add(this);
+          this.attr({ text: G(d) ? d : "", x: this.x, y: this.y });
+          this.box &&
+            G(this.anchorX) &&
+            this.attr({ anchorX: this.anchorX, anchorY: this.anchorY });
+        };
+        h.prototype.paddingSetter = function (d, c) {
+          C(d)
+            ? d !== this[c] && ((this[c] = d), this.updateTextPadding())
+            : (this[c] = void 0);
+        };
+        h.prototype.rSetter = function (d, c) {
+          this.boxAttr(c, d);
+        };
+        h.prototype.shadow = function (d) {
+          d &&
+            !this.renderer.styledMode &&
+            (this.updateBoxSize(), this.box && this.box.shadow(d));
+          return this;
+        };
+        h.prototype.strokeSetter = function (d, c) {
+          this.stroke = d;
+          this.boxAttr(c, d);
+        };
+        h.prototype["stroke-widthSetter"] = function (d, c) {
+          d && (this.needsBox = !0);
+          this["stroke-width"] = d;
+          this.boxAttr(c, d);
+        };
+        h.prototype["text-alignSetter"] = function (d) {
+          this.textAlign = d;
+        };
+        h.prototype.textSetter = function (d) {
+          "undefined" !== typeof d && this.text.attr({ text: d });
+          this.updateTextPadding();
+        };
+        h.prototype.updateBoxSize = function () {
+          var d = this.text.element.style,
+            c = {},
+            a = this.padding,
+            f = (this.bBox =
+              (C(this.widthSetting) &&
+                C(this.heightSetting) &&
+                !this.textAlign) ||
+              !G(this.text.textStr)
+                ? h.emptyBBox
+                : this.text.getBBox());
+          this.width = this.getPaddedWidth();
+          this.height = (this.heightSetting || f.height || 0) + 2 * a;
+          d = this.renderer.fontMetrics(d && d.fontSize, this.text);
+          this.baselineOffset =
+            a +
+            Math.min((this.text.firstLineMetrics || d).b, f.height || Infinity);
+          this.heightSetting &&
+            (this.baselineOffset += (this.heightSetting - d.h) / 2);
+          this.needsBox &&
+            (this.box ||
+              ((a = this.box =
+                this.symbolKey
+                  ? this.renderer.symbol(this.symbolKey)
+                  : this.renderer.rect()),
+              a.addClass(
+                ("button" === this.className ? "" : "highcharts-label-box") +
+                  (this.className
+                    ? " highcharts-" + this.className + "-box"
+                    : "")
+              ),
+              a.add(this)),
+            (a = this.getCrispAdjust()),
+            (c.x = a),
+            (c.y = (this.baseline ? -this.baselineOffset : 0) + a),
+            (c.width = Math.round(this.width)),
+            (c.height = Math.round(this.height)),
+            this.box.attr(x(c, this.deferredAttr)),
+            (this.deferredAttr = {}));
+        };
+        h.prototype.updateTextPadding = function () {
+          var d = this.text;
+          this.updateBoxSize();
+          var c = this.baseline ? 0 : this.baselineOffset,
+            a = z(this.paddingLeft, this.padding);
+          G(this.widthSetting) &&
+            this.bBox &&
+            ("center" === this.textAlign || "right" === this.textAlign) &&
+            (a +=
+              { center: 0.5, right: 1 }[this.textAlign] *
+              (this.widthSetting - this.bBox.width));
+          if (a !== d.x || c !== d.y)
+            d.attr("x", a),
+              d.hasBoxWidthChanged && (this.bBox = d.getBBox(!0)),
+              "undefined" !== typeof c && d.attr("y", c);
+          d.x = a;
+          d.y = c;
+        };
+        h.prototype.widthSetter = function (d) {
+          this.widthSetting = C(d) ? d : void 0;
+        };
+        h.prototype.getPaddedWidth = function () {
+          var d = this.padding,
+            c = z(this.paddingLeft, d);
+          d = z(this.paddingRight, d);
+          return (this.widthSetting || this.bBox.width || 0) + c + d;
+        };
+        h.prototype.xSetter = function (d) {
+          this.x = d;
+          this.alignFactor &&
+            ((d -= this.alignFactor * this.getPaddedWidth()),
+            (this["forceAnimate:x"] = !0));
+          this.xSetting = Math.round(d);
+          this.attr("translateX", this.xSetting);
+        };
+        h.prototype.ySetter = function (d) {
+          this.ySetting = this.y = Math.round(d);
+          this.attr("translateY", this.ySetting);
+        };
+        h.emptyBBox = { width: 0, height: 0, x: 0, y: 0 };
+        h.textProps =
+          "color direction fontFamily fontSize fontStyle fontWeight lineHeight textAlign textDecoration textOutline textOverflow width".split(
+            " "
+          );
+        return h;
+      })(a);
+    }
+  );
+  L(a, "Core/Renderer/SVG/Symbols.js", [a["Core/Utilities.js"]], function (a) {
+    function u(a, q, m, h, d) {
+      var c = [];
+      if (d) {
+        var l = d.start || 0,
+          f = I(d.r, m);
+        m = I(d.r, h || m);
+        var w = (d.end || 0) - 0.001;
+        h = d.innerR;
+        var p = I(d.open, 0.001 > Math.abs((d.end || 0) - l - 2 * Math.PI)),
+          K = Math.cos(l),
+          r = Math.sin(l),
+          y = Math.cos(w),
+          B = Math.sin(w);
+        l = I(d.longArc, 0.001 > w - l - Math.PI ? 0 : 1);
+        c.push(
+          ["M", a + f * K, q + m * r],
+          ["A", f, m, 0, l, I(d.clockwise, 1), a + f * y, q + m * B]
+        );
+        x(h) &&
+          c.push(
+            p ? ["M", a + h * y, q + h * B] : ["L", a + h * y, q + h * B],
+            [
+              "A",
+              h,
+              h,
+              0,
+              l,
+              x(d.clockwise) ? 1 - d.clockwise : 0,
+              a + h * K,
+              q + h * r,
+            ]
+          );
+        p || c.push(["Z"]);
+      }
+      return c;
+    }
+    function A(a, q, m, h, d) {
+      return d && d.r
+        ? G(a, q, m, h, d)
+        : [
+            ["M", a, q],
+            ["L", a + m, q],
+            ["L", a + m, q + h],
+            ["L", a, q + h],
+            ["Z"],
+          ];
+    }
+    function G(a, q, m, h, d) {
+      d = (d && d.r) || 0;
+      return [
+        ["M", a + d, q],
+        ["L", a + m - d, q],
+        ["C", a + m, q, a + m, q, a + m, q + d],
+        ["L", a + m, q + h - d],
+        ["C", a + m, q + h, a + m, q + h, a + m - d, q + h],
+        ["L", a + d, q + h],
+        ["C", a, q + h, a, q + h, a, q + h - d],
+        ["L", a, q + d],
+        ["C", a, q, a, q, a + d, q],
+      ];
+    }
+    var x = a.defined,
+      C = a.isNumber,
+      I = a.pick;
+    return {
+      arc: u,
+      callout: function (a, q, m, h, d) {
+        var c = Math.min((d && d.r) || 0, m, h),
+          l = c + 6,
+          f = d && d.anchorX;
+        d = (d && d.anchorY) || 0;
+        var w = G(a, q, m, h, { r: c });
+        if (!C(f)) return w;
+        a + f >= m
+          ? d > q + l && d < q + h - l
+            ? w.splice(
+                3,
+                1,
+                ["L", a + m, d - 6],
+                ["L", a + m + 6, d],
+                ["L", a + m, d + 6],
+                ["L", a + m, q + h - c]
+              )
+            : w.splice(
+                3,
+                1,
+                ["L", a + m, h / 2],
+                ["L", f, d],
+                ["L", a + m, h / 2],
+                ["L", a + m, q + h - c]
+              )
+          : 0 >= a + f
+          ? d > q + l && d < q + h - l
+            ? w.splice(
+                7,
+                1,
+                ["L", a, d + 6],
+                ["L", a - 6, d],
+                ["L", a, d - 6],
+                ["L", a, q + c]
+              )
+            : w.splice(
+                7,
+                1,
+                ["L", a, h / 2],
+                ["L", f, d],
+                ["L", a, h / 2],
+                ["L", a, q + c]
+              )
+          : d && d > h && f > a + l && f < a + m - l
+          ? w.splice(
+              5,
+              1,
+              ["L", f + 6, q + h],
+              ["L", f, q + h + 6],
+              ["L", f - 6, q + h],
+              ["L", a + c, q + h]
+            )
+          : d &&
+            0 > d &&
+            f > a + l &&
+            f < a + m - l &&
+            w.splice(
+              1,
+              1,
+              ["L", f - 6, q],
+              ["L", f, q - 6],
+              ["L", f + 6, q],
+              ["L", m - c, q]
+            );
+        return w;
+      },
+      circle: function (a, q, m, h) {
+        return u(a + m / 2, q + h / 2, m / 2, h / 2, {
+          start: 0.5 * Math.PI,
+          end: 2.5 * Math.PI,
+          open: !1,
+        });
+      },
+      diamond: function (a, q, m, h) {
+        return [
+          ["M", a + m / 2, q],
+          ["L", a + m, q + h / 2],
+          ["L", a + m / 2, q + h],
+          ["L", a, q + h / 2],
+          ["Z"],
+        ];
+      },
+      rect: A,
+      roundedRect: G,
+      square: A,
+      triangle: function (a, q, m, h) {
+        return [
+          ["M", a + m / 2, q],
+          ["L", a + m, q + h],
+          ["L", a, q + h],
+          ["Z"],
+        ];
+      },
+      "triangle-down": function (a, q, m, h) {
+        return [["M", a, q], ["L", a + m, q], ["L", a + m / 2, q + h], ["Z"]];
+      },
+    };
+  });
+  L(
+    a,
+    "Core/Renderer/SVG/TextBuilder.js",
+    [
+      a["Core/Renderer/HTML/AST.js"],
+      a["Core/Globals.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A) {
+      var u = t.doc,
+        x = t.SVG_NS,
+        C = t.win,
+        I = A.attr,
+        z = A.isString,
+        q = A.objectEach,
+        m = A.pick;
+      return (function () {
+        function h(a) {
+          var c = a.styles;
+          this.renderer = a.renderer;
+          this.svgElement = a;
+          this.width = a.textWidth;
+          this.textLineHeight = c && c.lineHeight;
+          this.textOutline = c && c.textOutline;
+          this.ellipsis = !(!c || "ellipsis" !== c.textOverflow);
+          this.noWrap = !(!c || "nowrap" !== c.whiteSpace);
+          this.fontSize = c && c.fontSize;
+        }
+        h.prototype.buildSVG = function () {
+          var d = this.svgElement,
+            c = d.element,
+            l = d.renderer,
+            f = m(d.textStr, "").toString(),
+            h = -1 !== f.indexOf("<"),
+            p = c.childNodes;
+          l = this.width && !d.added && l.box;
+          var K = /<br.*?>/g,
+            r = [
+              f,
+              this.ellipsis,
+              this.noWrap,
+              this.textLineHeight,
+              this.textOutline,
+              this.fontSize,
+              this.width,
+            ].join();
+          if (r !== d.textCache) {
+            d.textCache = r;
+            delete d.actualWidth;
+            for (r = p.length; r--; ) c.removeChild(p[r]);
+            h ||
+            this.ellipsis ||
+            this.width ||
+            (-1 !== f.indexOf(" ") && (!this.noWrap || K.test(f)))
+              ? "" !== f &&
+                (l && l.appendChild(c),
+                (f = new a(f)),
+                this.modifyTree(f.nodes),
+                f.addToDOM(d.element),
+                this.modifyDOM(),
+                this.ellipsis &&
+                  -1 !== (c.textContent || "").indexOf("\u2026") &&
+                  d.attr(
+                    "title",
+                    this.unescapeEntities(d.textStr || "", ["&lt;", "&gt;"])
+                  ),
+                l && l.removeChild(c))
+              : c.appendChild(u.createTextNode(this.unescapeEntities(f)));
+            z(this.textOutline) &&
+              d.applyTextOutline &&
+              d.applyTextOutline(this.textOutline);
+          }
+        };
+        h.prototype.modifyDOM = function () {
+          var a = this,
+            c = this.svgElement,
+            l = I(c.element, "x");
+          c.firstLineMetrics = void 0;
+          for (var f; (f = c.element.firstChild); )
+            if (/^[\s\u200B]*$/.test(f.textContent || " "))
+              c.element.removeChild(f);
+            else break;
+          [].forEach.call(
+            c.element.querySelectorAll("tspan.highcharts-br"),
+            function (d, f) {
+              d.nextSibling &&
+                d.previousSibling &&
+                (0 === f &&
+                  1 === d.previousSibling.nodeType &&
+                  (c.firstLineMetrics = c.renderer.fontMetrics(
+                    void 0,
+                    d.previousSibling
+                  )),
+                I(d, { dy: a.getLineHeight(d.nextSibling), x: l }));
+            }
+          );
+          var h = this.width || 0;
+          if (h) {
+            var p = function (d, f) {
+                var p = d.textContent || "",
+                  n = p.replace(/([^\^])-/g, "$1- ").split(" "),
+                  k =
+                    !a.noWrap &&
+                    (1 < n.length || 1 < c.element.childNodes.length),
+                  b = a.getLineHeight(f),
+                  g = 0,
+                  e = c.actualWidth;
+                if (a.ellipsis)
+                  p &&
+                    a.truncate(
+                      d,
+                      p,
+                      void 0,
+                      0,
+                      Math.max(0, h - parseInt(a.fontSize || 12, 10)),
+                      function (b, e) {
+                        return b.substring(0, e) + "\u2026";
+                      }
+                    );
+                else if (k) {
+                  p = [];
+                  for (k = []; f.firstChild && f.firstChild !== d; )
+                    k.push(f.firstChild), f.removeChild(f.firstChild);
+                  for (; n.length; )
+                    n.length &&
+                      !a.noWrap &&
+                      0 < g &&
+                      (p.push(d.textContent || ""),
+                      (d.textContent = n.join(" ").replace(/- /g, "-"))),
+                      a.truncate(
+                        d,
+                        void 0,
+                        n,
+                        0 === g ? e || 0 : 0,
+                        h,
+                        function (b, e) {
+                          return n.slice(0, e).join(" ").replace(/- /g, "-");
                         }
-                    }), 0 === h(T) || this.verifyDataLabelOverflow(T)) && (this.placeDataLabels(), this.points.forEach(function (c) {
-                        V =
-                        w(f, c.options.dataLabels); if (n = l(V.connectorWidth, 1)) {
-                            var d; A = c.connector; if ((z = c.dataLabel) && z._pos && c.visible && 0 < c.labelDistance) { P = z._attr.visibility; if (d = !A) c.connector = A = b.renderer.path().addClass("highcharts-data-label-connector  highcharts-color-" + c.colorIndex + (c.className ? " " + c.className : "")).add(a.dataLabelsGroup), b.styledMode || A.attr({ "stroke-width": n, stroke: V.connectorColor || c.color || H.neutralColor60 }); A[d ? "attr" : "animate"]({ d: c.getConnectorPath() }); A.attr("visibility", P) } else A && (c.connector =
-                                A.destroy())
-                        }
-                    }))
-                }, y.pie.prototype.placeDataLabels = function () { this.points.forEach(function (a) { var c = a.dataLabel, e; c && a.visible && ((e = c._pos) ? (c.sideOverflow && (c._attr.width = Math.max(c.getBBox().width - c.sideOverflow, 0), c.css({ width: c._attr.width + "px", textOverflow: (this.options.dataLabels.style || {}).textOverflow || "ellipsis" }), c.shortened = !0), c.attr(c._attr), c[c.moved ? "animate" : "attr"](e), c.moved = !0) : c && c.attr({ y: -9999 })); delete a.distributeBox }, this) }, y.pie.prototype.alignDataLabel = a, y.pie.prototype.verifyDataLabelOverflow =
-                    function (a) { var c = this.center, e = this.options, b = e.center, g = e.minSize || 80, h = null !== e.size; if (!h) { if (null !== b[0]) var l = Math.max(c[2] - Math.max(a[1], a[3]), g); else l = Math.max(c[2] - a[1] - a[3], g), c[0] += (a[3] - a[1]) / 2; null !== b[1] ? l = f(l, g, c[2] - Math.max(a[0], a[2])) : (l = f(l, g, c[2] - a[0] - a[2]), c[1] += (a[0] - a[2]) / 2); l < c[2] ? (c[2] = l, c[3] = Math.min(J(e.innerSize || 0, l), l), this.translate(c), this.drawDataLabels && this.drawDataLabels()) : h = !0 } return h }); y.column && (y.column.prototype.alignDataLabel = function (a, c, e, b, f) {
-                        var d = this.chart.inverted,
-                        g = a.series, h = a.dlBox || a.shapeArgs, k = l(a.below, a.plotY > l(this.translatedThreshold, g.yAxis.len)), m = l(e.inside, !!this.options.stacking); h && (b = w(h), 0 > b.y && (b.height += b.y, b.y = 0), h = b.y + b.height - g.yAxis.len, 0 < h && h < b.height && (b.height -= h), d && (b = { x: g.yAxis.len - b.y - b.height, y: g.xAxis.len - b.x - b.width, width: b.height, height: b.width }), m || (d ? (b.x += k ? 0 : b.width, b.width = 0) : (b.y += k ? b.height : 0, b.height = 0))); e.align = l(e.align, !d || m ? "center" : k ? "right" : "left"); e.verticalAlign = l(e.verticalAlign, d || m ? "middle" : k ? "top" : "bottom");
-                        x.prototype.alignDataLabel.call(this, a, c, e, b, f); e.inside && a.contrastColor && c.css({ color: a.contrastColor })
-                    })
-        }); L(a, "Extensions/OverlappingDataLabels.js", [a["Core/Chart/Chart.js"], a["Core/Utilities.js"]], function (a, u) {
-            function v(a, f) {
-                var c = !1; if (a) {
-                    var e = a.newOpacity; a.oldOpacity !== e && (a.alignAttr && a.placed ? (a[e ? "removeClass" : "addClass"]("highcharts-data-label-hidden"), c = !0, a.alignAttr.opacity = e, a[a.isOld ? "animate" : "attr"](a.alignAttr, null, function () { f.styledMode || a.css({ pointerEvents: e ? "auto" : "none" }) }),
-                        x(f, "afterHideOverlappingLabel")) : a.attr({ opacity: e })); a.isOld = !0
-                } return c
-            } var H = u.addEvent, x = u.fireEvent, y = u.isArray, G = u.isNumber, B = u.objectEach, q = u.pick; H(a, "render", function () {
-                var a = this, f = []; (this.labelCollectors || []).forEach(function (a) { f = f.concat(a()) }); (this.yAxis || []).forEach(function (a) { a.stacking && a.options.stackLabels && !a.options.stackLabels.allowOverlap && B(a.stacking.stacks, function (a) { B(a, function (a) { a.label && "hidden" !== a.label.visibility && f.push(a.label) }) }) }); (this.series || []).forEach(function (c) {
-                    var e =
-                        c.options.dataLabels; c.visible && (!1 !== e.enabled || c._hasPointLabels) && (e = function (c) { return c.forEach(function (c) { c.visible && (y(c.dataLabels) ? c.dataLabels : c.dataLabel ? [c.dataLabel] : []).forEach(function (e) { var h = e.options; e.labelrank = q(h.labelrank, c.labelrank, c.shapeArgs && c.shapeArgs.height); h.allowOverlap ? (e.oldOpacity = e.opacity, e.newOpacity = 1, v(e, a)) : f.push(e) }) }) }, e(c.nodes || []), e(c.points))
-                }); this.hideOverlappingLabels(f)
-            }); a.prototype.hideOverlappingLabels = function (a) {
-                var f = this, c = a.length, e = f.renderer,
-                h, m, q, n = !1; var l = function (a) {
-                    var c, d = a.box ? 0 : a.padding || 0, f = c = 0, b; if (a && (!a.alignAttr || a.placed)) {
-                        var g = a.alignAttr || { x: a.attr("x"), y: a.attr("y") }; var h = a.parentGroup; a.width || (c = a.getBBox(), a.width = c.width, a.height = c.height, c = e.fontMetrics(null, a.element).h); var l = a.width - 2 * d; (b = { left: "0", center: "0.5", right: "1" }[a.alignValue]) ? f = +b * l : G(a.x) && Math.round(a.x) !== a.translateX && (f = a.x - a.translateX); return {
-                            x: g.x + (h.translateX || 0) + d - (f || 0), y: g.y + (h.translateY || 0) + d - c, width: a.width - 2 * d, height: a.height - 2 *
-                                d
-                        }
+                      ),
+                      (e = c.actualWidth),
+                      g++;
+                  k.forEach(function (b) {
+                    f.insertBefore(b, d);
+                  });
+                  p.forEach(function (e) {
+                    f.insertBefore(u.createTextNode(e), d);
+                    e = u.createElementNS(x, "tspan");
+                    e.textContent = "\u200b";
+                    I(e, { dy: b, x: l });
+                    f.insertBefore(e, d);
+                  });
+                }
+              },
+              m = function (a) {
+                [].slice.call(a.childNodes).forEach(function (d) {
+                  d.nodeType === C.Node.TEXT_NODE
+                    ? p(d, a)
+                    : (-1 !== d.className.baseVal.indexOf("highcharts-br") &&
+                        (c.actualWidth = 0),
+                      m(d));
+                });
+              };
+            m(c.element);
+          }
+        };
+        h.prototype.getLineHeight = function (a) {
+          var c;
+          a = a.nodeType === C.Node.TEXT_NODE ? a.parentElement : a;
+          this.renderer.styledMode ||
+            (c =
+              a && /(px|em)$/.test(a.style.fontSize)
+                ? a.style.fontSize
+                : this.fontSize || this.renderer.style.fontSize || 12);
+          return this.textLineHeight
+            ? parseInt(this.textLineHeight.toString(), 10)
+            : this.renderer.fontMetrics(c, a || this.svgElement.element).h;
+        };
+        h.prototype.modifyTree = function (a) {
+          var c = this,
+            d = function (f, l) {
+              var p = f.tagName,
+                h = c.renderer.styledMode,
+                r = f.attributes || {};
+              if ("b" === p || "strong" === p)
+                h
+                  ? (r["class"] = "highcharts-strong")
+                  : (r.style = "font-weight:bold;" + (r.style || ""));
+              else if ("i" === p || "em" === p)
+                h
+                  ? (r["class"] = "highcharts-emphasized")
+                  : (r.style = "font-style:italic;" + (r.style || ""));
+              z(r.style) &&
+                (r.style = r.style.replace(/(;| |^)color([ :])/, "$1fill$2"));
+              "br" === p &&
+                ((r["class"] = "highcharts-br"),
+                (f.textContent = "\u200b"),
+                (l = a[l + 1]) &&
+                  l.textContent &&
+                  (l.textContent = l.textContent.replace(/^ +/gm, "")));
+              "#text" !== p && "a" !== p && (f.tagName = "tspan");
+              f.attributes = r;
+              f.children &&
+                f.children
+                  .filter(function (c) {
+                    return "#text" !== c.tagName;
+                  })
+                  .forEach(d);
+            };
+          a.forEach(d);
+        };
+        h.prototype.truncate = function (a, c, l, f, h, p) {
+          var d = this.svgElement,
+            r = d.renderer,
+            m = d.rotation,
+            w = [],
+            n = l ? 1 : 0,
+            k = (c || l || "").length,
+            b = k,
+            g,
+            e = function (b, e) {
+              e = e || b;
+              var g = a.parentNode;
+              if (g && "undefined" === typeof w[e])
+                if (g.getSubStringLength)
+                  try {
+                    w[e] = f + g.getSubStringLength(0, l ? e + 1 : e);
+                  } catch (O) {
+                    ("");
+                  }
+                else
+                  r.getSpanWidth &&
+                    ((a.textContent = p(c || l, b)),
+                    (w[e] = f + r.getSpanWidth(d, a)));
+              return w[e];
+            };
+          d.rotation = 0;
+          var D = e(a.textContent.length);
+          if (f + D > h) {
+            for (; n <= k; )
+              (b = Math.ceil((n + k) / 2)),
+                l && (g = p(l, b)),
+                (D = e(b, g && g.length - 1)),
+                n === k ? (n = k + 1) : D > h ? (k = b - 1) : (n = b);
+            0 === k
+              ? (a.textContent = "")
+              : (c && k === c.length - 1) ||
+                (a.textContent = g || p(c || l, b));
+          }
+          l && l.splice(0, b);
+          d.actualWidth = D;
+          d.rotation = m;
+        };
+        h.prototype.unescapeEntities = function (a, c) {
+          q(this.renderer.escapes, function (d, f) {
+            (c && -1 !== c.indexOf(d)) ||
+              (a = a.toString().replace(new RegExp(d, "g"), f));
+          });
+          return a;
+        };
+        return h;
+      })();
+    }
+  );
+  L(
+    a,
+    "Core/Renderer/SVG/SVGRenderer.js",
+    [
+      a["Core/Renderer/HTML/AST.js"],
+      a["Core/Color/Color.js"],
+      a["Core/Globals.js"],
+      a["Core/Renderer/RendererRegistry.js"],
+      a["Core/Renderer/SVG/SVGElement.js"],
+      a["Core/Renderer/SVG/SVGLabel.js"],
+      a["Core/Renderer/SVG/Symbols.js"],
+      a["Core/Renderer/SVG/TextBuilder.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G, x, C, I, z, q) {
+      var m = A.charts,
+        h = A.deg2rad,
+        d = A.doc,
+        c = A.isFirefox,
+        l = A.isMS,
+        f = A.isWebKit,
+        w = A.noop,
+        p = A.SVG_NS,
+        K = A.symbolSizes,
+        r = A.win,
+        y = q.addEvent,
+        B = q.attr,
+        n = q.createElement,
+        k = q.css,
+        b = q.defined,
+        g = q.destroyObjectProperties,
+        e = q.extend,
+        D = q.isArray,
+        H = q.isNumber,
+        v = q.isObject,
+        E = q.isString,
+        O = q.merge,
+        u = q.pick,
+        P = q.pInt,
+        U = q.uniqueKey,
+        Y;
+      A = (function () {
+        function J(b, e, c, a, g, d, k) {
+          this.width =
+            this.url =
+            this.style =
+            this.isSVG =
+            this.imgCount =
+            this.height =
+            this.gradients =
+            this.globalAnimation =
+            this.defs =
+            this.chartIndex =
+            this.cacheKeys =
+            this.cache =
+            this.boxWrapper =
+            this.box =
+            this.alignedObjects =
+              void 0;
+          this.init(b, e, c, a, g, d, k);
+        }
+        J.prototype.init = function (b, e, a, g, J, F, n) {
+          var M = this.createElement("svg").attr({
+              version: "1.1",
+              class: "highcharts-root",
+            }),
+            f = M.element;
+          n || M.css(this.getStyle(g));
+          b.appendChild(f);
+          B(b, "dir", "ltr");
+          -1 === b.innerHTML.indexOf("xmlns") && B(f, "xmlns", this.SVG_NS);
+          this.isSVG = !0;
+          this.box = f;
+          this.boxWrapper = M;
+          this.alignedObjects = [];
+          this.url = this.getReferenceURL();
+          this.createElement("desc")
+            .add()
+            .element.appendChild(
+              d.createTextNode("Created with Highcharts 9.3.1")
+            );
+          this.defs = this.createElement("defs").add();
+          this.allowHTML = F;
+          this.forExport = J;
+          this.styledMode = n;
+          this.gradients = {};
+          this.cache = {};
+          this.cacheKeys = [];
+          this.imgCount = 0;
+          this.setSize(e, a, !1);
+          var v;
+          c &&
+            b.getBoundingClientRect &&
+            ((e = function () {
+              k(b, { left: 0, top: 0 });
+              v = b.getBoundingClientRect();
+              k(b, {
+                left: Math.ceil(v.left) - v.left + "px",
+                top: Math.ceil(v.top) - v.top + "px",
+              });
+            }),
+            e(),
+            (this.unSubPixelFix = y(r, "resize", e)));
+        };
+        J.prototype.definition = function (b) {
+          return new a([b]).addToDOM(this.defs.element);
+        };
+        J.prototype.getReferenceURL = function () {
+          if ((c || f) && d.getElementsByTagName("base").length) {
+            if (!b(Y)) {
+              var e = U();
+              e = new a([
+                {
+                  tagName: "svg",
+                  attributes: { width: 8, height: 8 },
+                  children: [
+                    {
+                      tagName: "defs",
+                      children: [
+                        {
+                          tagName: "clipPath",
+                          attributes: { id: e },
+                          children: [
+                            {
+                              tagName: "rect",
+                              attributes: { width: 4, height: 4 },
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    {
+                      tagName: "rect",
+                      attributes: {
+                        id: "hitme",
+                        width: 8,
+                        height: 8,
+                        "clip-path": "url(#" + e + ")",
+                        fill: "rgba(0,0,0,0.001)",
+                      },
+                    },
+                  ],
+                },
+              ]).addToDOM(d.body);
+              k(e, { position: "fixed", top: 0, left: 0, zIndex: 9e5 });
+              var g = d.elementFromPoint(6, 6);
+              Y = "hitme" === (g && g.id);
+              d.body.removeChild(e);
+            }
+            if (Y)
+              return r.location.href
+                .split("#")[0]
+                .replace(/<[^>]*>/g, "")
+                .replace(/([\('\)])/g, "\\$1")
+                .replace(/ /g, "%20");
+          }
+          return "";
+        };
+        J.prototype.getStyle = function (b) {
+          return (this.style = e(
+            {
+              fontFamily:
+                '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif',
+              fontSize: "12px",
+            },
+            b
+          ));
+        };
+        J.prototype.setStyle = function (b) {
+          this.boxWrapper.css(this.getStyle(b));
+        };
+        J.prototype.isHidden = function () {
+          return !this.boxWrapper.getBBox().width;
+        };
+        J.prototype.destroy = function () {
+          var b = this.defs;
+          this.box = null;
+          this.boxWrapper = this.boxWrapper.destroy();
+          g(this.gradients || {});
+          this.gradients = null;
+          b && (this.defs = b.destroy());
+          this.unSubPixelFix && this.unSubPixelFix();
+          return (this.alignedObjects = null);
+        };
+        J.prototype.createElement = function (b) {
+          var e = new this.Element();
+          e.init(this, b);
+          return e;
+        };
+        J.prototype.getRadialAttr = function (b, e) {
+          return {
+            cx: b[0] - b[2] / 2 + (e.cx || 0) * b[2],
+            cy: b[1] - b[2] / 2 + (e.cy || 0) * b[2],
+            r: (e.r || 0) * b[2],
+          };
+        };
+        J.prototype.buildText = function (b) {
+          new z(b).buildSVG();
+        };
+        J.prototype.getContrast = function (b) {
+          b = t.parse(b).rgba;
+          b[0] *= 1;
+          b[1] *= 1.2;
+          b[2] *= 0.5;
+          return 459 < b[0] + b[1] + b[2] ? "#000000" : "#FFFFFF";
+        };
+        J.prototype.button = function (b, c, g, d, k, F, J, n, v, f) {
+          var p = this.label(b, c, g, v, void 0, void 0, f, void 0, "button"),
+            D = this.styledMode,
+            M = 0,
+            h = k ? O(k) : {};
+          b = (h && h.style) || {};
+          h = a.filterUserAttributes(h);
+          p.attr(O({ padding: 8, r: 2 }, h));
+          if (!D) {
+            h = O(
+              {
+                fill: "#f7f7f7",
+                stroke: "#cccccc",
+                "stroke-width": 1,
+                style: {
+                  color: "#333333",
+                  cursor: "pointer",
+                  fontWeight: "normal",
+                },
+              },
+              { style: b },
+              h
+            );
+            var H = h.style;
+            delete h.style;
+            F = O(h, { fill: "#e6e6e6" }, a.filterUserAttributes(F || {}));
+            var N = F.style;
+            delete F.style;
+            J = O(
+              h,
+              {
+                fill: "#e6ebf5",
+                style: { color: "#000000", fontWeight: "bold" },
+              },
+              a.filterUserAttributes(J || {})
+            );
+            var r = J.style;
+            delete J.style;
+            n = O(
+              h,
+              { style: { color: "#cccccc" } },
+              a.filterUserAttributes(n || {})
+            );
+            var E = n.style;
+            delete n.style;
+          }
+          y(p.element, l ? "mouseover" : "mouseenter", function () {
+            3 !== M && p.setState(1);
+          });
+          y(p.element, l ? "mouseout" : "mouseleave", function () {
+            3 !== M && p.setState(M);
+          });
+          p.setState = function (b) {
+            1 !== b && (p.state = M = b);
+            p.removeClass(
+              /highcharts-button-(normal|hover|pressed|disabled)/
+            ).addClass(
+              "highcharts-button-" +
+                ["normal", "hover", "pressed", "disabled"][b || 0]
+            );
+            D || p.attr([h, F, J, n][b || 0]).css([H, N, r, E][b || 0]);
+          };
+          D || p.attr(h).css(e({ cursor: "default" }, H));
+          return p
+            .on("touchstart", function (b) {
+              return b.stopPropagation();
+            })
+            .on("click", function (b) {
+              3 !== M && d.call(p, b);
+            });
+        };
+        J.prototype.crispLine = function (e, c, a) {
+          void 0 === a && (a = "round");
+          var g = e[0],
+            d = e[1];
+          b(g[1]) &&
+            g[1] === d[1] &&
+            (g[1] = d[1] = Math[a](g[1]) - (c % 2) / 2);
+          b(g[2]) &&
+            g[2] === d[2] &&
+            (g[2] = d[2] = Math[a](g[2]) + (c % 2) / 2);
+          return e;
+        };
+        J.prototype.path = function (b) {
+          var c = this.styledMode ? {} : { fill: "none" };
+          D(b) ? (c.d = b) : v(b) && e(c, b);
+          return this.createElement("path").attr(c);
+        };
+        J.prototype.circle = function (b, e, c) {
+          b = v(b) ? b : "undefined" === typeof b ? {} : { x: b, y: e, r: c };
+          e = this.createElement("circle");
+          e.xSetter = e.ySetter = function (b, e, c) {
+            c.setAttribute("c" + e, b);
+          };
+          return e.attr(b);
+        };
+        J.prototype.arc = function (b, e, c, a, g, d) {
+          v(b)
+            ? ((a = b), (e = a.y), (c = a.r), (b = a.x))
+            : (a = { innerR: a, start: g, end: d });
+          b = this.symbol("arc", b, e, c, c, a);
+          b.r = c;
+          return b;
+        };
+        J.prototype.rect = function (b, e, c, a, g, d) {
+          g = v(b) ? b.r : g;
+          var k = this.createElement("rect");
+          b = v(b)
+            ? b
+            : "undefined" === typeof b
+            ? {}
+            : { x: b, y: e, width: Math.max(c, 0), height: Math.max(a, 0) };
+          this.styledMode ||
+            ("undefined" !== typeof d &&
+              ((b["stroke-width"] = d), (b = k.crisp(b))),
+            (b.fill = "none"));
+          g && (b.r = g);
+          k.rSetter = function (b, e, c) {
+            k.r = b;
+            B(c, { rx: b, ry: b });
+          };
+          k.rGetter = function () {
+            return k.r || 0;
+          };
+          return k.attr(b);
+        };
+        J.prototype.setSize = function (b, e, c) {
+          this.width = b;
+          this.height = e;
+          this.boxWrapper.animate(
+            { width: b, height: e },
+            {
+              step: function () {
+                this.attr({
+                  viewBox:
+                    "0 0 " + this.attr("width") + " " + this.attr("height"),
+                });
+              },
+              duration: u(c, !0) ? void 0 : 0,
+            }
+          );
+          this.alignElements();
+        };
+        J.prototype.g = function (b) {
+          var e = this.createElement("g");
+          return b ? e.attr({ class: "highcharts-" + b }) : e;
+        };
+        J.prototype.image = function (b, e, c, a, g, d) {
+          var k = { preserveAspectRatio: "none" },
+            F = function (b, e) {
+              b.setAttributeNS
+                ? b.setAttributeNS("http://www.w3.org/1999/xlink", "href", e)
+                : b.setAttribute("hc-svg-href", e);
+            };
+          H(e) && (k.x = e);
+          H(c) && (k.y = c);
+          H(a) && (k.width = a);
+          H(g) && (k.height = g);
+          var J = this.createElement("image").attr(k);
+          e = function (e) {
+            F(J.element, b);
+            d.call(J, e);
+          };
+          d
+            ? (F(
+                J.element,
+                "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+              ),
+              (c = new r.Image()),
+              y(c, "load", e),
+              (c.src = b),
+              c.complete && e({}))
+            : F(J.element, b);
+          return J;
+        };
+        J.prototype.symbol = function (c, a, g, J, v, F) {
+          var f = this,
+            p = /^url\((.*?)\)$/,
+            D = p.test(c),
+            l = !D && (this.symbols[c] ? c : "circle"),
+            h = l && this.symbols[l],
+            H;
+          if (h) {
+            "number" === typeof a &&
+              (H = h.call(
+                this.symbols,
+                Math.round(a || 0),
+                Math.round(g || 0),
+                J || 0,
+                v || 0,
+                F
+              ));
+            var M = this.path(H);
+            f.styledMode || M.attr("fill", "none");
+            e(M, { symbolName: l || void 0, x: a, y: g, width: J, height: v });
+            F && e(M, F);
+          } else if (D) {
+            var r = c.match(p)[1];
+            var E = (M = this.image(r));
+            E.imgwidth = u(K[r] && K[r].width, F && F.width);
+            E.imgheight = u(K[r] && K[r].height, F && F.height);
+            var w = function (b) {
+              return b.attr({ width: b.width, height: b.height });
+            };
+            ["width", "height"].forEach(function (e) {
+              E[e + "Setter"] = function (e, c) {
+                var a = this["img" + c];
+                this[c] = e;
+                b(a) &&
+                  (F &&
+                    "within" === F.backgroundSize &&
+                    this.width &&
+                    this.height &&
+                    (a = Math.round(
+                      a *
+                        Math.min(
+                          this.width / this.imgwidth,
+                          this.height / this.imgheight
+                        )
+                    )),
+                  this.element && this.element.setAttribute(c, a),
+                  this.alignByTranslate ||
+                    ((e = ((this[c] || 0) - a) / 2),
+                    this.attr(
+                      "width" === c ? { translateX: e } : { translateY: e }
+                    )));
+              };
+            });
+            b(a) && E.attr({ x: a, y: g });
+            E.isImg = !0;
+            b(E.imgwidth) && b(E.imgheight)
+              ? w(E)
+              : (E.attr({ width: 0, height: 0 }),
+                n("img", {
+                  onload: function () {
+                    var b = m[f.chartIndex];
+                    0 === this.width &&
+                      (k(this, { position: "absolute", top: "-999em" }),
+                      d.body.appendChild(this));
+                    K[r] = { width: this.width, height: this.height };
+                    E.imgwidth = this.width;
+                    E.imgheight = this.height;
+                    E.element && w(E);
+                    this.parentNode && this.parentNode.removeChild(this);
+                    f.imgCount--;
+                    if (!f.imgCount && b && !b.hasLoaded) b.onload();
+                  },
+                  src: r,
+                }),
+                this.imgCount++);
+          }
+          return M;
+        };
+        J.prototype.clipRect = function (b, e, c, a) {
+          var g = U() + "-",
+            d = this.createElement("clipPath").attr({ id: g }).add(this.defs);
+          b = this.rect(b, e, c, a, 0).add(d);
+          b.id = g;
+          b.clipPath = d;
+          b.count = 0;
+          return b;
+        };
+        J.prototype.text = function (e, c, a, g) {
+          var d = {};
+          if (g && (this.allowHTML || !this.forExport))
+            return this.html(e, c, a);
+          d.x = Math.round(c || 0);
+          a && (d.y = Math.round(a));
+          b(e) && (d.text = e);
+          e = this.createElement("text").attr(d);
+          if (!g || (this.forExport && !this.allowHTML))
+            e.xSetter = function (b, e, c) {
+              for (
+                var a = c.getElementsByTagName("tspan"),
+                  g = c.getAttribute(e),
+                  d = 0,
+                  k;
+                d < a.length;
+                d++
+              )
+                (k = a[d]), k.getAttribute(e) === g && k.setAttribute(e, b);
+              c.setAttribute(e, b);
+            };
+          return e;
+        };
+        J.prototype.fontMetrics = function (b, e) {
+          b =
+            (!this.styledMode && /px/.test(b)) || !r.getComputedStyle
+              ? b ||
+                (e && e.style && e.style.fontSize) ||
+                (this.style && this.style.fontSize)
+              : e && x.prototype.getStyle.call(e, "font-size");
+          b = /px/.test(b) ? P(b) : 12;
+          e = 24 > b ? b + 3 : Math.round(1.2 * b);
+          return { h: e, b: Math.round(0.8 * e), f: b };
+        };
+        J.prototype.rotCorr = function (b, e, c) {
+          var a = b;
+          e && c && (a = Math.max(a * Math.cos(e * h), 4));
+          return { x: (-b / 3) * Math.sin(e * h), y: a };
+        };
+        J.prototype.pathToSegments = function (b) {
+          for (
+            var e = [],
+              c = [],
+              a = { A: 8, C: 7, H: 2, L: 3, M: 3, Q: 5, S: 5, T: 3, V: 2 },
+              g = 0;
+            g < b.length;
+            g++
+          )
+            E(c[0]) &&
+              H(b[g]) &&
+              c.length === a[c[0].toUpperCase()] &&
+              b.splice(g, 0, c[0].replace("M", "L").replace("m", "l")),
+              "string" === typeof b[g] &&
+                (c.length && e.push(c.slice(0)), (c.length = 0)),
+              c.push(b[g]);
+          e.push(c.slice(0));
+          return e;
+        };
+        J.prototype.label = function (b, e, c, a, g, d, k, J, n) {
+          return new C(this, b, e, c, a, g, d, k, J, n);
+        };
+        J.prototype.alignElements = function () {
+          this.alignedObjects.forEach(function (b) {
+            return b.align();
+          });
+        };
+        return J;
+      })();
+      e(A.prototype, {
+        Element: x,
+        SVG_NS: p,
+        escapes: {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          "'": "&#39;",
+          '"': "&quot;",
+        },
+        symbols: I,
+        draw: w,
+      });
+      G.registerRendererType("svg", A, !0);
+      ("");
+      return A;
+    }
+  );
+  L(
+    a,
+    "Core/Renderer/HTML/HTMLElement.js",
+    [
+      a["Core/Globals.js"],
+      a["Core/Renderer/SVG/SVGElement.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A) {
+      var u =
+          (this && this.__extends) ||
+          (function () {
+            var c = function (a, d) {
+              c =
+                Object.setPrototypeOf ||
+                ({ __proto__: [] } instanceof Array &&
+                  function (c, a) {
+                    c.__proto__ = a;
+                  }) ||
+                function (c, a) {
+                  for (var d in a) a.hasOwnProperty(d) && (c[d] = a[d]);
+                };
+              return c(a, d);
+            };
+            return function (a, d) {
+              function f() {
+                this.constructor = a;
+              }
+              c(a, d);
+              a.prototype =
+                null === d
+                  ? Object.create(d)
+                  : ((f.prototype = d.prototype), new f());
+            };
+          })(),
+        x = a.isFirefox,
+        C = a.isMS,
+        I = a.isWebKit,
+        z = a.win,
+        q = A.css,
+        m = A.defined,
+        h = A.extend,
+        d = A.pick,
+        c = A.pInt;
+      return (function (a) {
+        function f() {
+          return (null !== a && a.apply(this, arguments)) || this;
+        }
+        u(f, a);
+        f.compose = function (c) {
+          if (-1 === f.composedClasses.indexOf(c)) {
+            f.composedClasses.push(c);
+            var a = f.prototype,
+              d = c.prototype;
+            d.getSpanCorrection = a.getSpanCorrection;
+            d.htmlCss = a.htmlCss;
+            d.htmlGetBBox = a.htmlGetBBox;
+            d.htmlUpdateTransform = a.htmlUpdateTransform;
+            d.setSpanRotation = a.setSpanRotation;
+          }
+          return c;
+        };
+        f.prototype.getSpanCorrection = function (c, a, d) {
+          this.xCorr = -c * d;
+          this.yCorr = -a;
+        };
+        f.prototype.htmlCss = function (c) {
+          var a = "SPAN" === this.element.tagName && c && "width" in c,
+            f = d(a && c.width, void 0);
+          if (a) {
+            delete c.width;
+            this.textWidth = f;
+            var l = !0;
+          }
+          c &&
+            "ellipsis" === c.textOverflow &&
+            ((c.whiteSpace = "nowrap"), (c.overflow = "hidden"));
+          this.styles = h(this.styles, c);
+          q(this.element, c);
+          l && this.htmlUpdateTransform();
+          return this;
+        };
+        f.prototype.htmlGetBBox = function () {
+          var c = this.element;
+          return {
+            x: c.offsetLeft,
+            y: c.offsetTop,
+            width: c.offsetWidth,
+            height: c.offsetHeight,
+          };
+        };
+        f.prototype.htmlUpdateTransform = function () {
+          if (this.added) {
+            var a = this.renderer,
+              d = this.element,
+              f = this.translateX || 0,
+              l = this.translateY || 0,
+              h = this.x || 0,
+              B = this.y || 0,
+              n = this.textAlign || "left",
+              k = { left: 0, center: 0.5, right: 1 }[n],
+              b = this.styles;
+            b = b && b.whiteSpace;
+            q(d, { marginLeft: f, marginTop: l });
+            !a.styledMode &&
+              this.shadows &&
+              this.shadows.forEach(function (b) {
+                q(b, { marginLeft: f + 1, marginTop: l + 1 });
+              });
+            this.inverted &&
+              [].forEach.call(d.childNodes, function (b) {
+                a.invertChild(b, d);
+              });
+            if ("SPAN" === d.tagName) {
+              var g = this.rotation,
+                e = this.textWidth && c(this.textWidth),
+                D = [g, n, d.innerHTML, this.textWidth, this.textAlign].join(),
+                H = void 0;
+              H = !1;
+              if (e !== this.oldTextWidth) {
+                if (this.textPxLength) var v = this.textPxLength;
+                else
+                  q(d, { width: "", whiteSpace: b || "nowrap" }),
+                    (v = d.offsetWidth);
+                (e > this.oldTextWidth || v > e) &&
+                  (/[ \-]/.test(d.textContent || d.innerText) ||
+                    "ellipsis" === d.style.textOverflow) &&
+                  (q(d, {
+                    width: v > e || g ? e + "px" : "auto",
+                    display: "block",
+                    whiteSpace: b || "normal",
+                  }),
+                  (this.oldTextWidth = e),
+                  (H = !0));
+              }
+              this.hasBoxWidthChanged = H;
+              D !== this.cTT &&
+                ((H = a.fontMetrics(d.style.fontSize, d).b),
+                !m(g) ||
+                  (g === (this.oldRotation || 0) && n === this.oldAlign) ||
+                  this.setSpanRotation(g, k, H),
+                this.getSpanCorrection(
+                  (!m(g) && this.textPxLength) || d.offsetWidth,
+                  H,
+                  k,
+                  g,
+                  n
+                ));
+              q(d, {
+                left: h + (this.xCorr || 0) + "px",
+                top: B + (this.yCorr || 0) + "px",
+              });
+              this.cTT = D;
+              this.oldRotation = g;
+              this.oldAlign = n;
+            }
+          } else this.alignOnAdd = !0;
+        };
+        f.prototype.setSpanRotation = function (c, a, d) {
+          var f = {},
+            p =
+              C && !/Edge/.test(z.navigator.userAgent)
+                ? "-ms-transform"
+                : I
+                ? "-webkit-transform"
+                : x
+                ? "MozTransform"
+                : z.opera
+                ? "-o-transform"
+                : void 0;
+          p &&
+            ((f[p] = f.transform = "rotate(" + c + "deg)"),
+            (f[p + (x ? "Origin" : "-origin")] = f.transformOrigin =
+              100 * a + "% " + d + "px"),
+            q(this.element, f));
+        };
+        f.composedClasses = [];
+        return f;
+      })(t);
+    }
+  );
+  L(
+    a,
+    "Core/Renderer/HTML/HTMLRenderer.js",
+    [
+      a["Core/Renderer/HTML/AST.js"],
+      a["Core/Renderer/SVG/SVGElement.js"],
+      a["Core/Renderer/SVG/SVGRenderer.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G) {
+      var u =
+          (this && this.__extends) ||
+          (function () {
+            var a = function (h, d) {
+              a =
+                Object.setPrototypeOf ||
+                ({ __proto__: [] } instanceof Array &&
+                  function (c, a) {
+                    c.__proto__ = a;
+                  }) ||
+                function (c, a) {
+                  for (var d in a) a.hasOwnProperty(d) && (c[d] = a[d]);
+                };
+              return a(h, d);
+            };
+            return function (h, d) {
+              function c() {
+                this.constructor = h;
+              }
+              a(h, d);
+              h.prototype =
+                null === d
+                  ? Object.create(d)
+                  : ((c.prototype = d.prototype), new c());
+            };
+          })(),
+        C = G.attr,
+        I = G.createElement,
+        z = G.extend,
+        q = G.pick;
+      return (function (m) {
+        function h() {
+          return (null !== m && m.apply(this, arguments)) || this;
+        }
+        u(h, m);
+        h.compose = function (a) {
+          -1 === h.composedClasses.indexOf(a) &&
+            (h.composedClasses.push(a), (a.prototype.html = h.prototype.html));
+          return a;
+        };
+        h.prototype.html = function (d, c, l) {
+          var f = this.createElement("span"),
+            h = f.element,
+            p = f.renderer,
+            m = p.isSVG,
+            r = function (c, a) {
+              ["opacity", "visibility"].forEach(function (d) {
+                c[d + "Setter"] = function (k, b, g) {
+                  var e = c.div ? c.div.style : a;
+                  t.prototype[d + "Setter"].call(this, k, b, g);
+                  e && (e[b] = k);
+                };
+              });
+              c.addedSetters = !0;
+            };
+          f.textSetter = function (c) {
+            c !== this.textStr &&
+              (delete this.bBox,
+              delete this.oldTextWidth,
+              a.setElementHTML(this.element, q(c, "")),
+              (this.textStr = c),
+              (f.doTransform = !0));
+          };
+          m && r(f, f.element.style);
+          f.xSetter =
+            f.ySetter =
+            f.alignSetter =
+            f.rotationSetter =
+              function (c, a) {
+                "align" === a ? (f.alignValue = f.textAlign = c) : (f[a] = c);
+                f.doTransform = !0;
+              };
+          f.afterSetters = function () {
+            this.doTransform &&
+              (this.htmlUpdateTransform(), (this.doTransform = !1));
+          };
+          f.attr({ text: d, x: Math.round(c), y: Math.round(l) }).css({
+            position: "absolute",
+          });
+          p.styledMode ||
+            f.css({
+              fontFamily: this.style.fontFamily,
+              fontSize: this.style.fontSize,
+            });
+          h.style.whiteSpace = "nowrap";
+          f.css = f.htmlCss;
+          m &&
+            (f.add = function (c) {
+              var a = p.box.parentNode,
+                d = [];
+              if ((this.parentGroup = c)) {
+                var k = c.div;
+                if (!k) {
+                  for (; c; ) d.push(c), (c = c.parentGroup);
+                  d.reverse().forEach(function (b) {
+                    function c(e, c) {
+                      b[c] = e;
+                      "translateX" === c
+                        ? (p.left = e + "px")
+                        : (p.top = e + "px");
+                      b.doTransform = !0;
                     }
-                }; for (m = 0; m < c; m++)if (h = a[m]) h.oldOpacity = h.opacity, h.newOpacity = 1, h.absoluteBox = l(h); a.sort(function (a, c) { return (c.labelrank || 0) - (a.labelrank || 0) }); for (m = 0; m < c; m++) { var u = (l = a[m]) && l.absoluteBox; for (h = m + 1; h < c; ++h) { var y = (q = a[h]) && q.absoluteBox; !u || !y || l === q || 0 === l.newOpacity || 0 === q.newOpacity || y.x >= u.x + u.width || y.x + y.width <= u.x || y.y >= u.y + u.height || y.y + y.height <= u.y || ((l.labelrank < q.labelrank ? l : q).newOpacity = 0) } } a.forEach(function (a) { v(a, f) && (n = !0) }); n && x(f, "afterHideAllOverlappingLabels")
+                    var e = C(b.element, "class"),
+                      n = b.styles || {};
+                    k = b.div =
+                      b.div ||
+                      I(
+                        "div",
+                        e ? { className: e } : void 0,
+                        {
+                          position: "absolute",
+                          left: (b.translateX || 0) + "px",
+                          top: (b.translateY || 0) + "px",
+                          display: b.display,
+                          opacity: b.opacity,
+                          cursor: n.cursor,
+                          pointerEvents: n.pointerEvents,
+                          visibility: b.visibility,
+                        },
+                        k || a
+                      );
+                    var p = k.style;
+                    z(b, {
+                      classSetter: (function (b) {
+                        return function (e) {
+                          this.element.setAttribute("class", e);
+                          b.className = e;
+                        };
+                      })(k),
+                      on: function () {
+                        d[0].div &&
+                          f.on.apply(
+                            { element: d[0].div, onEvents: b.onEvents },
+                            arguments
+                          );
+                        return b;
+                      },
+                      translateXSetter: c,
+                      translateYSetter: c,
+                    });
+                    b.addedSetters || r(b);
+                  });
+                }
+              } else k = a;
+              k.appendChild(h);
+              f.added = !0;
+              f.alignOnAdd && f.htmlUpdateTransform();
+              return f;
+            });
+          return f;
+        };
+        h.composedClasses = [];
+        return h;
+      })(A);
+    }
+  );
+  L(a, "Core/Axis/AxisDefaults.js", [], function () {
+    var a;
+    (function (a) {
+      a.defaultXAxisOptions = {
+        alignTicks: !0,
+        allowDecimals: void 0,
+        panningEnabled: !0,
+        zIndex: 2,
+        zoomEnabled: !0,
+        dateTimeLabelFormats: {
+          millisecond: { main: "%H:%M:%S.%L", range: !1 },
+          second: { main: "%H:%M:%S", range: !1 },
+          minute: { main: "%H:%M", range: !1 },
+          hour: { main: "%H:%M", range: !1 },
+          day: { main: "%e. %b" },
+          week: { main: "%e. %b" },
+          month: { main: "%b '%y" },
+          year: { main: "%Y" },
+        },
+        endOnTick: !1,
+        gridLineDashStyle: "Solid",
+        gridZIndex: 1,
+        labels: {
+          autoRotation: void 0,
+          autoRotationLimit: 80,
+          distance: void 0,
+          enabled: !0,
+          indentation: 10,
+          overflow: "justify",
+          padding: 5,
+          reserveSpace: void 0,
+          rotation: void 0,
+          staggerLines: 0,
+          step: 0,
+          useHTML: !1,
+          x: 0,
+          zIndex: 7,
+          style: { color: "#666666", cursor: "default", fontSize: "11px" },
+        },
+        maxPadding: 0.01,
+        minorGridLineDashStyle: "Solid",
+        minorTickLength: 2,
+        minorTickPosition: "outside",
+        minPadding: 0.01,
+        offset: void 0,
+        opposite: !1,
+        reversed: void 0,
+        reversedStacks: !1,
+        showEmpty: !0,
+        showFirstLabel: !0,
+        showLastLabel: !0,
+        startOfWeek: 1,
+        startOnTick: !1,
+        tickLength: 10,
+        tickPixelInterval: 100,
+        tickmarkPlacement: "between",
+        tickPosition: "outside",
+        title: {
+          align: "middle",
+          rotation: 0,
+          useHTML: !1,
+          x: 0,
+          y: 0,
+          style: { color: "#666666" },
+        },
+        type: "linear",
+        uniqueNames: !0,
+        visible: !0,
+        minorGridLineColor: "#f2f2f2",
+        minorGridLineWidth: 1,
+        minorTickColor: "#999999",
+        lineColor: "#ccd6eb",
+        lineWidth: 1,
+        gridLineColor: "#e6e6e6",
+        gridLineWidth: void 0,
+        tickColor: "#ccd6eb",
+      };
+      a.defaultYAxisOptions = {
+        reversedStacks: !0,
+        endOnTick: !0,
+        maxPadding: 0.05,
+        minPadding: 0.05,
+        tickPixelInterval: 72,
+        showLastLabel: !0,
+        labels: { x: -8 },
+        startOnTick: !0,
+        title: { rotation: 270, text: "Values" },
+        stackLabels: {
+          animation: {},
+          allowOverlap: !1,
+          enabled: !1,
+          crop: !0,
+          overflow: "justify",
+          formatter: function () {
+            var a = this.axis.chart.numberFormatter;
+            return a(this.total, -1);
+          },
+          style: {
+            color: "#000000",
+            fontSize: "11px",
+            fontWeight: "bold",
+            textOutline: "1px contrast",
+          },
+        },
+        gridLineWidth: 1,
+        lineWidth: 0,
+      };
+      a.defaultLeftAxisOptions = {
+        labels: { x: -15 },
+        title: { rotation: 270 },
+      };
+      a.defaultRightAxisOptions = {
+        labels: { x: 15 },
+        title: { rotation: 90 },
+      };
+      a.defaultBottomAxisOptions = {
+        labels: { autoRotation: [-45], x: 0 },
+        margin: 15,
+        title: { rotation: 0 },
+      };
+      a.defaultTopAxisOptions = {
+        labels: { autoRotation: [-45], x: 0 },
+        margin: 15,
+        title: { rotation: 0 },
+      };
+    })(a || (a = {}));
+    return a;
+  });
+  L(a, "Core/Foundation.js", [a["Core/Utilities.js"]], function (a) {
+    var u = a.addEvent,
+      A = a.isFunction,
+      G = a.objectEach,
+      x = a.removeEvent,
+      C;
+    (function (a) {
+      a.registerEventOptions = function (a, q) {
+        a.eventOptions = a.eventOptions || {};
+        G(q.events, function (m, h) {
+          a.eventOptions[h] !== m &&
+            (a.eventOptions[h] &&
+              (x(a, h, a.eventOptions[h]), delete a.eventOptions[h]),
+            A(m) && ((a.eventOptions[h] = m), u(a, h, m)));
+        });
+      };
+    })(C || (C = {}));
+    return C;
+  });
+  L(
+    a,
+    "Core/Axis/Tick.js",
+    [
+      a["Core/FormatUtilities.js"],
+      a["Core/Globals.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A) {
+      var u = t.deg2rad,
+        x = A.clamp,
+        C = A.correctFloat,
+        I = A.defined,
+        z = A.destroyObjectProperties,
+        q = A.extend,
+        m = A.fireEvent,
+        h = A.isNumber,
+        d = A.merge,
+        c = A.objectEach,
+        l = A.pick;
+      t = (function () {
+        function f(c, a, d, f, h) {
+          this.isNewLabel = this.isNew = !0;
+          this.axis = c;
+          this.pos = a;
+          this.type = d || "";
+          this.parameters = h || {};
+          this.tickmarkOffset = this.parameters.tickmarkOffset;
+          this.options = this.parameters.options;
+          m(this, "init");
+          d || f || this.addLabel();
+        }
+        f.prototype.addLabel = function () {
+          var c = this,
+            d = c.axis,
+            f = d.options,
+            r = d.chart,
+            y = d.categories,
+            B = d.logarithmic,
+            n = d.names,
+            k = c.pos,
+            b = l(c.options && c.options.labels, f.labels),
+            g = d.tickPositions,
+            e = k === g[0],
+            D = k === g[g.length - 1],
+            H = (!b.step || 1 === b.step) && 1 === d.tickInterval;
+          g = g.info;
+          var v = c.label,
+            E;
+          y = this.parameters.category || (y ? l(y[k], n[k], k) : k);
+          B && h(y) && (y = C(B.lin2log(y)));
+          if (d.dateTime)
+            if (g) {
+              var O = r.time.resolveDTLFormat(
+                f.dateTimeLabelFormats[
+                  (!f.grid && g.higherRanks[k]) || g.unitName
+                ]
+              );
+              var u = O.main;
+            } else
+              h(y) &&
+                (u = d.dateTime.getXDateFormat(
+                  y,
+                  f.dateTimeLabelFormats || {}
+                ));
+          c.isFirst = e;
+          c.isLast = D;
+          var P = {
+            axis: d,
+            chart: r,
+            dateTimeLabelFormat: u,
+            isFirst: e,
+            isLast: D,
+            pos: k,
+            tick: c,
+            tickPositionInfo: g,
+            value: y,
+          };
+          m(this, "labelFormat", P);
+          var t = function (e) {
+            return b.formatter
+              ? b.formatter.call(e, e)
+              : b.format
+              ? ((e.text = d.defaultLabelFormatter.call(e)),
+                a.format(b.format, e, r))
+              : d.defaultLabelFormatter.call(e, e);
+          };
+          f = t.call(P, P);
+          var z = O && O.list;
+          c.shortenLabel = z
+            ? function () {
+                for (E = 0; E < z.length; E++)
+                  if (
+                    (q(P, { dateTimeLabelFormat: z[E] }),
+                    v.attr({ text: t.call(P, P) }),
+                    v.getBBox().width < d.getSlotWidth(c) - 2 * b.padding)
+                  )
+                    return;
+                v.attr({ text: "" });
+              }
+            : void 0;
+          H && d._addedPlotLB && c.moveLabel(f, b);
+          I(v) || c.movedLabel
+            ? v &&
+              v.textStr !== f &&
+              !H &&
+              (!v.textWidth ||
+                b.style.width ||
+                v.styles.width ||
+                v.css({ width: null }),
+              v.attr({ text: f }),
+              (v.textPxLength = v.getBBox().width))
+            : ((c.label = v = c.createLabel({ x: 0, y: 0 }, f, b)),
+              (c.rotation = 0));
+        };
+        f.prototype.createLabel = function (c, a, f) {
+          var h = this.axis,
+            l = h.chart;
+          if (
+            (c =
+              I(a) && f.enabled
+                ? l.renderer.text(a, c.x, c.y, f.useHTML).add(h.labelGroup)
+                : null)
+          )
+            l.styledMode || c.css(d(f.style)),
+              (c.textPxLength = c.getBBox().width);
+          return c;
+        };
+        f.prototype.destroy = function () {
+          z(this, this.axis);
+        };
+        f.prototype.getPosition = function (c, a, d, f) {
+          var h = this.axis,
+            l = h.chart,
+            n = (f && l.oldChartHeight) || l.chartHeight;
+          c = {
+            x: c
+              ? C(h.translate(a + d, null, null, f) + h.transB)
+              : h.left +
+                h.offset +
+                (h.opposite
+                  ? ((f && l.oldChartWidth) || l.chartWidth) - h.right - h.left
+                  : 0),
+            y: c
+              ? n - h.bottom + h.offset - (h.opposite ? h.height : 0)
+              : C(n - h.translate(a + d, null, null, f) - h.transB),
+          };
+          c.y = x(c.y, -1e5, 1e5);
+          m(this, "afterGetPosition", { pos: c });
+          return c;
+        };
+        f.prototype.getLabelPosition = function (c, a, d, f, h, l, n, k) {
+          var b = this.axis,
+            g = b.transA,
+            e =
+              b.isLinked && b.linkedParent
+                ? b.linkedParent.reversed
+                : b.reversed,
+            D = b.staggerLines,
+            p = b.tickRotCorr || { x: 0, y: 0 },
+            v =
+              f || b.reserveSpaceDefault
+                ? 0
+                : -b.labelOffset * ("center" === b.labelAlign ? 0.5 : 1),
+            E = {},
+            r = h.y;
+          I(r) ||
+            (r =
+              0 === b.side
+                ? d.rotation
+                  ? -8
+                  : -d.getBBox().height
+                : 2 === b.side
+                ? p.y + 8
+                : Math.cos(d.rotation * u) *
+                  (p.y - d.getBBox(!1, 0).height / 2));
+          c = c + h.x + v + p.x - (l && f ? l * g * (e ? -1 : 1) : 0);
+          a = a + r - (l && !f ? l * g * (e ? 1 : -1) : 0);
+          D &&
+            ((d = (n / (k || 1)) % D),
+            b.opposite && (d = D - d - 1),
+            (a += (b.labelOffset / D) * d));
+          E.x = c;
+          E.y = Math.round(a);
+          m(this, "afterGetLabelPosition", {
+            pos: E,
+            tickmarkOffset: l,
+            index: n,
+          });
+          return E;
+        };
+        f.prototype.getLabelSize = function () {
+          return this.label
+            ? this.label.getBBox()[this.axis.horiz ? "height" : "width"]
+            : 0;
+        };
+        f.prototype.getMarkPath = function (c, a, d, f, h, l) {
+          return l.crispLine(
+            [
+              ["M", c, a],
+              ["L", c + (h ? 0 : -d), a + (h ? d : 0)],
+            ],
+            f
+          );
+        };
+        f.prototype.handleOverflow = function (c) {
+          var a = this.axis,
+            d = a.options.labels,
+            f = c.x,
+            h = a.chart.chartWidth,
+            m = a.chart.spacing,
+            n = l(a.labelLeft, Math.min(a.pos, m[3]));
+          m = l(
+            a.labelRight,
+            Math.max(a.isRadial ? 0 : a.pos + a.len, h - m[1])
+          );
+          var k = this.label,
+            b = this.rotation,
+            g = { left: 0, center: 0.5, right: 1 }[
+              a.labelAlign || k.attr("align")
+            ],
+            e = k.getBBox().width,
+            D = a.getSlotWidth(this),
+            H = {},
+            v = D,
+            E = 1,
+            w;
+          if (b || "justify" !== d.overflow)
+            0 > b && f - g * e < n
+              ? (w = Math.round(f / Math.cos(b * u) - n))
+              : 0 < b &&
+                f + g * e > m &&
+                (w = Math.round((h - f) / Math.cos(b * u)));
+          else if (
+            ((h = f + (1 - g) * e),
+            f - g * e < n
+              ? (v = c.x + v * (1 - g) - n)
+              : h > m && ((v = m - c.x + v * g), (E = -1)),
+            (v = Math.min(D, v)),
+            v < D &&
+              "center" === a.labelAlign &&
+              (c.x += E * (D - v - g * (D - Math.min(e, v)))),
+            e > v || (a.autoRotation && (k.styles || {}).width))
+          )
+            w = v;
+          w &&
+            (this.shortenLabel
+              ? this.shortenLabel()
+              : ((H.width = Math.floor(w) + "px"),
+                (d.style || {}).textOverflow || (H.textOverflow = "ellipsis"),
+                k.css(H)));
+        };
+        f.prototype.moveLabel = function (a, d) {
+          var f = this,
+            h = f.label,
+            l = f.axis,
+            p = l.reversed,
+            n = !1;
+          h && h.textStr === a
+            ? ((f.movedLabel = h), (n = !0), delete f.label)
+            : c(l.ticks, function (b) {
+                n ||
+                  b.isNew ||
+                  b === f ||
+                  !b.label ||
+                  b.label.textStr !== a ||
+                  ((f.movedLabel = b.label),
+                  (n = !0),
+                  (b.labelPos = f.movedLabel.xy),
+                  delete b.label);
+              });
+          if (!n && (f.labelPos || h)) {
+            var k = f.labelPos || h.xy;
+            h = l.horiz ? (p ? 0 : l.width + l.left) : k.x;
+            l = l.horiz ? k.y : p ? l.width + l.left : 0;
+            f.movedLabel = f.createLabel({ x: h, y: l }, a, d);
+            f.movedLabel && f.movedLabel.attr({ opacity: 0 });
+          }
+        };
+        f.prototype.render = function (c, a, d) {
+          var f = this.axis,
+            h = f.horiz,
+            p = this.pos,
+            n = l(this.tickmarkOffset, f.tickmarkOffset);
+          p = this.getPosition(h, p, n, a);
+          n = p.x;
+          var k = p.y;
+          f = (h && n === f.pos + f.len) || (!h && k === f.pos) ? -1 : 1;
+          h = l(d, this.label && this.label.newOpacity, 1);
+          d = l(d, 1);
+          this.isActive = !0;
+          this.renderGridLine(a, d, f);
+          this.renderMark(p, d, f);
+          this.renderLabel(p, a, h, c);
+          this.isNew = !1;
+          m(this, "afterRender");
+        };
+        f.prototype.renderGridLine = function (c, a, d) {
+          var f = this.axis,
+            h = f.options,
+            p = {},
+            n = this.pos,
+            k = this.type,
+            b = l(this.tickmarkOffset, f.tickmarkOffset),
+            g = f.chart.renderer,
+            e = this.gridLine,
+            D = h.gridLineWidth,
+            H = h.gridLineColor,
+            v = h.gridLineDashStyle;
+          "minor" === this.type &&
+            ((D = h.minorGridLineWidth),
+            (H = h.minorGridLineColor),
+            (v = h.minorGridLineDashStyle));
+          e ||
+            (f.chart.styledMode ||
+              ((p.stroke = H), (p["stroke-width"] = D || 0), (p.dashstyle = v)),
+            k || (p.zIndex = 1),
+            c && (a = 0),
+            (this.gridLine = e =
+              g
+                .path()
+                .attr(p)
+                .addClass("highcharts-" + (k ? k + "-" : "") + "grid-line")
+                .add(f.gridGroup)));
+          if (
+            e &&
+            (d = f.getPlotLinePath({
+              value: n + b,
+              lineWidth: e.strokeWidth() * d,
+              force: "pass",
+              old: c,
+            }))
+          )
+            e[c || this.isNew ? "attr" : "animate"]({ d: d, opacity: a });
+        };
+        f.prototype.renderMark = function (c, a, d) {
+          var f = this.axis,
+            h = f.options,
+            p = f.chart.renderer,
+            n = this.type,
+            k = f.tickSize(n ? n + "Tick" : "tick"),
+            b = c.x;
+          c = c.y;
+          var g = l(
+            h["minor" !== n ? "tickWidth" : "minorTickWidth"],
+            !n && f.isXAxis ? 1 : 0
+          );
+          h = h["minor" !== n ? "tickColor" : "minorTickColor"];
+          var e = this.mark,
+            D = !e;
+          k &&
+            (f.opposite && (k[0] = -k[0]),
+            e ||
+              ((this.mark = e =
+                p
+                  .path()
+                  .addClass("highcharts-" + (n ? n + "-" : "") + "tick")
+                  .add(f.axisGroup)),
+              f.chart.styledMode || e.attr({ stroke: h, "stroke-width": g })),
+            e[D ? "attr" : "animate"]({
+              d: this.getMarkPath(b, c, k[0], e.strokeWidth() * d, f.horiz, p),
+              opacity: a,
+            }));
+        };
+        f.prototype.renderLabel = function (c, a, d, f) {
+          var p = this.axis,
+            m = p.horiz,
+            n = p.options,
+            k = this.label,
+            b = n.labels,
+            g = b.step;
+          p = l(this.tickmarkOffset, p.tickmarkOffset);
+          var e = c.x;
+          c = c.y;
+          var D = !0;
+          k &&
+            h(e) &&
+            ((k.xy = c = this.getLabelPosition(e, c, k, m, b, p, f, g)),
+            (this.isFirst && !this.isLast && !n.showFirstLabel) ||
+            (this.isLast && !this.isFirst && !n.showLastLabel)
+              ? (D = !1)
+              : !m ||
+                b.step ||
+                b.rotation ||
+                a ||
+                0 === d ||
+                this.handleOverflow(c),
+            g && f % g && (D = !1),
+            D && h(c.y)
+              ? ((c.opacity = d),
+                k[this.isNewLabel ? "attr" : "animate"](c),
+                (this.isNewLabel = !1))
+              : (k.attr("y", -9999), (this.isNewLabel = !0)));
+        };
+        f.prototype.replaceMovedLabel = function () {
+          var c = this.label,
+            a = this.axis,
+            d = a.reversed;
+          if (c && !this.isNew) {
+            var f = a.horiz ? (d ? a.left : a.width + a.left) : c.xy.x;
+            d = a.horiz ? c.xy.y : d ? a.width + a.top : a.top;
+            c.animate({ x: f, y: d, opacity: 0 }, void 0, c.destroy);
+            delete this.label;
+          }
+          a.isDirty = !0;
+          this.label = this.movedLabel;
+          delete this.movedLabel;
+        };
+        return f;
+      })();
+      ("");
+      return t;
+    }
+  );
+  L(
+    a,
+    "Core/Axis/Axis.js",
+    [
+      a["Core/Animation/AnimationUtilities.js"],
+      a["Core/Axis/AxisDefaults.js"],
+      a["Core/Color/Color.js"],
+      a["Core/DefaultOptions.js"],
+      a["Core/Foundation.js"],
+      a["Core/Globals.js"],
+      a["Core/Axis/Tick.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G, x, C, I, z) {
+      var q = a.animObject,
+        m = G.defaultOptions,
+        h = x.registerEventOptions,
+        d = C.deg2rad,
+        c = z.arrayMax,
+        l = z.arrayMin,
+        f = z.clamp,
+        w = z.correctFloat,
+        p = z.defined,
+        K = z.destroyObjectProperties,
+        r = z.erase,
+        y = z.error,
+        B = z.extend,
+        n = z.fireEvent,
+        k = z.getMagnitude,
+        b = z.isArray,
+        g = z.isNumber,
+        e = z.isString,
+        D = z.merge,
+        H = z.normalizeTickInterval,
+        v = z.objectEach,
+        E = z.pick,
+        O = z.relativeLength,
+        u = z.removeEvent,
+        P = z.splat,
+        U = z.syncTimeout;
+      a = (function () {
+        function a(b, e) {
+          this.zoomEnabled =
+            this.width =
+            this.visible =
+            this.userOptions =
+            this.translationSlope =
+            this.transB =
+            this.transA =
+            this.top =
+            this.ticks =
+            this.tickRotCorr =
+            this.tickPositions =
+            this.tickmarkOffset =
+            this.tickInterval =
+            this.tickAmount =
+            this.side =
+            this.series =
+            this.right =
+            this.positiveValuesOnly =
+            this.pos =
+            this.pointRangePadding =
+            this.pointRange =
+            this.plotLinesAndBandsGroups =
+            this.plotLinesAndBands =
+            this.paddedTicks =
+            this.overlap =
+            this.options =
+            this.offset =
+            this.names =
+            this.minPixelPadding =
+            this.minorTicks =
+            this.minorTickInterval =
+            this.min =
+            this.maxLabelLength =
+            this.max =
+            this.len =
+            this.left =
+            this.labelFormatter =
+            this.labelEdge =
+            this.isLinked =
+            this.height =
+            this.hasVisibleSeries =
+            this.hasNames =
+            this.eventOptions =
+            this.coll =
+            this.closestPointRange =
+            this.chart =
+            this.categories =
+            this.bottom =
+            this.alternateBands =
+              void 0;
+          this.init(b, e);
+        }
+        a.prototype.init = function (b, e) {
+          var a = e.isX;
+          this.chart = b;
+          this.horiz = b.inverted && !this.isZAxis ? !a : a;
+          this.isXAxis = a;
+          this.coll = this.coll || (a ? "xAxis" : "yAxis");
+          n(this, "init", { userOptions: e });
+          this.opposite = E(e.opposite, this.opposite);
+          this.side = E(
+            e.side,
+            this.side,
+            this.horiz ? (this.opposite ? 0 : 2) : this.opposite ? 1 : 3
+          );
+          this.setOptions(e);
+          var c = this.options,
+            d = c.labels,
+            k = c.type;
+          this.userOptions = e;
+          this.minPixelPadding = 0;
+          this.reversed = E(c.reversed, this.reversed);
+          this.visible = c.visible;
+          this.zoomEnabled = c.zoomEnabled;
+          this.hasNames = "category" === k || !0 === c.categories;
+          this.categories = c.categories || this.hasNames;
+          this.names || ((this.names = []), (this.names.keys = {}));
+          this.plotLinesAndBandsGroups = {};
+          this.positiveValuesOnly = !!this.logarithmic;
+          this.isLinked = p(c.linkedTo);
+          this.ticks = {};
+          this.labelEdge = [];
+          this.minorTicks = {};
+          this.plotLinesAndBands = [];
+          this.alternateBands = {};
+          this.len = 0;
+          this.minRange = this.userMinRange = c.minRange || c.maxZoom;
+          this.range = c.range;
+          this.offset = c.offset || 0;
+          this.min = this.max = null;
+          e = E(c.crosshair, P(b.options.tooltip.crosshairs)[a ? 0 : 1]);
+          this.crosshair = !0 === e ? {} : e;
+          -1 === b.axes.indexOf(this) &&
+            (a ? b.axes.splice(b.xAxis.length, 0, this) : b.axes.push(this),
+            b[this.coll].push(this));
+          this.series = this.series || [];
+          b.inverted &&
+            !this.isZAxis &&
+            a &&
+            "undefined" === typeof this.reversed &&
+            (this.reversed = !0);
+          this.labelRotation = g(d.rotation) ? d.rotation : void 0;
+          h(this, c);
+          n(this, "afterInit");
+        };
+        a.prototype.setOptions = function (b) {
+          this.options = D(
+            t.defaultXAxisOptions,
+            "yAxis" === this.coll && t.defaultYAxisOptions,
+            [
+              t.defaultTopAxisOptions,
+              t.defaultRightAxisOptions,
+              t.defaultBottomAxisOptions,
+              t.defaultLeftAxisOptions,
+            ][this.side],
+            D(m[this.coll], b)
+          );
+          n(this, "afterSetOptions", { userOptions: b });
+        };
+        a.prototype.defaultLabelFormatter = function (b) {
+          var e = this.axis;
+          b = this.chart.numberFormatter;
+          var a = g(this.value) ? this.value : NaN,
+            c = e.chart.time,
+            d = this.dateTimeLabelFormat,
+            k = m.lang,
+            f = k.numericSymbols;
+          k = k.numericSymbolMagnitude || 1e3;
+          var n = e.logarithmic ? Math.abs(a) : e.tickInterval,
+            J = f && f.length;
+          if (e.categories) var h = "" + this.value;
+          else if (d) h = c.dateFormat(d, a);
+          else if (J && 1e3 <= n)
+            for (; J-- && "undefined" === typeof h; )
+              (e = Math.pow(k, J + 1)),
+                n >= e &&
+                  0 === (10 * a) % e &&
+                  null !== f[J] &&
+                  0 !== a &&
+                  (h = b(a / e, -1) + f[J]);
+          "undefined" === typeof h &&
+            (h = 1e4 <= Math.abs(a) ? b(a, -1) : b(a, -1, void 0, ""));
+          return h;
+        };
+        a.prototype.getSeriesExtremes = function () {
+          var b = this,
+            e = b.chart,
+            a;
+          n(this, "getSeriesExtremes", null, function () {
+            b.hasVisibleSeries = !1;
+            b.dataMin = b.dataMax = b.threshold = null;
+            b.softThreshold = !b.isXAxis;
+            b.stacking && b.stacking.buildStacks();
+            b.series.forEach(function (c) {
+              if (c.visible || !e.options.chart.ignoreHiddenSeries) {
+                var d = c.options,
+                  k = d.threshold;
+                b.hasVisibleSeries = !0;
+                b.positiveValuesOnly && 0 >= k && (k = null);
+                if (b.isXAxis) {
+                  if (((d = c.xData), d.length)) {
+                    d = b.logarithmic ? d.filter(b.validatePositiveValue) : d;
+                    a = c.getXExtremes(d);
+                    var f = a.min;
+                    var n = a.max;
+                    g(f) ||
+                      f instanceof Date ||
+                      ((d = d.filter(g)),
+                      (a = c.getXExtremes(d)),
+                      (f = a.min),
+                      (n = a.max));
+                    d.length &&
+                      ((b.dataMin = Math.min(E(b.dataMin, f), f)),
+                      (b.dataMax = Math.max(E(b.dataMax, n), n)));
+                  }
+                } else if (
+                  ((c = c.applyExtremes()),
+                  g(c.dataMin) &&
+                    ((f = c.dataMin),
+                    (b.dataMin = Math.min(E(b.dataMin, f), f))),
+                  g(c.dataMax) &&
+                    ((n = c.dataMax),
+                    (b.dataMax = Math.max(E(b.dataMax, n), n))),
+                  p(k) && (b.threshold = k),
+                  !d.softThreshold || b.positiveValuesOnly)
+                )
+                  b.softThreshold = !1;
+              }
+            });
+          });
+          n(this, "afterGetSeriesExtremes");
+        };
+        a.prototype.translate = function (b, e, a, c, d, k) {
+          var f = this.linkedParent || this,
+            n = c && f.old ? f.old.min : f.min,
+            h = f.minPixelPadding;
+          d =
+            (f.isOrdinal ||
+              (f.brokenAxis && f.brokenAxis.hasBreaks) ||
+              (f.logarithmic && d)) &&
+            f.lin2val;
+          var v = 1,
+            J = 0;
+          c = c && f.old ? f.old.transA : f.transA;
+          c || (c = f.transA);
+          a && ((v *= -1), (J = f.len));
+          f.reversed && ((v *= -1), (J -= v * (f.sector || f.len)));
+          e
+            ? ((b = (b * v + J - h) / c + n), d && (b = f.lin2val(b)))
+            : (d && (b = f.val2lin(b)),
+              (b = g(n)
+                ? v * (b - n) * c + J + v * h + (g(k) ? c * k : 0)
+                : void 0));
+          return b;
+        };
+        a.prototype.toPixels = function (b, e) {
+          return (
+            this.translate(b, !1, !this.horiz, null, !0) + (e ? 0 : this.pos)
+          );
+        };
+        a.prototype.toValue = function (b, e) {
+          return this.translate(
+            b - (e ? 0 : this.pos),
+            !0,
+            !this.horiz,
+            null,
+            !0
+          );
+        };
+        a.prototype.getPlotLinePath = function (b) {
+          function e(b, e, a) {
+            if (("pass" !== H && b < e) || b > a)
+              H ? (b = f(b, e, a)) : (O = !0);
+            return b;
+          }
+          var a = this,
+            c = a.chart,
+            d = a.left,
+            k = a.top,
+            F = b.old,
+            h = b.value,
+            v = b.lineWidth,
+            J = (F && c.oldChartHeight) || c.chartHeight,
+            l = (F && c.oldChartWidth) || c.chartWidth,
+            D = a.transB,
+            p = b.translatedValue,
+            H = b.force,
+            m,
+            r,
+            B,
+            q,
+            O;
+          b = {
+            value: h,
+            lineWidth: v,
+            old: F,
+            force: H,
+            acrossPanes: b.acrossPanes,
+            translatedValue: p,
+          };
+          n(this, "getPlotLinePath", b, function (b) {
+            p = E(p, a.translate(h, null, null, F));
+            p = f(p, -1e5, 1e5);
+            m = B = Math.round(p + D);
+            r = q = Math.round(J - p - D);
+            g(p)
+              ? a.horiz
+                ? ((r = k), (q = J - a.bottom), (m = B = e(m, d, d + a.width)))
+                : ((m = d), (B = l - a.right), (r = q = e(r, k, k + a.height)))
+              : ((O = !0), (H = !1));
+            b.path =
+              O && !H
+                ? null
+                : c.renderer.crispLine(
+                    [
+                      ["M", m, r],
+                      ["L", B, q],
+                    ],
+                    v || 1
+                  );
+          });
+          return b.path;
+        };
+        a.prototype.getLinearTickPositions = function (b, e, a) {
+          var c = w(Math.floor(e / b) * b);
+          a = w(Math.ceil(a / b) * b);
+          var d = [],
+            g;
+          w(c + b) === c && (g = 20);
+          if (this.single) return [e];
+          for (e = c; e <= a; ) {
+            d.push(e);
+            e = w(e + b, g);
+            if (e === k) break;
+            var k = e;
+          }
+          return d;
+        };
+        a.prototype.getMinorTickInterval = function () {
+          var b = this.options;
+          return !0 === b.minorTicks
+            ? E(b.minorTickInterval, "auto")
+            : !1 === b.minorTicks
+            ? null
+            : b.minorTickInterval;
+        };
+        a.prototype.getMinorTickPositions = function () {
+          var b = this.options,
+            e = this.tickPositions,
+            a = this.minorTickInterval,
+            c = this.pointRangePadding || 0,
+            d = this.min - c;
+          c = this.max + c;
+          var g = c - d,
+            k = [];
+          if (g && g / a < this.len / 3) {
+            var f = this.logarithmic;
+            if (f)
+              this.paddedTicks.forEach(function (b, e, c) {
+                e &&
+                  k.push.apply(k, f.getLogTickPositions(a, c[e - 1], c[e], !0));
+              });
+            else if (this.dateTime && "auto" === this.getMinorTickInterval())
+              k = k.concat(
+                this.getTimeTicks(
+                  this.dateTime.normalizeTimeTickInterval(a),
+                  d,
+                  c,
+                  b.startOfWeek
+                )
+              );
+            else
+              for (b = d + ((e[0] - d) % a); b <= c && b !== k[0]; b += a)
+                k.push(b);
+          }
+          0 !== k.length && this.trimTicks(k);
+          return k;
+        };
+        a.prototype.adjustForMinRange = function () {
+          var b = this.options,
+            e = this.logarithmic,
+            a = this.min,
+            d = this.max,
+            g = 0,
+            k,
+            f,
+            n,
+            h;
+          this.isXAxis &&
+            "undefined" === typeof this.minRange &&
+            !e &&
+            (p(b.min) || p(b.max) || p(b.floor) || p(b.ceiling)
+              ? (this.minRange = null)
+              : (this.series.forEach(function (b) {
+                  n = b.xData;
+                  h = b.xIncrement ? 1 : n.length - 1;
+                  if (1 < n.length)
+                    for (k = h; 0 < k; k--)
+                      if (((f = n[k] - n[k - 1]), !g || f < g)) g = f;
+                }),
+                (this.minRange = Math.min(
+                  5 * g,
+                  this.dataMax - this.dataMin
+                ))));
+          if (d - a < this.minRange) {
+            var v = this.dataMax - this.dataMin >= this.minRange;
+            var D = this.minRange;
+            var H = (D - d + a) / 2;
+            H = [a - H, E(b.min, a - H)];
+            v &&
+              (H[2] = this.logarithmic
+                ? this.logarithmic.log2lin(this.dataMin)
+                : this.dataMin);
+            a = c(H);
+            d = [a + D, E(b.max, a + D)];
+            v && (d[2] = e ? e.log2lin(this.dataMax) : this.dataMax);
+            d = l(d);
+            d - a < D && ((H[0] = d - D), (H[1] = E(b.min, d - D)), (a = c(H)));
+          }
+          this.min = a;
+          this.max = d;
+        };
+        a.prototype.getClosest = function () {
+          var b;
+          this.categories
+            ? (b = 1)
+            : this.series.forEach(function (e) {
+                var a = e.closestPointRange,
+                  c = e.visible || !e.chart.options.chart.ignoreHiddenSeries;
+                !e.noSharedTooltip &&
+                  p(a) &&
+                  c &&
+                  (b = p(b) ? Math.min(b, a) : a);
+              });
+          return b;
+        };
+        a.prototype.nameToX = function (e) {
+          var a = b(this.categories),
+            c = a ? this.categories : this.names,
+            d = e.options.x;
+          e.series.requireSorting = !1;
+          p(d) ||
+            (d = this.options.uniqueNames
+              ? a
+                ? c.indexOf(e.name)
+                : E(c.keys[e.name], -1)
+              : e.series.autoIncrement());
+          if (-1 === d) {
+            if (!a) var g = c.length;
+          } else g = d;
+          "undefined" !== typeof g &&
+            ((this.names[g] = e.name), (this.names.keys[e.name] = g));
+          return g;
+        };
+        a.prototype.updateNames = function () {
+          var b = this,
+            e = this.names;
+          0 < e.length &&
+            (Object.keys(e.keys).forEach(function (b) {
+              delete e.keys[b];
+            }),
+            (e.length = 0),
+            (this.minRange = this.userMinRange),
+            (this.series || []).forEach(function (e) {
+              e.xIncrement = null;
+              if (!e.points || e.isDirtyData)
+                (b.max = Math.max(b.max, e.xData.length - 1)),
+                  e.processData(),
+                  e.generatePoints();
+              e.data.forEach(function (a, c) {
+                if (a && a.options && "undefined" !== typeof a.name) {
+                  var d = b.nameToX(a);
+                  "undefined" !== typeof d &&
+                    d !== a.x &&
+                    ((a.x = d), (e.xData[c] = d));
+                }
+              });
+            }));
+        };
+        a.prototype.setAxisTranslation = function () {
+          var b = this,
+            a = b.max - b.min,
+            c = b.linkedParent,
+            d = !!b.categories,
+            g = b.isXAxis,
+            k = b.axisPointRange || 0,
+            f = 0,
+            h = 0,
+            v = b.transA;
+          if (g || d || k) {
+            var D = b.getClosest();
+            c
+              ? ((f = c.minPointOffset), (h = c.pointRangePadding))
+              : b.series.forEach(function (a) {
+                  var c = d
+                      ? 1
+                      : g
+                      ? E(a.options.pointRange, D, 0)
+                      : b.axisPointRange || 0,
+                    n = a.options.pointPlacement;
+                  k = Math.max(k, c);
+                  if (!b.single || d)
+                    (a = a.is("xrange") ? !g : g),
+                      (f = Math.max(f, a && e(n) ? 0 : c / 2)),
+                      (h = Math.max(h, a && "on" === n ? 0 : c));
+                });
+            c = b.ordinal && b.ordinal.slope && D ? b.ordinal.slope / D : 1;
+            b.minPointOffset = f *= c;
+            b.pointRangePadding = h *= c;
+            b.pointRange = Math.min(k, b.single && d ? 1 : a);
+            g && (b.closestPointRange = D);
+          }
+          b.translationSlope =
+            b.transA =
+            v =
+              b.staticScale || b.len / (a + h || 1);
+          b.transB = b.horiz ? b.left : b.bottom;
+          b.minPixelPadding = v * f;
+          n(this, "afterSetAxisTranslation");
+        };
+        a.prototype.minFromRange = function () {
+          return this.max - this.range;
+        };
+        a.prototype.setTickInterval = function (b) {
+          var e = this.chart,
+            a = this.logarithmic,
+            c = this.options,
+            d = this.isXAxis,
+            f = this.isLinked,
+            h = c.tickPixelInterval,
+            v = this.categories,
+            D = this.softThreshold,
+            l = c.maxPadding,
+            J = c.minPadding,
+            m =
+              g(c.tickInterval) && 0 <= c.tickInterval
+                ? c.tickInterval
+                : void 0,
+            r = g(this.threshold) ? this.threshold : null;
+          this.dateTime || v || f || this.getTickAmount();
+          var B = E(this.userMin, c.min);
+          var q = E(this.userMax, c.max);
+          if (f) {
+            this.linkedParent = e[this.coll][c.linkedTo];
+            var O = this.linkedParent.getExtremes();
+            this.min = E(O.min, O.dataMin);
+            this.max = E(O.max, O.dataMax);
+            c.type !== this.linkedParent.options.type && y(11, 1, e);
+          } else {
+            if (D && p(r))
+              if (this.dataMin >= r) (O = r), (J = 0);
+              else if (this.dataMax <= r) {
+                var K = r;
+                l = 0;
+              }
+            this.min = E(B, O, this.dataMin);
+            this.max = E(q, K, this.dataMax);
+          }
+          a &&
+            (this.positiveValuesOnly &&
+              !b &&
+              0 >= Math.min(this.min, E(this.dataMin, this.min)) &&
+              y(10, 1, e),
+            (this.min = w(a.log2lin(this.min), 16)),
+            (this.max = w(a.log2lin(this.max), 16)));
+          this.range &&
+            p(this.max) &&
+            ((this.userMin =
+              this.min =
+              B =
+                Math.max(this.dataMin, this.minFromRange())),
+            (this.userMax = q = this.max),
+            (this.range = null));
+          n(this, "foundExtremes");
+          this.beforePadding && this.beforePadding();
+          this.adjustForMinRange();
+          !(
+            v ||
+            this.axisPointRange ||
+            (this.stacking && this.stacking.usePercentage) ||
+            f
+          ) &&
+            p(this.min) &&
+            p(this.max) &&
+            (e = this.max - this.min) &&
+            (!p(B) && J && (this.min -= e * J),
+            !p(q) && l && (this.max += e * l));
+          g(this.userMin) ||
+            (g(c.softMin) && c.softMin < this.min && (this.min = B = c.softMin),
+            g(c.floor) && (this.min = Math.max(this.min, c.floor)));
+          g(this.userMax) ||
+            (g(c.softMax) && c.softMax > this.max && (this.max = q = c.softMax),
+            g(c.ceiling) && (this.max = Math.min(this.max, c.ceiling)));
+          D &&
+            p(this.dataMin) &&
+            ((r = r || 0),
+            !p(B) && this.min < r && this.dataMin >= r
+              ? (this.min = this.options.minRange
+                  ? Math.min(r, this.max - this.minRange)
+                  : r)
+              : !p(q) &&
+                this.max > r &&
+                this.dataMax <= r &&
+                (this.max = this.options.minRange
+                  ? Math.max(r, this.min + this.minRange)
+                  : r));
+          g(this.min) &&
+            g(this.max) &&
+            !this.chart.polar &&
+            this.min > this.max &&
+            (p(this.options.min)
+              ? (this.max = this.min)
+              : p(this.options.max) && (this.min = this.max));
+          this.tickInterval =
+            this.min === this.max ||
+            "undefined" === typeof this.min ||
+            "undefined" === typeof this.max
+              ? 1
+              : f &&
+                this.linkedParent &&
+                !m &&
+                h === this.linkedParent.options.tickPixelInterval
+              ? (m = this.linkedParent.tickInterval)
+              : E(
+                  m,
+                  this.tickAmount
+                    ? (this.max - this.min) / Math.max(this.tickAmount - 1, 1)
+                    : void 0,
+                  v ? 1 : ((this.max - this.min) * h) / Math.max(this.len, h)
+                );
+          if (d && !b) {
+            var u =
+              this.min !== (this.old && this.old.min) ||
+              this.max !== (this.old && this.old.max);
+            this.series.forEach(function (b) {
+              b.forceCrop = b.forceCropping && b.forceCropping();
+              b.processData(u);
+            });
+            n(this, "postProcessData", { hasExtemesChanged: u });
+          }
+          this.setAxisTranslation();
+          n(this, "initialAxisTranslation");
+          this.pointRange &&
+            !m &&
+            (this.tickInterval = Math.max(this.pointRange, this.tickInterval));
+          b = E(
+            c.minTickInterval,
+            this.dateTime &&
+              !this.series.some(function (b) {
+                return b.noSharedTooltip;
+              })
+              ? this.closestPointRange
+              : 0
+          );
+          !m && this.tickInterval < b && (this.tickInterval = b);
+          this.dateTime ||
+            this.logarithmic ||
+            m ||
+            (this.tickInterval = H(
+              this.tickInterval,
+              void 0,
+              k(this.tickInterval),
+              E(
+                c.allowDecimals,
+                0.5 > this.tickInterval || void 0 !== this.tickAmount
+              ),
+              !!this.tickAmount
+            ));
+          this.tickAmount || (this.tickInterval = this.unsquish());
+          this.setTickPositions();
+        };
+        a.prototype.setTickPositions = function () {
+          var b = this.options,
+            e = b.tickPositions,
+            a = this.getMinorTickInterval(),
+            c = this.hasVerticalPanning(),
+            d = "colorAxis" === this.coll,
+            g = (d || !c) && b.startOnTick;
+          c = (d || !c) && b.endOnTick;
+          d = b.tickPositioner;
+          this.tickmarkOffset =
+            this.categories &&
+            "between" === b.tickmarkPlacement &&
+            1 === this.tickInterval
+              ? 0.5
+              : 0;
+          this.minorTickInterval =
+            "auto" === a && this.tickInterval ? this.tickInterval / 5 : a;
+          this.single =
+            this.min === this.max &&
+            p(this.min) &&
+            !this.tickAmount &&
+            (parseInt(this.min, 10) === this.min || !1 !== b.allowDecimals);
+          this.tickPositions = a = e && e.slice();
+          !a &&
+            ((this.ordinal && this.ordinal.positions) ||
+            !(
+              (this.max - this.min) / this.tickInterval >
+              Math.max(2 * this.len, 200)
+            )
+              ? (a = this.dateTime
+                  ? this.getTimeTicks(
+                      this.dateTime.normalizeTimeTickInterval(
+                        this.tickInterval,
+                        b.units
+                      ),
+                      this.min,
+                      this.max,
+                      b.startOfWeek,
+                      this.ordinal && this.ordinal.positions,
+                      this.closestPointRange,
+                      !0
+                    )
+                  : this.logarithmic
+                  ? this.logarithmic.getLogTickPositions(
+                      this.tickInterval,
+                      this.min,
+                      this.max
+                    )
+                  : this.getLinearTickPositions(
+                      this.tickInterval,
+                      this.min,
+                      this.max
+                    ))
+              : ((a = [this.min, this.max]), y(19, !1, this.chart)),
+            a.length > this.len &&
+              ((a = [a[0], a.pop()]), a[0] === a[1] && (a.length = 1)),
+            (this.tickPositions = a),
+            d && (d = d.apply(this, [this.min, this.max]))) &&
+            (this.tickPositions = a = d);
+          this.paddedTicks = a.slice(0);
+          this.trimTicks(a, g, c);
+          this.isLinked ||
+            (this.single &&
+              2 > a.length &&
+              !this.categories &&
+              !this.series.some(function (b) {
+                return (
+                  b.is("heatmap") && "between" === b.options.pointPlacement
+                );
+              }) &&
+              ((this.min -= 0.5), (this.max += 0.5)),
+            e || d || this.adjustTickAmount());
+          n(this, "afterSetTickPositions");
+        };
+        a.prototype.trimTicks = function (b, e, a) {
+          var c = b[0],
+            d = b[b.length - 1],
+            g = (!this.isOrdinal && this.minPointOffset) || 0;
+          n(this, "trimTicks");
+          if (!this.isLinked) {
+            if (e && -Infinity !== c) this.min = c;
+            else for (; this.min - g > b[0]; ) b.shift();
+            if (a) this.max = d;
+            else for (; this.max + g < b[b.length - 1]; ) b.pop();
+            0 === b.length &&
+              p(c) &&
+              !this.options.tickPositions &&
+              b.push((d + c) / 2);
+          }
+        };
+        a.prototype.alignToOthers = function () {
+          var b = {},
+            e = this.options,
+            a;
+          !1 !== this.chart.options.chart.alignTicks &&
+            e.alignTicks &&
+            !1 !== e.startOnTick &&
+            !1 !== e.endOnTick &&
+            !this.logarithmic &&
+            this.chart[this.coll].forEach(function (e) {
+              var c = e.options;
+              c = [e.horiz ? c.left : c.top, c.width, c.height, c.pane].join();
+              e.series.length && (b[c] ? (a = !0) : (b[c] = 1));
+            });
+          return a;
+        };
+        a.prototype.getTickAmount = function () {
+          var b = this.options,
+            e = b.tickPixelInterval,
+            a = b.tickAmount;
+          !p(b.tickInterval) &&
+            !a &&
+            this.len < e &&
+            !this.isRadial &&
+            !this.logarithmic &&
+            b.startOnTick &&
+            b.endOnTick &&
+            (a = 2);
+          !a && this.alignToOthers() && (a = Math.ceil(this.len / e) + 1);
+          4 > a && ((this.finalTickAmt = a), (a = 5));
+          this.tickAmount = a;
+        };
+        a.prototype.adjustTickAmount = function () {
+          var b = this.options,
+            e = this.tickInterval,
+            a = this.tickPositions,
+            c = this.tickAmount,
+            d = this.finalTickAmt,
+            k = a && a.length,
+            f = E(this.threshold, this.softThreshold ? 0 : null);
+          if (this.hasData() && g(this.min) && g(this.max)) {
+            if (k < c) {
+              for (; a.length < c; )
+                a.length % 2 || this.min === f
+                  ? a.push(w(a[a.length - 1] + e))
+                  : a.unshift(w(a[0] - e));
+              this.transA *= (k - 1) / (c - 1);
+              this.min = b.startOnTick ? a[0] : Math.min(this.min, a[0]);
+              this.max = b.endOnTick
+                ? a[a.length - 1]
+                : Math.max(this.max, a[a.length - 1]);
+            } else k > c && ((this.tickInterval *= 2), this.setTickPositions());
+            if (p(d)) {
+              for (e = b = a.length; e--; )
+                ((3 === d && 1 === e % 2) || (2 >= d && 0 < e && e < b - 1)) &&
+                  a.splice(e, 1);
+              this.finalTickAmt = void 0;
             }
-        }); L(a,
-            "Core/Responsive.js", [a["Core/Utilities.js"]], function (a) {
-                var v = a.extend, E = a.find, H = a.isArray, x = a.isObject, y = a.merge, G = a.objectEach, B = a.pick, q = a.splat, h = a.uniqueKey, f = function () {
-                    function a() { } a.prototype.currentOptions = function (a) {
-                        function c(a, f, h, m) {
-                            var l; G(a, function (a, d) {
-                                if (!m && -1 < e.collectionsWithUpdate.indexOf(d) && f[d]) for (a = q(a), h[d] = [], l = 0; l < Math.max(a.length, f[d].length); l++)f[d][l] && (void 0 === a[l] ? h[d][l] = f[d][l] : (h[d][l] = {}, c(a[l], f[d][l], h[d][l], m + 1))); else x(a) ? (h[d] = H(a) ? [] : {}, c(a, f[d] ||
-                                    {}, h[d], m + 1)) : h[d] = "undefined" === typeof f[d] ? null : f[d]
-                            })
-                        } var e = this, f = {}; c(a, this.options, f, 0); return f
-                    }; a.prototype.matchResponsiveRule = function (a, c) { var e = a.condition; (e.callback || function () { return this.chartWidth <= B(e.maxWidth, Number.MAX_VALUE) && this.chartHeight <= B(e.maxHeight, Number.MAX_VALUE) && this.chartWidth >= B(e.minWidth, 0) && this.chartHeight >= B(e.minHeight, 0) }).call(this) && c.push(a._id) }; a.prototype.setResponsive = function (a, c) {
-                        var e = this.options.responsive, f = this.currentResponsive, n = []; !c &&
-                            e && e.rules && e.rules.forEach(function (a) { "undefined" === typeof a._id && (a._id = h()); this.matchResponsiveRule(a, n) }, this); c = y.apply(void 0, n.map(function (a) { return E((e || {}).rules || [], function (c) { return c._id === a }) }).map(function (a) { return a && a.chartOptions })); c.isResponsiveOptions = !0; n = n.toString() || void 0; n !== (f && f.ruleIds) && (f && this.update(f.undoOptions, a, !0), n ? (f = this.currentOptions(c), f.isResponsiveOptions = !0, this.currentResponsive = { ruleIds: n, mergedOptions: c, undoOptions: f }, this.update(c, a, !0)) : this.currentResponsive =
-                                void 0)
-                    }; return a
-                }(); a = function () { function a() { } a.compose = function (a) { v(a.prototype, f.prototype); return a }; return a }(); ""; ""; return a
-            }); L(a, "masters/highcharts.src.js", [a["Core/Globals.js"], a["Core/Utilities.js"], a["Core/DefaultOptions.js"], a["Core/Animation/Fx.js"], a["Core/Animation/AnimationUtilities.js"], a["Core/Renderer/HTML/AST.js"], a["Core/FormatUtilities.js"], a["Core/Renderer/SVG/SVGElement.js"], a["Core/Renderer/SVG/SVGRenderer.js"], a["Core/Renderer/HTML/HTMLElement.js"], a["Core/Renderer/HTML/HTMLRenderer.js"],
-            a["Core/Axis/Axis.js"], a["Core/Axis/PlotLineOrBand.js"], a["Core/Axis/Tick.js"], a["Core/Pointer.js"], a["Core/MSPointer.js"], a["Core/Chart/Chart.js"], a["Core/Series/Series.js"], a["Core/Responsive.js"], a["Core/Color/Color.js"], a["Core/Time.js"]], function (a, u, E, H, x, y, G, B, q, h, f, c, e, t, m, w, n, l, J, K, A) {
-                a.animate = x.animate; a.animObject = x.animObject; a.getDeferredAnimation = x.getDeferredAnimation; a.setAnimation = x.setAnimation; a.stop = x.stop; a.timers = H.timers; a.AST = y; a.Axis = c; a.Chart = n; a.chart = n.chart; a.Fx = H; a.PlotLineOrBand =
-                    e; a.Pointer = w.isRequired() ? w : m; a.Series = l; a.SVGElement = B; a.SVGRenderer = q; a.Tick = t; a.Time = A; a.Color = K; a.color = K.parse; f.compose(q); h.compose(B); a.defaultOptions = E.defaultOptions; a.getOptions = E.getOptions; a.time = E.defaultTime; a.setOptions = E.setOptions; a.dateFormat = G.dateFormat; a.format = G.format; a.numberFormat = G.numberFormat; a.addEvent = u.addEvent; a.arrayMax = u.arrayMax; a.arrayMin = u.arrayMin; a.attr = u.attr; a.clearTimeout = u.clearTimeout; a.correctFloat = u.correctFloat; a.createElement = u.createElement; a.css =
-                        u.css; a.defined = u.defined; a.destroyObjectProperties = u.destroyObjectProperties; a.discardElement = u.discardElement; a.erase = u.erase; a.error = u.error; a.extend = u.extend; a.extendClass = u.extendClass; a.find = u.find; a.fireEvent = u.fireEvent; a.getMagnitude = u.getMagnitude; a.getStyle = u.getStyle; a.inArray = u.inArray; a.isArray = u.isArray; a.isClass = u.isClass; a.isDOMElement = u.isDOMElement; a.isFunction = u.isFunction; a.isNumber = u.isNumber; a.isObject = u.isObject; a.isString = u.isString; a.keys = u.keys; a.merge = u.merge; a.normalizeTickInterval =
-                            u.normalizeTickInterval; a.objectEach = u.objectEach; a.offset = u.offset; a.pad = u.pad; a.pick = u.pick; a.pInt = u.pInt; a.relativeLength = u.relativeLength; a.removeEvent = u.removeEvent; a.splat = u.splat; a.stableSort = u.stableSort; a.syncTimeout = u.syncTimeout; a.timeUnits = u.timeUnits; a.uniqueKey = u.uniqueKey; a.useSerialIds = u.useSerialIds; a.wrap = u.wrap; J.compose(n); return a
-            }); a["masters/highcharts.src.js"]._modules = a; return a["masters/highcharts.src.js"]
+          }
+        };
+        a.prototype.setScale = function () {
+          var b = !1,
+            e = !1;
+          this.series.forEach(function (a) {
+            b = b || a.isDirtyData || a.isDirty;
+            e = e || (a.xAxis && a.xAxis.isDirty) || !1;
+          });
+          this.setAxisSize();
+          var a = this.len !== (this.old && this.old.len);
+          a ||
+          b ||
+          e ||
+          this.isLinked ||
+          this.forceRedraw ||
+          this.userMin !== (this.old && this.old.userMin) ||
+          this.userMax !== (this.old && this.old.userMax) ||
+          this.alignToOthers()
+            ? (this.stacking && this.stacking.resetStacks(),
+              (this.forceRedraw = !1),
+              this.getSeriesExtremes(),
+              this.setTickInterval(),
+              this.isDirty ||
+                (this.isDirty =
+                  a ||
+                  this.min !== (this.old && this.old.min) ||
+                  this.max !== (this.old && this.old.max)))
+            : this.stacking && this.stacking.cleanStacks();
+          b && this.panningState && (this.panningState.isDirty = !0);
+          n(this, "afterSetScale");
+        };
+        a.prototype.setExtremes = function (b, e, a, c, d) {
+          var g = this,
+            k = g.chart;
+          a = E(a, !0);
+          g.series.forEach(function (b) {
+            delete b.kdTree;
+          });
+          d = B(d, { min: b, max: e });
+          n(g, "setExtremes", d, function () {
+            g.userMin = b;
+            g.userMax = e;
+            g.eventArgs = d;
+            a && k.redraw(c);
+          });
+        };
+        a.prototype.zoom = function (b, e) {
+          var a = this,
+            c = this.dataMin,
+            d = this.dataMax,
+            g = this.options,
+            k = Math.min(c, E(g.min, c)),
+            f = Math.max(d, E(g.max, d));
+          b = { newMin: b, newMax: e };
+          n(this, "zoom", b, function (b) {
+            var e = b.newMin,
+              g = b.newMax;
+            if (e !== a.min || g !== a.max)
+              a.allowZoomOutside ||
+                (p(c) && (e < k && (e = k), e > f && (e = f)),
+                p(d) && (g < k && (g = k), g > f && (g = f))),
+                (a.displayBtn =
+                  "undefined" !== typeof e || "undefined" !== typeof g),
+                a.setExtremes(e, g, !1, void 0, { trigger: "zoom" });
+            b.zoomed = !0;
+          });
+          return b.zoomed;
+        };
+        a.prototype.setAxisSize = function () {
+          var b = this.chart,
+            e = this.options,
+            a = e.offsets || [0, 0, 0, 0],
+            c = this.horiz,
+            d = (this.width = Math.round(
+              O(E(e.width, b.plotWidth - a[3] + a[1]), b.plotWidth)
+            )),
+            g = (this.height = Math.round(
+              O(E(e.height, b.plotHeight - a[0] + a[2]), b.plotHeight)
+            )),
+            k = (this.top = Math.round(
+              O(E(e.top, b.plotTop + a[0]), b.plotHeight, b.plotTop)
+            ));
+          e = this.left = Math.round(
+            O(E(e.left, b.plotLeft + a[3]), b.plotWidth, b.plotLeft)
+          );
+          this.bottom = b.chartHeight - g - k;
+          this.right = b.chartWidth - d - e;
+          this.len = Math.max(c ? d : g, 0);
+          this.pos = c ? e : k;
+        };
+        a.prototype.getExtremes = function () {
+          var b = this.logarithmic;
+          return {
+            min: b ? w(b.lin2log(this.min)) : this.min,
+            max: b ? w(b.lin2log(this.max)) : this.max,
+            dataMin: this.dataMin,
+            dataMax: this.dataMax,
+            userMin: this.userMin,
+            userMax: this.userMax,
+          };
+        };
+        a.prototype.getThreshold = function (b) {
+          var e = this.logarithmic,
+            a = e ? e.lin2log(this.min) : this.min;
+          e = e ? e.lin2log(this.max) : this.max;
+          null === b || -Infinity === b
+            ? (b = a)
+            : Infinity === b
+            ? (b = e)
+            : a > b
+            ? (b = a)
+            : e < b && (b = e);
+          return this.translate(b, 0, 1, 0, 1);
+        };
+        a.prototype.autoLabelAlign = function (b) {
+          var e = (E(b, 0) - 90 * this.side + 720) % 360;
+          b = { align: "center" };
+          n(this, "autoLabelAlign", b, function (b) {
+            15 < e && 165 > e
+              ? (b.align = "right")
+              : 195 < e && 345 > e && (b.align = "left");
+          });
+          return b.align;
+        };
+        a.prototype.tickSize = function (b) {
+          var e = this.options,
+            a = E(
+              e["tick" === b ? "tickWidth" : "minorTickWidth"],
+              "tick" === b && this.isXAxis && !this.categories ? 1 : 0
+            ),
+            c = e["tick" === b ? "tickLength" : "minorTickLength"];
+          if (a && c) {
+            "inside" === e[b + "Position"] && (c = -c);
+            var d = [c, a];
+          }
+          b = { tickSize: d };
+          n(this, "afterTickSize", b);
+          return b.tickSize;
+        };
+        a.prototype.labelMetrics = function () {
+          var b = (this.tickPositions && this.tickPositions[0]) || 0;
+          return this.chart.renderer.fontMetrics(
+            this.options.labels.style.fontSize,
+            this.ticks[b] && this.ticks[b].label
+          );
+        };
+        a.prototype.unsquish = function () {
+          var b = this.options.labels,
+            e = this.horiz,
+            a = this.tickInterval,
+            c =
+              this.len /
+              (((this.categories ? 1 : 0) + this.max - this.min) / a),
+            k = b.rotation,
+            f = this.labelMetrics(),
+            n = Math.max(this.max - this.min, 0),
+            h = function (b) {
+              var e = b / (c || 1);
+              e = 1 < e ? Math.ceil(e) : 1;
+              e * a > n &&
+                Infinity !== b &&
+                Infinity !== c &&
+                n &&
+                (e = Math.ceil(n / a));
+              return w(e * a);
+            },
+            v = a,
+            D,
+            l,
+            H = Number.MAX_VALUE;
+          if (e) {
+            if (!b.staggerLines && !b.step)
+              if (g(k)) var p = [k];
+              else c < b.autoRotationLimit && (p = b.autoRotation);
+            p &&
+              p.forEach(function (b) {
+                if (b === k || (b && -90 <= b && 90 >= b)) {
+                  l = h(Math.abs(f.h / Math.sin(d * b)));
+                  var e = l + Math.abs(b / 360);
+                  e < H && ((H = e), (D = b), (v = l));
+                }
+              });
+          } else b.step || (v = h(f.h));
+          this.autoRotation = p;
+          this.labelRotation = E(D, g(k) ? k : 0);
+          return v;
+        };
+        a.prototype.getSlotWidth = function (b) {
+          var e = this.chart,
+            a = this.horiz,
+            c = this.options.labels,
+            d = Math.max(
+              this.tickPositions.length - (this.categories ? 0 : 1),
+              1
+            ),
+            k = e.margin[3];
+          if (b && g(b.slotWidth)) return b.slotWidth;
+          if (a && 2 > c.step)
+            return c.rotation ? 0 : ((this.staggerLines || 1) * this.len) / d;
+          if (!a) {
+            b = c.style.width;
+            if (void 0 !== b) return parseInt(String(b), 10);
+            if (k) return k - e.spacing[3];
+          }
+          return 0.33 * e.chartWidth;
+        };
+        a.prototype.renderUnsquish = function () {
+          var b = this.chart,
+            a = b.renderer,
+            c = this.tickPositions,
+            d = this.ticks,
+            g = this.options.labels,
+            k = g.style,
+            f = this.horiz,
+            n = this.getSlotWidth(),
+            h = Math.max(1, Math.round(n - 2 * g.padding)),
+            v = {},
+            D = this.labelMetrics(),
+            l = k.textOverflow,
+            H = 0;
+          e(g.rotation) || (v.rotation = g.rotation || 0);
+          c.forEach(function (b) {
+            b = d[b];
+            b.movedLabel && b.replaceMovedLabel();
+            b &&
+              b.label &&
+              b.label.textPxLength > H &&
+              (H = b.label.textPxLength);
+          });
+          this.maxLabelLength = H;
+          if (this.autoRotation)
+            H > h && H > D.h
+              ? (v.rotation = this.labelRotation)
+              : (this.labelRotation = 0);
+          else if (n) {
+            var p = h;
+            if (!l) {
+              var m = "clip";
+              for (h = c.length; !f && h--; ) {
+                var E = c[h];
+                if ((E = d[E].label))
+                  E.styles && "ellipsis" === E.styles.textOverflow
+                    ? E.css({ textOverflow: "clip" })
+                    : E.textPxLength > n && E.css({ width: n + "px" }),
+                    E.getBBox().height > this.len / c.length - (D.h - D.f) &&
+                      (E.specificTextOverflow = "ellipsis");
+              }
+            }
+          }
+          v.rotation &&
+            ((p = H > 0.5 * b.chartHeight ? 0.33 * b.chartHeight : H),
+            l || (m = "ellipsis"));
+          if (
+            (this.labelAlign =
+              g.align || this.autoLabelAlign(this.labelRotation))
+          )
+            v.align = this.labelAlign;
+          c.forEach(function (b) {
+            var e = (b = d[b]) && b.label,
+              a = k.width,
+              c = {};
+            e &&
+              (e.attr(v),
+              b.shortenLabel
+                ? b.shortenLabel()
+                : p &&
+                  !a &&
+                  "nowrap" !== k.whiteSpace &&
+                  (p < e.textPxLength || "SPAN" === e.element.tagName)
+                ? ((c.width = p + "px"),
+                  l || (c.textOverflow = e.specificTextOverflow || m),
+                  e.css(c))
+                : e.styles &&
+                  e.styles.width &&
+                  !c.width &&
+                  !a &&
+                  e.css({ width: null }),
+              delete e.specificTextOverflow,
+              (b.rotation = v.rotation));
+          }, this);
+          this.tickRotCorr = a.rotCorr(
+            D.b,
+            this.labelRotation || 0,
+            0 !== this.side
+          );
+        };
+        a.prototype.hasData = function () {
+          return (
+            this.series.some(function (b) {
+              return b.hasData();
+            }) ||
+            (this.options.showEmpty && p(this.min) && p(this.max))
+          );
+        };
+        a.prototype.addTitle = function (b) {
+          var e = this.chart.renderer,
+            a = this.horiz,
+            c = this.opposite,
+            d = this.options.title,
+            g = this.chart.styledMode,
+            k;
+          this.axisTitle ||
+            ((k = d.textAlign) ||
+              (k = (
+                a
+                  ? { low: "left", middle: "center", high: "right" }
+                  : {
+                      low: c ? "right" : "left",
+                      middle: "center",
+                      high: c ? "left" : "right",
+                    }
+              )[d.align]),
+            (this.axisTitle = e
+              .text(d.text || "", 0, 0, d.useHTML)
+              .attr({ zIndex: 7, rotation: d.rotation, align: k })
+              .addClass("highcharts-axis-title")),
+            g || this.axisTitle.css(D(d.style)),
+            this.axisTitle.add(this.axisGroup),
+            (this.axisTitle.isNew = !0));
+          g ||
+            d.style.width ||
+            this.isRadial ||
+            this.axisTitle.css({ width: this.len + "px" });
+          this.axisTitle[b ? "show" : "hide"](b);
+        };
+        a.prototype.generateTick = function (b) {
+          var e = this.ticks;
+          e[b] ? e[b].addLabel() : (e[b] = new I(this, b));
+        };
+        a.prototype.getOffset = function () {
+          var b = this,
+            e = this,
+            a = e.chart,
+            c = e.horiz,
+            d = e.options,
+            g = e.side,
+            k = e.ticks,
+            f = e.tickPositions,
+            h = e.coll,
+            D = e.axisParent,
+            l = a.renderer,
+            H = a.inverted && !e.isZAxis ? [1, 0, 3, 2][g] : g,
+            m = e.hasData(),
+            r = d.title,
+            B = d.labels,
+            q = a.axisOffset;
+          a = a.clipOffset;
+          var O = [-1, 1, 1, -1][g],
+            w = d.className,
+            y,
+            K = 0,
+            ja = 0,
+            ca = 0;
+          e.showAxis = y = m || d.showEmpty;
+          e.staggerLines = (e.horiz && B.staggerLines) || void 0;
+          if (!e.axisGroup) {
+            var u = function (e, a, c) {
+              return l
+                .g(e)
+                .attr({ zIndex: c })
+                .addClass(
+                  "highcharts-" +
+                    h.toLowerCase() +
+                    a +
+                    " " +
+                    (b.isRadial ? "highcharts-radial-axis" + a + " " : "") +
+                    (w || "")
+                )
+                .add(D);
+            };
+            e.gridGroup = u("grid", "-grid", d.gridZIndex);
+            e.axisGroup = u("axis", "", d.zIndex);
+            e.labelGroup = u("axis-labels", "-labels", B.zIndex);
+          }
+          m || e.isLinked
+            ? (f.forEach(function (b) {
+                e.generateTick(b);
+              }),
+              e.renderUnsquish(),
+              (e.reserveSpaceDefault =
+                0 === g ||
+                2 === g ||
+                { 1: "left", 3: "right" }[g] === e.labelAlign),
+              E(
+                B.reserveSpace,
+                "center" === e.labelAlign ? !0 : null,
+                e.reserveSpaceDefault
+              ) &&
+                f.forEach(function (b) {
+                  ca = Math.max(k[b].getLabelSize(), ca);
+                }),
+              e.staggerLines && (ca *= e.staggerLines),
+              (e.labelOffset = ca * (e.opposite ? -1 : 1)))
+            : v(k, function (b, e) {
+                b.destroy();
+                delete k[e];
+              });
+          if (
+            r &&
+            r.text &&
+            !1 !== r.enabled &&
+            (e.addTitle(y), y && !1 !== r.reserveSpace)
+          ) {
+            e.titleOffset = K = e.axisTitle.getBBox()[c ? "height" : "width"];
+            var P = r.offset;
+            ja = p(P) ? 0 : E(r.margin, c ? 5 : 10);
+          }
+          e.renderLine();
+          e.offset = O * E(d.offset, q[g] ? q[g] + (d.margin || 0) : 0);
+          e.tickRotCorr = e.tickRotCorr || { x: 0, y: 0 };
+          r = 0 === g ? -e.labelMetrics().h : 2 === g ? e.tickRotCorr.y : 0;
+          m = Math.abs(ca) + ja;
+          ca && (m = m - r + O * (c ? E(B.y, e.tickRotCorr.y + 8 * O) : B.x));
+          e.axisTitleMargin = E(P, m);
+          e.getMaxLabelDimensions &&
+            (e.maxLabelDimensions = e.getMaxLabelDimensions(k, f));
+          "colorAxis" !== h &&
+            ((c = this.tickSize("tick")),
+            (q[g] = Math.max(
+              q[g],
+              (e.axisTitleMargin || 0) + K + O * e.offset,
+              m,
+              f && f.length && c ? c[0] + O * e.offset : 0
+            )),
+            (d =
+              !e.axisLine || d.offset
+                ? 0
+                : 2 * Math.floor(e.axisLine.strokeWidth() / 2)),
+            (a[H] = Math.max(a[H], d)));
+          n(this, "afterGetOffset");
+        };
+        a.prototype.getLinePath = function (b) {
+          var e = this.chart,
+            a = this.opposite,
+            c = this.offset,
+            d = this.horiz,
+            g = this.left + (a ? this.width : 0) + c;
+          c = e.chartHeight - this.bottom - (a ? this.height : 0) + c;
+          a && (b *= -1);
+          return e.renderer.crispLine(
+            [
+              ["M", d ? this.left : g, d ? c : this.top],
+              [
+                "L",
+                d ? e.chartWidth - this.right : g,
+                d ? c : e.chartHeight - this.bottom,
+              ],
+            ],
+            b
+          );
+        };
+        a.prototype.renderLine = function () {
+          this.axisLine ||
+            ((this.axisLine = this.chart.renderer
+              .path()
+              .addClass("highcharts-axis-line")
+              .add(this.axisGroup)),
+            this.chart.styledMode ||
+              this.axisLine.attr({
+                stroke: this.options.lineColor,
+                "stroke-width": this.options.lineWidth,
+                zIndex: 7,
+              }));
+        };
+        a.prototype.getTitlePosition = function () {
+          var b = this.horiz,
+            e = this.left,
+            a = this.top,
+            c = this.len,
+            d = this.options.title,
+            g = b ? e : a,
+            k = this.opposite,
+            f = this.offset,
+            h = d.x,
+            v = d.y,
+            D = this.axisTitle,
+            l = this.chart.renderer.fontMetrics(d.style.fontSize, D);
+          D = Math.max(D.getBBox(null, 0).height - l.h - 1, 0);
+          c = {
+            low: g + (b ? 0 : c),
+            middle: g + c / 2,
+            high: g + (b ? c : 0),
+          }[d.align];
+          e =
+            (b ? a + this.height : e) +
+            (b ? 1 : -1) * (k ? -1 : 1) * this.axisTitleMargin +
+            [-D, D, l.f, -D][this.side];
+          b = {
+            x: b ? c + h : e + (k ? this.width : 0) + f + h,
+            y: b ? e + v - (k ? this.height : 0) + f : c + v,
+          };
+          n(this, "afterGetTitlePosition", { titlePosition: b });
+          return b;
+        };
+        a.prototype.renderMinorTick = function (b, e) {
+          var a = this.minorTicks;
+          a[b] || (a[b] = new I(this, b, "minor"));
+          e && a[b].isNew && a[b].render(null, !0);
+          a[b].render(null, !1, 1);
+        };
+        a.prototype.renderTick = function (b, e, a) {
+          var c = this.ticks;
+          if (
+            !this.isLinked ||
+            (b >= this.min && b <= this.max) ||
+            (this.grid && this.grid.isColumn)
+          )
+            c[b] || (c[b] = new I(this, b)),
+              a && c[b].isNew && c[b].render(e, !0, -1),
+              c[b].render(e);
+        };
+        a.prototype.render = function () {
+          var b = this,
+            e = b.chart,
+            a = b.logarithmic,
+            c = b.options,
+            d = b.isLinked,
+            k = b.tickPositions,
+            f = b.axisTitle,
+            h = b.ticks,
+            D = b.minorTicks,
+            l = b.alternateBands,
+            H = c.stackLabels,
+            p = c.alternateGridColor,
+            m = b.tickmarkOffset,
+            E = b.axisLine,
+            r = b.showAxis,
+            B = q(e.renderer.globalAnimation),
+            O,
+            w;
+          b.labelEdge.length = 0;
+          b.overlap = !1;
+          [h, D, l].forEach(function (b) {
+            v(b, function (b) {
+              b.isActive = !1;
+            });
+          });
+          if (b.hasData() || d) {
+            var y = b.chart.hasRendered && b.old && g(b.old.min);
+            b.minorTickInterval &&
+              !b.categories &&
+              b.getMinorTickPositions().forEach(function (e) {
+                b.renderMinorTick(e, y);
+              });
+            k.length &&
+              (k.forEach(function (e, a) {
+                b.renderTick(e, a, y);
+              }),
+              m &&
+                (0 === b.min || b.single) &&
+                (h[-1] || (h[-1] = new I(b, -1, null, !0)), h[-1].render(-1)));
+            p &&
+              k.forEach(function (c, d) {
+                w = "undefined" !== typeof k[d + 1] ? k[d + 1] + m : b.max - m;
+                0 === d % 2 &&
+                  c < b.max &&
+                  w <= b.max + (e.polar ? -m : m) &&
+                  (l[c] || (l[c] = new C.PlotLineOrBand(b)),
+                  (O = c + m),
+                  (l[c].options = {
+                    from: a ? a.lin2log(O) : O,
+                    to: a ? a.lin2log(w) : w,
+                    color: p,
+                    className: "highcharts-alternate-grid",
+                  }),
+                  l[c].render(),
+                  (l[c].isActive = !0));
+              });
+            b._addedPlotLB ||
+              ((b._addedPlotLB = !0),
+              (c.plotLines || [])
+                .concat(c.plotBands || [])
+                .forEach(function (e) {
+                  b.addPlotBandOrLine(e);
+                }));
+          }
+          [h, D, l].forEach(function (b) {
+            var a = [],
+              c = B.duration;
+            v(b, function (b, e) {
+              b.isActive || (b.render(e, !1, 0), (b.isActive = !1), a.push(e));
+            });
+            U(
+              function () {
+                for (var e = a.length; e--; )
+                  b[a[e]] &&
+                    !b[a[e]].isActive &&
+                    (b[a[e]].destroy(), delete b[a[e]]);
+              },
+              b !== l && e.hasRendered && c ? c : 0
+            );
+          });
+          E &&
+            (E[E.isPlaced ? "animate" : "attr"]({
+              d: this.getLinePath(E.strokeWidth()),
+            }),
+            (E.isPlaced = !0),
+            E[r ? "show" : "hide"](r));
+          f &&
+            r &&
+            ((c = b.getTitlePosition()),
+            g(c.y)
+              ? (f[f.isNew ? "attr" : "animate"](c), (f.isNew = !1))
+              : (f.attr("y", -9999), (f.isNew = !0)));
+          H && H.enabled && b.stacking && b.stacking.renderStackTotals();
+          b.old = {
+            len: b.len,
+            max: b.max,
+            min: b.min,
+            transA: b.transA,
+            userMax: b.userMax,
+            userMin: b.userMin,
+          };
+          b.isDirty = !1;
+          n(this, "afterRender");
+        };
+        a.prototype.redraw = function () {
+          this.visible &&
+            (this.render(),
+            this.plotLinesAndBands.forEach(function (b) {
+              b.render();
+            }));
+          this.series.forEach(function (b) {
+            b.isDirty = !0;
+          });
+        };
+        a.prototype.getKeepProps = function () {
+          return this.keepProps || a.keepProps;
+        };
+        a.prototype.destroy = function (b) {
+          var e = this,
+            a = e.plotLinesAndBands,
+            c = this.eventOptions;
+          n(this, "destroy", { keepEvents: b });
+          b || u(e);
+          [e.ticks, e.minorTicks, e.alternateBands].forEach(function (b) {
+            K(b);
+          });
+          if (a) for (b = a.length; b--; ) a[b].destroy();
+          "axisLine axisTitle axisGroup gridGroup labelGroup cross scrollbar"
+            .split(" ")
+            .forEach(function (b) {
+              e[b] && (e[b] = e[b].destroy());
+            });
+          for (var d in e.plotLinesAndBandsGroups)
+            e.plotLinesAndBandsGroups[d] =
+              e.plotLinesAndBandsGroups[d].destroy();
+          v(e, function (b, a) {
+            -1 === e.getKeepProps().indexOf(a) && delete e[a];
+          });
+          this.eventOptions = c;
+        };
+        a.prototype.drawCrosshair = function (b, e) {
+          var a = this.crosshair,
+            c = E(a && a.snap, !0),
+            d = this.chart,
+            g,
+            k = this.cross;
+          n(this, "drawCrosshair", { e: b, point: e });
+          b || (b = this.cross && this.cross.e);
+          if (a && !1 !== (p(e) || !c)) {
+            c
+              ? p(e) &&
+                (g = E(
+                  "colorAxis" !== this.coll ? e.crosshairPos : null,
+                  this.isXAxis ? e.plotX : this.len - e.plotY
+                ))
+              : (g =
+                  b &&
+                  (this.horiz
+                    ? b.chartX - this.pos
+                    : this.len - b.chartY + this.pos));
+            if (p(g)) {
+              var f = {
+                value: e && (this.isXAxis ? e.x : E(e.stackY, e.y)),
+                translatedValue: g,
+              };
+              d.polar &&
+                B(f, {
+                  isCrosshair: !0,
+                  chartX: b && b.chartX,
+                  chartY: b && b.chartY,
+                  point: e,
+                });
+              f = this.getPlotLinePath(f) || null;
+            }
+            if (!p(f)) {
+              this.hideCrosshair();
+              return;
+            }
+            c = this.categories && !this.isRadial;
+            k ||
+              ((this.cross = k =
+                d.renderer
+                  .path()
+                  .addClass(
+                    "highcharts-crosshair highcharts-crosshair-" +
+                      (c ? "category " : "thin ") +
+                      (a.className || "")
+                  )
+                  .attr({ zIndex: E(a.zIndex, 2) })
+                  .add()),
+              d.styledMode ||
+                (k
+                  .attr({
+                    stroke:
+                      a.color ||
+                      (c
+                        ? A.parse("#ccd6eb").setOpacity(0.25).get()
+                        : "#cccccc"),
+                    "stroke-width": E(a.width, 1),
+                  })
+                  .css({ "pointer-events": "none" }),
+                a.dashStyle && k.attr({ dashstyle: a.dashStyle })));
+            k.show().attr({ d: f });
+            c && !a.width && k.attr({ "stroke-width": this.transA });
+            this.cross.e = b;
+          } else this.hideCrosshair();
+          n(this, "afterDrawCrosshair", { e: b, point: e });
+        };
+        a.prototype.hideCrosshair = function () {
+          this.cross && this.cross.hide();
+          n(this, "afterHideCrosshair");
+        };
+        a.prototype.hasVerticalPanning = function () {
+          var b = this.chart.options.chart.panning;
+          return !!(b && b.enabled && /y/.test(b.type));
+        };
+        a.prototype.validatePositiveValue = function (b) {
+          return g(b) && 0 < b;
+        };
+        a.prototype.update = function (b, e) {
+          var a = this.chart;
+          b = D(this.userOptions, b);
+          this.destroy(!0);
+          this.init(a, b);
+          a.isDirtyBox = !0;
+          E(e, !0) && a.redraw();
+        };
+        a.prototype.remove = function (b) {
+          for (
+            var e = this.chart, a = this.coll, c = this.series, d = c.length;
+            d--;
+
+          )
+            c[d] && c[d].remove(!1);
+          r(e.axes, this);
+          r(e[a], this);
+          e[a].forEach(function (b, e) {
+            b.options.index = b.userOptions.index = e;
+          });
+          this.destroy();
+          e.isDirtyBox = !0;
+          E(b, !0) && e.redraw();
+        };
+        a.prototype.setTitle = function (b, e) {
+          this.update({ title: b }, e);
+        };
+        a.prototype.setCategories = function (b, e) {
+          this.update({ categories: b }, e);
+        };
+        a.defaultOptions = t.defaultXAxisOptions;
+        a.keepProps = "extKey hcEvents names series userMax userMin".split(" ");
+        return a;
+      })();
+      ("");
+      return a;
+    }
+  );
+  L(a, "Core/Axis/DateTimeAxis.js", [a["Core/Utilities.js"]], function (a) {
+    var u = a.addEvent,
+      A = a.getMagnitude,
+      G = a.normalizeTickInterval,
+      x = a.timeUnits,
+      C;
+    (function (a) {
+      function t() {
+        return this.chart.time.getTimeTicks.apply(this.chart.time, arguments);
+      }
+      function q(a) {
+        "datetime" !== a.userOptions.type
+          ? (this.dateTime = void 0)
+          : this.dateTime || (this.dateTime = new h(this));
+      }
+      var m = [];
+      a.compose = function (a) {
+        -1 === m.indexOf(a) &&
+          (m.push(a),
+          a.keepProps.push("dateTime"),
+          (a.prototype.getTimeTicks = t),
+          u(a, "init", q));
+        return a;
+      };
+      var h = (function () {
+        function a(a) {
+          this.axis = a;
+        }
+        a.prototype.normalizeTimeTickInterval = function (a, d) {
+          var c = d || [
+            ["millisecond", [1, 2, 5, 10, 20, 25, 50, 100, 200, 500]],
+            ["second", [1, 2, 5, 10, 15, 30]],
+            ["minute", [1, 2, 5, 10, 15, 30]],
+            ["hour", [1, 2, 3, 4, 6, 8, 12]],
+            ["day", [1, 2]],
+            ["week", [1, 2]],
+            ["month", [1, 2, 3, 4, 6]],
+            ["year", null],
+          ];
+          d = c[c.length - 1];
+          var h = x[d[0]],
+            l = d[1],
+            m;
+          for (
+            m = 0;
+            m < c.length &&
+            !((d = c[m]),
+            (h = x[d[0]]),
+            (l = d[1]),
+            c[m + 1] && a <= (h * l[l.length - 1] + x[c[m + 1][0]]) / 2);
+            m++
+          );
+          h === x.year && a < 5 * h && (l = [1, 2, 5]);
+          a = G(a / h, l, "year" === d[0] ? Math.max(A(a / h), 1) : 1);
+          return { unitRange: h, count: a, unitName: d[0] };
+        };
+        a.prototype.getXDateFormat = function (a, d) {
+          var c = this.axis;
+          return c.closestPointRange
+            ? c.chart.time.getDateFormat(
+                c.closestPointRange,
+                a,
+                c.options.startOfWeek,
+                d
+              ) || d.year
+            : d.day;
+        };
+        return a;
+      })();
+      a.Additions = h;
+    })(C || (C = {}));
+    return C;
+  });
+  L(a, "Core/Axis/LogarithmicAxis.js", [a["Core/Utilities.js"]], function (a) {
+    var u = a.addEvent,
+      A = a.getMagnitude,
+      G = a.normalizeTickInterval,
+      x = a.pick,
+      C;
+    (function (a) {
+      function t(a) {
+        var c = this.logarithmic;
+        "logarithmic" !== a.userOptions.type
+          ? (this.logarithmic = void 0)
+          : c || (this.logarithmic = new h(this));
+      }
+      function q() {
+        var a = this.logarithmic;
+        a &&
+          ((this.lin2val = function (c) {
+            return a.lin2log(c);
+          }),
+          (this.val2lin = function (c) {
+            return a.log2lin(c);
+          }));
+      }
+      var m = [];
+      a.compose = function (a) {
+        -1 === m.indexOf(a) &&
+          (m.push(a),
+          a.keepProps.push("logarithmic"),
+          u(a, "init", t),
+          u(a, "afterInit", q));
+        return a;
+      };
+      var h = (function () {
+        function a(a) {
+          this.axis = a;
+        }
+        a.prototype.getLogTickPositions = function (a, d, f, h) {
+          var c = this.axis,
+            l = c.len,
+            m = c.options,
+            q = [];
+          h || (this.minorAutoInterval = void 0);
+          if (0.5 <= a)
+            (a = Math.round(a)), (q = c.getLinearTickPositions(a, d, f));
+          else if (0.08 <= a) {
+            var B = Math.floor(d),
+              n,
+              k = (m = void 0);
+            for (
+              l =
+                0.3 < a
+                  ? [1, 2, 4]
+                  : 0.15 < a
+                  ? [1, 2, 4, 6, 8]
+                  : [1, 2, 3, 4, 5, 6, 7, 8, 9];
+              B < f + 1 && !k;
+              B++
+            ) {
+              var b = l.length;
+              for (n = 0; n < b && !k; n++) {
+                var g = this.log2lin(this.lin2log(B) * l[n]);
+                g > d &&
+                  (!h || m <= f) &&
+                  "undefined" !== typeof m &&
+                  q.push(m);
+                m > f && (k = !0);
+                m = g;
+              }
+            }
+          } else
+            (d = this.lin2log(d)),
+              (f = this.lin2log(f)),
+              (a = h ? c.getMinorTickInterval() : m.tickInterval),
+              (a = x(
+                "auto" === a ? null : a,
+                this.minorAutoInterval,
+                ((m.tickPixelInterval / (h ? 5 : 1)) * (f - d)) /
+                  ((h ? l / c.tickPositions.length : l) || 1)
+              )),
+              (a = G(a, void 0, A(a))),
+              (q = c.getLinearTickPositions(a, d, f).map(this.log2lin)),
+              h || (this.minorAutoInterval = a / 5);
+          h || (c.tickInterval = a);
+          return q;
+        };
+        a.prototype.lin2log = function (a) {
+          return Math.pow(10, a);
+        };
+        a.prototype.log2lin = function (a) {
+          return Math.log(a) / Math.LN10;
+        };
+        return a;
+      })();
+      a.Additions = h;
+    })(C || (C = {}));
+    return C;
+  });
+  L(
+    a,
+    "Core/Axis/PlotLineOrBand/PlotLineOrBandAxis.js",
+    [a["Core/Utilities.js"]],
+    function (a) {
+      var u = a.erase,
+        A = a.extend,
+        G = a.isNumber,
+        x;
+      (function (a) {
+        var t = [],
+          z;
+        a.compose = function (a, h) {
+          z || (z = a);
+          -1 === t.indexOf(h) && (t.push(h), A(h.prototype, q.prototype));
+          return h;
+        };
+        var q = (function () {
+          function a() {}
+          a.prototype.getPlotBandPath = function (a, d, c) {
+            void 0 === c && (c = this.options);
+            var h = this.getPlotLinePath({
+                value: d,
+                force: !0,
+                acrossPanes: c.acrossPanes,
+              }),
+              f = [],
+              m = this.horiz;
+            d =
+              !G(this.min) ||
+              !G(this.max) ||
+              (a < this.min && d < this.min) ||
+              (a > this.max && d > this.max);
+            a = this.getPlotLinePath({
+              value: a,
+              force: !0,
+              acrossPanes: c.acrossPanes,
+            });
+            c = 1;
+            if (a && h) {
+              if (d) {
+                var p = a.toString() === h.toString();
+                c = 0;
+              }
+              for (d = 0; d < a.length; d += 2) {
+                var q = a[d],
+                  r = a[d + 1],
+                  y = h[d],
+                  B = h[d + 1];
+                ("M" !== q[0] && "L" !== q[0]) ||
+                  ("M" !== r[0] && "L" !== r[0]) ||
+                  ("M" !== y[0] && "L" !== y[0]) ||
+                  ("M" !== B[0] && "L" !== B[0]) ||
+                  (m && y[1] === q[1]
+                    ? ((y[1] += c), (B[1] += c))
+                    : m || y[2] !== q[2] || ((y[2] += c), (B[2] += c)),
+                  f.push(
+                    ["M", q[1], q[2]],
+                    ["L", r[1], r[2]],
+                    ["L", B[1], B[2]],
+                    ["L", y[1], y[2]],
+                    ["Z"]
+                  ));
+                f.isFlat = p;
+              }
+            }
+            return f;
+          };
+          a.prototype.addPlotBand = function (a) {
+            return this.addPlotBandOrLine(a, "plotBands");
+          };
+          a.prototype.addPlotLine = function (a) {
+            return this.addPlotBandOrLine(a, "plotLines");
+          };
+          a.prototype.addPlotBandOrLine = function (a, d) {
+            var c = this,
+              h = this.userOptions,
+              f = new z(this, a);
+            this.visible && (f = f.render());
+            if (f) {
+              this._addedPlotLB ||
+                ((this._addedPlotLB = !0),
+                (h.plotLines || [])
+                  .concat(h.plotBands || [])
+                  .forEach(function (a) {
+                    c.addPlotBandOrLine(a);
+                  }));
+              if (d) {
+                var m = h[d] || [];
+                m.push(a);
+                h[d] = m;
+              }
+              this.plotLinesAndBands.push(f);
+            }
+            return f;
+          };
+          a.prototype.removePlotBandOrLine = function (a) {
+            var d = this.plotLinesAndBands,
+              c = this.options,
+              h = this.userOptions;
+            if (d) {
+              for (var f = d.length; f--; ) d[f].id === a && d[f].destroy();
+              [
+                c.plotLines || [],
+                h.plotLines || [],
+                c.plotBands || [],
+                h.plotBands || [],
+              ].forEach(function (c) {
+                for (f = c.length; f--; ) (c[f] || {}).id === a && u(c, c[f]);
+              });
+            }
+          };
+          a.prototype.removePlotBand = function (a) {
+            this.removePlotBandOrLine(a);
+          };
+          a.prototype.removePlotLine = function (a) {
+            this.removePlotBandOrLine(a);
+          };
+          return a;
+        })();
+      })(x || (x = {}));
+      return x;
+    }
+  );
+  L(
+    a,
+    "Core/Axis/PlotLineOrBand/PlotLineOrBand.js",
+    [
+      a["Core/Axis/PlotLineOrBand/PlotLineOrBandAxis.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t) {
+      var u = t.arrayMax,
+        G = t.arrayMin,
+        x = t.defined,
+        C = t.destroyObjectProperties,
+        I = t.erase,
+        z = t.fireEvent,
+        q = t.merge,
+        m = t.objectEach,
+        h = t.pick;
+      t = (function () {
+        function d(a, d) {
+          this.axis = a;
+          d && ((this.options = d), (this.id = d.id));
+        }
+        d.compose = function (c) {
+          return a.compose(d, c);
+        };
+        d.prototype.render = function () {
+          z(this, "render");
+          var a = this,
+            d = a.axis,
+            f = d.horiz,
+            w = d.logarithmic,
+            p = a.options,
+            u = p.color,
+            r = h(p.zIndex, 0),
+            y = p.events,
+            B = {},
+            n = d.chart.renderer,
+            k = p.label,
+            b = a.label,
+            g = p.to,
+            e = p.from,
+            D = p.value,
+            H = a.svgElem,
+            v = [],
+            E = x(e) && x(g);
+          v = x(D);
+          var O = !H,
+            S = {
+              class:
+                "highcharts-plot-" +
+                (E ? "band " : "line ") +
+                (p.className || ""),
+            },
+            P = E ? "bands" : "lines";
+          w && ((e = w.log2lin(e)), (g = w.log2lin(g)), (D = w.log2lin(D)));
+          d.chart.styledMode ||
+            (v
+              ? ((S.stroke = u || "#999999"),
+                (S["stroke-width"] = h(p.width, 1)),
+                p.dashStyle && (S.dashstyle = p.dashStyle))
+              : E &&
+                ((S.fill = u || "#e6ebf5"),
+                p.borderWidth &&
+                  ((S.stroke = p.borderColor),
+                  (S["stroke-width"] = p.borderWidth))));
+          B.zIndex = r;
+          P += "-" + r;
+          (w = d.plotLinesAndBandsGroups[P]) ||
+            (d.plotLinesAndBandsGroups[P] = w =
+              n
+                .g("plot-" + P)
+                .attr(B)
+                .add());
+          O && (a.svgElem = H = n.path().attr(S).add(w));
+          if (v)
+            v = d.getPlotLinePath({
+              value: D,
+              lineWidth: H.strokeWidth(),
+              acrossPanes: p.acrossPanes,
+            });
+          else if (E) v = d.getPlotBandPath(e, g, p);
+          else return;
+          !a.eventsAdded &&
+            y &&
+            (m(y, function (b, e) {
+              H.on(e, function (b) {
+                y[e].apply(a, [b]);
+              });
+            }),
+            (a.eventsAdded = !0));
+          (O || !H.d) && v && v.length
+            ? H.attr({ d: v })
+            : H &&
+              (v
+                ? (H.show(!0), H.animate({ d: v }))
+                : H.d && (H.hide(), b && (a.label = b = b.destroy())));
+          k &&
+          (x(k.text) || x(k.formatter)) &&
+          v &&
+          v.length &&
+          0 < d.width &&
+          0 < d.height &&
+          !v.isFlat
+            ? ((k = q(
+                {
+                  align: f && E && "center",
+                  x: f ? !E && 4 : 10,
+                  verticalAlign: !f && E && "middle",
+                  y: f ? (E ? 16 : 10) : E ? 6 : -4,
+                  rotation: f && !E && 90,
+                },
+                k
+              )),
+              this.renderLabel(k, v, E, r))
+            : b && b.hide();
+          return a;
+        };
+        d.prototype.renderLabel = function (a, d, f, h) {
+          var c = this.axis,
+            l = c.chart.renderer,
+            m = this.label;
+          m ||
+            ((this.label = m =
+              l
+                .text(this.getLabelText(a), 0, 0, a.useHTML)
+                .attr({
+                  align: a.textAlign || a.align,
+                  rotation: a.rotation,
+                  class:
+                    "highcharts-plot-" +
+                    (f ? "band" : "line") +
+                    "-label " +
+                    (a.className || ""),
+                  zIndex: h,
+                })
+                .add()),
+            c.chart.styledMode ||
+              m.css(q({ textOverflow: "ellipsis" }, a.style)));
+          h = d.xBounds || [d[0][1], d[1][1], f ? d[2][1] : d[0][1]];
+          d = d.yBounds || [d[0][2], d[1][2], f ? d[2][2] : d[0][2]];
+          f = G(h);
+          l = G(d);
+          m.align(a, !1, { x: f, y: l, width: u(h) - f, height: u(d) - l });
+          (m.alignValue && "left" !== m.alignValue) ||
+            m.css({
+              width:
+                (90 === m.rotation
+                  ? c.height - (m.alignAttr.y - c.top)
+                  : c.width - (m.alignAttr.x - c.left)) + "px",
+            });
+          m.show(!0);
+        };
+        d.prototype.getLabelText = function (a) {
+          return x(a.formatter) ? a.formatter.call(this) : a.text;
+        };
+        d.prototype.destroy = function () {
+          I(this.axis.plotLinesAndBands, this);
+          delete this.axis;
+          C(this);
+        };
+        return d;
+      })();
+      ("");
+      ("");
+      return t;
+    }
+  );
+  L(
+    a,
+    "Core/Tooltip.js",
+    [
+      a["Core/FormatUtilities.js"],
+      a["Core/Globals.js"],
+      a["Core/Renderer/RendererUtilities.js"],
+      a["Core/Renderer/RendererRegistry.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G, x) {
+      var u = a.format,
+        I = t.doc,
+        z = A.distribute,
+        q = x.addEvent,
+        m = x.clamp,
+        h = x.css,
+        d = x.defined,
+        c = x.discardElement,
+        l = x.extend,
+        f = x.fireEvent,
+        w = x.isArray,
+        p = x.isNumber,
+        K = x.isString,
+        r = x.merge,
+        y = x.pick,
+        B = x.splat,
+        n = x.syncTimeout;
+      a = (function () {
+        function a(b, a) {
+          this.allowShared = !0;
+          this.container = void 0;
+          this.crosshairs = [];
+          this.distance = 0;
+          this.isHidden = !0;
+          this.isSticky = !1;
+          this.now = {};
+          this.options = {};
+          this.outside = !1;
+          this.chart = b;
+          this.init(b, a);
+        }
+        a.prototype.applyFilter = function () {
+          var b = this.chart;
+          b.renderer.definition({
+            tagName: "filter",
+            attributes: { id: "drop-shadow-" + b.index, opacity: 0.5 },
+            children: [
+              {
+                tagName: "feGaussianBlur",
+                attributes: { in: "SourceAlpha", stdDeviation: 1 },
+              },
+              { tagName: "feOffset", attributes: { dx: 1, dy: 1 } },
+              {
+                tagName: "feComponentTransfer",
+                children: [
+                  {
+                    tagName: "feFuncA",
+                    attributes: { type: "linear", slope: 0.3 },
+                  },
+                ],
+              },
+              {
+                tagName: "feMerge",
+                children: [
+                  { tagName: "feMergeNode" },
+                  {
+                    tagName: "feMergeNode",
+                    attributes: { in: "SourceGraphic" },
+                  },
+                ],
+              },
+            ],
+          });
+        };
+        a.prototype.bodyFormatter = function (b) {
+          return b.map(function (b) {
+            var e = b.series.tooltipOptions;
+            return (
+              e[(b.point.formatPrefix || "point") + "Formatter"] ||
+              b.point.tooltipFormatter
+            ).call(
+              b.point,
+              e[(b.point.formatPrefix || "point") + "Format"] || ""
+            );
+          });
+        };
+        a.prototype.cleanSplit = function (b) {
+          this.chart.series.forEach(function (a) {
+            var e = a && a.tt;
+            e && (!e.isActive || b ? (a.tt = e.destroy()) : (e.isActive = !1));
+          });
+        };
+        a.prototype.defaultFormatter = function (b) {
+          var a = this.points || B(this);
+          var e = [b.tooltipFooterHeaderFormatter(a[0])];
+          e = e.concat(b.bodyFormatter(a));
+          e.push(b.tooltipFooterHeaderFormatter(a[0], !0));
+          return e;
+        };
+        a.prototype.destroy = function () {
+          this.label && (this.label = this.label.destroy());
+          this.split &&
+            this.tt &&
+            (this.cleanSplit(!0), (this.tt = this.tt.destroy()));
+          this.renderer &&
+            ((this.renderer = this.renderer.destroy()), c(this.container));
+          x.clearTimeout(this.hideTimer);
+          x.clearTimeout(this.tooltipTimeout);
+        };
+        a.prototype.getAnchor = function (b, a) {
+          var e = this.chart,
+            c = e.pointer,
+            d = e.inverted,
+            g = e.plotTop,
+            k = e.plotLeft,
+            f,
+            n,
+            h = 0,
+            l = 0;
+          b = B(b);
+          this.followPointer && a
+            ? ("undefined" === typeof a.chartX && (a = c.normalize(a)),
+              (c = [a.chartX - k, a.chartY - g]))
+            : b[0].tooltipPos
+            ? (c = b[0].tooltipPos)
+            : (b.forEach(function (b) {
+                f = b.series.yAxis;
+                n = b.series.xAxis;
+                h += b.plotX || 0;
+                l += b.plotLow
+                  ? (b.plotLow + (b.plotHigh || 0)) / 2
+                  : b.plotY || 0;
+                n &&
+                  f &&
+                  (d
+                    ? ((h += g + e.plotHeight - n.len - n.pos),
+                      (l += k + e.plotWidth - f.len - f.pos))
+                    : ((h += n.pos - k), (l += f.pos - g)));
+              }),
+              (h /= b.length),
+              (l /= b.length),
+              (c = [d ? e.plotWidth - l : h, d ? e.plotHeight - h : l]),
+              this.shared &&
+                1 < b.length &&
+                a &&
+                (d ? (c[0] = a.chartX - k) : (c[1] = a.chartY - g)));
+          return c.map(Math.round);
+        };
+        a.prototype.getLabel = function () {
+          var b = this,
+            a = this.chart.styledMode,
+            e = this.options,
+            c = this.split && this.allowShared,
+            k = "tooltip" + (d(e.className) ? " " + e.className : ""),
+            f =
+              e.style.pointerEvents ||
+              (!this.followPointer && e.stickOnContact ? "auto" : "none"),
+            n = function () {
+              b.inContact = !0;
+            },
+            l = function (a) {
+              var e = b.chart.hoverSeries;
+              b.inContact =
+                b.shouldStickOnContact() &&
+                b.chart.pointer.inClass(a.relatedTarget, "highcharts-tooltip");
+              if (!b.inContact && e && e.onMouseOut) e.onMouseOut();
+            },
+            m,
+            p = this.chart.renderer;
+          if (b.label) {
+            var r = !b.label.hasClass("highcharts-label");
+            ((c && !r) || (!c && r)) && b.destroy();
+          }
+          if (!this.label) {
+            if (this.outside) {
+              r = this.chart.options.chart.style;
+              var B = G.getRendererType();
+              this.container = m = t.doc.createElement("div");
+              m.className = "highcharts-tooltip-container";
+              h(m, {
+                position: "absolute",
+                top: "1px",
+                pointerEvents: f,
+                zIndex: Math.max(
+                  this.options.style.zIndex || 0,
+                  ((r && r.zIndex) || 0) + 3
+                ),
+              });
+              q(m, "mouseenter", n);
+              q(m, "mouseleave", l);
+              t.doc.body.appendChild(m);
+              this.renderer = p = new B(
+                m,
+                0,
+                0,
+                r,
+                void 0,
+                void 0,
+                p.styledMode
+              );
+            }
+            c
+              ? (this.label = p.g(k))
+              : ((this.label = p
+                  .label(
+                    "",
+                    0,
+                    0,
+                    e.shape,
+                    void 0,
+                    void 0,
+                    e.useHTML,
+                    void 0,
+                    k
+                  )
+                  .attr({ padding: e.padding, r: e.borderRadius })),
+                a ||
+                  this.label
+                    .attr({
+                      fill: e.backgroundColor,
+                      "stroke-width": e.borderWidth,
+                    })
+                    .css(e.style)
+                    .css({ pointerEvents: f })
+                    .shadow(e.shadow));
+            a &&
+              e.shadow &&
+              (this.applyFilter(),
+              this.label.attr({
+                filter: "url(#drop-shadow-" + this.chart.index + ")",
+              }));
+            if (b.outside && !b.split) {
+              var y = this.label,
+                w = y.xSetter,
+                u = y.ySetter;
+              y.xSetter = function (a) {
+                w.call(y, b.distance);
+                m.style.left = a + "px";
+              };
+              y.ySetter = function (a) {
+                u.call(y, b.distance);
+                m.style.top = a + "px";
+              };
+            }
+            this.label
+              .on("mouseenter", n)
+              .on("mouseleave", l)
+              .attr({ zIndex: 8 })
+              .add();
+          }
+          return this.label;
+        };
+        a.prototype.getPosition = function (b, a, e) {
+          var c = this.chart,
+            d = this.distance,
+            g = {},
+            k = (c.inverted && e.h) || 0,
+            f = this.outside,
+            n = f ? I.documentElement.clientWidth - 2 * d : c.chartWidth,
+            h = f
+              ? Math.max(
+                  I.body.scrollHeight,
+                  I.documentElement.scrollHeight,
+                  I.body.offsetHeight,
+                  I.documentElement.offsetHeight,
+                  I.documentElement.clientHeight
+                )
+              : c.chartHeight,
+            l = c.pointer.getChartPosition(),
+            m = function (g) {
+              var k = "x" === g;
+              return [g, k ? n : h, k ? b : a].concat(
+                f
+                  ? [
+                      k ? b * l.scaleX : a * l.scaleY,
+                      k
+                        ? l.left - d + (e.plotX + c.plotLeft) * l.scaleX
+                        : l.top - d + (e.plotY + c.plotTop) * l.scaleY,
+                      0,
+                      k ? n : h,
+                    ]
+                  : [
+                      k ? b : a,
+                      k ? e.plotX + c.plotLeft : e.plotY + c.plotTop,
+                      k ? c.plotLeft : c.plotTop,
+                      k ? c.plotLeft + c.plotWidth : c.plotTop + c.plotHeight,
+                    ]
+              );
+            },
+            p = m("y"),
+            r = m("x"),
+            B;
+          m = !!e.negative;
+          !c.polar &&
+            c.hoverSeries &&
+            c.hoverSeries.yAxis &&
+            c.hoverSeries.yAxis.reversed &&
+            (m = !m);
+          var q = !this.followPointer && y(e.ttBelow, !c.inverted === m),
+            w = function (b, a, e, c, n, h, v) {
+              var D = f ? ("y" === b ? d * l.scaleY : d * l.scaleX) : d,
+                m = (e - c) / 2,
+                F = c < n - d,
+                H = n + d + c < a,
+                p = n - D - e + m;
+              n = n + D - m;
+              if (q && H) g[b] = n;
+              else if (!q && F) g[b] = p;
+              else if (F) g[b] = Math.min(v - c, 0 > p - k ? p : p - k);
+              else if (H) g[b] = Math.max(h, n + k + e > a ? n : n + k);
+              else return !1;
+            },
+            u = function (b, a, e, c, k) {
+              var f;
+              k < d || k > a - d
+                ? (f = !1)
+                : (g[b] =
+                    k < e / 2 ? 1 : k > a - c / 2 ? a - c - 2 : k - e / 2);
+              return f;
+            },
+            F = function (b) {
+              var a = p;
+              p = r;
+              r = a;
+              B = b;
+            },
+            T = function () {
+              !1 !== w.apply(0, p)
+                ? !1 !== u.apply(0, r) || B || (F(!0), T())
+                : B
+                ? (g.x = g.y = 0)
+                : (F(!0), T());
+            };
+          (c.inverted || 1 < this.len) && F();
+          T();
+          return g;
+        };
+        a.prototype.hide = function (b) {
+          var a = this;
+          x.clearTimeout(this.hideTimer);
+          b = y(b, this.options.hideDelay);
+          this.isHidden ||
+            (this.hideTimer = n(function () {
+              a.getLabel().fadeOut(b ? void 0 : b);
+              a.isHidden = !0;
+            }, b));
+        };
+        a.prototype.init = function (b, a) {
+          this.chart = b;
+          this.options = a;
+          this.crosshairs = [];
+          this.now = { x: 0, y: 0 };
+          this.isHidden = !0;
+          this.split = a.split && !b.inverted && !b.polar;
+          this.shared = a.shared || this.split;
+          this.outside = y(
+            a.outside,
+            !(!b.scrollablePixelsX && !b.scrollablePixelsY)
+          );
+        };
+        a.prototype.shouldStickOnContact = function () {
+          return !(this.followPointer || !this.options.stickOnContact);
+        };
+        a.prototype.isStickyOnContact = function () {
+          return !(!this.shouldStickOnContact() || !this.inContact);
+        };
+        a.prototype.move = function (b, a, e, c) {
+          var d = this,
+            g = d.now,
+            k =
+              !1 !== d.options.animation &&
+              !d.isHidden &&
+              (1 < Math.abs(b - g.x) || 1 < Math.abs(a - g.y)),
+            f = d.followPointer || 1 < d.len;
+          l(g, {
+            x: k ? (2 * g.x + b) / 3 : b,
+            y: k ? (g.y + a) / 2 : a,
+            anchorX: f ? void 0 : k ? (2 * g.anchorX + e) / 3 : e,
+            anchorY: f ? void 0 : k ? (g.anchorY + c) / 2 : c,
+          });
+          d.getLabel().attr(g);
+          d.drawTracker();
+          k &&
+            (x.clearTimeout(this.tooltipTimeout),
+            (this.tooltipTimeout = setTimeout(function () {
+              d && d.move(b, a, e, c);
+            }, 32)));
+        };
+        a.prototype.refresh = function (b, a) {
+          var e = this.chart,
+            c = this.options,
+            d = B(b),
+            g = d[0],
+            k = [],
+            n = c.formatter || this.defaultFormatter,
+            h = this.shared,
+            l = e.styledMode,
+            m = {};
+          if (c.enabled) {
+            x.clearTimeout(this.hideTimer);
+            this.allowShared = !(!w(b) && b.series && b.series.noSharedTooltip);
+            this.followPointer =
+              !this.split && g.series.tooltipOptions.followPointer;
+            b = this.getAnchor(b, a);
+            var p = b[0],
+              r = b[1];
+            h && this.allowShared
+              ? (e.pointer.applyInactiveState(d),
+                d.forEach(function (b) {
+                  b.setState("hover");
+                  k.push(b.getLabelConfig());
+                }),
+                (m = { x: g.category, y: g.y }),
+                (m.points = k))
+              : (m = g.getLabelConfig());
+            this.len = k.length;
+            n = n.call(m, this);
+            h = g.series;
+            this.distance = y(h.tooltipOptions.distance, 16);
+            if (!1 === n) this.hide();
+            else {
+              if (this.split && this.allowShared) this.renderSplit(n, d);
+              else {
+                var q = p,
+                  u = r;
+                a &&
+                  e.pointer.isDirectTouch &&
+                  ((q = a.chartX - e.plotLeft), (u = a.chartY - e.plotTop));
+                if (
+                  e.polar ||
+                  !1 === h.options.clip ||
+                  d.some(function (b) {
+                    return b.series.shouldShowTooltip(q, u);
+                  })
+                )
+                  (a = this.getLabel()),
+                    (c.style.width && !l) ||
+                      a.css({ width: this.chart.spacingBox.width + "px" }),
+                    a.attr({ text: n && n.join ? n.join("") : n }),
+                    a
+                      .removeClass(/highcharts-color-[\d]+/g)
+                      .addClass(
+                        "highcharts-color-" + y(g.colorIndex, h.colorIndex)
+                      ),
+                    l ||
+                      a.attr({
+                        stroke:
+                          c.borderColor || g.color || h.color || "#666666",
+                      }),
+                    this.updatePosition({
+                      plotX: p,
+                      plotY: r,
+                      negative: g.negative,
+                      ttBelow: g.ttBelow,
+                      h: b[2] || 0,
+                    });
+                else {
+                  this.hide();
+                  return;
+                }
+              }
+              this.isHidden &&
+                this.label &&
+                this.label.attr({ opacity: 1 }).show();
+              this.isHidden = !1;
+            }
+            f(this, "refresh");
+          }
+        };
+        a.prototype.renderSplit = function (b, a) {
+          function e(b, a, e, d, g) {
+            void 0 === g && (g = !0);
+            e
+              ? ((a = X ? 0 : C),
+                (b = m(b - d / 2, N.left, N.right - d - (c.outside ? R : 0))))
+              : ((a -= A),
+                (b = g ? b - d - x : b + x),
+                (b = m(b, g ? b : N.left, N.right)));
+            return { x: b, y: a };
+          }
+          var c = this,
+            d = c.chart,
+            g = c.chart,
+            k = g.chartWidth,
+            f = g.chartHeight,
+            n = g.plotHeight,
+            h = g.plotLeft,
+            p = g.plotTop,
+            r = g.pointer,
+            B = g.scrollablePixelsY;
+          B = void 0 === B ? 0 : B;
+          var q = g.scrollablePixelsX,
+            w = g.scrollingContainer;
+          w = void 0 === w ? { scrollLeft: 0, scrollTop: 0 } : w;
+          var u = w.scrollLeft;
+          w = w.scrollTop;
+          var t = g.styledMode,
+            x = c.distance,
+            F = c.options,
+            T = c.options.positioner,
+            N =
+              c.outside && "number" !== typeof q
+                ? I.documentElement.getBoundingClientRect()
+                : { left: u, right: u + k, top: w, bottom: w + f },
+            V = c.getLabel(),
+            W = this.renderer || d.renderer,
+            X = !(!d.xAxis[0] || !d.xAxis[0].opposite);
+          d = r.getChartPosition();
+          var R = d.left;
+          d = d.top;
+          var A = p + w,
+            aa = 0,
+            C = n - B;
+          K(b) && (b = [!1, b]);
+          b = b.slice(0, a.length + 1).reduce(function (b, d, g) {
+            if (!1 !== d && "" !== d) {
+              g = a[g - 1] || {
+                isHeader: !0,
+                plotX: a[0].plotX,
+                plotY: n,
+                series: {},
+              };
+              var k = g.isHeader,
+                f = k ? c : g.series;
+              d = d.toString();
+              var v = f.tt,
+                l = g.isHeader;
+              var D = g.series;
+              var H =
+                "highcharts-color-" + y(g.colorIndex, D.colorIndex, "none");
+              v ||
+                ((v = { padding: F.padding, r: F.borderRadius }),
+                t ||
+                  ((v.fill = F.backgroundColor),
+                  (v["stroke-width"] = F.borderWidth)),
+                (v = W.label(
+                  "",
+                  0,
+                  0,
+                  F[l ? "headerShape" : "shape"],
+                  void 0,
+                  void 0,
+                  F.useHTML
+                )
+                  .addClass(
+                    (l ? "highcharts-tooltip-header " : "") +
+                      "highcharts-tooltip-box " +
+                      H
+                  )
+                  .attr(v)
+                  .add(V)));
+              v.isActive = !0;
+              v.attr({ text: d });
+              t ||
+                v
+                  .css(F.style)
+                  .shadow(F.shadow)
+                  .attr({
+                    stroke: F.borderColor || g.color || D.color || "#333333",
+                  });
+              f = f.tt = v;
+              l = f.getBBox();
+              d = l.width + f.strokeWidth();
+              k && ((aa = l.height), (C += aa), X && (A -= aa));
+              D = g.plotX;
+              D = void 0 === D ? 0 : D;
+              H = g.plotY;
+              H = void 0 === H ? 0 : H;
+              v = g.series;
+              if (g.isHeader) {
+                D = h + D;
+                var E = p + n / 2;
+              } else {
+                var r = v.xAxis,
+                  B = v.yAxis;
+                D = r.pos + m(D, -x, r.len + x);
+                v.shouldShowTooltip(0, B.pos - p + H, { ignoreX: !0 }) &&
+                  (E = B.pos + H);
+              }
+              D = m(D, N.left - x, N.right + x);
+              "number" === typeof E
+                ? ((l = l.height + 1),
+                  (H = T ? T.call(c, d, l, g) : e(D, E, k, d)),
+                  b.push({
+                    align: T ? 0 : void 0,
+                    anchorX: D,
+                    anchorY: E,
+                    boxWidth: d,
+                    point: g,
+                    rank: y(H.rank, k ? 1 : 0),
+                    size: l,
+                    target: H.y,
+                    tt: f,
+                    x: H.x,
+                  }))
+                : (f.isActive = !1);
+            }
+            return b;
+          }, []);
+          !T &&
+            b.some(function (b) {
+              var a = (c.outside ? R : 0) + b.anchorX;
+              return a < N.left && a + b.boxWidth < N.right
+                ? !0
+                : a < R - N.left + b.boxWidth && N.right - a > a;
+            }) &&
+            (b = b.map(function (b) {
+              var a = e(b.anchorX, b.anchorY, b.point.isHeader, b.boxWidth, !1);
+              return l(b, { target: a.y, x: a.x });
+            }));
+          c.cleanSplit();
+          z(b, C);
+          var G = R,
+            ba = R;
+          b.forEach(function (b) {
+            var a = b.x,
+              e = b.boxWidth;
+            b = b.isHeader;
+            b ||
+              (c.outside && R + a < G && (G = R + a),
+              !b && c.outside && G + e > ba && (ba = R + a));
+          });
+          b.forEach(function (b) {
+            var a = b.x,
+              e = b.anchorX,
+              d = b.pos,
+              g = b.point.isHeader;
+            d = {
+              visibility: "undefined" === typeof d ? "hidden" : "inherit",
+              x: a,
+              y: d + A,
+              anchorX: e,
+              anchorY: b.anchorY,
+            };
+            if (c.outside && a < e) {
+              var k = R - G;
+              0 < k &&
+                (g || ((d.x = a + k), (d.anchorX = e + k)),
+                g && ((d.x = (ba - G) / 2), (d.anchorX = e + k)));
+            }
+            b.tt.attr(d);
+          });
+          b = c.container;
+          B = c.renderer;
+          c.outside &&
+            b &&
+            B &&
+            ((g = V.getBBox()),
+            B.setSize(g.width + g.x, g.height + g.y, !1),
+            (b.style.left = G + "px"),
+            (b.style.top = d + "px"));
+        };
+        a.prototype.drawTracker = function () {
+          if (this.followPointer || !this.options.stickOnContact)
+            this.tracker && this.tracker.destroy();
+          else {
+            var b = this.chart,
+              a = this.label,
+              e = this.shared ? b.hoverPoints : b.hoverPoint;
+            if (a && e) {
+              var c = { x: 0, y: 0, width: 0, height: 0 };
+              e = this.getAnchor(e);
+              var d = a.getBBox();
+              e[0] += b.plotLeft - a.translateX;
+              e[1] += b.plotTop - a.translateY;
+              c.x = Math.min(0, e[0]);
+              c.y = Math.min(0, e[1]);
+              c.width =
+                0 > e[0]
+                  ? Math.max(Math.abs(e[0]), d.width - e[0])
+                  : Math.max(Math.abs(e[0]), d.width);
+              c.height =
+                0 > e[1]
+                  ? Math.max(Math.abs(e[1]), d.height - Math.abs(e[1]))
+                  : Math.max(Math.abs(e[1]), d.height);
+              this.tracker
+                ? this.tracker.attr(c)
+                : ((this.tracker = a.renderer
+                    .rect(c)
+                    .addClass("highcharts-tracker")
+                    .add(a)),
+                  b.styledMode || this.tracker.attr({ fill: "rgba(0,0,0,0)" }));
+            }
+          }
+        };
+        a.prototype.styledModeFormat = function (b) {
+          return b
+            .replace('style="font-size: 10px"', 'class="highcharts-header"')
+            .replace(
+              /style="color:{(point|series)\.color}"/g,
+              'class="highcharts-color-{$1.colorIndex}"'
+            );
+        };
+        a.prototype.tooltipFooterHeaderFormatter = function (b, a) {
+          var e = b.series,
+            c = e.tooltipOptions,
+            d = e.xAxis,
+            g = d && d.dateTime;
+          d = { isFooter: a, labelConfig: b };
+          var k = c.xDateFormat,
+            n = c[a ? "footerFormat" : "headerFormat"];
+          f(this, "headerFormatter", d, function (a) {
+            g &&
+              !k &&
+              p(b.key) &&
+              (k = g.getXDateFormat(b.key, c.dateTimeLabelFormats));
+            g &&
+              k &&
+              ((b.point && b.point.tooltipDateKeys) || ["key"]).forEach(
+                function (b) {
+                  n = n.replace(
+                    "{point." + b + "}",
+                    "{point." + b + ":" + k + "}"
+                  );
+                }
+              );
+            e.chart.styledMode && (n = this.styledModeFormat(n));
+            a.text = u(n, { point: b, series: e }, this.chart);
+          });
+          return d.text;
+        };
+        a.prototype.update = function (b) {
+          this.destroy();
+          r(!0, this.chart.options.tooltip.userOptions, b);
+          this.init(this.chart, r(!0, this.options, b));
+        };
+        a.prototype.updatePosition = function (b) {
+          var a = this.chart,
+            e = this.options,
+            c = a.pointer,
+            d = this.getLabel();
+          c = c.getChartPosition();
+          var k = (e.positioner || this.getPosition).call(
+              this,
+              d.width,
+              d.height,
+              b
+            ),
+            f = b.plotX + a.plotLeft;
+          b = b.plotY + a.plotTop;
+          if (this.outside) {
+            e = e.borderWidth + 2 * this.distance;
+            this.renderer.setSize(d.width + e, d.height + e, !1);
+            if (1 !== c.scaleX || 1 !== c.scaleY)
+              h(this.container, {
+                transform: "scale(" + c.scaleX + ", " + c.scaleY + ")",
+              }),
+                (f *= c.scaleX),
+                (b *= c.scaleY);
+            f += c.left - k.x;
+            b += c.top - k.y;
+          }
+          this.move(Math.round(k.x), Math.round(k.y || 0), f, b);
+        };
+        return a;
+      })();
+      ("");
+      return a;
+    }
+  );
+  L(
+    a,
+    "Core/Series/Point.js",
+    [
+      a["Core/Renderer/HTML/AST.js"],
+      a["Core/Animation/AnimationUtilities.js"],
+      a["Core/DefaultOptions.js"],
+      a["Core/FormatUtilities.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G, x) {
+      var u = t.animObject,
+        I = A.defaultOptions,
+        z = G.format,
+        q = x.addEvent,
+        m = x.defined,
+        h = x.erase,
+        d = x.extend,
+        c = x.fireEvent,
+        l = x.getNestedProperty,
+        f = x.isArray,
+        w = x.isFunction,
+        p = x.isNumber,
+        K = x.isObject,
+        r = x.merge,
+        y = x.objectEach,
+        B = x.pick,
+        n = x.syncTimeout,
+        k = x.removeEvent,
+        b = x.uniqueKey;
+      t = (function () {
+        function g() {
+          this.colorIndex = this.category = void 0;
+          this.formatPrefix = "point";
+          this.id = void 0;
+          this.isNull = !1;
+          this.percentage = this.options = this.name = void 0;
+          this.selected = !1;
+          this.total = this.series = void 0;
+          this.visible = !0;
+          this.x = void 0;
+        }
+        g.prototype.animateBeforeDestroy = function () {
+          var b = this,
+            a = { x: b.startXPos, opacity: 0 },
+            c = b.getGraphicalProps();
+          c.singular.forEach(function (e) {
+            b[e] = b[e].animate(
+              "dataLabel" === e
+                ? { x: b[e].startXPos, y: b[e].startYPos, opacity: 0 }
+                : a
+            );
+          });
+          c.plural.forEach(function (a) {
+            b[a].forEach(function (a) {
+              a.element &&
+                a.animate(
+                  d(
+                    { x: b.startXPos },
+                    a.startYPos ? { x: a.startXPos, y: a.startYPos } : {}
+                  )
+                );
+            });
+          });
+        };
+        g.prototype.applyOptions = function (b, a) {
+          var e = this.series,
+            c = e.options.pointValKey || e.pointValKey;
+          b = g.prototype.optionsToObject.call(this, b);
+          d(this, b);
+          this.options = this.options ? d(this.options, b) : b;
+          b.group && delete this.group;
+          b.dataLabels && delete this.dataLabels;
+          c && (this.y = g.prototype.getNestedProperty.call(this, c));
+          this.formatPrefix = (this.isNull = B(
+            this.isValid && !this.isValid(),
+            null === this.x || !p(this.y)
+          ))
+            ? "null"
+            : "point";
+          this.selected && (this.state = "select");
+          "name" in this &&
+            "undefined" === typeof a &&
+            e.xAxis &&
+            e.xAxis.hasNames &&
+            (this.x = e.xAxis.nameToX(this));
+          "undefined" === typeof this.x && e
+            ? (this.x = "undefined" === typeof a ? e.autoIncrement() : a)
+            : p(b.x) &&
+              e.options.relativeXValue &&
+              (this.x = e.autoIncrement(b.x));
+          return this;
+        };
+        g.prototype.destroy = function () {
+          function b() {
+            if (a.graphic || a.dataLabel || a.dataLabels)
+              k(a), a.destroyElements();
+            for (l in a) a[l] = null;
+          }
+          var a = this,
+            c = a.series,
+            d = c.chart;
+          c = c.options.dataSorting;
+          var g = d.hoverPoints,
+            f = u(a.series.chart.renderer.globalAnimation),
+            l;
+          a.legendItem && d.legend.destroyItem(a);
+          g && (a.setState(), h(g, a), g.length || (d.hoverPoints = null));
+          if (a === d.hoverPoint) a.onMouseOut();
+          c && c.enabled
+            ? (this.animateBeforeDestroy(), n(b, f.duration))
+            : b();
+          d.pointCount--;
+        };
+        g.prototype.destroyElements = function (b) {
+          var a = this;
+          b = a.getGraphicalProps(b);
+          b.singular.forEach(function (b) {
+            a[b] = a[b].destroy();
+          });
+          b.plural.forEach(function (b) {
+            a[b].forEach(function (b) {
+              b.element && b.destroy();
+            });
+            delete a[b];
+          });
+        };
+        g.prototype.firePointEvent = function (b, a, d) {
+          var e = this,
+            g = this.series.options;
+          (g.point.events[b] ||
+            (e.options && e.options.events && e.options.events[b])) &&
+            e.importEvents();
+          "click" === b &&
+            g.allowPointSelect &&
+            (d = function (b) {
+              e.select && e.select(null, b.ctrlKey || b.metaKey || b.shiftKey);
+            });
+          c(e, b, a, d);
+        };
+        g.prototype.getClassName = function () {
+          return (
+            "highcharts-point" +
+            (this.selected ? " highcharts-point-select" : "") +
+            (this.negative ? " highcharts-negative" : "") +
+            (this.isNull ? " highcharts-null-point" : "") +
+            ("undefined" !== typeof this.colorIndex
+              ? " highcharts-color-" + this.colorIndex
+              : "") +
+            (this.options.className ? " " + this.options.className : "") +
+            (this.zone && this.zone.className
+              ? " " + this.zone.className.replace("highcharts-negative", "")
+              : "")
+          );
+        };
+        g.prototype.getGraphicalProps = function (b) {
+          var a = this,
+            e = [],
+            c = { singular: [], plural: [] },
+            d;
+          b = b || { graphic: 1, dataLabel: 1 };
+          b.graphic && e.push("graphic", "upperGraphic", "shadowGroup");
+          b.dataLabel && e.push("dataLabel", "dataLabelUpper", "connector");
+          for (d = e.length; d--; ) {
+            var g = e[d];
+            a[g] && c.singular.push(g);
+          }
+          ["dataLabel", "connector"].forEach(function (e) {
+            var d = e + "s";
+            b[e] && a[d] && c.plural.push(d);
+          });
+          return c;
+        };
+        g.prototype.getLabelConfig = function () {
+          return {
+            x: this.category,
+            y: this.y,
+            color: this.color,
+            colorIndex: this.colorIndex,
+            key: this.name || this.category,
+            series: this.series,
+            point: this,
+            percentage: this.percentage,
+            total: this.total || this.stackTotal,
+          };
+        };
+        g.prototype.getNestedProperty = function (b) {
+          if (b)
+            return 0 === b.indexOf("custom.") ? l(b, this.options) : this[b];
+        };
+        g.prototype.getZone = function () {
+          var b = this.series,
+            a = b.zones;
+          b = b.zoneAxis || "y";
+          var c,
+            d = 0;
+          for (c = a[d]; this[b] >= c.value; ) c = a[++d];
+          this.nonZonedColor || (this.nonZonedColor = this.color);
+          this.color =
+            c && c.color && !this.options.color ? c.color : this.nonZonedColor;
+          return c;
+        };
+        g.prototype.hasNewShapeType = function () {
+          return (
+            (this.graphic &&
+              (this.graphic.symbolName || this.graphic.element.nodeName)) !==
+            this.shapeType
+          );
+        };
+        g.prototype.init = function (a, d, g) {
+          this.series = a;
+          this.applyOptions(d, g);
+          this.id = m(this.id) ? this.id : b();
+          this.resolveColor();
+          a.chart.pointCount++;
+          c(this, "afterInit");
+          return this;
+        };
+        g.prototype.optionsToObject = function (b) {
+          var a = this.series,
+            e = a.options.keys,
+            c = e || a.pointArrayMap || ["y"],
+            d = c.length,
+            k = {},
+            n = 0,
+            h = 0;
+          if (p(b) || null === b) k[c[0]] = b;
+          else if (f(b))
+            for (
+              !e &&
+              b.length > d &&
+              ((a = typeof b[0]),
+              "string" === a ? (k.name = b[0]) : "number" === a && (k.x = b[0]),
+              n++);
+              h < d;
+
+            )
+              (e && "undefined" === typeof b[n]) ||
+                (0 < c[h].indexOf(".")
+                  ? g.prototype.setNestedProperty(k, b[n], c[h])
+                  : (k[c[h]] = b[n])),
+                n++,
+                h++;
+          else
+            "object" === typeof b &&
+              ((k = b),
+              b.dataLabels && (a._hasPointLabels = !0),
+              b.marker && (a._hasPointMarkers = !0));
+          return k;
+        };
+        g.prototype.resolveColor = function () {
+          var b = this.series,
+            a = b.chart.styledMode;
+          var c = b.chart.options.chart.colorCount;
+          delete this.nonZonedColor;
+          if (b.options.colorByPoint) {
+            if (!a) {
+              c = b.options.colors || b.chart.options.colors;
+              var d = c[b.colorCounter];
+              c = c.length;
+            }
+            a = b.colorCounter;
+            b.colorCounter++;
+            b.colorCounter === c && (b.colorCounter = 0);
+          } else a || (d = b.color), (a = b.colorIndex);
+          this.colorIndex = B(this.options.colorIndex, a);
+          this.color = B(this.options.color, d);
+        };
+        g.prototype.setNestedProperty = function (b, a, c) {
+          c.split(".").reduce(function (b, e, c, d) {
+            b[e] = d.length - 1 === c ? a : K(b[e], !0) ? b[e] : {};
+            return b[e];
+          }, b);
+          return b;
+        };
+        g.prototype.tooltipFormatter = function (b) {
+          var a = this.series,
+            e = a.tooltipOptions,
+            c = B(e.valueDecimals, ""),
+            d = e.valuePrefix || "",
+            g = e.valueSuffix || "";
+          a.chart.styledMode && (b = a.chart.tooltip.styledModeFormat(b));
+          (a.pointArrayMap || ["y"]).forEach(function (a) {
+            a = "{point." + a;
+            if (d || g) b = b.replace(RegExp(a + "}", "g"), d + a + "}" + g);
+            b = b.replace(RegExp(a + "}", "g"), a + ":,." + c + "f}");
+          });
+          return z(b, { point: this, series: this.series }, a.chart);
+        };
+        g.prototype.update = function (b, a, c, d) {
+          function e() {
+            g.applyOptions(b);
+            var e = f && g.hasDummyGraphic;
+            e = null === g.y ? !e : e;
+            f && e && ((g.graphic = f.destroy()), delete g.hasDummyGraphic);
+            K(b, !0) &&
+              (f &&
+                f.element &&
+                b &&
+                b.marker &&
+                "undefined" !== typeof b.marker.symbol &&
+                (g.graphic = f.destroy()),
+              b &&
+                b.dataLabels &&
+                g.dataLabel &&
+                (g.dataLabel = g.dataLabel.destroy()),
+              g.connector && (g.connector = g.connector.destroy()));
+            l = g.index;
+            k.updateParallelArrays(g, l);
+            h.data[l] =
+              K(h.data[l], !0) || K(b, !0) ? g.options : B(b, h.data[l]);
+            k.isDirty = k.isDirtyData = !0;
+            !k.fixedBox && k.hasCartesianSeries && (n.isDirtyBox = !0);
+            "point" === h.legendType && (n.isDirtyLegend = !0);
+            a && n.redraw(c);
+          }
+          var g = this,
+            k = g.series,
+            f = g.graphic,
+            n = k.chart,
+            h = k.options,
+            l;
+          a = B(a, !0);
+          !1 === d ? e() : g.firePointEvent("update", { options: b }, e);
+        };
+        g.prototype.remove = function (b, a) {
+          this.series.removePoint(this.series.data.indexOf(this), b, a);
+        };
+        g.prototype.select = function (b, a) {
+          var e = this,
+            c = e.series,
+            d = c.chart;
+          this.selectedStaging = b = B(b, !e.selected);
+          e.firePointEvent(
+            b ? "select" : "unselect",
+            { accumulate: a },
+            function () {
+              e.selected = e.options.selected = b;
+              c.options.data[c.data.indexOf(e)] = e.options;
+              e.setState(b && "select");
+              a ||
+                d.getSelectedPoints().forEach(function (b) {
+                  var a = b.series;
+                  b.selected &&
+                    b !== e &&
+                    ((b.selected = b.options.selected = !1),
+                    (a.options.data[a.data.indexOf(b)] = b.options),
+                    b.setState(
+                      d.hoverPoints && a.options.inactiveOtherPoints
+                        ? "inactive"
+                        : ""
+                    ),
+                    b.firePointEvent("unselect"));
+                });
+            }
+          );
+          delete this.selectedStaging;
+        };
+        g.prototype.onMouseOver = function (b) {
+          var a = this.series.chart,
+            e = a.pointer;
+          b = b
+            ? e.normalize(b)
+            : e.getChartCoordinatesFromPoint(this, a.inverted);
+          e.runPointActions(b, this);
+        };
+        g.prototype.onMouseOut = function () {
+          var b = this.series.chart;
+          this.firePointEvent("mouseOut");
+          this.series.options.inactiveOtherPoints ||
+            (b.hoverPoints || []).forEach(function (b) {
+              b.setState();
+            });
+          b.hoverPoints = b.hoverPoint = null;
+        };
+        g.prototype.importEvents = function () {
+          if (!this.hasImportedEvents) {
+            var b = this,
+              a = r(b.series.options.point, b.options).events;
+            b.events = a;
+            y(a, function (a, e) {
+              w(a) && q(b, e, a);
+            });
+            this.hasImportedEvents = !0;
+          }
+        };
+        g.prototype.setState = function (b, g) {
+          var e = this.series,
+            k = this.state,
+            f = e.options.states[b || "normal"] || {},
+            n = I.plotOptions[e.type].marker && e.options.marker,
+            h = n && !1 === n.enabled,
+            l = (n && n.states && n.states[b || "normal"]) || {},
+            m = !1 === l.enabled,
+            D = this.marker || {},
+            r = e.chart,
+            q = n && e.markerAttribs,
+            w = e.halo,
+            y,
+            u = e.stateMarkerGraphic;
+          b = b || "";
+          if (
+            !(
+              (b === this.state && !g) ||
+              (this.selected && "select" !== b) ||
+              !1 === f.enabled ||
+              (b && (m || (h && !1 === l.enabled))) ||
+              (b && D.states && D.states[b] && !1 === D.states[b].enabled)
+            )
+          ) {
+            this.state = b;
+            q && (y = e.markerAttribs(this, b));
+            if (this.graphic && !this.hasDummyGraphic) {
+              k && this.graphic.removeClass("highcharts-point-" + k);
+              b && this.graphic.addClass("highcharts-point-" + b);
+              if (!r.styledMode) {
+                var K = e.pointAttribs(this, b);
+                var F = B(r.options.chart.animation, f.animation);
+                e.options.inactiveOtherPoints &&
+                  p(K.opacity) &&
+                  ((this.dataLabels || []).forEach(function (b) {
+                    b && b.animate({ opacity: K.opacity }, F);
+                  }),
+                  this.connector &&
+                    this.connector.animate({ opacity: K.opacity }, F));
+                this.graphic.animate(K, F);
+              }
+              y &&
+                this.graphic.animate(
+                  y,
+                  B(r.options.chart.animation, l.animation, n.animation)
+                );
+              u && u.hide();
+            } else {
+              if (b && l) {
+                k = D.symbol || e.symbol;
+                u && u.currentSymbol !== k && (u = u.destroy());
+                if (y)
+                  if (u) u[g ? "animate" : "attr"]({ x: y.x, y: y.y });
+                  else
+                    k &&
+                      ((e.stateMarkerGraphic = u =
+                        r.renderer
+                          .symbol(k, y.x, y.y, y.width, y.height)
+                          .add(e.markerGroup)),
+                      (u.currentSymbol = k));
+                !r.styledMode &&
+                  u &&
+                  "inactive" !== this.state &&
+                  u.attr(e.pointAttribs(this, b));
+              }
+              u &&
+                (u[b && this.isInside ? "show" : "hide"](),
+                (u.element.point = this),
+                u.addClass(this.getClassName(), !0));
+            }
+            f = f.halo;
+            y = ((u = this.graphic || u) && u.visibility) || "inherit";
+            f && f.size && u && "hidden" !== y && !this.isCluster
+              ? (w || (e.halo = w = r.renderer.path().add(u.parentGroup)),
+                w.show()[g ? "animate" : "attr"]({ d: this.haloPath(f.size) }),
+                w.attr({
+                  class:
+                    "highcharts-halo highcharts-color-" +
+                    B(this.colorIndex, e.colorIndex) +
+                    (this.className ? " " + this.className : ""),
+                  visibility: y,
+                  zIndex: -1,
+                }),
+                (w.point = this),
+                r.styledMode ||
+                  w.attr(
+                    d(
+                      {
+                        fill: this.color || e.color,
+                        "fill-opacity": f.opacity,
+                      },
+                      a.filterUserAttributes(f.attributes || {})
+                    )
+                  ))
+              : w &&
+                w.point &&
+                w.point.haloPath &&
+                w.animate({ d: w.point.haloPath(0) }, null, w.hide);
+            c(this, "afterSetState", { state: b });
+          }
+        };
+        g.prototype.haloPath = function (b) {
+          return this.series.chart.renderer.symbols.circle(
+            Math.floor(this.plotX) - b,
+            this.plotY - b,
+            2 * b,
+            2 * b
+          );
+        };
+        return g;
+      })();
+      ("");
+      return t;
+    }
+  );
+  L(
+    a,
+    "Core/Pointer.js",
+    [
+      a["Core/Color/Color.js"],
+      a["Core/Globals.js"],
+      a["Core/Tooltip.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G) {
+      var u = a.parse,
+        C = t.charts,
+        I = t.noop,
+        z = G.addEvent,
+        q = G.attr,
+        m = G.css,
+        h = G.defined,
+        d = G.extend,
+        c = G.find,
+        l = G.fireEvent,
+        f = G.isNumber,
+        w = G.isObject,
+        p = G.objectEach,
+        K = G.offset,
+        r = G.pick,
+        y = G.splat;
+      a = (function () {
+        function a(a, c) {
+          this.lastValidTouch = {};
+          this.pinchDown = [];
+          this.runChartClick = !1;
+          this.eventsToUnbind = [];
+          this.chart = a;
+          this.hasDragged = !1;
+          this.options = c;
+          this.init(a, c);
+        }
+        a.prototype.applyInactiveState = function (a) {
+          var c = [],
+            b;
+          (a || []).forEach(function (a) {
+            b = a.series;
+            c.push(b);
+            b.linkedParent && c.push(b.linkedParent);
+            b.linkedSeries && (c = c.concat(b.linkedSeries));
+            b.navigatorSeries && c.push(b.navigatorSeries);
+          });
+          this.chart.series.forEach(function (b) {
+            -1 === c.indexOf(b)
+              ? b.setState("inactive", !0)
+              : b.options.inactiveOtherPoints &&
+                b.setAllPointsToState("inactive");
+          });
+        };
+        a.prototype.destroy = function () {
+          var c = this;
+          this.eventsToUnbind.forEach(function (a) {
+            return a();
+          });
+          this.eventsToUnbind = [];
+          t.chartCount ||
+            (a.unbindDocumentMouseUp &&
+              (a.unbindDocumentMouseUp = a.unbindDocumentMouseUp()),
+            a.unbindDocumentTouchEnd &&
+              (a.unbindDocumentTouchEnd = a.unbindDocumentTouchEnd()));
+          clearInterval(c.tooltipTimeout);
+          p(c, function (a, b) {
+            c[b] = void 0;
+          });
+        };
+        a.prototype.drag = function (a) {
+          var c = this.chart,
+            b = c.options.chart,
+            d = this.zoomHor,
+            e = this.zoomVert,
+            f = c.plotLeft,
+            n = c.plotTop,
+            h = c.plotWidth,
+            l = c.plotHeight,
+            m = this.mouseDownX || 0,
+            p = this.mouseDownY || 0,
+            r = w(b.panning) ? b.panning && b.panning.enabled : b.panning,
+            q = b.panKey && a[b.panKey + "Key"],
+            B = a.chartX,
+            y = a.chartY,
+            K = this.selectionMarker;
+          if (!K || !K.touch)
+            if (
+              (B < f ? (B = f) : B > f + h && (B = f + h),
+              y < n ? (y = n) : y > n + l && (y = n + l),
+              (this.hasDragged = Math.sqrt(
+                Math.pow(m - B, 2) + Math.pow(p - y, 2)
+              )),
+              10 < this.hasDragged)
+            ) {
+              var t = c.isInsidePlot(m - f, p - n, { visiblePlotOnly: !0 });
+              (!c.hasCartesianSeries && !c.mapView) ||
+                (!this.zoomX && !this.zoomY) ||
+                !t ||
+                q ||
+                K ||
+                ((this.selectionMarker = K =
+                  c.renderer
+                    .rect(f, n, d ? 1 : h, e ? 1 : l, 0)
+                    .attr({ class: "highcharts-selection-marker", zIndex: 7 })
+                    .add()),
+                c.styledMode ||
+                  K.attr({
+                    fill:
+                      b.selectionMarkerFill ||
+                      u("#335cad").setOpacity(0.25).get(),
+                  }));
+              K &&
+                d &&
+                ((d = B - m),
+                K.attr({ width: Math.abs(d), x: (0 < d ? 0 : d) + m }));
+              K &&
+                e &&
+                ((d = y - p),
+                K.attr({ height: Math.abs(d), y: (0 < d ? 0 : d) + p }));
+              t && !K && r && c.pan(a, b.panning);
+            }
+        };
+        a.prototype.dragStart = function (a) {
+          var c = this.chart;
+          c.mouseIsDown = a.type;
+          c.cancelClick = !1;
+          c.mouseDownX = this.mouseDownX = a.chartX;
+          c.mouseDownY = this.mouseDownY = a.chartY;
+        };
+        a.prototype.drop = function (a) {
+          var c = this,
+            b = this.chart,
+            g = this.hasPinched;
+          if (this.selectionMarker) {
+            var e = this.selectionMarker,
+              n = e.attr ? e.attr("x") : e.x,
+              p = e.attr ? e.attr("y") : e.y,
+              v = e.attr ? e.attr("width") : e.width,
+              r = e.attr ? e.attr("height") : e.height,
+              q = {
+                originalEvent: a,
+                xAxis: [],
+                yAxis: [],
+                x: n,
+                y: p,
+                width: v,
+                height: r,
+              },
+              B = !!b.mapView;
+            if (this.hasDragged || g)
+              b.axes.forEach(function (b) {
+                if (
+                  b.zoomEnabled &&
+                  h(b.min) &&
+                  (g || c[{ xAxis: "zoomX", yAxis: "zoomY" }[b.coll]]) &&
+                  f(n) &&
+                  f(p)
+                ) {
+                  var e = b.horiz,
+                    d = "touchend" === a.type ? b.minPixelPadding : 0,
+                    k = b.toValue((e ? n : p) + d);
+                  e = b.toValue((e ? n + v : p + r) - d);
+                  q[b.coll].push({
+                    axis: b,
+                    min: Math.min(k, e),
+                    max: Math.max(k, e),
+                  });
+                  B = !0;
+                }
+              }),
+                B &&
+                  l(b, "selection", q, function (a) {
+                    b.zoom(d(a, g ? { animation: !1 } : null));
+                  });
+            f(b.index) &&
+              (this.selectionMarker = this.selectionMarker.destroy());
+            g && this.scaleGroups();
+          }
+          b &&
+            f(b.index) &&
+            (m(b.container, { cursor: b._cursor }),
+            (b.cancelClick = 10 < this.hasDragged),
+            (b.mouseIsDown = this.hasDragged = this.hasPinched = !1),
+            (this.pinchDown = []));
+        };
+        a.prototype.findNearestKDPoint = function (a, c, b) {
+          var d = this.chart,
+            e = d.hoverPoint;
+          d = d.tooltip;
+          if (e && d && d.isStickyOnContact()) return e;
+          var k;
+          a.forEach(function (a) {
+            var e =
+              !(a.noSharedTooltip && c) &&
+              0 > a.options.findNearestPointBy.indexOf("y");
+            a = a.searchPoint(b, e);
+            if ((e = w(a, !0) && a.series) && !(e = !w(k, !0))) {
+              e = k.distX - a.distX;
+              var d = k.dist - a.dist,
+                g =
+                  (a.series.group && a.series.group.zIndex) -
+                  (k.series.group && k.series.group.zIndex);
+              e =
+                0 <
+                (0 !== e && c
+                  ? e
+                  : 0 !== d
+                  ? d
+                  : 0 !== g
+                  ? g
+                  : k.series.index > a.series.index
+                  ? -1
+                  : 1);
+            }
+            e && (k = a);
+          });
+          return k;
+        };
+        a.prototype.getChartCoordinatesFromPoint = function (a, c) {
+          var b = a.series,
+            d = b.xAxis;
+          b = b.yAxis;
+          var e = a.shapeArgs;
+          if (d && b) {
+            var k = r(a.clientX, a.plotX),
+              n = a.plotY || 0;
+            a.isNode && e && f(e.x) && f(e.y) && ((k = e.x), (n = e.y));
+            return c
+              ? { chartX: b.len + b.pos - n, chartY: d.len + d.pos - k }
+              : { chartX: k + d.pos, chartY: n + b.pos };
+          }
+          if (e && e.x && e.y) return { chartX: e.x, chartY: e.y };
+        };
+        a.prototype.getChartPosition = function () {
+          if (this.chartPosition) return this.chartPosition;
+          var a = this.chart.container,
+            c = K(a);
+          this.chartPosition = {
+            left: c.left,
+            top: c.top,
+            scaleX: 1,
+            scaleY: 1,
+          };
+          var b = a.offsetWidth;
+          a = a.offsetHeight;
+          2 < b &&
+            2 < a &&
+            ((this.chartPosition.scaleX = c.width / b),
+            (this.chartPosition.scaleY = c.height / a));
+          return this.chartPosition;
+        };
+        a.prototype.getCoordinates = function (a) {
+          var c = { xAxis: [], yAxis: [] };
+          this.chart.axes.forEach(function (b) {
+            c[b.isXAxis ? "xAxis" : "yAxis"].push({
+              axis: b,
+              value: b.toValue(a[b.horiz ? "chartX" : "chartY"]),
+            });
+          });
+          return c;
+        };
+        a.prototype.getHoverData = function (a, d, b, g, e, f) {
+          var k = [];
+          g = !(!g || !a);
+          var h = {
+            chartX: f ? f.chartX : void 0,
+            chartY: f ? f.chartY : void 0,
+            shared: e,
+          };
+          l(this, "beforeGetHoverData", h);
+          var n =
+            d && !d.stickyTracking
+              ? [d]
+              : b.filter(function (b) {
+                  return h.filter
+                    ? h.filter(b)
+                    : b.visible &&
+                        !(!e && b.directTouch) &&
+                        r(b.options.enableMouseTracking, !0) &&
+                        b.stickyTracking;
+                });
+          var m = g || !f ? a : this.findNearestKDPoint(n, e, f);
+          d = m && m.series;
+          m &&
+            (e && !d.noSharedTooltip
+              ? ((n = b.filter(function (b) {
+                  return h.filter
+                    ? h.filter(b)
+                    : b.visible &&
+                        !(!e && b.directTouch) &&
+                        r(b.options.enableMouseTracking, !0) &&
+                        !b.noSharedTooltip;
+                })),
+                n.forEach(function (b) {
+                  var a = c(b.points, function (b) {
+                    return b.x === m.x && !b.isNull;
+                  });
+                  w(a) &&
+                    (b.chart.isBoosting && (a = b.getPoint(a)), k.push(a));
+                }))
+              : k.push(m));
+          h = { hoverPoint: m };
+          l(this, "afterGetHoverData", h);
+          return { hoverPoint: h.hoverPoint, hoverSeries: d, hoverPoints: k };
+        };
+        a.prototype.getPointFromEvent = function (a) {
+          a = a.target;
+          for (var c; a && !c; ) (c = a.point), (a = a.parentNode);
+          return c;
+        };
+        a.prototype.onTrackerMouseOut = function (a) {
+          a = a.relatedTarget || a.toElement;
+          var c = this.chart.hoverSeries;
+          this.isDirectTouch = !1;
+          if (
+            !(
+              !c ||
+              !a ||
+              c.stickyTracking ||
+              this.inClass(a, "highcharts-tooltip") ||
+              (this.inClass(a, "highcharts-series-" + c.index) &&
+                this.inClass(a, "highcharts-tracker"))
+            )
+          )
+            c.onMouseOut();
+        };
+        a.prototype.inClass = function (a, c) {
+          for (var b; a; ) {
+            if ((b = q(a, "class"))) {
+              if (-1 !== b.indexOf(c)) return !0;
+              if (-1 !== b.indexOf("highcharts-container")) return !1;
+            }
+            a = a.parentNode;
+          }
+        };
+        a.prototype.init = function (a, c) {
+          this.options = c;
+          this.chart = a;
+          this.runChartClick = !(!c.chart.events || !c.chart.events.click);
+          this.pinchDown = [];
+          this.lastValidTouch = {};
+          A &&
+            ((a.tooltip = new A(a, c.tooltip)),
+            (this.followTouchMove = r(c.tooltip.followTouchMove, !0)));
+          this.setDOMEvents();
+        };
+        a.prototype.normalize = function (a, c) {
+          var b = a.touches,
+            g = b
+              ? b.length
+                ? b.item(0)
+                : r(b.changedTouches, a.changedTouches)[0]
+              : a;
+          c || (c = this.getChartPosition());
+          b = g.pageX - c.left;
+          g = g.pageY - c.top;
+          b /= c.scaleX;
+          g /= c.scaleY;
+          return d(a, { chartX: Math.round(b), chartY: Math.round(g) });
+        };
+        a.prototype.onContainerClick = function (a) {
+          var c = this.chart,
+            b = c.hoverPoint;
+          a = this.normalize(a);
+          var g = c.plotLeft,
+            e = c.plotTop;
+          c.cancelClick ||
+            (b && this.inClass(a.target, "highcharts-tracker")
+              ? (l(b.series, "click", d(a, { point: b })),
+                c.hoverPoint && b.firePointEvent("click", a))
+              : (d(a, this.getCoordinates(a)),
+                c.isInsidePlot(a.chartX - g, a.chartY - e, {
+                  visiblePlotOnly: !0,
+                }) && l(c, "click", a)));
+        };
+        a.prototype.onContainerMouseDown = function (a) {
+          var c = 1 === ((a.buttons || a.button) & 1);
+          a = this.normalize(a);
+          if (t.isFirefox && 0 !== a.button) this.onContainerMouseMove(a);
+          if ("undefined" === typeof a.button || c)
+            this.zoomOption(a),
+              c && a.preventDefault && a.preventDefault(),
+              this.dragStart(a);
+        };
+        a.prototype.onContainerMouseLeave = function (c) {
+          var d = C[r(a.hoverChartIndex, -1)],
+            b = this.chart.tooltip;
+          (b &&
+            b.shouldStickOnContact() &&
+            this.inClass(c.relatedTarget, "highcharts-tooltip-container")) ||
+            ((c = this.normalize(c)),
+            d &&
+              (c.relatedTarget || c.toElement) &&
+              (d.pointer.reset(), (d.pointer.chartPosition = void 0)),
+            b && !b.isHidden && this.reset());
+        };
+        a.prototype.onContainerMouseEnter = function (a) {
+          delete this.chartPosition;
+        };
+        a.prototype.onContainerMouseMove = function (a) {
+          var c = this.chart;
+          a = this.normalize(a);
+          this.setHoverChartIndex();
+          a.preventDefault || (a.returnValue = !1);
+          ("mousedown" === c.mouseIsDown || this.touchSelect(a)) &&
+            this.drag(a);
+          c.openMenu ||
+            (!this.inClass(a.target, "highcharts-tracker") &&
+              !c.isInsidePlot(a.chartX - c.plotLeft, a.chartY - c.plotTop, {
+                visiblePlotOnly: !0,
+              })) ||
+            (this.inClass(a.target, "highcharts-no-tooltip")
+              ? this.reset(!1, 0)
+              : this.runPointActions(a));
+        };
+        a.prototype.onDocumentTouchEnd = function (c) {
+          var d = C[r(a.hoverChartIndex, -1)];
+          d && d.pointer.drop(c);
+        };
+        a.prototype.onContainerTouchMove = function (a) {
+          if (this.touchSelect(a)) this.onContainerMouseMove(a);
+          else this.touch(a);
+        };
+        a.prototype.onContainerTouchStart = function (a) {
+          if (this.touchSelect(a)) this.onContainerMouseDown(a);
+          else this.zoomOption(a), this.touch(a, !0);
+        };
+        a.prototype.onDocumentMouseMove = function (a) {
+          var c = this.chart,
+            b = this.chartPosition;
+          a = this.normalize(a, b);
+          var d = c.tooltip;
+          !b ||
+            (d && d.isStickyOnContact()) ||
+            c.isInsidePlot(a.chartX - c.plotLeft, a.chartY - c.plotTop, {
+              visiblePlotOnly: !0,
+            }) ||
+            this.inClass(a.target, "highcharts-tracker") ||
+            this.reset();
+        };
+        a.prototype.onDocumentMouseUp = function (c) {
+          var d = C[r(a.hoverChartIndex, -1)];
+          d && d.pointer.drop(c);
+        };
+        a.prototype.pinch = function (a) {
+          var c = this,
+            b = c.chart,
+            g = c.pinchDown,
+            e = a.touches || [],
+            f = e.length,
+            h = c.lastValidTouch,
+            n = c.hasZoom,
+            m = {},
+            p =
+              1 === f &&
+              ((c.inClass(a.target, "highcharts-tracker") &&
+                b.runTrackerClick) ||
+                c.runChartClick),
+            q = {},
+            B = c.selectionMarker;
+          1 < f
+            ? (c.initiated = !0)
+            : 1 === f && this.followTouchMove && (c.initiated = !1);
+          n && c.initiated && !p && !1 !== a.cancelable && a.preventDefault();
+          [].map.call(e, function (b) {
+            return c.normalize(b);
+          });
+          "touchstart" === a.type
+            ? ([].forEach.call(e, function (b, a) {
+                g[a] = { chartX: b.chartX, chartY: b.chartY };
+              }),
+              (h.x = [g[0].chartX, g[1] && g[1].chartX]),
+              (h.y = [g[0].chartY, g[1] && g[1].chartY]),
+              b.axes.forEach(function (a) {
+                if (a.zoomEnabled) {
+                  var c = b.bounds[a.horiz ? "h" : "v"],
+                    e = a.minPixelPadding,
+                    d = a.toPixels(
+                      Math.min(r(a.options.min, a.dataMin), a.dataMin)
+                    ),
+                    g = a.toPixels(
+                      Math.max(r(a.options.max, a.dataMax), a.dataMax)
+                    ),
+                    f = Math.max(d, g);
+                  c.min = Math.min(a.pos, Math.min(d, g) - e);
+                  c.max = Math.max(a.pos + a.len, f + e);
+                }
+              }),
+              (c.res = !0))
+            : c.followTouchMove && 1 === f
+            ? this.runPointActions(c.normalize(a))
+            : g.length &&
+              (l(b, "touchpan", { originalEvent: a }, function () {
+                B ||
+                  (c.selectionMarker = B =
+                    d({ destroy: I, touch: !0 }, b.plotBox));
+                c.pinchTranslate(g, e, m, B, q, h);
+                c.hasPinched = n;
+                c.scaleGroups(m, q);
+              }),
+              c.res && ((c.res = !1), this.reset(!1, 0)));
+        };
+        a.prototype.pinchTranslate = function (a, c, b, d, e, f) {
+          this.zoomHor && this.pinchTranslateDirection(!0, a, c, b, d, e, f);
+          this.zoomVert && this.pinchTranslateDirection(!1, a, c, b, d, e, f);
+        };
+        a.prototype.pinchTranslateDirection = function (
+          a,
+          c,
+          b,
+          d,
+          e,
+          f,
+          h,
+          l
+        ) {
+          var g = this.chart,
+            k = a ? "x" : "y",
+            n = a ? "X" : "Y",
+            m = "chart" + n,
+            p = a ? "width" : "height",
+            v = g["plot" + (a ? "Left" : "Top")],
+            r = g.inverted,
+            D = g.bounds[a ? "h" : "v"],
+            q = 1 === c.length,
+            B = c[0][m],
+            y = !q && c[1][m];
+          c = function () {
+            "number" === typeof u &&
+              20 < Math.abs(B - y) &&
+              (w = l || Math.abs(N - u) / Math.abs(B - y));
+            F = (v - N) / w + B;
+            H = g["plot" + (a ? "Width" : "Height")] / w;
+          };
+          var H,
+            F,
+            w = l || 1,
+            N = b[0][m],
+            u = !q && b[1][m];
+          c();
+          b = F;
+          if (b < D.min) {
+            b = D.min;
+            var K = !0;
+          } else b + H > D.max && ((b = D.max - H), (K = !0));
+          K
+            ? ((N -= 0.8 * (N - h[k][0])),
+              "number" === typeof u && (u -= 0.8 * (u - h[k][1])),
+              c())
+            : (h[k] = [N, u]);
+          r || ((f[k] = F - v), (f[p] = H));
+          f = r ? 1 / w : w;
+          e[p] = H;
+          e[k] = b;
+          d[r ? (a ? "scaleY" : "scaleX") : "scale" + n] = w;
+          d["translate" + n] = f * v + (N - f * B);
+        };
+        a.prototype.reset = function (a, c) {
+          var b = this.chart,
+            d = b.hoverSeries,
+            e = b.hoverPoint,
+            f = b.hoverPoints,
+            k = b.tooltip,
+            h = k && k.shared ? f : e;
+          a &&
+            h &&
+            y(h).forEach(function (b) {
+              b.series.isCartesian &&
+                "undefined" === typeof b.plotX &&
+                (a = !1);
+            });
+          if (a)
+            k &&
+              h &&
+              y(h).length &&
+              (k.refresh(h),
+              k.shared && f
+                ? f.forEach(function (b) {
+                    b.setState(b.state, !0);
+                    b.series.isCartesian &&
+                      (b.series.xAxis.crosshair &&
+                        b.series.xAxis.drawCrosshair(null, b),
+                      b.series.yAxis.crosshair &&
+                        b.series.yAxis.drawCrosshair(null, b));
+                  })
+                : e &&
+                  (e.setState(e.state, !0),
+                  b.axes.forEach(function (b) {
+                    b.crosshair &&
+                      e.series[b.coll] === b &&
+                      b.drawCrosshair(null, e);
+                  })));
+          else {
+            if (e) e.onMouseOut();
+            f &&
+              f.forEach(function (b) {
+                b.setState();
+              });
+            if (d) d.onMouseOut();
+            k && k.hide(c);
+            this.unDocMouseMove &&
+              (this.unDocMouseMove = this.unDocMouseMove());
+            b.axes.forEach(function (b) {
+              b.hideCrosshair();
+            });
+            this.hoverX = b.hoverPoints = b.hoverPoint = null;
+          }
+        };
+        a.prototype.runPointActions = function (d, f) {
+          var b = this.chart,
+            g = b.tooltip && b.tooltip.options.enabled ? b.tooltip : void 0,
+            e = g ? g.shared : !1,
+            k = f || b.hoverPoint,
+            h = (k && k.series) || b.hoverSeries;
+          f = this.getHoverData(
+            k,
+            h,
+            b.series,
+            (!d || "touchmove" !== d.type) &&
+              (!!f || (h && h.directTouch && this.isDirectTouch)),
+            e,
+            d
+          );
+          k = f.hoverPoint;
+          h = f.hoverSeries;
+          var l = f.hoverPoints;
+          f = h && h.tooltipOptions.followPointer && !h.tooltipOptions.split;
+          e = e && h && !h.noSharedTooltip;
+          if (k && (k !== b.hoverPoint || (g && g.isHidden))) {
+            (b.hoverPoints || []).forEach(function (b) {
+              -1 === l.indexOf(b) && b.setState();
+            });
+            if (b.hoverSeries !== h) h.onMouseOver();
+            this.applyInactiveState(l);
+            (l || []).forEach(function (b) {
+              b.setState("hover");
+            });
+            b.hoverPoint && b.hoverPoint.firePointEvent("mouseOut");
+            if (!k.series) return;
+            b.hoverPoints = l;
+            b.hoverPoint = k;
+            k.firePointEvent("mouseOver");
+            g && g.refresh(e ? l : k, d);
+          } else
+            f &&
+              g &&
+              !g.isHidden &&
+              ((k = g.getAnchor([{}], d)),
+              b.isInsidePlot(k[0], k[1], { visiblePlotOnly: !0 }) &&
+                g.updatePosition({ plotX: k[0], plotY: k[1] }));
+          this.unDocMouseMove ||
+            ((this.unDocMouseMove = z(
+              b.container.ownerDocument,
+              "mousemove",
+              function (b) {
+                var c = C[a.hoverChartIndex];
+                if (c) c.pointer.onDocumentMouseMove(b);
+              }
+            )),
+            this.eventsToUnbind.push(this.unDocMouseMove));
+          b.axes.forEach(function (a) {
+            var e = r((a.crosshair || {}).snap, !0),
+              g;
+            e &&
+              (((g = b.hoverPoint) && g.series[a.coll] === a) ||
+                (g = c(l, function (b) {
+                  return b.series[a.coll] === a;
+                })));
+            g || !e ? a.drawCrosshair(d, g) : a.hideCrosshair();
+          });
+        };
+        a.prototype.scaleGroups = function (a, c) {
+          var b = this.chart;
+          b.series.forEach(function (d) {
+            var e = a || d.getPlotBox();
+            d.group &&
+              ((d.xAxis && d.xAxis.zoomEnabled) || b.mapView) &&
+              (d.group.attr(e),
+              d.markerGroup &&
+                (d.markerGroup.attr(e),
+                d.markerGroup.clip(c ? b.clipRect : null)),
+              d.dataLabelsGroup && d.dataLabelsGroup.attr(e));
+          });
+          b.clipRect.attr(c || b.clipBox);
+        };
+        a.prototype.setDOMEvents = function () {
+          var c = this,
+            d = this.chart.container,
+            b = d.ownerDocument;
+          d.onmousedown = this.onContainerMouseDown.bind(this);
+          d.onmousemove = this.onContainerMouseMove.bind(this);
+          d.onclick = this.onContainerClick.bind(this);
+          this.eventsToUnbind.push(
+            z(d, "mouseenter", this.onContainerMouseEnter.bind(this))
+          );
+          this.eventsToUnbind.push(
+            z(d, "mouseleave", this.onContainerMouseLeave.bind(this))
+          );
+          a.unbindDocumentMouseUp ||
+            (a.unbindDocumentMouseUp = z(
+              b,
+              "mouseup",
+              this.onDocumentMouseUp.bind(this)
+            ));
+          for (
+            var g = this.chart.renderTo.parentElement;
+            g && "BODY" !== g.tagName;
+
+          )
+            this.eventsToUnbind.push(
+              z(g, "scroll", function () {
+                delete c.chartPosition;
+              })
+            ),
+              (g = g.parentElement);
+          t.hasTouch &&
+            (this.eventsToUnbind.push(
+              z(d, "touchstart", this.onContainerTouchStart.bind(this), {
+                passive: !1,
+              })
+            ),
+            this.eventsToUnbind.push(
+              z(d, "touchmove", this.onContainerTouchMove.bind(this), {
+                passive: !1,
+              })
+            ),
+            a.unbindDocumentTouchEnd ||
+              (a.unbindDocumentTouchEnd = z(
+                b,
+                "touchend",
+                this.onDocumentTouchEnd.bind(this),
+                { passive: !1 }
+              )));
+        };
+        a.prototype.setHoverChartIndex = function () {
+          var c = this.chart,
+            d = t.charts[r(a.hoverChartIndex, -1)];
+          if (d && d !== c)
+            d.pointer.onContainerMouseLeave({ relatedTarget: !0 });
+          (d && d.mouseIsDown) || (a.hoverChartIndex = c.index);
+        };
+        a.prototype.touch = function (a, c) {
+          var b = this.chart,
+            d;
+          this.setHoverChartIndex();
+          if (1 === a.touches.length)
+            if (
+              ((a = this.normalize(a)),
+              (d = b.isInsidePlot(a.chartX - b.plotLeft, a.chartY - b.plotTop, {
+                visiblePlotOnly: !0,
+              })) && !b.openMenu)
+            ) {
+              c && this.runPointActions(a);
+              if ("touchmove" === a.type) {
+                c = this.pinchDown;
+                var e = c[0]
+                  ? 4 <=
+                    Math.sqrt(
+                      Math.pow(c[0].chartX - a.chartX, 2) +
+                        Math.pow(c[0].chartY - a.chartY, 2)
+                    )
+                  : !1;
+              }
+              r(e, !0) && this.pinch(a);
+            } else c && this.reset();
+          else 2 === a.touches.length && this.pinch(a);
+        };
+        a.prototype.touchSelect = function (a) {
+          return !(
+            !this.chart.options.chart.zoomBySingleTouch ||
+            !a.touches ||
+            1 !== a.touches.length
+          );
+        };
+        a.prototype.zoomOption = function (a) {
+          var c = this.chart,
+            b = c.options.chart;
+          c = c.inverted;
+          var d = b.zoomType || "";
+          /touch/.test(a.type) && (d = r(b.pinchType, d));
+          this.zoomX = a = /x/.test(d);
+          this.zoomY = b = /y/.test(d);
+          this.zoomHor = (a && !c) || (b && c);
+          this.zoomVert = (b && !c) || (a && c);
+          this.hasZoom = a || b;
+        };
+        return a;
+      })();
+      ("");
+      return a;
+    }
+  );
+  L(
+    a,
+    "Core/MSPointer.js",
+    [a["Core/Globals.js"], a["Core/Pointer.js"], a["Core/Utilities.js"]],
+    function (a, t, A) {
+      function u() {
+        var a = [];
+        a.item = function (a) {
+          return this[a];
+        };
+        c(f, function (c) {
+          a.push({ pageX: c.pageX, pageY: c.pageY, target: c.target });
+        });
+        return a;
+      }
+      function x(a, c, d, f) {
+        var h = I[t.hoverChartIndex || NaN];
+        ("touch" !== a.pointerType &&
+          a.pointerType !== a.MSPOINTER_TYPE_TOUCH) ||
+          !h ||
+          ((h = h.pointer),
+          f(a),
+          h[c]({
+            type: d,
+            target: a.currentTarget,
+            preventDefault: q,
+            touches: u(),
+          }));
+      }
+      var C =
+          (this && this.__extends) ||
+          (function () {
+            var a = function (c, d) {
+              a =
+                Object.setPrototypeOf ||
+                ({ __proto__: [] } instanceof Array &&
+                  function (a, c) {
+                    a.__proto__ = c;
+                  }) ||
+                function (a, c) {
+                  for (var d in c) c.hasOwnProperty(d) && (a[d] = c[d]);
+                };
+              return a(c, d);
+            };
+            return function (c, d) {
+              function f() {
+                this.constructor = c;
+              }
+              a(c, d);
+              c.prototype =
+                null === d
+                  ? Object.create(d)
+                  : ((f.prototype = d.prototype), new f());
+            };
+          })(),
+        I = a.charts,
+        z = a.doc,
+        q = a.noop,
+        m = a.win,
+        h = A.addEvent,
+        d = A.css,
+        c = A.objectEach,
+        l = A.removeEvent,
+        f = {},
+        w = !!m.PointerEvent;
+      return (function (c) {
+        function p() {
+          return (null !== c && c.apply(this, arguments)) || this;
+        }
+        C(p, c);
+        p.isRequired = function () {
+          return !(a.hasTouch || (!m.PointerEvent && !m.MSPointerEvent));
+        };
+        p.prototype.batchMSEvents = function (a) {
+          a(
+            this.chart.container,
+            w ? "pointerdown" : "MSPointerDown",
+            this.onContainerPointerDown
+          );
+          a(
+            this.chart.container,
+            w ? "pointermove" : "MSPointerMove",
+            this.onContainerPointerMove
+          );
+          a(z, w ? "pointerup" : "MSPointerUp", this.onDocumentPointerUp);
+        };
+        p.prototype.destroy = function () {
+          this.batchMSEvents(l);
+          c.prototype.destroy.call(this);
+        };
+        p.prototype.init = function (a, f) {
+          c.prototype.init.call(this, a, f);
+          this.hasZoom &&
+            d(a.container, {
+              "-ms-touch-action": "none",
+              "touch-action": "none",
+            });
+        };
+        p.prototype.onContainerPointerDown = function (a) {
+          x(a, "onContainerTouchStart", "touchstart", function (a) {
+            f[a.pointerId] = {
+              pageX: a.pageX,
+              pageY: a.pageY,
+              target: a.currentTarget,
+            };
+          });
+        };
+        p.prototype.onContainerPointerMove = function (a) {
+          x(a, "onContainerTouchMove", "touchmove", function (a) {
+            f[a.pointerId] = { pageX: a.pageX, pageY: a.pageY };
+            f[a.pointerId].target || (f[a.pointerId].target = a.currentTarget);
+          });
+        };
+        p.prototype.onDocumentPointerUp = function (a) {
+          x(a, "onDocumentTouchEnd", "touchend", function (a) {
+            delete f[a.pointerId];
+          });
+        };
+        p.prototype.setDOMEvents = function () {
+          c.prototype.setDOMEvents.call(this);
+          (this.hasZoom || this.followTouchMove) && this.batchMSEvents(h);
+        };
+        return p;
+      })(t);
+    }
+  );
+  L(
+    a,
+    "Core/Legend/Legend.js",
+    [
+      a["Core/Animation/AnimationUtilities.js"],
+      a["Core/FormatUtilities.js"],
+      a["Core/Globals.js"],
+      a["Core/Series/Point.js"],
+      a["Core/Renderer/RendererUtilities.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G, x, C) {
+      var u = a.animObject,
+        z = a.setAnimation,
+        q = t.format;
+      a = A.isFirefox;
+      var m = A.marginNames;
+      A = A.win;
+      var h = x.distribute,
+        d = C.addEvent,
+        c = C.createElement,
+        l = C.css,
+        f = C.defined,
+        w = C.discardElement,
+        p = C.find,
+        K = C.fireEvent,
+        r = C.isNumber,
+        y = C.merge,
+        B = C.pick,
+        n = C.relativeLength,
+        k = C.stableSort,
+        b = C.syncTimeout;
+      x = C.wrap;
+      C = (function () {
+        function a(b, a) {
+          this.allItems = [];
+          this.contentGroup = this.box = void 0;
+          this.display = !1;
+          this.group = void 0;
+          this.offsetWidth =
+            this.maxLegendWidth =
+            this.maxItemWidth =
+            this.legendWidth =
+            this.legendHeight =
+            this.lastLineHeight =
+            this.lastItemY =
+            this.itemY =
+            this.itemX =
+            this.itemMarginTop =
+            this.itemMarginBottom =
+            this.itemHeight =
+            this.initialItemY =
+              0;
+          this.options = {};
+          this.padding = 0;
+          this.pages = [];
+          this.proximate = !1;
+          this.scrollGroup = void 0;
+          this.widthOption =
+            this.totalItemWidth =
+            this.titleHeight =
+            this.symbolWidth =
+            this.symbolHeight =
+              0;
+          this.chart = b;
+          this.init(b, a);
+        }
+        a.prototype.init = function (b, a) {
+          this.chart = b;
+          this.setOptions(a);
+          a.enabled &&
+            (this.render(),
+            d(this.chart, "endResize", function () {
+              this.legend.positionCheckboxes();
+            }),
+            this.proximate
+              ? (this.unchartrender = d(this.chart, "render", function () {
+                  this.legend.proximatePositions();
+                  this.legend.positionItems();
+                }))
+              : this.unchartrender && this.unchartrender());
+        };
+        a.prototype.setOptions = function (b) {
+          var a = B(b.padding, 8);
+          this.options = b;
+          this.chart.styledMode ||
+            ((this.itemStyle = b.itemStyle),
+            (this.itemHiddenStyle = y(this.itemStyle, b.itemHiddenStyle)));
+          this.itemMarginTop = b.itemMarginTop || 0;
+          this.itemMarginBottom = b.itemMarginBottom || 0;
+          this.padding = a;
+          this.initialItemY = a - 5;
+          this.symbolWidth = B(b.symbolWidth, 16);
+          this.pages = [];
+          this.proximate = "proximate" === b.layout && !this.chart.inverted;
+          this.baseline = void 0;
+        };
+        a.prototype.update = function (b, a) {
+          var c = this.chart;
+          this.setOptions(y(!0, this.options, b));
+          this.destroy();
+          c.isDirtyLegend = c.isDirtyBox = !0;
+          B(a, !0) && c.redraw();
+          K(this, "afterUpdate");
+        };
+        a.prototype.colorizeItem = function (b, a) {
+          b.legendGroup[a ? "removeClass" : "addClass"](
+            "highcharts-legend-item-hidden"
+          );
+          if (!this.chart.styledMode) {
+            var c = this.options,
+              e = b.legendItem,
+              d = b.legendLine,
+              g = b.legendSymbol,
+              f = this.itemHiddenStyle.color;
+            c = a ? c.itemStyle.color : f;
+            var k = a ? b.color || f : f,
+              h = b.options && b.options.marker,
+              l = { fill: k };
+            e && e.css({ fill: c, color: c });
+            d && d.attr({ stroke: k });
+            g &&
+              (h &&
+                g.isMarker &&
+                ((l = b.pointAttribs()), a || (l.stroke = l.fill = f)),
+              g.attr(l));
+          }
+          K(this, "afterColorizeItem", { item: b, visible: a });
+        };
+        a.prototype.positionItems = function () {
+          this.allItems.forEach(this.positionItem, this);
+          this.chart.isResizing || this.positionCheckboxes();
+        };
+        a.prototype.positionItem = function (b) {
+          var a = this,
+            c = this.options,
+            e = c.symbolPadding,
+            d = !c.rtl,
+            g = b._legendItemPos;
+          c = g[0];
+          g = g[1];
+          var k = b.checkbox,
+            h = b.legendGroup;
+          h &&
+            h.element &&
+            ((e = {
+              translateX: d ? c : this.legendWidth - c - 2 * e - 4,
+              translateY: g,
+            }),
+            (d = function () {
+              K(a, "afterPositionItem", { item: b });
+            }),
+            f(h.translateY) ? h.animate(e, void 0, d) : (h.attr(e), d()));
+          k && ((k.x = c), (k.y = g));
+        };
+        a.prototype.destroyItem = function (b) {
+          var a = b.checkbox;
+          ["legendItem", "legendLine", "legendSymbol", "legendGroup"].forEach(
+            function (a) {
+              b[a] && (b[a] = b[a].destroy());
+            }
+          );
+          a && w(b.checkbox);
+        };
+        a.prototype.destroy = function () {
+          function b(b) {
+            this[b] && (this[b] = this[b].destroy());
+          }
+          this.getAllItems().forEach(function (a) {
+            ["legendItem", "legendGroup"].forEach(b, a);
+          });
+          "clipRect up down pager nav box title group"
+            .split(" ")
+            .forEach(b, this);
+          this.display = null;
+        };
+        a.prototype.positionCheckboxes = function () {
+          var b = this.group && this.group.alignAttr,
+            a = this.clipHeight || this.legendHeight,
+            c = this.titleHeight;
+          if (b) {
+            var d = b.translateY;
+            this.allItems.forEach(function (e) {
+              var g = e.checkbox;
+              if (g) {
+                var f = d + c + g.y + (this.scrollOffset || 0) + 3;
+                l(g, {
+                  left: b.translateX + e.checkboxOffset + g.x - 20 + "px",
+                  top: f + "px",
+                  display:
+                    this.proximate || (f > d - 6 && f < d + a - 6)
+                      ? ""
+                      : "none",
+                });
+              }
+            }, this);
+          }
+        };
+        a.prototype.renderTitle = function () {
+          var b = this.options,
+            a = this.padding,
+            c = b.title,
+            d = 0;
+          c.text &&
+            (this.title ||
+              ((this.title = this.chart.renderer
+                .label(
+                  c.text,
+                  a - 3,
+                  a - 4,
+                  null,
+                  null,
+                  null,
+                  b.useHTML,
+                  null,
+                  "legend-title"
+                )
+                .attr({ zIndex: 1 })),
+              this.chart.styledMode || this.title.css(c.style),
+              this.title.add(this.group)),
+            c.width || this.title.css({ width: this.maxLegendWidth + "px" }),
+            (b = this.title.getBBox()),
+            (d = b.height),
+            (this.offsetWidth = b.width),
+            this.contentGroup.attr({ translateY: d }));
+          this.titleHeight = d;
+        };
+        a.prototype.setText = function (b) {
+          var a = this.options;
+          b.legendItem.attr({
+            text: a.labelFormat
+              ? q(a.labelFormat, b, this.chart)
+              : a.labelFormatter.call(b),
+          });
+        };
+        a.prototype.renderItem = function (b) {
+          var a = this.chart,
+            c = a.renderer,
+            e = this.options,
+            d = this.symbolWidth,
+            g = e.symbolPadding || 0,
+            f = this.itemStyle,
+            k = this.itemHiddenStyle,
+            h = "horizontal" === e.layout ? B(e.itemDistance, 20) : 0,
+            l = !e.rtl,
+            m = !b.series,
+            n = !m && b.series.drawLegendSymbol ? b.series : b,
+            p = n.options,
+            r = this.createCheckboxForItem && p && p.showCheckbox,
+            q = e.useHTML,
+            w = b.options.className,
+            F = b.legendItem;
+          p = d + g + h + (r ? 20 : 0);
+          F ||
+            ((b.legendGroup = c
+              .g("legend-item")
+              .addClass(
+                "highcharts-" +
+                  n.type +
+                  "-series highcharts-color-" +
+                  b.colorIndex +
+                  (w ? " " + w : "") +
+                  (m ? " highcharts-series-" + b.index : "")
+              )
+              .attr({ zIndex: 1 })
+              .add(this.scrollGroup)),
+            (b.legendItem = F =
+              c.text("", l ? d + g : -g, this.baseline || 0, q)),
+            a.styledMode || F.css(y(b.visible ? f : k)),
+            F.attr({ align: l ? "left" : "right", zIndex: 2 }).add(
+              b.legendGroup
+            ),
+            this.baseline ||
+              ((this.fontMetrics = c.fontMetrics(
+                a.styledMode ? 12 : f.fontSize,
+                F
+              )),
+              (this.baseline = this.fontMetrics.f + 3 + this.itemMarginTop),
+              F.attr("y", this.baseline),
+              (this.symbolHeight = e.symbolHeight || this.fontMetrics.f),
+              e.squareSymbol &&
+                ((this.symbolWidth = B(
+                  e.symbolWidth,
+                  Math.max(this.symbolHeight, 16)
+                )),
+                (p = this.symbolWidth + g + h + (r ? 20 : 0)),
+                l && F.attr("x", this.symbolWidth + g))),
+            n.drawLegendSymbol(this, b),
+            this.setItemEvents && this.setItemEvents(b, F, q));
+          r &&
+            !b.checkbox &&
+            this.createCheckboxForItem &&
+            this.createCheckboxForItem(b);
+          this.colorizeItem(b, b.visible);
+          (!a.styledMode && f.width) ||
+            F.css({
+              width:
+                (e.itemWidth || this.widthOption || a.spacingBox.width) -
+                p +
+                "px",
+            });
+          this.setText(b);
+          a = F.getBBox();
+          b.itemWidth = b.checkboxOffset =
+            e.itemWidth || b.legendItemWidth || a.width + p;
+          this.maxItemWidth = Math.max(this.maxItemWidth, b.itemWidth);
+          this.totalItemWidth += b.itemWidth;
+          this.itemHeight = b.itemHeight = Math.round(
+            b.legendItemHeight || a.height || this.symbolHeight
+          );
+        };
+        a.prototype.layoutItem = function (b) {
+          var a = this.options,
+            c = this.padding,
+            e = "horizontal" === a.layout,
+            d = b.itemHeight,
+            g = this.itemMarginBottom,
+            f = this.itemMarginTop,
+            k = e ? B(a.itemDistance, 20) : 0,
+            h = this.maxLegendWidth;
+          a =
+            a.alignColumns && this.totalItemWidth > h
+              ? this.maxItemWidth
+              : b.itemWidth;
+          e &&
+            this.itemX - c + a > h &&
+            ((this.itemX = c),
+            this.lastLineHeight && (this.itemY += f + this.lastLineHeight + g),
+            (this.lastLineHeight = 0));
+          this.lastItemY = f + this.itemY + g;
+          this.lastLineHeight = Math.max(d, this.lastLineHeight);
+          b._legendItemPos = [this.itemX, this.itemY];
+          e
+            ? (this.itemX += a)
+            : ((this.itemY += f + d + g), (this.lastLineHeight = d));
+          this.offsetWidth =
+            this.widthOption ||
+            Math.max(
+              (e ? this.itemX - c - (b.checkbox ? 0 : k) : a) + c,
+              this.offsetWidth
+            );
+        };
+        a.prototype.getAllItems = function () {
+          var b = [];
+          this.chart.series.forEach(function (a) {
+            var c = a && a.options;
+            a &&
+              B(c.showInLegend, f(c.linkedTo) ? !1 : void 0, !0) &&
+              (b = b.concat(
+                a.legendItems || ("point" === c.legendType ? a.data : a)
+              ));
+          });
+          K(this, "afterGetAllItems", { allItems: b });
+          return b;
+        };
+        a.prototype.getAlignment = function () {
+          var b = this.options;
+          return this.proximate
+            ? b.align.charAt(0) + "tv"
+            : b.floating
+            ? ""
+            : b.align.charAt(0) +
+              b.verticalAlign.charAt(0) +
+              b.layout.charAt(0);
+        };
+        a.prototype.adjustMargins = function (b, a) {
+          var c = this.chart,
+            e = this.options,
+            d = this.getAlignment();
+          d &&
+            [
+              /(lth|ct|rth)/,
+              /(rtv|rm|rbv)/,
+              /(rbh|cb|lbh)/,
+              /(lbv|lm|ltv)/,
+            ].forEach(function (g, k) {
+              g.test(d) &&
+                !f(b[k]) &&
+                (c[m[k]] = Math.max(
+                  c[m[k]],
+                  c.legend[(k + 1) % 2 ? "legendHeight" : "legendWidth"] +
+                    [1, -1, -1, 1][k] * e[k % 2 ? "x" : "y"] +
+                    B(e.margin, 12) +
+                    a[k] +
+                    (c.titleOffset[k] || 0)
+                ));
+            });
+        };
+        a.prototype.proximatePositions = function () {
+          var b = this.chart,
+            a = [],
+            c = "left" === this.options.align;
+          this.allItems.forEach(function (e) {
+            var d;
+            var g = c;
+            if (e.yAxis) {
+              e.xAxis.options.reversed && (g = !g);
+              e.points &&
+                (d = p(
+                  g ? e.points : e.points.slice(0).reverse(),
+                  function (b) {
+                    return r(b.plotY);
+                  }
+                ));
+              g =
+                this.itemMarginTop +
+                e.legendItem.getBBox().height +
+                this.itemMarginBottom;
+              var f = e.yAxis.top - b.plotTop;
+              e.visible
+                ? ((d = d ? d.plotY : e.yAxis.height), (d += f - 0.3 * g))
+                : (d = f + e.yAxis.height);
+              a.push({ target: d, size: g, item: e });
+            }
+          }, this);
+          h(a, b.plotHeight).forEach(function (a) {
+            a.item._legendItemPos &&
+              (a.item._legendItemPos[1] = b.plotTop - b.spacing[0] + a.pos);
+          });
+        };
+        a.prototype.render = function () {
+          var b = this.chart,
+            a = b.renderer,
+            c = this.options,
+            d = this.padding,
+            g = this.getAllItems(),
+            f = this.group,
+            h = this.box;
+          this.itemX = d;
+          this.itemY = this.initialItemY;
+          this.lastItemY = this.offsetWidth = 0;
+          this.widthOption = n(c.width, b.spacingBox.width - d);
+          var l = b.spacingBox.width - 2 * d - c.x;
+          -1 < ["rm", "lm"].indexOf(this.getAlignment().substring(0, 2)) &&
+            (l /= 2);
+          this.maxLegendWidth = this.widthOption || l;
+          f ||
+            ((this.group = f =
+              a
+                .g("legend")
+                .addClass(c.className || "")
+                .attr({ zIndex: 7 })
+                .add()),
+            (this.contentGroup = a.g().attr({ zIndex: 1 }).add(f)),
+            (this.scrollGroup = a.g().add(this.contentGroup)));
+          this.renderTitle();
+          k(g, function (b, a) {
+            return (
+              ((b.options && b.options.legendIndex) || 0) -
+              ((a.options && a.options.legendIndex) || 0)
+            );
+          });
+          c.reversed && g.reverse();
+          this.allItems = g;
+          this.display = l = !!g.length;
+          this.itemHeight =
+            this.totalItemWidth =
+            this.maxItemWidth =
+            this.lastLineHeight =
+              0;
+          g.forEach(this.renderItem, this);
+          g.forEach(this.layoutItem, this);
+          g = (this.widthOption || this.offsetWidth) + d;
+          var m = this.lastItemY + this.lastLineHeight + this.titleHeight;
+          m = this.handleOverflow(m);
+          m += d;
+          h ||
+            ((this.box = h =
+              a
+                .rect()
+                .addClass("highcharts-legend-box")
+                .attr({ r: c.borderRadius })
+                .add(f)),
+            (h.isNew = !0));
+          b.styledMode ||
+            h
+              .attr({
+                stroke: c.borderColor,
+                "stroke-width": c.borderWidth || 0,
+                fill: c.backgroundColor || "none",
+              })
+              .shadow(c.shadow);
+          0 < g &&
+            0 < m &&
+            (h[h.isNew ? "attr" : "animate"](
+              h.crisp.call(
+                {},
+                { x: 0, y: 0, width: g, height: m },
+                h.strokeWidth()
+              )
+            ),
+            (h.isNew = !1));
+          h[l ? "show" : "hide"]();
+          b.styledMode && "none" === f.getStyle("display") && (g = m = 0);
+          this.legendWidth = g;
+          this.legendHeight = m;
+          l && this.align();
+          this.proximate || this.positionItems();
+          K(this, "afterRender");
+        };
+        a.prototype.align = function (b) {
+          void 0 === b && (b = this.chart.spacingBox);
+          var a = this.chart,
+            c = this.options,
+            e = b.y;
+          /(lth|ct|rth)/.test(this.getAlignment()) && 0 < a.titleOffset[0]
+            ? (e += a.titleOffset[0])
+            : /(lbh|cb|rbh)/.test(this.getAlignment()) &&
+              0 < a.titleOffset[2] &&
+              (e -= a.titleOffset[2]);
+          e !== b.y && (b = y(b, { y: e }));
+          this.group.align(
+            y(c, {
+              width: this.legendWidth,
+              height: this.legendHeight,
+              verticalAlign: this.proximate ? "top" : c.verticalAlign,
+            }),
+            !0,
+            b
+          );
+        };
+        a.prototype.handleOverflow = function (b) {
+          var a = this,
+            c = this.chart,
+            e = c.renderer,
+            d = this.options,
+            g = d.y,
+            f = "top" === d.verticalAlign,
+            k = this.padding,
+            h = d.maxHeight,
+            l = d.navigation,
+            m = B(l.animation, !0),
+            n = l.arrowSize || 12,
+            p = this.pages,
+            r = this.allItems,
+            q = function (b) {
+              "number" === typeof b
+                ? y.attr({ height: b })
+                : y && ((a.clipRect = y.destroy()), a.contentGroup.clip());
+              a.contentGroup.div &&
+                (a.contentGroup.div.style.clip = b
+                  ? "rect(" + k + "px,9999px," + (k + b) + "px,0)"
+                  : "auto");
+            },
+            w = function (b) {
+              a[b] = e
+                .circle(0, 0, 1.3 * n)
+                .translate(n / 2, n / 2)
+                .add(N);
+              c.styledMode || a[b].attr("fill", "rgba(0,0,0,0.0001)");
+              return a[b];
+            },
+            F,
+            u;
+          g = c.spacingBox.height + (f ? -g : g) - k;
+          var N = this.nav,
+            y = this.clipRect;
+          "horizontal" !== d.layout ||
+            "middle" === d.verticalAlign ||
+            d.floating ||
+            (g /= 2);
+          h && (g = Math.min(g, h));
+          p.length = 0;
+          b && 0 < g && b > g && !1 !== l.enabled
+            ? ((this.clipHeight = F =
+                Math.max(g - 20 - this.titleHeight - k, 0)),
+              (this.currentPage = B(this.currentPage, 1)),
+              (this.fullHeight = b),
+              r.forEach(function (b, a) {
+                var c = b._legendItemPos[1],
+                  e = Math.round(b.legendItem.getBBox().height),
+                  d = p.length;
+                if (!d || (c - p[d - 1] > F && (u || c) !== p[d - 1]))
+                  p.push(u || c), d++;
+                b.pageIx = d - 1;
+                u && (r[a - 1].pageIx = d - 1);
+                a === r.length - 1 &&
+                  c + e - p[d - 1] > F &&
+                  e <= F &&
+                  (p.push(c), (b.pageIx = d));
+                c !== u && (u = c);
+              }),
+              y ||
+                ((y = a.clipRect = e.clipRect(0, k, 9999, 0)),
+                a.contentGroup.clip(y)),
+              q(F),
+              N ||
+                ((this.nav = N = e.g().attr({ zIndex: 1 }).add(this.group)),
+                (this.up = e.symbol("triangle", 0, 0, n, n).add(N)),
+                w("upTracker").on("click", function () {
+                  a.scroll(-1, m);
+                }),
+                (this.pager = e
+                  .text("", 15, 10)
+                  .addClass("highcharts-legend-navigation")),
+                c.styledMode || this.pager.css(l.style),
+                this.pager.add(N),
+                (this.down = e.symbol("triangle-down", 0, 0, n, n).add(N)),
+                w("downTracker").on("click", function () {
+                  a.scroll(1, m);
+                })),
+              a.scroll(0),
+              (b = g))
+            : N &&
+              (q(),
+              (this.nav = N.destroy()),
+              this.scrollGroup.attr({ translateY: 1 }),
+              (this.clipHeight = 0));
+          return b;
+        };
+        a.prototype.scroll = function (a, c) {
+          var e = this,
+            d = this.chart,
+            g = this.pages,
+            f = g.length,
+            k = this.clipHeight,
+            h = this.options.navigation,
+            l = this.pager,
+            m = this.padding,
+            n = this.currentPage + a;
+          n > f && (n = f);
+          0 < n &&
+            ("undefined" !== typeof c && z(c, d),
+            this.nav.attr({
+              translateX: m,
+              translateY: k + this.padding + 7 + this.titleHeight,
+              visibility: "visible",
+            }),
+            [this.up, this.upTracker].forEach(function (b) {
+              b.attr({
+                class:
+                  1 === n
+                    ? "highcharts-legend-nav-inactive"
+                    : "highcharts-legend-nav-active",
+              });
+            }),
+            l.attr({ text: n + "/" + f }),
+            [this.down, this.downTracker].forEach(function (b) {
+              b.attr({
+                x: 18 + this.pager.getBBox().width,
+                class:
+                  n === f
+                    ? "highcharts-legend-nav-inactive"
+                    : "highcharts-legend-nav-active",
+              });
+            }, this),
+            d.styledMode ||
+              (this.up.attr({
+                fill: 1 === n ? h.inactiveColor : h.activeColor,
+              }),
+              this.upTracker.css({ cursor: 1 === n ? "default" : "pointer" }),
+              this.down.attr({
+                fill: n === f ? h.inactiveColor : h.activeColor,
+              }),
+              this.downTracker.css({
+                cursor: n === f ? "default" : "pointer",
+              })),
+            (this.scrollOffset = -g[n - 1] + this.initialItemY),
+            this.scrollGroup.animate({ translateY: this.scrollOffset }),
+            (this.currentPage = n),
+            this.positionCheckboxes(),
+            (a = u(B(c, d.renderer.globalAnimation, !0))),
+            b(function () {
+              K(e, "afterScroll", { currentPage: n });
+            }, a.duration));
+        };
+        a.prototype.setItemEvents = function (b, a, c) {
+          var e = this,
+            d = e.chart.renderer.boxWrapper,
+            g = b instanceof G,
+            f = "highcharts-legend-" + (g ? "point" : "series") + "-active",
+            k = e.chart.styledMode,
+            h = function (a) {
+              e.allItems.forEach(function (c) {
+                b !== c &&
+                  [c].concat(c.linkedSeries || []).forEach(function (b) {
+                    b.setState(a, !g);
+                  });
+              });
+            };
+          (c ? [a, b.legendSymbol] : [b.legendGroup]).forEach(function (c) {
+            if (c)
+              c.on("mouseover", function () {
+                b.visible && h("inactive");
+                b.setState("hover");
+                b.visible && d.addClass(f);
+                k || a.css(e.options.itemHoverStyle);
+              })
+                .on("mouseout", function () {
+                  e.chart.styledMode ||
+                    a.css(y(b.visible ? e.itemStyle : e.itemHiddenStyle));
+                  h("");
+                  d.removeClass(f);
+                  b.setState();
+                })
+                .on("click", function (a) {
+                  var c = function () {
+                    b.setVisible && b.setVisible();
+                    h(b.visible ? "inactive" : "");
+                  };
+                  d.removeClass(f);
+                  a = { browserEvent: a };
+                  b.firePointEvent
+                    ? b.firePointEvent("legendItemClick", a, c)
+                    : K(b, "legendItemClick", a, c);
+                });
+          });
+        };
+        a.prototype.createCheckboxForItem = function (b) {
+          b.checkbox = c(
+            "input",
+            {
+              type: "checkbox",
+              className: "highcharts-legend-checkbox",
+              checked: b.selected,
+              defaultChecked: b.selected,
+            },
+            this.options.itemCheckboxStyle,
+            this.chart.container
+          );
+          d(b.checkbox, "click", function (a) {
+            K(
+              b.series || b,
+              "checkboxClick",
+              { checked: a.target.checked, item: b },
+              function () {
+                b.select();
+              }
+            );
+          });
+        };
+        return a;
+      })();
+      (/Trident\/7\.0/.test(A.navigator && A.navigator.userAgent) || a) &&
+        x(C.prototype, "positionItem", function (b, a) {
+          var c = this,
+            e = function () {
+              a._legendItemPos && b.call(c, a);
+            };
+          e();
+          c.bubbleLegend || setTimeout(e);
+        });
+      ("");
+      return C;
+    }
+  );
+  L(
+    a,
+    "Core/Series/SeriesRegistry.js",
+    [
+      a["Core/Globals.js"],
+      a["Core/DefaultOptions.js"],
+      a["Core/Series/Point.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G) {
+      var u = t.defaultOptions,
+        C = G.error,
+        I = G.extendClass,
+        z = G.merge,
+        q;
+      (function (m) {
+        function h(a, c) {
+          var d = u.plotOptions || {},
+            f = c.defaultOptions;
+          c.prototype.pointClass || (c.prototype.pointClass = A);
+          c.prototype.type = a;
+          f && (d[a] = f);
+          m.seriesTypes[a] = c;
+        }
+        m.seriesTypes = a.seriesTypes;
+        m.getSeries = function (a, c) {
+          void 0 === c && (c = {});
+          var d = a.options.chart;
+          d = c.type || d.type || d.defaultSeriesType || "";
+          var f = m.seriesTypes[d];
+          m || C(17, !0, a, { missingModuleFor: d });
+          d = new f();
+          "function" === typeof d.init && d.init(a, c);
+          return d;
+        };
+        m.registerSeriesType = h;
+        m.seriesType = function (a, c, l, f, q) {
+          var d = u.plotOptions || {};
+          c = c || "";
+          d[a] = z(d[c], l);
+          h(a, I(m.seriesTypes[c] || function () {}, f));
+          m.seriesTypes[a].prototype.type = a;
+          q && (m.seriesTypes[a].prototype.pointClass = I(A, q));
+          return m.seriesTypes[a];
+        };
+      })(q || (q = {}));
+      return q;
+    }
+  );
+  L(
+    a,
+    "Core/Chart/Chart.js",
+    [
+      a["Core/Animation/AnimationUtilities.js"],
+      a["Core/Axis/Axis.js"],
+      a["Core/FormatUtilities.js"],
+      a["Core/Foundation.js"],
+      a["Core/Globals.js"],
+      a["Core/Legend/Legend.js"],
+      a["Core/MSPointer.js"],
+      a["Core/DefaultOptions.js"],
+      a["Core/Pointer.js"],
+      a["Core/Renderer/RendererRegistry.js"],
+      a["Core/Series/SeriesRegistry.js"],
+      a["Core/Renderer/SVG/SVGRenderer.js"],
+      a["Core/Time.js"],
+      a["Core/Utilities.js"],
+      a["Core/Renderer/HTML/AST.js"],
+    ],
+    function (a, t, A, G, x, C, I, z, q, m, h, d, c, l, f) {
+      var w = a.animate,
+        p = a.animObject,
+        u = a.setAnimation,
+        r = A.numberFormat,
+        y = G.registerEventOptions,
+        B = x.charts,
+        n = x.doc,
+        k = x.marginNames,
+        b = x.svg,
+        g = x.win,
+        e = z.defaultOptions,
+        D = z.defaultTime,
+        H = h.seriesTypes,
+        v = l.addEvent,
+        E = l.attr,
+        O = l.cleanRecursively,
+        S = l.createElement,
+        P = l.css,
+        U = l.defined,
+        Y = l.discardElement,
+        J = l.erase,
+        M = l.error,
+        L = l.extend,
+        da = l.find,
+        Q = l.fireEvent,
+        ea = l.getStyle,
+        F = l.isArray,
+        T = l.isNumber,
+        N = l.isObject,
+        V = l.isString,
+        W = l.merge,
+        X = l.objectEach,
+        R = l.pick,
+        fa = l.pInt,
+        aa = l.relativeLength,
+        ia = l.removeEvent,
+        ha = l.splat,
+        ba = l.syncTimeout,
+        ka = l.uniqueKey;
+      a = (function () {
+        function a(b, a, c) {
+          this.series =
+            this.renderTo =
+            this.renderer =
+            this.pointer =
+            this.pointCount =
+            this.plotWidth =
+            this.plotTop =
+            this.plotLeft =
+            this.plotHeight =
+            this.plotBox =
+            this.options =
+            this.numberFormatter =
+            this.margin =
+            this.legend =
+            this.labelCollectors =
+            this.isResizing =
+            this.index =
+            this.eventOptions =
+            this.container =
+            this.colorCounter =
+            this.clipBox =
+            this.chartWidth =
+            this.chartHeight =
+            this.bounds =
+            this.axisOffset =
+            this.axes =
+              void 0;
+          this.sharedClips = {};
+          this.yAxis =
+            this.xAxis =
+            this.userOptions =
+            this.titleOffset =
+            this.time =
+            this.symbolCounter =
+            this.spacingBox =
+            this.spacing =
+              void 0;
+          this.getArgs(b, a, c);
+        }
+        a.chart = function (b, c, e) {
+          return new a(b, c, e);
+        };
+        a.prototype.getArgs = function (b, a, c) {
+          V(b) || b.nodeName
+            ? ((this.renderTo = b), this.init(a, c))
+            : this.init(b, a);
+        };
+        a.prototype.init = function (b, a) {
+          var d = b.plotOptions || {};
+          Q(this, "init", { args: arguments }, function () {
+            var g = W(e, b),
+              f = g.chart;
+            X(g.plotOptions, function (b, a) {
+              N(b) && (b.tooltip = (d[a] && W(d[a].tooltip)) || void 0);
+            });
+            g.tooltip.userOptions =
+              (b.chart && b.chart.forExport && b.tooltip.userOptions) ||
+              b.tooltip;
+            this.userOptions = b;
+            this.margin = [];
+            this.spacing = [];
+            this.bounds = { h: {}, v: {} };
+            this.labelCollectors = [];
+            this.callback = a;
+            this.isResizing = 0;
+            this.options = g;
+            this.axes = [];
+            this.series = [];
+            this.time =
+              b.time && Object.keys(b.time).length ? new c(b.time) : x.time;
+            this.numberFormatter = f.numberFormatter || r;
+            this.styledMode = f.styledMode;
+            this.hasCartesianSeries = f.showAxes;
+            this.index = B.length;
+            B.push(this);
+            x.chartCount++;
+            y(this, f);
+            this.xAxis = [];
+            this.yAxis = [];
+            this.pointCount = this.colorCounter = this.symbolCounter = 0;
+            Q(this, "afterInit");
+            this.firstRender();
+          });
+        };
+        a.prototype.initSeries = function (b) {
+          var a = this.options.chart;
+          a = b.type || a.type || a.defaultSeriesType;
+          var c = H[a];
+          c || M(17, !0, this, { missingModuleFor: a });
+          a = new c();
+          "function" === typeof a.init && a.init(this, b);
+          return a;
+        };
+        a.prototype.setSeriesData = function () {
+          this.getSeriesOrderByLinks().forEach(function (b) {
+            b.points ||
+              b.data ||
+              !b.enabledDataSorting ||
+              b.setData(b.options.data, !1);
+          });
+        };
+        a.prototype.getSeriesOrderByLinks = function () {
+          return this.series.concat().sort(function (b, a) {
+            return b.linkedSeries.length || a.linkedSeries.length
+              ? a.linkedSeries.length - b.linkedSeries.length
+              : 0;
+          });
+        };
+        a.prototype.orderSeries = function (b) {
+          var a = this.series;
+          b = b || 0;
+          for (var c = a.length; b < c; ++b)
+            a[b] && ((a[b].index = b), (a[b].name = a[b].getName()));
+        };
+        a.prototype.isInsidePlot = function (b, a, c) {
+          void 0 === c && (c = {});
+          var e = this.inverted,
+            d = this.plotBox,
+            g = this.plotLeft,
+            f = this.plotTop,
+            k = this.scrollablePlotBox,
+            h = 0;
+          var l = 0;
+          c.visiblePlotOnly &&
+            this.scrollingContainer &&
+            ((l = this.scrollingContainer),
+            (h = l.scrollLeft),
+            (l = l.scrollTop));
+          var m = c.series;
+          d = (c.visiblePlotOnly && k) || d;
+          k = c.inverted ? a : b;
+          a = c.inverted ? b : a;
+          b = { x: k, y: a, isInsidePlot: !0 };
+          if (!c.ignoreX) {
+            var n = (m && (e ? m.yAxis : m.xAxis)) || { pos: g, len: Infinity };
+            k = c.paneCoordinates ? n.pos + k : g + k;
+            (k >= Math.max(h + g, n.pos) &&
+              k <= Math.min(h + g + d.width, n.pos + n.len)) ||
+              (b.isInsidePlot = !1);
+          }
+          !c.ignoreY &&
+            b.isInsidePlot &&
+            ((e = (m && (e ? m.xAxis : m.yAxis)) || { pos: f, len: Infinity }),
+            (c = c.paneCoordinates ? e.pos + a : f + a),
+            (c >= Math.max(l + f, e.pos) &&
+              c <= Math.min(l + f + d.height, e.pos + e.len)) ||
+              (b.isInsidePlot = !1));
+          Q(this, "afterIsInsidePlot", b);
+          return b.isInsidePlot;
+        };
+        a.prototype.redraw = function (b) {
+          Q(this, "beforeRedraw");
+          var a = this.hasCartesianSeries ? this.axes : this.colorAxis || [],
+            c = this.series,
+            e = this.pointer,
+            d = this.legend,
+            g = this.userOptions.legend,
+            f = this.renderer,
+            k = f.isHidden(),
+            h = [],
+            l = this.isDirtyBox,
+            m = this.isDirtyLegend;
+          this.setResponsive && this.setResponsive(!1);
+          u(this.hasRendered ? b : !1, this);
+          k && this.temporaryDisplay();
+          this.layOutTitles();
+          for (b = c.length; b--; ) {
+            var n = c[b];
+            if (n.options.stacking || n.options.centerInCategory) {
+              var p = !0;
+              if (n.isDirty) {
+                var F = !0;
+                break;
+              }
+            }
+          }
+          if (F)
+            for (b = c.length; b--; )
+              (n = c[b]), n.options.stacking && (n.isDirty = !0);
+          c.forEach(function (b) {
+            b.isDirty &&
+              ("point" === b.options.legendType
+                ? ("function" === typeof b.updateTotals && b.updateTotals(),
+                  (m = !0))
+                : g && (g.labelFormatter || g.labelFormat) && (m = !0));
+            b.isDirtyData && Q(b, "updatedData");
+          });
+          m &&
+            d &&
+            d.options.enabled &&
+            (d.render(), (this.isDirtyLegend = !1));
+          p && this.getStacks();
+          a.forEach(function (b) {
+            b.updateNames();
+            b.setScale();
+          });
+          this.getMargins();
+          a.forEach(function (b) {
+            b.isDirty && (l = !0);
+          });
+          a.forEach(function (b) {
+            var a = b.min + "," + b.max;
+            b.extKey !== a &&
+              ((b.extKey = a),
+              h.push(function () {
+                Q(b, "afterSetExtremes", L(b.eventArgs, b.getExtremes()));
+                delete b.eventArgs;
+              }));
+            (l || p) && b.redraw();
+          });
+          l && this.drawChartBox();
+          Q(this, "predraw");
+          c.forEach(function (b) {
+            (l || b.isDirty) && b.visible && b.redraw();
+            b.isDirtyData = !1;
+          });
+          e && e.reset(!0);
+          f.draw();
+          Q(this, "redraw");
+          Q(this, "render");
+          k && this.temporaryDisplay(!0);
+          h.forEach(function (b) {
+            b.call();
+          });
+        };
+        a.prototype.get = function (b) {
+          function a(a) {
+            return a.id === b || (a.options && a.options.id === b);
+          }
+          for (
+            var c = this.series,
+              e = da(this.axes, a) || da(this.series, a),
+              d = 0;
+            !e && d < c.length;
+            d++
+          )
+            e = da(c[d].points || [], a);
+          return e;
+        };
+        a.prototype.getAxes = function () {
+          var b = this,
+            a = this.options,
+            c = (a.xAxis = ha(a.xAxis || {}));
+          a = a.yAxis = ha(a.yAxis || {});
+          Q(this, "getAxes");
+          c.forEach(function (b, a) {
+            b.index = a;
+            b.isX = !0;
+          });
+          a.forEach(function (b, a) {
+            b.index = a;
+          });
+          c.concat(a).forEach(function (a) {
+            new t(b, a);
+          });
+          Q(this, "afterGetAxes");
+        };
+        a.prototype.getSelectedPoints = function () {
+          return this.series.reduce(function (b, a) {
+            a.getPointsCollection().forEach(function (a) {
+              R(a.selectedStaging, a.selected) && b.push(a);
+            });
+            return b;
+          }, []);
+        };
+        a.prototype.getSelectedSeries = function () {
+          return this.series.filter(function (b) {
+            return b.selected;
+          });
+        };
+        a.prototype.setTitle = function (b, a, c) {
+          this.applyDescription("title", b);
+          this.applyDescription("subtitle", a);
+          this.applyDescription("caption", void 0);
+          this.layOutTitles(c);
+        };
+        a.prototype.applyDescription = function (b, a) {
+          var c = this,
+            e =
+              "title" === b
+                ? {
+                    color: "#333333",
+                    fontSize: this.options.isStock ? "16px" : "18px",
+                  }
+                : { color: "#666666" };
+          e = this.options[b] = W(
+            !this.styledMode && { style: e },
+            this.options[b],
+            a
+          );
+          var d = this[b];
+          d && a && (this[b] = d = d.destroy());
+          e &&
+            !d &&
+            ((d = this.renderer
+              .text(e.text, 0, 0, e.useHTML)
+              .attr({
+                align: e.align,
+                class: "highcharts-" + b,
+                zIndex: e.zIndex || 4,
+              })
+              .add()),
+            (d.update = function (a) {
+              c[
+                {
+                  title: "setTitle",
+                  subtitle: "setSubtitle",
+                  caption: "setCaption",
+                }[b]
+              ](a);
+            }),
+            this.styledMode || d.css(e.style),
+            (this[b] = d));
+        };
+        a.prototype.layOutTitles = function (b) {
+          var a = [0, 0, 0],
+            c = this.renderer,
+            e = this.spacingBox;
+          ["title", "subtitle", "caption"].forEach(function (b) {
+            var d = this[b],
+              g = this.options[b],
+              f = g.verticalAlign || "top";
+            b =
+              "title" === b
+                ? "top" === f
+                  ? -3
+                  : 0
+                : "top" === f
+                ? a[0] + 2
+                : 0;
+            var k;
+            if (d) {
+              this.styledMode || (k = g.style && g.style.fontSize);
+              k = c.fontMetrics(k, d).b;
+              d.css({
+                width: (g.width || e.width + (g.widthAdjust || 0)) + "px",
+              });
+              var h = Math.round(d.getBBox(g.useHTML).height);
+              d.align(
+                L({ y: "bottom" === f ? k : b + k, height: h }, g),
+                !1,
+                "spacingBox"
+              );
+              g.floating ||
+                ("top" === f
+                  ? (a[0] = Math.ceil(a[0] + h))
+                  : "bottom" === f && (a[2] = Math.ceil(a[2] + h)));
+            }
+          }, this);
+          a[0] &&
+            "top" === (this.options.title.verticalAlign || "top") &&
+            (a[0] += this.options.title.margin);
+          a[2] &&
+            "bottom" === this.options.caption.verticalAlign &&
+            (a[2] += this.options.caption.margin);
+          var d =
+            !this.titleOffset || this.titleOffset.join(",") !== a.join(",");
+          this.titleOffset = a;
+          Q(this, "afterLayOutTitles");
+          !this.isDirtyBox &&
+            d &&
+            ((this.isDirtyBox = this.isDirtyLegend = d),
+            this.hasRendered && R(b, !0) && this.isDirtyBox && this.redraw());
+        };
+        a.prototype.getChartSize = function () {
+          var b = this.options.chart,
+            a = b.width;
+          b = b.height;
+          var c = this.renderTo;
+          U(a) || (this.containerWidth = ea(c, "width"));
+          U(b) || (this.containerHeight = ea(c, "height"));
+          this.chartWidth = Math.max(0, a || this.containerWidth || 600);
+          this.chartHeight = Math.max(
+            0,
+            aa(b, this.chartWidth) ||
+              (1 < this.containerHeight ? this.containerHeight : 400)
+          );
+        };
+        a.prototype.temporaryDisplay = function (b) {
+          var a = this.renderTo;
+          if (b)
+            for (; a && a.style; )
+              a.hcOrigStyle && (P(a, a.hcOrigStyle), delete a.hcOrigStyle),
+                a.hcOrigDetached &&
+                  (n.body.removeChild(a), (a.hcOrigDetached = !1)),
+                (a = a.parentNode);
+          else
+            for (; a && a.style; ) {
+              n.body.contains(a) ||
+                a.parentNode ||
+                ((a.hcOrigDetached = !0), n.body.appendChild(a));
+              if ("none" === ea(a, "display", !1) || a.hcOricDetached)
+                (a.hcOrigStyle = {
+                  display: a.style.display,
+                  height: a.style.height,
+                  overflow: a.style.overflow,
+                }),
+                  (b = { display: "block", overflow: "hidden" }),
+                  a !== this.renderTo && (b.height = 0),
+                  P(a, b),
+                  a.offsetWidth ||
+                    a.style.setProperty("display", "block", "important");
+              a = a.parentNode;
+              if (a === n.body) break;
+            }
+        };
+        a.prototype.setClassName = function (b) {
+          this.container.className = "highcharts-container " + (b || "");
+        };
+        a.prototype.getContainer = function () {
+          var a = this.options,
+            c = a.chart,
+            e = ka(),
+            g,
+            f = this.renderTo;
+          f || (this.renderTo = f = c.renderTo);
+          V(f) && (this.renderTo = f = n.getElementById(f));
+          f || M(13, !0, this);
+          var k = fa(E(f, "data-highcharts-chart"));
+          T(k) && B[k] && B[k].hasRendered && B[k].destroy();
+          E(f, "data-highcharts-chart", this.index);
+          f.innerHTML = "";
+          c.skipClone || f.offsetWidth || this.temporaryDisplay();
+          this.getChartSize();
+          k = this.chartWidth;
+          var h = this.chartHeight;
+          P(f, { overflow: "hidden" });
+          this.styledMode ||
+            (g = L(
+              {
+                position: "relative",
+                overflow: "hidden",
+                width: k + "px",
+                height: h + "px",
+                textAlign: "left",
+                lineHeight: "normal",
+                zIndex: 0,
+                "-webkit-tap-highlight-color": "rgba(0,0,0,0)",
+                userSelect: "none",
+                "touch-action": "manipulation",
+                outline: "none",
+              },
+              c.style || {}
+            ));
+          this.container = e = S("div", { id: e }, g, f);
+          this._cursor = e.style.cursor;
+          this.renderer = new (
+            c.renderer || !b ? m.getRendererType(c.renderer) : d
+          )(
+            e,
+            k,
+            h,
+            void 0,
+            c.forExport,
+            a.exporting && a.exporting.allowHTML,
+            this.styledMode
+          );
+          u(void 0, this);
+          this.setClassName(c.className);
+          if (this.styledMode)
+            for (var l in a.defs) this.renderer.definition(a.defs[l]);
+          else this.renderer.setStyle(c.style);
+          this.renderer.chartIndex = this.index;
+          Q(this, "afterGetContainer");
+        };
+        a.prototype.getMargins = function (b) {
+          var a = this.spacing,
+            c = this.margin,
+            e = this.titleOffset;
+          this.resetMargins();
+          e[0] &&
+            !U(c[0]) &&
+            (this.plotTop = Math.max(this.plotTop, e[0] + a[0]));
+          e[2] &&
+            !U(c[2]) &&
+            (this.marginBottom = Math.max(this.marginBottom, e[2] + a[2]));
+          this.legend && this.legend.display && this.legend.adjustMargins(c, a);
+          Q(this, "getMargins");
+          b || this.getAxisMargins();
+        };
+        a.prototype.getAxisMargins = function () {
+          var b = this,
+            a = (b.axisOffset = [0, 0, 0, 0]),
+            c = b.colorAxis,
+            e = b.margin,
+            d = function (b) {
+              b.forEach(function (b) {
+                b.visible && b.getOffset();
+              });
+            };
+          b.hasCartesianSeries ? d(b.axes) : c && c.length && d(c);
+          k.forEach(function (c, d) {
+            U(e[d]) || (b[c] += a[d]);
+          });
+          b.setChartSize();
+        };
+        a.prototype.reflow = function (b) {
+          var a = this,
+            c = a.options.chart,
+            e = a.renderTo,
+            d = U(c.width) && U(c.height),
+            f = c.width || ea(e, "width");
+          c = c.height || ea(e, "height");
+          e = b ? b.target : g;
+          delete a.pointer.chartPosition;
+          if (!d && !a.isPrinting && f && c && (e === g || e === n)) {
+            if (f !== a.containerWidth || c !== a.containerHeight)
+              l.clearTimeout(a.reflowTimeout),
+                (a.reflowTimeout = ba(
+                  function () {
+                    a.container && a.setSize(void 0, void 0, !1);
+                  },
+                  b ? 100 : 0
+                ));
+            a.containerWidth = f;
+            a.containerHeight = c;
+          }
+        };
+        a.prototype.setReflow = function (b) {
+          var a = this;
+          !1 === b || this.unbindReflow
+            ? !1 === b &&
+              this.unbindReflow &&
+              (this.unbindReflow = this.unbindReflow())
+            : ((this.unbindReflow = v(g, "resize", function (b) {
+                a.options && a.reflow(b);
+              })),
+              v(this, "destroy", this.unbindReflow));
+        };
+        a.prototype.setSize = function (b, a, c) {
+          var e = this,
+            d = e.renderer;
+          e.isResizing += 1;
+          u(c, e);
+          c = d.globalAnimation;
+          e.oldChartHeight = e.chartHeight;
+          e.oldChartWidth = e.chartWidth;
+          "undefined" !== typeof b && (e.options.chart.width = b);
+          "undefined" !== typeof a && (e.options.chart.height = a);
+          e.getChartSize();
+          e.styledMode ||
+            (c ? w : P)(
+              e.container,
+              { width: e.chartWidth + "px", height: e.chartHeight + "px" },
+              c
+            );
+          e.setChartSize(!0);
+          d.setSize(e.chartWidth, e.chartHeight, c);
+          e.axes.forEach(function (b) {
+            b.isDirty = !0;
+            b.setScale();
+          });
+          e.isDirtyLegend = !0;
+          e.isDirtyBox = !0;
+          e.layOutTitles();
+          e.getMargins();
+          e.redraw(c);
+          e.oldChartHeight = null;
+          Q(e, "resize");
+          ba(function () {
+            e &&
+              Q(e, "endResize", null, function () {
+                --e.isResizing;
+              });
+          }, p(c).duration);
+        };
+        a.prototype.setChartSize = function (b) {
+          var a = this.inverted,
+            c = this.renderer,
+            e = this.chartWidth,
+            d = this.chartHeight,
+            g = this.options.chart,
+            f = this.spacing,
+            k = this.clipOffset,
+            h,
+            l,
+            m,
+            n;
+          this.plotLeft = h = Math.round(this.plotLeft);
+          this.plotTop = l = Math.round(this.plotTop);
+          this.plotWidth = m = Math.max(
+            0,
+            Math.round(e - h - this.marginRight)
+          );
+          this.plotHeight = n = Math.max(
+            0,
+            Math.round(d - l - this.marginBottom)
+          );
+          this.plotSizeX = a ? n : m;
+          this.plotSizeY = a ? m : n;
+          this.plotBorderWidth = g.plotBorderWidth || 0;
+          this.spacingBox = c.spacingBox = {
+            x: f[3],
+            y: f[0],
+            width: e - f[3] - f[1],
+            height: d - f[0] - f[2],
+          };
+          this.plotBox = c.plotBox = { x: h, y: l, width: m, height: n };
+          a = 2 * Math.floor(this.plotBorderWidth / 2);
+          e = Math.ceil(Math.max(a, k[3]) / 2);
+          d = Math.ceil(Math.max(a, k[0]) / 2);
+          this.clipBox = {
+            x: e,
+            y: d,
+            width: Math.floor(this.plotSizeX - Math.max(a, k[1]) / 2 - e),
+            height: Math.max(
+              0,
+              Math.floor(this.plotSizeY - Math.max(a, k[2]) / 2 - d)
+            ),
+          };
+          b ||
+            (this.axes.forEach(function (b) {
+              b.setAxisSize();
+              b.setAxisTranslation();
+            }),
+            c.alignElements());
+          Q(this, "afterSetChartSize", { skipAxes: b });
+        };
+        a.prototype.resetMargins = function () {
+          Q(this, "resetMargins");
+          var b = this,
+            a = b.options.chart;
+          ["margin", "spacing"].forEach(function (c) {
+            var e = a[c],
+              d = N(e) ? e : [e, e, e, e];
+            ["Top", "Right", "Bottom", "Left"].forEach(function (e, g) {
+              b[c][g] = R(a[c + e], d[g]);
+            });
+          });
+          k.forEach(function (a, c) {
+            b[a] = R(b.margin[c], b.spacing[c]);
+          });
+          b.axisOffset = [0, 0, 0, 0];
+          b.clipOffset = [0, 0, 0, 0];
+        };
+        a.prototype.drawChartBox = function () {
+          var b = this.options.chart,
+            a = this.renderer,
+            c = this.chartWidth,
+            e = this.chartHeight,
+            d = this.styledMode,
+            g = this.plotBGImage,
+            f = b.backgroundColor,
+            k = b.plotBackgroundColor,
+            h = b.plotBackgroundImage,
+            l = this.plotLeft,
+            m = this.plotTop,
+            n = this.plotWidth,
+            p = this.plotHeight,
+            F = this.plotBox,
+            r = this.clipRect,
+            N = this.clipBox,
+            q = this.chartBackground,
+            v = this.plotBackground,
+            B = this.plotBorder,
+            w,
+            u = "animate";
+          q ||
+            ((this.chartBackground = q =
+              a.rect().addClass("highcharts-background").add()),
+            (u = "attr"));
+          if (d) var y = (w = q.strokeWidth());
+          else {
+            y = b.borderWidth || 0;
+            w = y + (b.shadow ? 8 : 0);
+            f = { fill: f || "none" };
+            if (y || q["stroke-width"])
+              (f.stroke = b.borderColor), (f["stroke-width"] = y);
+            q.attr(f).shadow(b.shadow);
+          }
+          q[u]({
+            x: w / 2,
+            y: w / 2,
+            width: c - w - (y % 2),
+            height: e - w - (y % 2),
+            r: b.borderRadius,
+          });
+          u = "animate";
+          v ||
+            ((u = "attr"),
+            (this.plotBackground = v =
+              a.rect().addClass("highcharts-plot-background").add()));
+          v[u](F);
+          d ||
+            (v.attr({ fill: k || "none" }).shadow(b.plotShadow),
+            h &&
+              (g
+                ? (h !== g.attr("href") && g.attr("href", h), g.animate(F))
+                : (this.plotBGImage = a.image(h, l, m, n, p).add())));
+          r
+            ? r.animate({ width: N.width, height: N.height })
+            : (this.clipRect = a.clipRect(N));
+          u = "animate";
+          B ||
+            ((u = "attr"),
+            (this.plotBorder = B =
+              a
+                .rect()
+                .addClass("highcharts-plot-border")
+                .attr({ zIndex: 1 })
+                .add()));
+          d ||
+            B.attr({
+              stroke: b.plotBorderColor,
+              "stroke-width": b.plotBorderWidth || 0,
+              fill: "none",
+            });
+          B[u](B.crisp({ x: l, y: m, width: n, height: p }, -B.strokeWidth()));
+          this.isDirtyBox = !1;
+          Q(this, "afterDrawChartBox");
+        };
+        a.prototype.propFromSeries = function () {
+          var b = this,
+            a = b.options.chart,
+            c = b.options.series,
+            e,
+            d,
+            g;
+          ["inverted", "angular", "polar"].forEach(function (f) {
+            d = H[a.type || a.defaultSeriesType];
+            g = a[f] || (d && d.prototype[f]);
+            for (e = c && c.length; !g && e--; )
+              (d = H[c[e].type]) && d.prototype[f] && (g = !0);
+            b[f] = g;
+          });
+        };
+        a.prototype.linkSeries = function () {
+          var b = this,
+            a = b.series;
+          a.forEach(function (b) {
+            b.linkedSeries.length = 0;
+          });
+          a.forEach(function (a) {
+            var c = a.options.linkedTo;
+            V(c) &&
+              (c = ":previous" === c ? b.series[a.index - 1] : b.get(c)) &&
+              c.linkedParent !== a &&
+              (c.linkedSeries.push(a),
+              (a.linkedParent = c),
+              c.enabledDataSorting && a.setDataSortingOptions(),
+              (a.visible = R(a.options.visible, c.options.visible, a.visible)));
+          });
+          Q(this, "afterLinkSeries");
+        };
+        a.prototype.renderSeries = function () {
+          this.series.forEach(function (b) {
+            b.translate();
+            b.render();
+          });
+        };
+        a.prototype.renderLabels = function () {
+          var b = this,
+            a = b.options.labels;
+          a.items &&
+            a.items.forEach(function (c) {
+              var e = L(a.style, c.style),
+                d = fa(e.left) + b.plotLeft,
+                g = fa(e.top) + b.plotTop + 12;
+              delete e.left;
+              delete e.top;
+              b.renderer.text(c.html, d, g).attr({ zIndex: 2 }).css(e).add();
+            });
+        };
+        a.prototype.render = function () {
+          var b = this.axes,
+            a = this.colorAxis,
+            c = this.renderer,
+            e = this.options,
+            d = function (b) {
+              b.forEach(function (b) {
+                b.visible && b.render();
+              });
+            },
+            g = 0;
+          this.setTitle();
+          this.legend = new C(this, e.legend);
+          this.getStacks && this.getStacks();
+          this.getMargins(!0);
+          this.setChartSize();
+          e = this.plotWidth;
+          b.some(function (b) {
+            if (
+              b.horiz &&
+              b.visible &&
+              b.options.labels.enabled &&
+              b.series.length
+            )
+              return (g = 21), !0;
+          });
+          var f = (this.plotHeight = Math.max(this.plotHeight - g, 0));
+          b.forEach(function (b) {
+            b.setScale();
+          });
+          this.getAxisMargins();
+          var k = 1.1 < e / this.plotWidth,
+            h = 1.05 < f / this.plotHeight;
+          if (k || h)
+            b.forEach(function (b) {
+              ((b.horiz && k) || (!b.horiz && h)) && b.setTickInterval(!0);
+            }),
+              this.getMargins();
+          this.drawChartBox();
+          this.hasCartesianSeries ? d(b) : a && a.length && d(a);
+          this.seriesGroup ||
+            (this.seriesGroup = c.g("series-group").attr({ zIndex: 3 }).add());
+          this.renderSeries();
+          this.renderLabels();
+          this.addCredits();
+          this.setResponsive && this.setResponsive();
+          this.hasRendered = !0;
+        };
+        a.prototype.addCredits = function (b) {
+          var a = this,
+            c = W(!0, this.options.credits, b);
+          c.enabled &&
+            !this.credits &&
+            ((this.credits = this.renderer
+              .text(c.text + (this.mapCredits || ""), 0, 0)
+              .addClass("highcharts-credits")
+              .on("click", function () {
+                c.href && (g.location.href = c.href);
+              })
+              .attr({ align: c.position.align, zIndex: 8 })),
+            a.styledMode || this.credits.css(c.style),
+            this.credits.add().align(c.position),
+            (this.credits.update = function (b) {
+              a.credits = a.credits.destroy();
+              a.addCredits(b);
+            }));
+        };
+        a.prototype.destroy = function () {
+          var b = this,
+            a = b.axes,
+            c = b.series,
+            e = b.container,
+            d = e && e.parentNode,
+            g;
+          Q(b, "destroy");
+          b.renderer.forExport ? J(B, b) : (B[b.index] = void 0);
+          x.chartCount--;
+          b.renderTo.removeAttribute("data-highcharts-chart");
+          ia(b);
+          for (g = a.length; g--; ) a[g] = a[g].destroy();
+          this.scroller && this.scroller.destroy && this.scroller.destroy();
+          for (g = c.length; g--; ) c[g] = c[g].destroy();
+          "title subtitle chartBackground plotBackground plotBGImage plotBorder seriesGroup clipRect credits pointer rangeSelector legend resetZoomButton tooltip renderer"
+            .split(" ")
+            .forEach(function (a) {
+              var c = b[a];
+              c && c.destroy && (b[a] = c.destroy());
+            });
+          e && ((e.innerHTML = ""), ia(e), d && Y(e));
+          X(b, function (a, c) {
+            delete b[c];
+          });
+        };
+        a.prototype.firstRender = function () {
+          var b = this,
+            a = b.options;
+          if (!b.isReadyToRender || b.isReadyToRender()) {
+            b.getContainer();
+            b.resetMargins();
+            b.setChartSize();
+            b.propFromSeries();
+            b.getAxes();
+            (F(a.series) ? a.series : []).forEach(function (a) {
+              b.initSeries(a);
+            });
+            b.linkSeries();
+            b.setSeriesData();
+            Q(b, "beforeRender");
+            q &&
+              (I.isRequired()
+                ? (b.pointer = new I(b, a))
+                : (b.pointer = new q(b, a)));
+            b.render();
+            b.pointer.getChartPosition();
+            if (!b.renderer.imgCount && !b.hasLoaded) b.onload();
+            b.temporaryDisplay(!0);
+          }
+        };
+        a.prototype.onload = function () {
+          this.callbacks.concat([this.callback]).forEach(function (b) {
+            b && "undefined" !== typeof this.index && b.apply(this, [this]);
+          }, this);
+          Q(this, "load");
+          Q(this, "render");
+          U(this.index) && this.setReflow(this.options.chart.reflow);
+          this.hasLoaded = !0;
+        };
+        a.prototype.addSeries = function (b, a, c) {
+          var e = this,
+            d;
+          b &&
+            ((a = R(a, !0)),
+            Q(e, "addSeries", { options: b }, function () {
+              d = e.initSeries(b);
+              e.isDirtyLegend = !0;
+              e.linkSeries();
+              d.enabledDataSorting && d.setData(b.data, !1);
+              Q(e, "afterAddSeries", { series: d });
+              a && e.redraw(c);
+            }));
+          return d;
+        };
+        a.prototype.addAxis = function (b, a, c, e) {
+          return this.createAxis(a ? "xAxis" : "yAxis", {
+            axis: b,
+            redraw: c,
+            animation: e,
+          });
+        };
+        a.prototype.addColorAxis = function (b, a, c) {
+          return this.createAxis("colorAxis", {
+            axis: b,
+            redraw: a,
+            animation: c,
+          });
+        };
+        a.prototype.createAxis = function (b, a) {
+          b = new t(
+            this,
+            W(a.axis, { index: this[b].length, isX: "xAxis" === b })
+          );
+          R(a.redraw, !0) && this.redraw(a.animation);
+          return b;
+        };
+        a.prototype.showLoading = function (b) {
+          var a = this,
+            c = a.options,
+            e = c.loading,
+            d = function () {
+              g &&
+                P(g, {
+                  left: a.plotLeft + "px",
+                  top: a.plotTop + "px",
+                  width: a.plotWidth + "px",
+                  height: a.plotHeight + "px",
+                });
+            },
+            g = a.loadingDiv,
+            k = a.loadingSpan;
+          g ||
+            (a.loadingDiv = g =
+              S(
+                "div",
+                { className: "highcharts-loading highcharts-loading-hidden" },
+                null,
+                a.container
+              ));
+          k ||
+            ((a.loadingSpan = k =
+              S("span", { className: "highcharts-loading-inner" }, null, g)),
+            v(a, "redraw", d));
+          g.className = "highcharts-loading";
+          f.setElementHTML(k, R(b, c.lang.loading, ""));
+          a.styledMode ||
+            (P(g, L(e.style, { zIndex: 10 })),
+            P(k, e.labelStyle),
+            a.loadingShown ||
+              (P(g, { opacity: 0, display: "" }),
+              w(
+                g,
+                { opacity: e.style.opacity || 0.5 },
+                { duration: e.showDuration || 0 }
+              )));
+          a.loadingShown = !0;
+          d();
+        };
+        a.prototype.hideLoading = function () {
+          var b = this.options,
+            a = this.loadingDiv;
+          a &&
+            ((a.className = "highcharts-loading highcharts-loading-hidden"),
+            this.styledMode ||
+              w(
+                a,
+                { opacity: 0 },
+                {
+                  duration: b.loading.hideDuration || 100,
+                  complete: function () {
+                    P(a, { display: "none" });
+                  },
+                }
+              ));
+          this.loadingShown = !1;
+        };
+        a.prototype.update = function (b, a, e, d) {
+          var g = this,
+            f = {
+              credits: "addCredits",
+              title: "setTitle",
+              subtitle: "setSubtitle",
+              caption: "setCaption",
+            },
+            k = b.isResponsiveOptions,
+            h = [],
+            l,
+            m;
+          Q(g, "update", { options: b });
+          k || g.setResponsive(!1, !0);
+          b = O(b, g.options);
+          g.userOptions = W(g.userOptions, b);
+          var n = b.chart;
+          if (n) {
+            W(!0, g.options.chart, n);
+            "className" in n && g.setClassName(n.className);
+            "reflow" in n && g.setReflow(n.reflow);
+            if ("inverted" in n || "polar" in n || "type" in n) {
+              g.propFromSeries();
+              var p = !0;
+            }
+            "alignTicks" in n && (p = !0);
+            "events" in n && y(this, n);
+            X(n, function (b, a) {
+              -1 !== g.propsRequireUpdateSeries.indexOf("chart." + a) &&
+                (l = !0);
+              -1 !== g.propsRequireDirtyBox.indexOf(a) && (g.isDirtyBox = !0);
+              -1 !== g.propsRequireReflow.indexOf(a) &&
+                (k ? (g.isDirtyBox = !0) : (m = !0));
+            });
+            !g.styledMode &&
+              n.style &&
+              g.renderer.setStyle(g.options.chart.style || {});
+          }
+          !g.styledMode && b.colors && (this.options.colors = b.colors);
+          b.time &&
+            (this.time === D && (this.time = new c(b.time)),
+            W(!0, g.options.time, b.time));
+          X(b, function (a, c) {
+            if (g[c] && "function" === typeof g[c].update) g[c].update(a, !1);
+            else if ("function" === typeof g[f[c]]) g[f[c]](a);
+            else
+              "colors" !== c &&
+                -1 === g.collectionsWithUpdate.indexOf(c) &&
+                W(!0, g.options[c], b[c]);
+            "chart" !== c &&
+              -1 !== g.propsRequireUpdateSeries.indexOf(c) &&
+              (l = !0);
+          });
+          this.collectionsWithUpdate.forEach(function (a) {
+            if (b[a]) {
+              var c = [];
+              g[a].forEach(function (b, a) {
+                b.options.isInternal || c.push(R(b.options.index, a));
+              });
+              ha(b[a]).forEach(function (b, d) {
+                var f = U(b.id),
+                  k;
+                f && (k = g.get(b.id));
+                !k &&
+                  g[a] &&
+                  (k = g[a][c ? c[d] : d]) &&
+                  f &&
+                  U(k.options.id) &&
+                  (k = void 0);
+                k && k.coll === a && (k.update(b, !1), e && (k.touched = !0));
+                !k &&
+                  e &&
+                  g.collectionsWithInit[a] &&
+                  (g.collectionsWithInit[a][0].apply(
+                    g,
+                    [b].concat(g.collectionsWithInit[a][1] || []).concat([!1])
+                  ).touched = !0);
+              });
+              e &&
+                g[a].forEach(function (b) {
+                  b.touched || b.options.isInternal
+                    ? delete b.touched
+                    : h.push(b);
+                });
+            }
+          });
+          h.forEach(function (b) {
+            b.chart && b.remove && b.remove(!1);
+          });
+          p &&
+            g.axes.forEach(function (b) {
+              b.update({}, !1);
+            });
+          l &&
+            g.getSeriesOrderByLinks().forEach(function (b) {
+              b.chart && b.update({}, !1);
+            }, this);
+          p = n && n.width;
+          n = n && (V(n.height) ? aa(n.height, p || g.chartWidth) : n.height);
+          m || (T(p) && p !== g.chartWidth) || (T(n) && n !== g.chartHeight)
+            ? g.setSize(p, n, d)
+            : R(a, !0) && g.redraw(d);
+          Q(g, "afterUpdate", { options: b, redraw: a, animation: d });
+        };
+        a.prototype.setSubtitle = function (b, a) {
+          this.applyDescription("subtitle", b);
+          this.layOutTitles(a);
+        };
+        a.prototype.setCaption = function (b, a) {
+          this.applyDescription("caption", b);
+          this.layOutTitles(a);
+        };
+        a.prototype.showResetZoom = function () {
+          function b() {
+            a.zoomOut();
+          }
+          var a = this,
+            c = e.lang,
+            d = a.options.chart.resetZoomButton,
+            g = d.theme,
+            f = g.states,
+            k =
+              "chart" === d.relativeTo || "spacingBox" === d.relativeTo
+                ? null
+                : "scrollablePlotBox";
+          Q(this, "beforeShowResetZoom", null, function () {
+            a.resetZoomButton = a.renderer
+              .button(c.resetZoom, null, null, b, g, f && f.hover)
+              .attr({ align: d.position.align, title: c.resetZoomTitle })
+              .addClass("highcharts-reset-zoom")
+              .add()
+              .align(d.position, !1, k);
+          });
+          Q(this, "afterShowResetZoom");
+        };
+        a.prototype.zoomOut = function () {
+          Q(this, "selection", { resetSelection: !0 }, this.zoom);
+        };
+        a.prototype.zoom = function (b) {
+          var a = this,
+            c = a.pointer,
+            e = a.inverted ? c.mouseDownX : c.mouseDownY,
+            d = !1,
+            g;
+          !b || b.resetSelection
+            ? (a.axes.forEach(function (b) {
+                g = b.zoom();
+              }),
+              (c.initiated = !1))
+            : b.xAxis.concat(b.yAxis).forEach(function (b) {
+                var f = b.axis,
+                  k = a.inverted ? f.left : f.top,
+                  h = a.inverted ? k + f.width : k + f.height,
+                  l = f.isXAxis,
+                  n = !1;
+                if ((!l && e >= k && e <= h) || l || !U(e)) n = !0;
+                c[l ? "zoomX" : "zoomY"] &&
+                  n &&
+                  ((g = f.zoom(b.min, b.max)), f.displayBtn && (d = !0));
+              });
+          var f = a.resetZoomButton;
+          d && !f
+            ? a.showResetZoom()
+            : !d && N(f) && (a.resetZoomButton = f.destroy());
+          g &&
+            a.redraw(
+              R(a.options.chart.animation, b && b.animation, 100 > a.pointCount)
+            );
+        };
+        a.prototype.pan = function (b, a) {
+          var c = this,
+            e = c.hoverPoints;
+          a = "object" === typeof a ? a : { enabled: a, type: "x" };
+          var d = c.options.chart,
+            g = c.options.mapNavigation && c.options.mapNavigation.enabled;
+          d && d.panning && (d.panning = a);
+          var f = a.type,
+            k;
+          Q(this, "pan", { originalEvent: b }, function () {
+            e &&
+              e.forEach(function (b) {
+                b.setState();
+              });
+            var a = c.xAxis;
+            "xy" === f ? (a = a.concat(c.yAxis)) : "y" === f && (a = c.yAxis);
+            var d = {};
+            a.forEach(function (a) {
+              if (a.options.panningEnabled && !a.options.isInternal) {
+                var e = a.horiz,
+                  h = b[e ? "chartX" : "chartY"];
+                e = e ? "mouseDownX" : "mouseDownY";
+                var l = c[e],
+                  n = a.minPointOffset || 0,
+                  m =
+                    (a.reversed && !c.inverted) || (!a.reversed && c.inverted)
+                      ? -1
+                      : 1,
+                  p = a.getExtremes(),
+                  F = a.toValue(l - h, !0) + n * m,
+                  r =
+                    a.toValue(l + a.len - h, !0) -
+                    (n * m || (a.isXAxis && a.pointRangePadding) || 0),
+                  q = r < F;
+                m = a.hasVerticalPanning();
+                l = q ? r : F;
+                F = q ? F : r;
+                var N = a.panningState;
+                !m ||
+                  a.isXAxis ||
+                  (N && !N.isDirty) ||
+                  a.series.forEach(function (b) {
+                    var a = b.getProcessedData(!0);
+                    a = b.getExtremes(a.yData, !0);
+                    N ||
+                      (N = {
+                        startMin: Number.MAX_VALUE,
+                        startMax: -Number.MAX_VALUE,
+                      });
+                    T(a.dataMin) &&
+                      T(a.dataMax) &&
+                      ((N.startMin = Math.min(
+                        R(b.options.threshold, Infinity),
+                        a.dataMin,
+                        N.startMin
+                      )),
+                      (N.startMax = Math.max(
+                        R(b.options.threshold, -Infinity),
+                        a.dataMax,
+                        N.startMax
+                      )));
+                  });
+                m = Math.min(
+                  R(N && N.startMin, p.dataMin),
+                  n ? p.min : a.toValue(a.toPixels(p.min) - a.minPixelPadding)
+                );
+                r = Math.max(
+                  R(N && N.startMax, p.dataMax),
+                  n ? p.max : a.toValue(a.toPixels(p.max) + a.minPixelPadding)
+                );
+                a.panningState = N;
+                a.isOrdinal ||
+                  ((n = m - l),
+                  0 < n && ((F += n), (l = m)),
+                  (n = F - r),
+                  0 < n && ((F = r), (l -= n)),
+                  a.series.length &&
+                    l !== p.min &&
+                    F !== p.max &&
+                    l >= m &&
+                    F <= r &&
+                    (a.setExtremes(l, F, !1, !1, { trigger: "pan" }),
+                    c.resetZoomButton ||
+                      g ||
+                      l === m ||
+                      F === r ||
+                      !f.match("y") ||
+                      (c.showResetZoom(), (a.displayBtn = !1)),
+                    (k = !0)),
+                  (d[e] = h));
+              }
+            });
+            X(d, function (b, a) {
+              c[a] = b;
+            });
+            k && c.redraw(!1);
+            P(c.container, { cursor: "move" });
+          });
+        };
+        return a;
+      })();
+      L(a.prototype, {
+        callbacks: [],
+        collectionsWithInit: {
+          xAxis: [a.prototype.addAxis, [!0]],
+          yAxis: [a.prototype.addAxis, [!1]],
+          series: [a.prototype.addSeries],
+        },
+        collectionsWithUpdate: ["xAxis", "yAxis", "series"],
+        propsRequireDirtyBox:
+          "backgroundColor borderColor borderWidth borderRadius plotBackgroundColor plotBackgroundImage plotBorderColor plotBorderWidth plotShadow shadow".split(
+            " "
+          ),
+        propsRequireReflow:
+          "margin marginTop marginRight marginBottom marginLeft spacing spacingTop spacingRight spacingBottom spacingLeft".split(
+            " "
+          ),
+        propsRequireUpdateSeries:
+          "chart.inverted chart.polar chart.ignoreHiddenSeries chart.type colors plotOptions time tooltip".split(
+            " "
+          ),
+      });
+      ("");
+      return a;
+    }
+  );
+  L(a, "Core/Legend/LegendSymbol.js", [a["Core/Utilities.js"]], function (a) {
+    var u = a.merge,
+      A = a.pick,
+      G;
+    (function (a) {
+      a.drawLineMarker = function (a) {
+        var t = this.options,
+          z = a.symbolWidth,
+          q = a.symbolHeight,
+          m = q / 2,
+          h = this.chart.renderer,
+          d = this.legendGroup;
+        a = a.baseline - Math.round(0.3 * a.fontMetrics.b);
+        var c = {},
+          l = t.marker;
+        this.chart.styledMode ||
+          ((c = { "stroke-width": t.lineWidth || 0 }),
+          t.dashStyle && (c.dashstyle = t.dashStyle));
+        this.legendLine = h
+          .path([
+            ["M", 0, a],
+            ["L", z, a],
+          ])
+          .addClass("highcharts-graph")
+          .attr(c)
+          .add(d);
+        l &&
+          !1 !== l.enabled &&
+          z &&
+          ((t = Math.min(A(l.radius, m), m)),
+          0 === this.symbol.indexOf("url") &&
+            ((l = u(l, { width: q, height: q })), (t = 0)),
+          (this.legendSymbol = z =
+            h
+              .symbol(this.symbol, z / 2 - t, a - t, 2 * t, 2 * t, l)
+              .addClass("highcharts-point")
+              .add(d)),
+          (z.isMarker = !0));
+      };
+      a.drawRectangle = function (a, u) {
+        var t = a.symbolHeight,
+          q = a.options.squareSymbol;
+        u.legendSymbol = this.chart.renderer
+          .rect(
+            q ? (a.symbolWidth - t) / 2 : 0,
+            a.baseline - t + 1,
+            q ? t : a.symbolWidth,
+            t,
+            A(a.options.symbolRadius, t / 2)
+          )
+          .addClass("highcharts-point")
+          .attr({ zIndex: 3 })
+          .add(u.legendGroup);
+      };
+    })(G || (G = {}));
+    return G;
+  });
+  L(a, "Core/Series/SeriesDefaults.js", [], function () {
+    return {
+      lineWidth: 2,
+      allowPointSelect: !1,
+      crisp: !0,
+      showCheckbox: !1,
+      animation: { duration: 1e3 },
+      events: {},
+      marker: {
+        enabledThreshold: 2,
+        lineColor: "#ffffff",
+        lineWidth: 0,
+        radius: 4,
+        states: {
+          normal: { animation: !0 },
+          hover: {
+            animation: { duration: 50 },
+            enabled: !0,
+            radiusPlus: 2,
+            lineWidthPlus: 1,
+          },
+          select: { fillColor: "#cccccc", lineColor: "#000000", lineWidth: 2 },
+        },
+      },
+      point: { events: {} },
+      dataLabels: {
+        animation: {},
+        align: "center",
+        defer: !0,
+        formatter: function () {
+          var a = this.series.chart.numberFormatter;
+          return "number" !== typeof this.y ? "" : a(this.y, -1);
+        },
+        padding: 5,
+        style: {
+          fontSize: "11px",
+          fontWeight: "bold",
+          color: "contrast",
+          textOutline: "1px contrast",
+        },
+        verticalAlign: "bottom",
+        x: 0,
+        y: 0,
+      },
+      cropThreshold: 300,
+      opacity: 1,
+      pointRange: 0,
+      softThreshold: !0,
+      states: {
+        normal: { animation: !0 },
+        hover: {
+          animation: { duration: 50 },
+          lineWidthPlus: 1,
+          marker: {},
+          halo: { size: 10, opacity: 0.25 },
+        },
+        select: { animation: { duration: 0 } },
+        inactive: { animation: { duration: 50 }, opacity: 0.2 },
+      },
+      stickyTracking: !0,
+      turboThreshold: 1e3,
+      findNearestPointBy: "x",
+    };
+  });
+  L(
+    a,
+    "Core/Series/Series.js",
+    [
+      a["Core/Animation/AnimationUtilities.js"],
+      a["Core/DefaultOptions.js"],
+      a["Core/Foundation.js"],
+      a["Core/Globals.js"],
+      a["Core/Legend/LegendSymbol.js"],
+      a["Core/Series/Point.js"],
+      a["Core/Series/SeriesDefaults.js"],
+      a["Core/Series/SeriesRegistry.js"],
+      a["Core/Renderer/SVG/SVGElement.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G, x, C, I, z, q, m) {
+      var h = a.animObject,
+        d = a.setAnimation,
+        c = t.defaultOptions,
+        l = A.registerEventOptions,
+        f = G.hasTouch,
+        w = G.svg,
+        p = G.win,
+        u = z.seriesTypes,
+        r = m.addEvent,
+        y = m.arrayMax,
+        B = m.arrayMin,
+        n = m.clamp,
+        k = m.cleanRecursively,
+        b = m.correctFloat,
+        g = m.defined,
+        e = m.erase,
+        D = m.error,
+        H = m.extend,
+        v = m.find,
+        E = m.fireEvent,
+        O = m.getNestedProperty,
+        S = m.isArray,
+        P = m.isNumber,
+        U = m.isString,
+        Y = m.merge,
+        J = m.objectEach,
+        M = m.pick,
+        L = m.removeEvent,
+        da = m.splat,
+        Q = m.syncTimeout;
+      a = (function () {
+        function a() {
+          this.zones =
+            this.yAxis =
+            this.xAxis =
+            this.userOptions =
+            this.tooltipOptions =
+            this.processedYData =
+            this.processedXData =
+            this.points =
+            this.options =
+            this.linkedSeries =
+            this.index =
+            this.eventsToUnbind =
+            this.eventOptions =
+            this.data =
+            this.chart =
+            this._i =
+              void 0;
+        }
+        a.prototype.init = function (b, a) {
+          E(this, "init", { options: a });
+          var c = this,
+            e = b.series;
+          this.eventsToUnbind = [];
+          c.chart = b;
+          c.options = c.setOptions(a);
+          a = c.options;
+          c.linkedSeries = [];
+          c.bindAxes();
+          H(c, {
+            name: a.name,
+            state: "",
+            visible: !1 !== a.visible,
+            selected: !0 === a.selected,
+          });
+          l(this, a);
+          var d = a.events;
+          if (
+            (d && d.click) ||
+            (a.point && a.point.events && a.point.events.click) ||
+            a.allowPointSelect
+          )
+            b.runTrackerClick = !0;
+          c.getColor();
+          c.getSymbol();
+          c.parallelArrays.forEach(function (b) {
+            c[b + "Data"] || (c[b + "Data"] = []);
+          });
+          c.isCartesian && (b.hasCartesianSeries = !0);
+          var g;
+          e.length && (g = e[e.length - 1]);
+          c._i = M(g && g._i, -1) + 1;
+          c.opacity = c.options.opacity;
+          b.orderSeries(this.insert(e));
+          a.dataSorting && a.dataSorting.enabled
+            ? c.setDataSortingOptions()
+            : c.points || c.data || c.setData(a.data, !1);
+          E(this, "afterInit");
+        };
+        a.prototype.is = function (b) {
+          return u[b] && this instanceof u[b];
+        };
+        a.prototype.insert = function (b) {
+          var a = this.options.index,
+            c;
+          if (P(a)) {
+            for (c = b.length; c--; )
+              if (a >= M(b[c].options.index, b[c]._i)) {
+                b.splice(c + 1, 0, this);
+                break;
+              }
+            -1 === c && b.unshift(this);
+            c += 1;
+          } else b.push(this);
+          return M(c, b.length - 1);
+        };
+        a.prototype.bindAxes = function () {
+          var b = this,
+            a = b.options,
+            c = b.chart,
+            e;
+          E(this, "bindAxes", null, function () {
+            (b.axisTypes || []).forEach(function (d) {
+              var g = 0;
+              c[d].forEach(function (c) {
+                e = c.options;
+                if (
+                  (a[d] === g && !e.isInternal) ||
+                  ("undefined" !== typeof a[d] && a[d] === e.id) ||
+                  ("undefined" === typeof a[d] && 0 === e.index)
+                )
+                  b.insert(c.series), (b[d] = c), (c.isDirty = !0);
+                e.isInternal || g++;
+              });
+              b[d] || b.optionalAxis === d || D(18, !0, c);
+            });
+          });
+          E(this, "afterBindAxes");
+        };
+        a.prototype.updateParallelArrays = function (b, a) {
+          var c = b.series,
+            e = arguments,
+            d = P(a)
+              ? function (e) {
+                  var d = "y" === e && c.toYData ? c.toYData(b) : b[e];
+                  c[e + "Data"][a] = d;
+                }
+              : function (b) {
+                  Array.prototype[a].apply(
+                    c[b + "Data"],
+                    Array.prototype.slice.call(e, 2)
+                  );
+                };
+          c.parallelArrays.forEach(d);
+        };
+        a.prototype.hasData = function () {
+          return (
+            (this.visible &&
+              "undefined" !== typeof this.dataMax &&
+              "undefined" !== typeof this.dataMin) ||
+            (this.visible && this.yData && 0 < this.yData.length)
+          );
+        };
+        a.prototype.autoIncrement = function (b) {
+          var a = this.options,
+            c = a.pointIntervalUnit,
+            e = a.relativeXValue,
+            d = this.chart.time,
+            g = this.xIncrement,
+            f;
+          g = M(g, a.pointStart, 0);
+          this.pointInterval = f = M(this.pointInterval, a.pointInterval, 1);
+          e && P(b) && (f *= b);
+          c &&
+            ((a = new d.Date(g)),
+            "day" === c
+              ? d.set("Date", a, d.get("Date", a) + f)
+              : "month" === c
+              ? d.set("Month", a, d.get("Month", a) + f)
+              : "year" === c && d.set("FullYear", a, d.get("FullYear", a) + f),
+            (f = a.getTime() - g));
+          if (e && P(b)) return g + f;
+          this.xIncrement = g + f;
+          return g;
+        };
+        a.prototype.setDataSortingOptions = function () {
+          var b = this.options;
+          H(this, {
+            requireSorting: !1,
+            sorted: !1,
+            enabledDataSorting: !0,
+            allowDG: !1,
+          });
+          g(b.pointRange) || (b.pointRange = 1);
+        };
+        a.prototype.setOptions = function (b) {
+          var a = this.chart,
+            e = a.options,
+            d = e.plotOptions,
+            f = a.userOptions || {};
+          b = Y(b);
+          a = a.styledMode;
+          var k = { plotOptions: d, userOptions: b };
+          E(this, "setOptions", k);
+          var h = k.plotOptions[this.type],
+            l = f.plotOptions || {};
+          this.userOptions = k.userOptions;
+          f = Y(h, d.series, f.plotOptions && f.plotOptions[this.type], b);
+          this.tooltipOptions = Y(
+            c.tooltip,
+            c.plotOptions.series && c.plotOptions.series.tooltip,
+            c.plotOptions[this.type].tooltip,
+            e.tooltip.userOptions,
+            d.series && d.series.tooltip,
+            d[this.type].tooltip,
+            b.tooltip
+          );
+          this.stickyTracking = M(
+            b.stickyTracking,
+            l[this.type] && l[this.type].stickyTracking,
+            l.series && l.series.stickyTracking,
+            this.tooltipOptions.shared && !this.noSharedTooltip
+              ? !0
+              : f.stickyTracking
+          );
+          null === h.marker && delete f.marker;
+          this.zoneAxis = f.zoneAxis;
+          d = this.zones = (f.zones || []).slice();
+          (!f.negativeColor && !f.negativeFillColor) ||
+            f.zones ||
+            ((e = {
+              value: f[this.zoneAxis + "Threshold"] || f.threshold || 0,
+              className: "highcharts-negative",
+            }),
+            a ||
+              ((e.color = f.negativeColor),
+              (e.fillColor = f.negativeFillColor)),
+            d.push(e));
+          d.length &&
+            g(d[d.length - 1].value) &&
+            d.push(a ? {} : { color: this.color, fillColor: this.fillColor });
+          E(this, "afterSetOptions", { options: f });
+          return f;
+        };
+        a.prototype.getName = function () {
+          return M(this.options.name, "Series " + (this.index + 1));
+        };
+        a.prototype.getCyclic = function (b, a, c) {
+          var e = this.chart,
+            d = this.userOptions,
+            f = b + "Index",
+            k = b + "Counter",
+            h = c ? c.length : M(e.options.chart[b + "Count"], e[b + "Count"]);
+          if (!a) {
+            var l = M(d[f], d["_" + f]);
+            g(l) ||
+              (e.series.length || (e[k] = 0),
+              (d["_" + f] = l = e[k] % h),
+              (e[k] += 1));
+            c && (a = c[l]);
+          }
+          "undefined" !== typeof l && (this[f] = l);
+          this[b] = a;
+        };
+        a.prototype.getColor = function () {
+          this.chart.styledMode
+            ? this.getCyclic("color")
+            : this.options.colorByPoint
+            ? (this.color = "#cccccc")
+            : this.getCyclic(
+                "color",
+                this.options.color || c.plotOptions[this.type].color,
+                this.chart.options.colors
+              );
+        };
+        a.prototype.getPointsCollection = function () {
+          return (this.hasGroupedData ? this.points : this.data) || [];
+        };
+        a.prototype.getSymbol = function () {
+          this.getCyclic(
+            "symbol",
+            this.options.marker.symbol,
+            this.chart.options.symbols
+          );
+        };
+        a.prototype.findPointIndex = function (b, a) {
+          var c = b.id,
+            e = b.x,
+            d = this.points,
+            g = this.options.dataSorting,
+            f,
+            k;
+          if (c) (g = this.chart.get(c)), g instanceof C && (f = g);
+          else if (
+            this.linkedParent ||
+            this.enabledDataSorting ||
+            this.options.relativeXValue
+          )
+            if (
+              ((f = function (a) {
+                return !a.touched && a.index === b.index;
+              }),
+              g && g.matchByName
+                ? (f = function (a) {
+                    return !a.touched && a.name === b.name;
+                  })
+                : this.options.relativeXValue &&
+                  (f = function (a) {
+                    return !a.touched && a.options.x === b.x;
+                  }),
+              (f = v(d, f)),
+              !f)
+            )
+              return;
+          if (f) {
+            var h = f && f.index;
+            "undefined" !== typeof h && (k = !0);
+          }
+          "undefined" === typeof h && P(e) && (h = this.xData.indexOf(e, a));
+          -1 !== h &&
+            "undefined" !== typeof h &&
+            this.cropped &&
+            (h = h >= this.cropStart ? h - this.cropStart : h);
+          !k && P(h) && d[h] && d[h].touched && (h = void 0);
+          return h;
+        };
+        a.prototype.updateData = function (b, a) {
+          var c = this.options,
+            e = c.dataSorting,
+            d = this.points,
+            f = [],
+            k = this.requireSorting,
+            h = b.length === d.length,
+            l,
+            n,
+            m,
+            p = !0;
+          this.xIncrement = null;
+          b.forEach(function (b, a) {
+            var n =
+                (g(b) &&
+                  this.pointClass.prototype.optionsToObject.call(
+                    { series: this },
+                    b
+                  )) ||
+                {},
+              p = n.x;
+            if (n.id || P(p)) {
+              if (
+                ((n = this.findPointIndex(n, m)),
+                -1 === n || "undefined" === typeof n
+                  ? f.push(b)
+                  : d[n] && b !== c.data[n]
+                  ? (d[n].update(b, !1, null, !1),
+                    (d[n].touched = !0),
+                    k && (m = n + 1))
+                  : d[n] && (d[n].touched = !0),
+                !h || a !== n || (e && e.enabled) || this.hasDerivedData)
+              )
+                l = !0;
+            } else f.push(b);
+          }, this);
+          if (l)
+            for (b = d.length; b--; )
+              (n = d[b]) && !n.touched && n.remove && n.remove(!1, a);
+          else
+            !h || (e && e.enabled)
+              ? (p = !1)
+              : (b.forEach(function (b, a) {
+                  b !== d[a].y && d[a].update && d[a].update(b, !1, null, !1);
+                }),
+                (f.length = 0));
+          d.forEach(function (b) {
+            b && (b.touched = !1);
+          });
+          if (!p) return !1;
+          f.forEach(function (b) {
+            this.addPoint(b, !1, null, null, !1);
+          }, this);
+          null === this.xIncrement &&
+            this.xData &&
+            this.xData.length &&
+            ((this.xIncrement = y(this.xData)), this.autoIncrement());
+          return !0;
+        };
+        a.prototype.setData = function (b, a, c, e) {
+          var d = this,
+            g = d.points,
+            f = (g && g.length) || 0,
+            k = d.options,
+            h = d.chart,
+            l = k.dataSorting,
+            n = d.xAxis,
+            m = k.turboThreshold,
+            p = this.xData,
+            F = this.yData,
+            r = d.pointArrayMap;
+          r = r && r.length;
+          var q = k.keys,
+            v,
+            B = 0,
+            w = 1,
+            u = null;
+          b = b || [];
+          var y = b.length;
+          a = M(a, !0);
+          l && l.enabled && (b = this.sortData(b));
+          !1 !== e &&
+            y &&
+            f &&
+            !d.cropped &&
+            !d.hasGroupedData &&
+            d.visible &&
+            !d.isSeriesBoosting &&
+            (v = this.updateData(b, c));
+          if (!v) {
+            d.xIncrement = null;
+            d.colorCounter = 0;
+            this.parallelArrays.forEach(function (b) {
+              d[b + "Data"].length = 0;
+            });
+            if (m && y > m)
+              if (((u = d.getFirstValidPoint(b)), P(u)))
+                for (c = 0; c < y; c++)
+                  (p[c] = this.autoIncrement()), (F[c] = b[c]);
+              else if (S(u))
+                if (r)
+                  if (u.length === r)
+                    for (c = 0; c < y; c++)
+                      (p[c] = this.autoIncrement()), (F[c] = b[c]);
+                  else
+                    for (c = 0; c < y; c++)
+                      (e = b[c]), (p[c] = e[0]), (F[c] = e.slice(1, r + 1));
+                else if (
+                  (q &&
+                    ((B = q.indexOf("x")),
+                    (w = q.indexOf("y")),
+                    (B = 0 <= B ? B : 0),
+                    (w = 0 <= w ? w : 1)),
+                  1 === u.length && (w = 0),
+                  B === w)
+                )
+                  for (c = 0; c < y; c++)
+                    (p[c] = this.autoIncrement()), (F[c] = b[c][w]);
+                else
+                  for (c = 0; c < y; c++)
+                    (e = b[c]), (p[c] = e[B]), (F[c] = e[w]);
+              else D(12, !1, h);
+            else
+              for (c = 0; c < y; c++)
+                "undefined" !== typeof b[c] &&
+                  ((e = { series: d }),
+                  d.pointClass.prototype.applyOptions.apply(e, [b[c]]),
+                  d.updateParallelArrays(e, c));
+            F && U(F[0]) && D(14, !0, h);
+            d.data = [];
+            d.options.data = d.userOptions.data = b;
+            for (c = f; c--; ) g[c] && g[c].destroy && g[c].destroy();
+            n && (n.minRange = n.userMinRange);
+            d.isDirty = h.isDirtyBox = !0;
+            d.isDirtyData = !!g;
+            c = !1;
+          }
+          "point" === k.legendType &&
+            (this.processData(), this.generatePoints());
+          a && h.redraw(c);
+        };
+        a.prototype.sortData = function (b) {
+          var a = this,
+            c = a.options.dataSorting.sortKey || "y",
+            e = function (b, a) {
+              return (
+                (g(a) &&
+                  b.pointClass.prototype.optionsToObject.call(
+                    { series: b },
+                    a
+                  )) ||
+                {}
+              );
+            };
+          b.forEach(function (c, d) {
+            b[d] = e(a, c);
+            b[d].index = d;
+          }, this);
+          b.concat()
+            .sort(function (b, a) {
+              b = O(c, b);
+              a = O(c, a);
+              return a < b ? -1 : a > b ? 1 : 0;
+            })
+            .forEach(function (b, a) {
+              b.x = a;
+            }, this);
+          a.linkedSeries &&
+            a.linkedSeries.forEach(function (a) {
+              var c = a.options,
+                d = c.data;
+              (c.dataSorting && c.dataSorting.enabled) ||
+                !d ||
+                (d.forEach(function (c, g) {
+                  d[g] = e(a, c);
+                  b[g] && ((d[g].x = b[g].x), (d[g].index = g));
+                }),
+                a.setData(d, !1));
+            });
+          return b;
+        };
+        a.prototype.getProcessedData = function (b) {
+          var a = this.xAxis,
+            c = this.options,
+            e = c.cropThreshold,
+            d = b || this.getExtremesFromAll || c.getExtremesFromAll,
+            g = this.isCartesian;
+          b = a && a.val2lin;
+          c = !(!a || !a.logarithmic);
+          var f = 0,
+            k = this.xData,
+            h = this.yData,
+            l = this.requireSorting;
+          var n = !1;
+          var m = k.length;
+          if (a) {
+            n = a.getExtremes();
+            var p = n.min;
+            var r = n.max;
+            n = a.categories && !a.names.length;
+          }
+          if (g && this.sorted && !d && (!e || m > e || this.forceCrop))
+            if (k[m - 1] < p || k[0] > r) (k = []), (h = []);
+            else if (this.yData && (k[0] < p || k[m - 1] > r)) {
+              var F = this.cropData(this.xData, this.yData, p, r);
+              k = F.xData;
+              h = F.yData;
+              f = F.start;
+              F = !0;
+            }
+          for (e = k.length || 1; --e; )
+            if (
+              ((a = c ? b(k[e]) - b(k[e - 1]) : k[e] - k[e - 1]),
+              0 < a && ("undefined" === typeof q || a < q))
+            )
+              var q = a;
+            else 0 > a && l && !n && (D(15, !1, this.chart), (l = !1));
+          return {
+            xData: k,
+            yData: h,
+            cropped: F,
+            cropStart: f,
+            closestPointRange: q,
+          };
+        };
+        a.prototype.processData = function (b) {
+          var a = this.xAxis;
+          if (
+            this.isCartesian &&
+            !this.isDirty &&
+            !a.isDirty &&
+            !this.yAxis.isDirty &&
+            !b
+          )
+            return !1;
+          b = this.getProcessedData();
+          this.cropped = b.cropped;
+          this.cropStart = b.cropStart;
+          this.processedXData = b.xData;
+          this.processedYData = b.yData;
+          this.closestPointRange = this.basePointRange = b.closestPointRange;
+          E(this, "afterProcessData");
+        };
+        a.prototype.cropData = function (b, a, c, e, d) {
+          var g = b.length,
+            f,
+            k = 0,
+            h = g;
+          d = M(d, this.cropShoulder);
+          for (f = 0; f < g; f++)
+            if (b[f] >= c) {
+              k = Math.max(0, f - d);
+              break;
+            }
+          for (c = f; c < g; c++)
+            if (b[c] > e) {
+              h = c + d;
+              break;
+            }
+          return {
+            xData: b.slice(k, h),
+            yData: a.slice(k, h),
+            start: k,
+            end: h,
+          };
+        };
+        a.prototype.generatePoints = function () {
+          var b = this.options,
+            a = b.data,
+            c = this.processedXData,
+            e = this.processedYData,
+            d = this.pointClass,
+            g = c.length,
+            f = this.cropStart || 0,
+            k = this.hasGroupedData,
+            h = b.keys,
+            l = [];
+          b = b.dataGrouping && b.dataGrouping.groupAll ? f : 0;
+          var n,
+            m,
+            p = this.data;
+          if (!p && !k) {
+            var r = [];
+            r.length = a.length;
+            p = this.data = r;
+          }
+          h && k && (this.options.keys = !1);
+          for (m = 0; m < g; m++) {
+            r = f + m;
+            if (k) {
+              var q = new d().init(this, [c[m]].concat(da(e[m])));
+              q.dataGroup = this.groupMap[b + m];
+              q.dataGroup.options &&
+                ((q.options = q.dataGroup.options),
+                H(q, q.dataGroup.options),
+                delete q.dataLabels);
+            } else
+              (q = p[r]) ||
+                "undefined" === typeof a[r] ||
+                (p[r] = q = new d().init(this, a[r], c[m]));
+            q && ((q.index = k ? b + m : r), (l[m] = q));
+          }
+          this.options.keys = h;
+          if (p && (g !== (n = p.length) || k))
+            for (m = 0; m < n; m++)
+              m !== f || k || (m += g),
+                p[m] && (p[m].destroyElements(), (p[m].plotX = void 0));
+          this.data = p;
+          this.points = l;
+          E(this, "afterGeneratePoints");
+        };
+        a.prototype.getXExtremes = function (b) {
+          return { min: B(b), max: y(b) };
+        };
+        a.prototype.getExtremes = function (b, a) {
+          var c = this.xAxis,
+            e = this.yAxis,
+            d = this.processedXData || this.xData,
+            g = [],
+            f = this.requireSorting ? this.cropShoulder : 0;
+          e = e ? e.positiveValuesOnly : !1;
+          var k,
+            h = 0,
+            l = 0,
+            n = 0;
+          b = b || this.stackedYData || this.processedYData || [];
+          var m = b.length;
+          if (c) {
+            var p = c.getExtremes();
+            h = p.min;
+            l = p.max;
+          }
+          for (k = 0; k < m; k++) {
+            var r = d[k];
+            p = b[k];
+            var q = (P(p) || S(p)) && (p.length || 0 < p || !e);
+            r =
+              a ||
+              this.getExtremesFromAll ||
+              this.options.getExtremesFromAll ||
+              this.cropped ||
+              !c ||
+              ((d[k + f] || r) >= h && (d[k - f] || r) <= l);
+            if (q && r)
+              if ((q = p.length)) for (; q--; ) P(p[q]) && (g[n++] = p[q]);
+              else g[n++] = p;
+          }
+          b = { activeYData: g, dataMin: B(g), dataMax: y(g) };
+          E(this, "afterGetExtremes", { dataExtremes: b });
+          return b;
+        };
+        a.prototype.applyExtremes = function () {
+          var b = this.getExtremes();
+          this.dataMin = b.dataMin;
+          this.dataMax = b.dataMax;
+          return b;
+        };
+        a.prototype.getFirstValidPoint = function (b) {
+          for (var a = b.length, c = 0, e = null; null === e && c < a; )
+            (e = b[c]), c++;
+          return e;
+        };
+        a.prototype.translate = function () {
+          this.processedXData || this.processData();
+          this.generatePoints();
+          var a = this.options,
+            c = a.stacking,
+            e = this.xAxis,
+            d = e.categories,
+            f = this.enabledDataSorting,
+            k = this.yAxis,
+            h = this.points,
+            l = h.length,
+            m = this.pointPlacementToXValue(),
+            p = !!m,
+            r = a.threshold,
+            q = a.startFromThreshold ? r : 0,
+            v = this.zoneAxis || "y",
+            B,
+            w,
+            u = Number.MAX_VALUE;
+          for (B = 0; B < l; B++) {
+            var y = h[B],
+              t = y.x,
+              D = void 0,
+              K = void 0,
+              H = y.y,
+              z = y.low,
+              x =
+                c &&
+                k.stacking &&
+                k.stacking.stacks[
+                  (this.negStacks && H < (q ? 0 : r) ? "-" : "") + this.stackKey
+                ];
+            if (
+              (k.positiveValuesOnly && !k.validatePositiveValue(H)) ||
+              (e.positiveValuesOnly && !e.validatePositiveValue(t))
+            )
+              y.isNull = !0;
+            y.plotX = w = b(
+              n(e.translate(t, 0, 0, 0, 1, m, "flags" === this.type), -1e5, 1e5)
+            );
+            if (c && this.visible && x && x[t]) {
+              var A = this.getStackIndicator(A, t, this.index);
+              y.isNull || ((D = x[t]), (K = D.points[A.key]));
+            }
+            S(K) &&
+              ((z = K[0]),
+              (H = K[1]),
+              z === q && A.key === x[t].base && (z = M(P(r) && r, k.min)),
+              k.positiveValuesOnly && 0 >= z && (z = null),
+              (y.total = y.stackTotal = D.total),
+              (y.percentage = D.total && (y.y / D.total) * 100),
+              (y.stackY = H),
+              this.irregularWidths ||
+                D.setOffset(this.pointXOffset || 0, this.barW || 0));
+            y.yBottom = g(z) ? n(k.translate(z, 0, 1, 0, 1), -1e5, 1e5) : null;
+            this.dataModify && (H = this.dataModify.modifyValue(H, B));
+            y.plotY = void 0;
+            P(H) &&
+              ((D = k.translate(H, !1, !0, !1, !0)),
+              "undefined" !== typeof D && (y.plotY = n(D, -1e5, 1e5)));
+            y.isInside = this.isPointInside(y);
+            y.clientX = p ? b(e.translate(t, 0, 0, 0, 1, m)) : w;
+            y.negative = y[v] < (a[v + "Threshold"] || r || 0);
+            y.category = d && "undefined" !== typeof d[y.x] ? d[y.x] : y.x;
+            if (!y.isNull && !1 !== y.visible) {
+              "undefined" !== typeof G && (u = Math.min(u, Math.abs(w - G)));
+              var G = w;
+            }
+            y.zone = this.zones.length ? y.getZone() : void 0;
+            !y.graphic && this.group && f && (y.isNew = !0);
+          }
+          this.closestPointRangePx = u;
+          E(this, "afterTranslate");
+        };
+        a.prototype.getValidPoints = function (b, a, c) {
+          var e = this.chart;
+          return (b || this.points || []).filter(function (b) {
+            return a &&
+              !e.isInsidePlot(b.plotX, b.plotY, { inverted: e.inverted })
+              ? !1
+              : !1 !== b.visible && (c || !b.isNull);
+          });
+        };
+        a.prototype.getClipBox = function () {
+          var b = this.chart,
+            a = this.xAxis,
+            c = this.yAxis,
+            e = Y(b.clipBox);
+          a && a.len !== b.plotSizeX && (e.width = a.len);
+          c && c.len !== b.plotSizeY && (e.height = c.len);
+          return e;
+        };
+        a.prototype.getSharedClipKey = function () {
+          return (this.sharedClipKey =
+            (this.options.xAxis || 0) + "," + (this.options.yAxis || 0));
+        };
+        a.prototype.setClip = function () {
+          var b = this.chart,
+            a = this.group,
+            c = this.markerGroup,
+            e = b.sharedClips;
+          b = b.renderer;
+          var d = this.getClipBox(),
+            g = this.getSharedClipKey(),
+            f = e[g];
+          f ? f.animate(d) : (e[g] = f = b.clipRect(d));
+          a && a.clip(!1 === this.options.clip ? void 0 : f);
+          c && c.clip();
+        };
+        a.prototype.animate = function (b) {
+          var a = this.chart,
+            c = this.group,
+            e = this.markerGroup,
+            d = a.inverted,
+            g = h(this.options.animation),
+            f = [this.getSharedClipKey(), g.duration, g.easing, g.defer].join(),
+            k = a.sharedClips[f],
+            l = a.sharedClips[f + "m"];
+          if (b && c)
+            (g = this.getClipBox()),
+              k
+                ? k.attr("height", g.height)
+                : ((g.width = 0),
+                  d && (g.x = a.plotHeight),
+                  (k = a.renderer.clipRect(g)),
+                  (a.sharedClips[f] = k),
+                  (l = a.renderer.clipRect({
+                    x: d ? (a.plotSizeX || 0) + 99 : -99,
+                    y: d ? -a.plotLeft : -a.plotTop,
+                    width: 99,
+                    height: d ? a.chartWidth : a.chartHeight,
+                  })),
+                  (a.sharedClips[f + "m"] = l)),
+              c.clip(k),
+              e && e.clip(l);
+          else if (k && !k.hasClass("highcharts-animating")) {
+            a = this.getClipBox();
+            var n = g.step;
+            e &&
+              e.element.childNodes.length &&
+              (g.step = function (b, a) {
+                n && n.apply(a, arguments);
+                l &&
+                  l.element &&
+                  l.attr(a.prop, "width" === a.prop ? b + 99 : b);
+              });
+            k.addClass("highcharts-animating").animate(a, g);
+          }
+        };
+        a.prototype.afterAnimate = function () {
+          var b = this;
+          this.setClip();
+          J(this.chart.sharedClips, function (a, c, e) {
+            a &&
+              !b.chart.container.querySelector(
+                '[clip-path="url(#' + a.id + ')"]'
+              ) &&
+              (a.destroy(), delete e[c]);
+          });
+          this.finishedAnimating = !0;
+          E(this, "afterAnimate");
+        };
+        a.prototype.drawPoints = function () {
+          var b = this.points,
+            a = this.chart,
+            c = this.options.marker,
+            e = this[this.specialGroup] || this.markerGroup,
+            d = this.xAxis,
+            g = M(
+              c.enabled,
+              !d || d.isRadial ? !0 : null,
+              this.closestPointRangePx >= c.enabledThreshold * c.radius
+            ),
+            f,
+            k;
+          if (!1 !== c.enabled || this._hasPointMarkers)
+            for (f = 0; f < b.length; f++) {
+              var h = b[f];
+              var l = (k = h.graphic) ? "animate" : "attr";
+              var n = h.marker || {};
+              var m = !!h.marker;
+              if (
+                ((g && "undefined" === typeof n.enabled) || n.enabled) &&
+                !h.isNull &&
+                !1 !== h.visible
+              ) {
+                var p = M(n.symbol, this.symbol, "rect");
+                var r = this.markerAttribs(h, h.selected && "select");
+                this.enabledDataSorting &&
+                  (h.startXPos = d.reversed ? -(r.width || 0) : d.width);
+                var q = !1 !== h.isInside;
+                k
+                  ? k[q ? "show" : "hide"](q).animate(r)
+                  : q &&
+                    (0 < (r.width || 0) || h.hasImage) &&
+                    ((h.graphic = k =
+                      a.renderer
+                        .symbol(p, r.x, r.y, r.width, r.height, m ? n : c)
+                        .add(e)),
+                    this.enabledDataSorting &&
+                      a.hasRendered &&
+                      (k.attr({ x: h.startXPos }), (l = "animate")));
+                k && "animate" === l && k[q ? "show" : "hide"](q).animate(r);
+                if (k && !a.styledMode)
+                  k[l](this.pointAttribs(h, h.selected && "select"));
+                k && k.addClass(h.getClassName(), !0);
+              } else k && (h.graphic = k.destroy());
+            }
+        };
+        a.prototype.markerAttribs = function (b, a) {
+          var c = this.options,
+            e = c.marker,
+            d = b.marker || {},
+            g = d.symbol || e.symbol,
+            f = M(d.radius, e.radius);
+          a &&
+            ((e = e.states[a]),
+            (a = d.states && d.states[a]),
+            (f = M(
+              a && a.radius,
+              e && e.radius,
+              f + ((e && e.radiusPlus) || 0)
+            )));
+          b.hasImage = g && 0 === g.indexOf("url");
+          b.hasImage && (f = 0);
+          b = {
+            x: c.crisp ? Math.floor(b.plotX - f) : b.plotX - f,
+            y: b.plotY - f,
+          };
+          f && (b.width = b.height = 2 * f);
+          return b;
+        };
+        a.prototype.pointAttribs = function (b, a) {
+          var c = this.options.marker,
+            e = b && b.options,
+            d = (e && e.marker) || {},
+            g = e && e.color,
+            f = b && b.color,
+            k = b && b.zone && b.zone.color,
+            h = this.color;
+          b = M(d.lineWidth, c.lineWidth);
+          e = 1;
+          h = g || k || f || h;
+          g = d.fillColor || c.fillColor || h;
+          f = d.lineColor || c.lineColor || h;
+          a = a || "normal";
+          c = c.states[a] || {};
+          a = (d.states && d.states[a]) || {};
+          b = M(
+            a.lineWidth,
+            c.lineWidth,
+            b + M(a.lineWidthPlus, c.lineWidthPlus, 0)
+          );
+          g = a.fillColor || c.fillColor || g;
+          f = a.lineColor || c.lineColor || f;
+          e = M(a.opacity, c.opacity, e);
+          return { stroke: f, "stroke-width": b, fill: g, opacity: e };
+        };
+        a.prototype.destroy = function (b) {
+          var a = this,
+            c = a.chart,
+            d = /AppleWebKit\/533/.test(p.navigator.userAgent),
+            g = a.data || [],
+            f,
+            k,
+            h,
+            l;
+          E(a, "destroy");
+          this.removeEvents(b);
+          (a.axisTypes || []).forEach(function (b) {
+            (l = a[b]) &&
+              l.series &&
+              (e(l.series, a), (l.isDirty = l.forceRedraw = !0));
+          });
+          a.legendItem && a.chart.legend.destroyItem(a);
+          for (k = g.length; k--; ) (h = g[k]) && h.destroy && h.destroy();
+          a.clips &&
+            a.clips.forEach(function (b) {
+              return b.destroy();
+            });
+          m.clearTimeout(a.animationTimeout);
+          J(a, function (b, a) {
+            b instanceof q &&
+              !b.survive &&
+              ((f = d && "group" === a ? "hide" : "destroy"), b[f]());
+          });
+          c.hoverSeries === a && (c.hoverSeries = void 0);
+          e(c.series, a);
+          c.orderSeries();
+          J(a, function (c, e) {
+            (b && "hcEvents" === e) || delete a[e];
+          });
+        };
+        a.prototype.applyZones = function () {
+          var b = this,
+            a = this.chart,
+            c = a.renderer,
+            e = this.zones,
+            d = this.clips || [],
+            g = this.graph,
+            f = this.area,
+            k = Math.max(a.chartWidth, a.chartHeight),
+            h = this[(this.zoneAxis || "y") + "Axis"],
+            l = a.inverted,
+            m,
+            p,
+            r,
+            q,
+            v,
+            y,
+            B,
+            w,
+            u = !1;
+          if (e.length && (g || f) && h && "undefined" !== typeof h.min) {
+            var t = h.reversed;
+            var D = h.horiz;
+            g && !this.showLine && g.hide();
+            f && f.hide();
+            var E = h.getExtremes();
+            e.forEach(function (e, F) {
+              m = t ? (D ? a.plotWidth : 0) : D ? 0 : h.toPixels(E.min) || 0;
+              m = n(M(p, m), 0, k);
+              p = n(Math.round(h.toPixels(M(e.value, E.max), !0) || 0), 0, k);
+              u && (m = p = h.toPixels(E.max));
+              q = Math.abs(m - p);
+              v = Math.min(m, p);
+              y = Math.max(m, p);
+              h.isXAxis
+                ? ((r = { x: l ? y : v, y: 0, width: q, height: k }),
+                  D || (r.x = a.plotHeight - r.x))
+                : ((r = { x: 0, y: l ? y : v, width: k, height: q }),
+                  D && (r.y = a.plotWidth - r.y));
+              l &&
+                c.isVML &&
+                (r = h.isXAxis
+                  ? { x: 0, y: t ? v : y, height: r.width, width: a.chartWidth }
+                  : {
+                      x: r.y - a.plotLeft - a.spacingBox.x,
+                      y: 0,
+                      width: r.height,
+                      height: a.chartHeight,
+                    });
+              d[F] ? d[F].animate(r) : (d[F] = c.clipRect(r));
+              B = b["zone-area-" + F];
+              w = b["zone-graph-" + F];
+              g && w && w.clip(d[F]);
+              f && B && B.clip(d[F]);
+              u = e.value > E.max;
+              b.resetZones && 0 === p && (p = void 0);
+            });
+            this.clips = d;
+          } else b.visible && (g && g.show(!0), f && f.show(!0));
+        };
+        a.prototype.invertGroups = function (b) {
+          function a() {
+            ["group", "markerGroup"].forEach(function (a) {
+              c[a] &&
+                (e.renderer.isVML &&
+                  c[a].attr({ width: c.yAxis.len, height: c.xAxis.len }),
+                (c[a].width = c.yAxis.len),
+                (c[a].height = c.xAxis.len),
+                c[a].invert(c.isRadialSeries ? !1 : b));
+            });
+          }
+          var c = this,
+            e = c.chart;
+          c.xAxis &&
+            (c.eventsToUnbind.push(r(e, "resize", a)),
+            a(),
+            (c.invertGroups = a));
+        };
+        a.prototype.plotGroup = function (b, a, c, e, d) {
+          var f = this[b],
+            k = !f;
+          c = { visibility: c, zIndex: e || 0.1 };
+          "undefined" === typeof this.opacity ||
+            this.chart.styledMode ||
+            "inactive" === this.state ||
+            (c.opacity = this.opacity);
+          k && (this[b] = f = this.chart.renderer.g().add(d));
+          f.addClass(
+            "highcharts-" +
+              a +
+              " highcharts-series-" +
+              this.index +
+              " highcharts-" +
+              this.type +
+              "-series " +
+              (g(this.colorIndex)
+                ? "highcharts-color-" + this.colorIndex + " "
+                : "") +
+              (this.options.className || "") +
+              (f.hasClass("highcharts-tracker") ? " highcharts-tracker" : ""),
+            !0
+          );
+          f.attr(c)[k ? "attr" : "animate"](this.getPlotBox());
+          return f;
+        };
+        a.prototype.getPlotBox = function () {
+          var b = this.chart,
+            a = this.xAxis,
+            c = this.yAxis;
+          b.inverted && ((a = c), (c = this.xAxis));
+          return {
+            translateX: a ? a.left : b.plotLeft,
+            translateY: c ? c.top : b.plotTop,
+            scaleX: 1,
+            scaleY: 1,
+          };
+        };
+        a.prototype.removeEvents = function (b) {
+          b || L(this);
+          this.eventsToUnbind.length &&
+            (this.eventsToUnbind.forEach(function (b) {
+              b();
+            }),
+            (this.eventsToUnbind.length = 0));
+        };
+        a.prototype.render = function () {
+          var b = this,
+            a = b.chart,
+            c = b.options,
+            e = h(c.animation),
+            d = b.visible ? "inherit" : "hidden",
+            g = c.zIndex,
+            f = b.hasRendered,
+            k = a.seriesGroup,
+            l = a.inverted;
+          a = !b.finishedAnimating && a.renderer.isSVG ? e.duration : 0;
+          E(this, "render");
+          var n = b.plotGroup("group", "series", d, g, k);
+          b.markerGroup = b.plotGroup("markerGroup", "markers", d, g, k);
+          !1 !== c.clip && b.setClip();
+          b.animate && a && b.animate(!0);
+          n.inverted = M(b.invertible, b.isCartesian) ? l : !1;
+          b.drawGraph && (b.drawGraph(), b.applyZones());
+          b.visible && b.drawPoints();
+          b.drawDataLabels && b.drawDataLabels();
+          b.redrawPoints && b.redrawPoints();
+          b.drawTracker &&
+            !1 !== b.options.enableMouseTracking &&
+            b.drawTracker();
+          b.invertGroups(l);
+          b.animate && a && b.animate();
+          f ||
+            (a && e.defer && (a += e.defer),
+            (b.animationTimeout = Q(function () {
+              b.afterAnimate();
+            }, a || 0)));
+          b.isDirty = !1;
+          b.hasRendered = !0;
+          E(b, "afterRender");
+        };
+        a.prototype.redraw = function () {
+          var b = this.chart,
+            a = this.isDirty || this.isDirtyData,
+            c = this.group,
+            e = this.xAxis,
+            d = this.yAxis;
+          c &&
+            (b.inverted && c.attr({ width: b.plotWidth, height: b.plotHeight }),
+            c.animate({
+              translateX: M(e && e.left, b.plotLeft),
+              translateY: M(d && d.top, b.plotTop),
+            }));
+          this.translate();
+          this.render();
+          a && delete this.kdTree;
+        };
+        a.prototype.searchPoint = function (b, a) {
+          var c = this.xAxis,
+            e = this.yAxis,
+            d = this.chart.inverted;
+          return this.searchKDTree(
+            {
+              clientX: d ? c.len - b.chartY + c.pos : b.chartX - c.pos,
+              plotY: d ? e.len - b.chartX + e.pos : b.chartY - e.pos,
+            },
+            a,
+            b
+          );
+        };
+        a.prototype.buildKDTree = function (b) {
+          function a(b, e, d) {
+            var g = b && b.length;
+            if (g) {
+              var f = c.kdAxisArray[e % d];
+              b.sort(function (b, a) {
+                return b[f] - a[f];
+              });
+              g = Math.floor(g / 2);
+              return {
+                point: b[g],
+                left: a(b.slice(0, g), e + 1, d),
+                right: a(b.slice(g + 1), e + 1, d),
+              };
+            }
+          }
+          this.buildingKdTree = !0;
+          var c = this,
+            e = -1 < c.options.findNearestPointBy.indexOf("y") ? 2 : 1;
+          delete c.kdTree;
+          Q(
+            function () {
+              c.kdTree = a(c.getValidPoints(null, !c.directTouch), e, e);
+              c.buildingKdTree = !1;
+            },
+            c.options.kdNow || (b && "touchstart" === b.type) ? 0 : 1
+          );
+        };
+        a.prototype.searchKDTree = function (b, a, c) {
+          function e(b, a, c, l) {
+            var n = a.point,
+              m = d.kdAxisArray[c % l],
+              p = n,
+              r = g(b[f]) && g(n[f]) ? Math.pow(b[f] - n[f], 2) : null;
+            var q = g(b[k]) && g(n[k]) ? Math.pow(b[k] - n[k], 2) : null;
+            q = (r || 0) + (q || 0);
+            n.dist = g(q) ? Math.sqrt(q) : Number.MAX_VALUE;
+            n.distX = g(r) ? Math.sqrt(r) : Number.MAX_VALUE;
+            m = b[m] - n[m];
+            q = 0 > m ? "left" : "right";
+            r = 0 > m ? "right" : "left";
+            a[q] && ((q = e(b, a[q], c + 1, l)), (p = q[h] < p[h] ? q : n));
+            a[r] &&
+              Math.sqrt(m * m) < p[h] &&
+              ((b = e(b, a[r], c + 1, l)), (p = b[h] < p[h] ? b : p));
+            return p;
+          }
+          var d = this,
+            f = this.kdAxisArray[0],
+            k = this.kdAxisArray[1],
+            h = a ? "distX" : "dist";
+          a = -1 < d.options.findNearestPointBy.indexOf("y") ? 2 : 1;
+          this.kdTree || this.buildingKdTree || this.buildKDTree(c);
+          if (this.kdTree) return e(b, this.kdTree, a, a);
+        };
+        a.prototype.pointPlacementToXValue = function () {
+          var b = this.options,
+            a = b.pointRange,
+            c = this.xAxis;
+          b = b.pointPlacement;
+          "between" === b && (b = c.reversed ? -0.5 : 0.5);
+          return P(b) ? b * (a || c.pointRange) : 0;
+        };
+        a.prototype.isPointInside = function (b) {
+          var a = this.chart,
+            c = this.xAxis,
+            e = this.yAxis;
+          return (
+            "undefined" !== typeof b.plotY &&
+            "undefined" !== typeof b.plotX &&
+            0 <= b.plotY &&
+            b.plotY <= (e ? e.len : a.plotHeight) &&
+            0 <= b.plotX &&
+            b.plotX <= (c ? c.len : a.plotWidth)
+          );
+        };
+        a.prototype.drawTracker = function () {
+          var b = this,
+            a = b.options,
+            c = a.trackByArea,
+            e = [].concat(c ? b.areaPath : b.graphPath),
+            d = b.chart,
+            g = d.pointer,
+            k = d.renderer,
+            h = d.options.tooltip.snap,
+            l = b.tracker,
+            n = function (a) {
+              if (d.hoverSeries !== b) b.onMouseOver();
+            },
+            m = "rgba(192,192,192," + (w ? 0.0001 : 0.002) + ")";
+          l
+            ? l.attr({ d: e })
+            : b.graph &&
+              ((b.tracker = k
+                .path(e)
+                .attr({
+                  visibility: b.visible ? "visible" : "hidden",
+                  zIndex: 2,
+                })
+                .addClass(
+                  c ? "highcharts-tracker-area" : "highcharts-tracker-line"
+                )
+                .add(b.group)),
+              d.styledMode ||
+                b.tracker.attr({
+                  "stroke-linecap": "round",
+                  "stroke-linejoin": "round",
+                  stroke: m,
+                  fill: c ? m : "none",
+                  "stroke-width": b.graph.strokeWidth() + (c ? 0 : 2 * h),
+                }),
+              [b.tracker, b.markerGroup, b.dataLabelsGroup].forEach(function (
+                b
+              ) {
+                if (
+                  b &&
+                  (b
+                    .addClass("highcharts-tracker")
+                    .on("mouseover", n)
+                    .on("mouseout", function (b) {
+                      g.onTrackerMouseOut(b);
+                    }),
+                  a.cursor && !d.styledMode && b.css({ cursor: a.cursor }),
+                  f)
+                )
+                  b.on("touchstart", n);
+              }));
+          E(this, "afterDrawTracker");
+        };
+        a.prototype.addPoint = function (b, a, c, e, d) {
+          var g = this.options,
+            f = this.data,
+            k = this.chart,
+            h = this.xAxis;
+          h = h && h.hasNames && h.names;
+          var l = g.data,
+            n = this.xData,
+            m;
+          a = M(a, !0);
+          var p = { series: this };
+          this.pointClass.prototype.applyOptions.apply(p, [b]);
+          var r = p.x;
+          var q = n.length;
+          if (this.requireSorting && r < n[q - 1])
+            for (m = !0; q && n[q - 1] > r; ) q--;
+          this.updateParallelArrays(p, "splice", q, 0, 0);
+          this.updateParallelArrays(p, q);
+          h && p.name && (h[r] = p.name);
+          l.splice(q, 0, b);
+          m && (this.data.splice(q, 0, null), this.processData());
+          "point" === g.legendType && this.generatePoints();
+          c &&
+            (f[0] && f[0].remove
+              ? f[0].remove(!1)
+              : (f.shift(), this.updateParallelArrays(p, "shift"), l.shift()));
+          !1 !== d && E(this, "addPoint", { point: p });
+          this.isDirtyData = this.isDirty = !0;
+          a && k.redraw(e);
+        };
+        a.prototype.removePoint = function (b, a, c) {
+          var e = this,
+            g = e.data,
+            f = g[b],
+            k = e.points,
+            h = e.chart,
+            l = function () {
+              k && k.length === g.length && k.splice(b, 1);
+              g.splice(b, 1);
+              e.options.data.splice(b, 1);
+              e.updateParallelArrays(f || { series: e }, "splice", b, 1);
+              f && f.destroy();
+              e.isDirty = !0;
+              e.isDirtyData = !0;
+              a && h.redraw();
+            };
+          d(c, h);
+          a = M(a, !0);
+          f ? f.firePointEvent("remove", null, l) : l();
+        };
+        a.prototype.remove = function (b, a, c, e) {
+          function d() {
+            g.destroy(e);
+            f.isDirtyLegend = f.isDirtyBox = !0;
+            f.linkSeries();
+            M(b, !0) && f.redraw(a);
+          }
+          var g = this,
+            f = g.chart;
+          !1 !== c ? E(g, "remove", null, d) : d();
+        };
+        a.prototype.update = function (b, a) {
+          b = k(b, this.userOptions);
+          E(this, "update", { options: b });
+          var c = this,
+            e = c.chart,
+            d = c.userOptions,
+            g = c.initialType || c.type,
+            f = e.options.plotOptions,
+            h = u[g].prototype,
+            l = c.finishedAnimating && { animation: !1 },
+            n = {},
+            m,
+            p = ["eventOptions", "navigatorSeries", "baseSeries"],
+            r = b.type || d.type || e.options.chart.type,
+            q = !(
+              this.hasDerivedData ||
+              (r && r !== this.type) ||
+              "undefined" !== typeof b.pointStart ||
+              "undefined" !== typeof b.pointInterval ||
+              "undefined" !== typeof b.relativeXValue ||
+              c.hasOptionChanged("dataGrouping") ||
+              c.hasOptionChanged("pointStart") ||
+              c.hasOptionChanged("pointInterval") ||
+              c.hasOptionChanged("pointIntervalUnit") ||
+              c.hasOptionChanged("keys")
+            );
+          r = r || g;
+          q &&
+            (p.push(
+              "data",
+              "isDirtyData",
+              "points",
+              "processedXData",
+              "processedYData",
+              "xIncrement",
+              "cropped",
+              "_hasPointMarkers",
+              "_hasPointLabels",
+              "clips",
+              "nodes",
+              "layout",
+              "mapMap",
+              "mapData",
+              "minY",
+              "maxY",
+              "minX",
+              "maxX"
+            ),
+            !1 !== b.visible && p.push("area", "graph"),
+            c.parallelArrays.forEach(function (b) {
+              p.push(b + "Data");
+            }),
+            b.data &&
+              (b.dataSorting && H(c.options.dataSorting, b.dataSorting),
+              this.setData(b.data, !1)));
+          b = Y(
+            d,
+            l,
+            {
+              index: "undefined" === typeof d.index ? c.index : d.index,
+              pointStart: M(
+                f && f.series && f.series.pointStart,
+                d.pointStart,
+                c.xData[0]
+              ),
+            },
+            !q && { data: c.options.data },
+            b
+          );
+          q && b.data && (b.data = c.options.data);
+          p = [
+            "group",
+            "markerGroup",
+            "dataLabelsGroup",
+            "transformGroup",
+          ].concat(p);
+          p.forEach(function (b) {
+            p[b] = c[b];
+            delete c[b];
+          });
+          f = !1;
+          if (u[r]) {
+            if (((f = r !== c.type), c.remove(!1, !1, !1, !0), f))
+              if (Object.setPrototypeOf)
+                Object.setPrototypeOf(c, u[r].prototype);
+              else {
+                l = Object.hasOwnProperty.call(c, "hcEvents") && c.hcEvents;
+                for (m in h) c[m] = void 0;
+                H(c, u[r].prototype);
+                l ? (c.hcEvents = l) : delete c.hcEvents;
+              }
+          } else D(17, !0, e, { missingModuleFor: r });
+          p.forEach(function (b) {
+            c[b] = p[b];
+          });
+          c.init(e, b);
+          if (q && this.points) {
+            var v = c.options;
+            !1 === v.visible
+              ? ((n.graphic = 1), (n.dataLabel = 1))
+              : c._hasPointLabels ||
+                ((b = v.marker),
+                (h = v.dataLabels),
+                !b ||
+                  (!1 !== b.enabled &&
+                    (d.marker && d.marker.symbol) === b.symbol) ||
+                  (n.graphic = 1),
+                h && !1 === h.enabled && (n.dataLabel = 1));
+            this.points.forEach(function (b) {
+              b &&
+                b.series &&
+                (b.resolveColor(),
+                Object.keys(n).length && b.destroyElements(n),
+                !1 === v.showInLegend &&
+                  b.legendItem &&
+                  e.legend.destroyItem(b));
+            }, this);
+          }
+          c.initialType = g;
+          e.linkSeries();
+          f && c.linkedSeries.length && (c.isDirtyData = !0);
+          E(this, "afterUpdate");
+          M(a, !0) && e.redraw(q ? void 0 : !1);
+        };
+        a.prototype.setName = function (b) {
+          this.name = this.options.name = this.userOptions.name = b;
+          this.chart.isDirtyLegend = !0;
+        };
+        a.prototype.hasOptionChanged = function (b) {
+          var a = this.options[b],
+            c = this.chart.options.plotOptions,
+            e = this.userOptions[b];
+          return e
+            ? a !== e
+            : a !==
+                M(
+                  c && c[this.type] && c[this.type][b],
+                  c && c.series && c.series[b],
+                  a
+                );
+        };
+        a.prototype.onMouseOver = function () {
+          var b = this.chart,
+            a = b.hoverSeries;
+          b.pointer.setHoverChartIndex();
+          if (a && a !== this) a.onMouseOut();
+          this.options.events.mouseOver && E(this, "mouseOver");
+          this.setState("hover");
+          b.hoverSeries = this;
+        };
+        a.prototype.onMouseOut = function () {
+          var b = this.options,
+            a = this.chart,
+            c = a.tooltip,
+            e = a.hoverPoint;
+          a.hoverSeries = null;
+          if (e) e.onMouseOut();
+          this && b.events.mouseOut && E(this, "mouseOut");
+          !c ||
+            this.stickyTracking ||
+            (c.shared && !this.noSharedTooltip) ||
+            c.hide();
+          a.series.forEach(function (b) {
+            b.setState("", !0);
+          });
+        };
+        a.prototype.setState = function (b, a) {
+          var c = this,
+            e = c.options,
+            d = c.graph,
+            g = e.inactiveOtherPoints,
+            f = e.states,
+            k = M(
+              f[b || "normal"] && f[b || "normal"].animation,
+              c.chart.options.chart.animation
+            ),
+            h = e.lineWidth,
+            l = 0,
+            n = e.opacity;
+          b = b || "";
+          if (
+            c.state !== b &&
+            ([c.group, c.markerGroup, c.dataLabelsGroup].forEach(function (a) {
+              a &&
+                (c.state && a.removeClass("highcharts-series-" + c.state),
+                b && a.addClass("highcharts-series-" + b));
+            }),
+            (c.state = b),
+            !c.chart.styledMode)
+          ) {
+            if (f[b] && !1 === f[b].enabled) return;
+            b &&
+              ((h = f[b].lineWidth || h + (f[b].lineWidthPlus || 0)),
+              (n = M(f[b].opacity, n)));
+            if (d && !d.dashstyle)
+              for (
+                e = { "stroke-width": h }, d.animate(e, k);
+                c["zone-graph-" + l];
+
+              )
+                c["zone-graph-" + l].animate(e, k), (l += 1);
+            g ||
+              [
+                c.group,
+                c.markerGroup,
+                c.dataLabelsGroup,
+                c.labelBySeries,
+              ].forEach(function (b) {
+                b && b.animate({ opacity: n }, k);
+              });
+          }
+          a && g && c.points && c.setAllPointsToState(b || void 0);
+        };
+        a.prototype.setAllPointsToState = function (b) {
+          this.points.forEach(function (a) {
+            a.setState && a.setState(b);
+          });
+        };
+        a.prototype.setVisible = function (b, a) {
+          var c = this,
+            e = c.chart,
+            d = c.legendItem,
+            g = e.options.chart.ignoreHiddenSeries,
+            f = c.visible,
+            k = (c.visible =
+              b =
+              c.options.visible =
+              c.userOptions.visible =
+                "undefined" === typeof b ? !f : b)
+              ? "show"
+              : "hide";
+          ["group", "dataLabelsGroup", "markerGroup", "tracker", "tt"].forEach(
+            function (b) {
+              if (c[b]) c[b][k]();
+            }
+          );
+          if (
+            e.hoverSeries === c ||
+            (e.hoverPoint && e.hoverPoint.series) === c
+          )
+            c.onMouseOut();
+          d && e.legend.colorizeItem(c, b);
+          c.isDirty = !0;
+          c.options.stacking &&
+            e.series.forEach(function (b) {
+              b.options.stacking && b.visible && (b.isDirty = !0);
+            });
+          c.linkedSeries.forEach(function (a) {
+            a.setVisible(b, !1);
+          });
+          g && (e.isDirtyBox = !0);
+          E(c, k);
+          !1 !== a && e.redraw();
+        };
+        a.prototype.show = function () {
+          this.setVisible(!0);
+        };
+        a.prototype.hide = function () {
+          this.setVisible(!1);
+        };
+        a.prototype.select = function (b) {
+          this.selected =
+            b =
+            this.options.selected =
+              "undefined" === typeof b ? !this.selected : b;
+          this.checkbox && (this.checkbox.checked = b);
+          E(this, b ? "select" : "unselect");
+        };
+        a.prototype.shouldShowTooltip = function (b, a, c) {
+          void 0 === c && (c = {});
+          c.series = this;
+          c.visiblePlotOnly = !0;
+          return this.chart.isInsidePlot(b, a, c);
+        };
+        a.defaultOptions = I;
+        return a;
+      })();
+      H(a.prototype, {
+        axisTypes: ["xAxis", "yAxis"],
+        coll: "series",
+        colorCounter: 0,
+        cropShoulder: 1,
+        directTouch: !1,
+        drawLegendSymbol: x.drawLineMarker,
+        isCartesian: !0,
+        kdAxisArray: ["clientX", "plotY"],
+        parallelArrays: ["x", "y"],
+        pointClass: C,
+        requireSorting: !0,
+        sorted: !0,
+      });
+      z.series = a;
+      ("");
+      ("");
+      return a;
+    }
+  );
+  L(
+    a,
+    "Extensions/ScrollablePlotArea.js",
+    [
+      a["Core/Animation/AnimationUtilities.js"],
+      a["Core/Axis/Axis.js"],
+      a["Core/Chart/Chart.js"],
+      a["Core/Series/Series.js"],
+      a["Core/Renderer/RendererRegistry.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G, x, C) {
+      var u = a.stop,
+        z = C.addEvent,
+        q = C.createElement,
+        m = C.merge,
+        h = C.pick;
+      z(A, "afterSetChartSize", function (a) {
+        var c = this.options.chart.scrollablePlotArea,
+          d = c && c.minWidth;
+        c = c && c.minHeight;
+        if (!this.renderer.forExport) {
+          if (d) {
+            if (
+              (this.scrollablePixelsX = d = Math.max(0, d - this.chartWidth))
+            ) {
+              this.scrollablePlotBox = this.renderer.scrollablePlotBox = m(
+                this.plotBox
+              );
+              this.plotBox.width = this.plotWidth += d;
+              this.inverted
+                ? (this.clipBox.height += d)
+                : (this.clipBox.width += d);
+              var f = { 1: { name: "right", value: d } };
+            }
+          } else
+            c &&
+              (this.scrollablePixelsY = d =
+                Math.max(0, c - this.chartHeight)) &&
+              ((this.scrollablePlotBox = this.renderer.scrollablePlotBox =
+                m(this.plotBox)),
+              (this.plotBox.height = this.plotHeight += d),
+              this.inverted
+                ? (this.clipBox.width += d)
+                : (this.clipBox.height += d),
+              (f = { 2: { name: "bottom", value: d } }));
+          f &&
+            !a.skipAxes &&
+            this.axes.forEach(function (a) {
+              f[a.side]
+                ? (a.getPlotLinePath = function () {
+                    var c = f[a.side].name,
+                      d = this[c];
+                    this[c] = d - f[a.side].value;
+                    var h = t.prototype.getPlotLinePath.apply(this, arguments);
+                    this[c] = d;
+                    return h;
+                  })
+                : (a.setAxisSize(), a.setAxisTranslation());
+            });
+        }
+      });
+      z(A, "render", function () {
+        this.scrollablePixelsX || this.scrollablePixelsY
+          ? (this.setUpScrolling && this.setUpScrolling(), this.applyFixed())
+          : this.fixedDiv && this.applyFixed();
+      });
+      A.prototype.setUpScrolling = function () {
+        var a = this,
+          c = {
+            WebkitOverflowScrolling: "touch",
+            overflowX: "hidden",
+            overflowY: "hidden",
+          };
+        this.scrollablePixelsX && (c.overflowX = "auto");
+        this.scrollablePixelsY && (c.overflowY = "auto");
+        this.scrollingParent = q(
+          "div",
+          { className: "highcharts-scrolling-parent" },
+          { position: "relative" },
+          this.renderTo
+        );
+        this.scrollingContainer = q(
+          "div",
+          { className: "highcharts-scrolling" },
+          c,
+          this.scrollingParent
+        );
+        z(this.scrollingContainer, "scroll", function () {
+          a.pointer && delete a.pointer.chartPosition;
+        });
+        this.innerContainer = q(
+          "div",
+          { className: "highcharts-inner-container" },
+          null,
+          this.scrollingContainer
+        );
+        this.innerContainer.appendChild(this.container);
+        this.setUpScrolling = null;
+      };
+      A.prototype.moveFixedElements = function () {
+        var a = this.container,
+          c = this.fixedRenderer,
+          h =
+            ".highcharts-contextbutton .highcharts-credits .highcharts-legend .highcharts-legend-checkbox .highcharts-navigator-series .highcharts-navigator-xaxis .highcharts-navigator-yaxis .highcharts-navigator .highcharts-reset-zoom .highcharts-drillup-button .highcharts-scrollbar .highcharts-subtitle .highcharts-title".split(
+              " "
+            ),
+          f;
+        this.scrollablePixelsX && !this.inverted
+          ? (f = ".highcharts-yaxis")
+          : this.scrollablePixelsX && this.inverted
+          ? (f = ".highcharts-xaxis")
+          : this.scrollablePixelsY && !this.inverted
+          ? (f = ".highcharts-xaxis")
+          : this.scrollablePixelsY &&
+            this.inverted &&
+            (f = ".highcharts-yaxis");
+        f &&
+          h.push(
+            f + ":not(.highcharts-radial-axis)",
+            f + "-labels:not(.highcharts-radial-axis-labels)"
+          );
+        h.forEach(function (d) {
+          [].forEach.call(a.querySelectorAll(d), function (a) {
+            (a.namespaceURI === c.SVG_NS
+              ? c.box
+              : c.box.parentNode
+            ).appendChild(a);
+            a.style.pointerEvents = "auto";
+          });
+        });
+      };
+      A.prototype.applyFixed = function () {
+        var a = !this.fixedDiv,
+          c = this.options.chart,
+          l = c.scrollablePlotArea,
+          f = x.getRendererType();
+        a
+          ? ((this.fixedDiv = q(
+              "div",
+              { className: "highcharts-fixed" },
+              {
+                position: "absolute",
+                overflow: "hidden",
+                pointerEvents: "none",
+                zIndex: ((c.style && c.style.zIndex) || 0) + 2,
+                top: 0,
+              },
+              null,
+              !0
+            )),
+            this.scrollingContainer &&
+              this.scrollingContainer.parentNode.insertBefore(
+                this.fixedDiv,
+                this.scrollingContainer
+              ),
+            (this.renderTo.style.overflow = "visible"),
+            (this.fixedRenderer = c =
+              new f(
+                this.fixedDiv,
+                this.chartWidth,
+                this.chartHeight,
+                this.options.chart.style
+              )),
+            (this.scrollableMask = c
+              .path()
+              .attr({
+                fill: this.options.chart.backgroundColor || "#fff",
+                "fill-opacity": h(l.opacity, 0.85),
+                zIndex: -1,
+              })
+              .addClass("highcharts-scrollable-mask")
+              .add()),
+            z(this, "afterShowResetZoom", this.moveFixedElements),
+            z(this, "afterDrilldown", this.moveFixedElements),
+            z(this, "afterLayOutTitles", this.moveFixedElements))
+          : this.fixedRenderer.setSize(this.chartWidth, this.chartHeight);
+        if (this.scrollableDirty || a)
+          (this.scrollableDirty = !1), this.moveFixedElements();
+        c = this.chartWidth + (this.scrollablePixelsX || 0);
+        f = this.chartHeight + (this.scrollablePixelsY || 0);
+        u(this.container);
+        this.container.style.width = c + "px";
+        this.container.style.height = f + "px";
+        this.renderer.boxWrapper.attr({
+          width: c,
+          height: f,
+          viewBox: [0, 0, c, f].join(" "),
+        });
+        this.chartBackground.attr({ width: c, height: f });
+        this.scrollingContainer.style.height = this.chartHeight + "px";
+        a &&
+          (l.scrollPositionX &&
+            (this.scrollingContainer.scrollLeft =
+              this.scrollablePixelsX * l.scrollPositionX),
+          l.scrollPositionY &&
+            (this.scrollingContainer.scrollTop =
+              this.scrollablePixelsY * l.scrollPositionY));
+        f = this.axisOffset;
+        a = this.plotTop - f[0] - 1;
+        l = this.plotLeft - f[3] - 1;
+        c = this.plotTop + this.plotHeight + f[2] + 1;
+        f = this.plotLeft + this.plotWidth + f[1] + 1;
+        var m = this.plotLeft + this.plotWidth - (this.scrollablePixelsX || 0),
+          p = this.plotTop + this.plotHeight - (this.scrollablePixelsY || 0);
+        a = this.scrollablePixelsX
+          ? [
+              ["M", 0, a],
+              ["L", this.plotLeft - 1, a],
+              ["L", this.plotLeft - 1, c],
+              ["L", 0, c],
+              ["Z"],
+              ["M", m, a],
+              ["L", this.chartWidth, a],
+              ["L", this.chartWidth, c],
+              ["L", m, c],
+              ["Z"],
+            ]
+          : this.scrollablePixelsY
+          ? [
+              ["M", l, 0],
+              ["L", l, this.plotTop - 1],
+              ["L", f, this.plotTop - 1],
+              ["L", f, 0],
+              ["Z"],
+              ["M", l, p],
+              ["L", l, this.chartHeight],
+              ["L", f, this.chartHeight],
+              ["L", f, p],
+              ["Z"],
+            ]
+          : [["M", 0, 0]];
+        "adjustHeight" !== this.redrawTrigger &&
+          this.scrollableMask.attr({ d: a });
+      };
+      z(t, "afterInit", function () {
+        this.chart.scrollableDirty = !0;
+      });
+      z(G, "show", function () {
+        this.chart.scrollableDirty = !0;
+      });
+      ("");
+    }
+  );
+  L(
+    a,
+    "Core/Axis/StackingAxis.js",
+    [
+      a["Core/Animation/AnimationUtilities.js"],
+      a["Core/Axis/Axis.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A) {
+      var u = a.getDeferredAnimation,
+        x = A.addEvent,
+        C = A.destroyObjectProperties,
+        I = A.fireEvent,
+        z = A.isNumber,
+        q = A.objectEach,
+        m;
+      (function (a) {
+        function d() {
+          var a = this.stacking;
+          if (a) {
+            var c = a.stacks;
+            q(c, function (a, d) {
+              C(a);
+              c[d] = null;
+            });
+            a && a.stackTotalGroup && a.stackTotalGroup.destroy();
+          }
+        }
+        function c() {
+          this.stacking || (this.stacking = new f(this));
+        }
+        var h = [];
+        a.compose = function (a) {
+          -1 === h.indexOf(a) &&
+            (h.push(a), x(a, "init", c), x(a, "destroy", d));
+          return a;
+        };
+        var f = (function () {
+          function a(a) {
+            this.oldStacks = {};
+            this.stacks = {};
+            this.stacksTouched = 0;
+            this.axis = a;
+          }
+          a.prototype.buildStacks = function () {
+            var a = this.axis,
+              c = a.series,
+              d = a.options.reversedStacks,
+              f = c.length,
+              h;
+            if (!a.isXAxis) {
+              this.usePercentage = !1;
+              for (h = f; h--; ) {
+                var l = c[d ? h : f - h - 1];
+                l.setStackedPoints();
+                l.setGroupedPoints();
+              }
+              for (h = 0; h < f; h++) c[h].modifyStacks();
+              I(a, "afterBuildStacks");
+            }
+          };
+          a.prototype.cleanStacks = function () {
+            if (!this.axis.isXAxis) {
+              if (this.oldStacks) var a = (this.stacks = this.oldStacks);
+              q(a, function (a) {
+                q(a, function (a) {
+                  a.cumulative = a.total;
+                });
+              });
+            }
+          };
+          a.prototype.resetStacks = function () {
+            var a = this,
+              c = a.stacks;
+            a.axis.isXAxis ||
+              q(c, function (c) {
+                q(c, function (d, f) {
+                  z(d.touched) && d.touched < a.stacksTouched
+                    ? (d.destroy(), delete c[f])
+                    : ((d.total = null), (d.cumulative = null));
+                });
+              });
+          };
+          a.prototype.renderStackTotals = function () {
+            var a = this.axis,
+              c = a.chart,
+              d = c.renderer,
+              f = this.stacks;
+            a = u(
+              c,
+              (a.options.stackLabels && a.options.stackLabels.animation) || !1
+            );
+            var h = (this.stackTotalGroup =
+              this.stackTotalGroup ||
+              d
+                .g("stack-labels")
+                .attr({ visibility: "visible", zIndex: 6, opacity: 0 })
+                .add());
+            h.translate(c.plotLeft, c.plotTop);
+            q(f, function (a) {
+              q(a, function (a) {
+                a.render(h);
+              });
+            });
+            h.animate({ opacity: 1 }, a);
+          };
+          return a;
+        })();
+        a.Additions = f;
+      })(m || (m = {}));
+      return m;
+    }
+  );
+  L(
+    a,
+    "Extensions/Stacking.js",
+    [
+      a["Core/Axis/Axis.js"],
+      a["Core/Chart/Chart.js"],
+      a["Core/FormatUtilities.js"],
+      a["Core/Globals.js"],
+      a["Core/Series/Series.js"],
+      a["Core/Axis/StackingAxis.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G, x, C, I) {
+      var u = A.format,
+        q = I.correctFloat,
+        m = I.defined,
+        h = I.destroyObjectProperties,
+        d = I.isArray,
+        c = I.isNumber,
+        l = I.objectEach,
+        f = I.pick,
+        w = (function () {
+          function a(a, c, d, f, h) {
+            var k = a.chart.inverted;
+            this.axis = a;
+            this.isNegative = d;
+            this.options = c = c || {};
+            this.x = f;
+            this.total = null;
+            this.points = {};
+            this.hasValidPoints = !1;
+            this.stack = h;
+            this.rightCliff = this.leftCliff = 0;
+            this.alignOptions = {
+              align: c.align || (k ? (d ? "left" : "right") : "center"),
+              verticalAlign:
+                c.verticalAlign || (k ? "middle" : d ? "bottom" : "top"),
+              y: c.y,
+              x: c.x,
+            };
+            this.textAlign =
+              c.textAlign || (k ? (d ? "right" : "left") : "center");
+          }
+          a.prototype.destroy = function () {
+            h(this, this.axis);
+          };
+          a.prototype.render = function (a) {
+            var c = this.axis.chart,
+              d = this.options,
+              h = d.format;
+            h = h ? u(h, this, c) : d.formatter.call(this);
+            this.label
+              ? this.label.attr({ text: h, visibility: "hidden" })
+              : ((this.label = c.renderer.label(
+                  h,
+                  null,
+                  null,
+                  d.shape,
+                  null,
+                  null,
+                  d.useHTML,
+                  !1,
+                  "stack-labels"
+                )),
+                (h = {
+                  r: d.borderRadius || 0,
+                  text: h,
+                  rotation: d.rotation,
+                  padding: f(d.padding, 5),
+                  visibility: "hidden",
+                }),
+                c.styledMode ||
+                  ((h.fill = d.backgroundColor),
+                  (h.stroke = d.borderColor),
+                  (h["stroke-width"] = d.borderWidth),
+                  this.label.css(d.style)),
+                this.label.attr(h),
+                this.label.added || this.label.add(a));
+            this.label.labelrank = c.plotSizeY;
+          };
+          a.prototype.setOffset = function (a, d, h, l, n) {
+            var k = this.axis,
+              b = k.chart;
+            l = k.translate(
+              k.stacking.usePercentage ? 100 : l ? l : this.total,
+              0,
+              0,
+              0,
+              1
+            );
+            h = k.translate(h ? h : 0);
+            h = m(l) && Math.abs(l - h);
+            a = f(n, b.xAxis[0].translate(this.x)) + a;
+            k = m(l) && this.getStackBox(b, this, a, l, d, h, k);
+            d = this.label;
+            h = this.isNegative;
+            a = "justify" === f(this.options.overflow, "justify");
+            var g = this.textAlign;
+            d &&
+              k &&
+              ((n = d.getBBox()),
+              (l = d.padding),
+              (g =
+                "left" === g
+                  ? b.inverted
+                    ? -l
+                    : l
+                  : "right" === g
+                  ? n.width
+                  : b.inverted && "center" === g
+                  ? n.width / 2
+                  : b.inverted
+                  ? h
+                    ? n.width + l
+                    : -l
+                  : n.width / 2),
+              (h = b.inverted ? n.height / 2 : h ? -l : n.height),
+              (this.alignOptions.x = f(this.options.x, 0)),
+              (this.alignOptions.y = f(this.options.y, 0)),
+              (k.x -= g),
+              (k.y -= h),
+              d.align(this.alignOptions, null, k),
+              b.isInsidePlot(
+                d.alignAttr.x + g - this.alignOptions.x,
+                d.alignAttr.y + h - this.alignOptions.y
+              )
+                ? d.show()
+                : ((d.alignAttr.y = -9999), (a = !1)),
+              a &&
+                x.prototype.justifyDataLabel.call(
+                  this.axis,
+                  d,
+                  this.alignOptions,
+                  d.alignAttr,
+                  n,
+                  k
+                ),
+              d.attr({ x: d.alignAttr.x, y: d.alignAttr.y }),
+              f(!a && this.options.crop, !0) &&
+                ((b =
+                  c(d.x) &&
+                  c(d.y) &&
+                  b.isInsidePlot(d.x - l + d.width, d.y) &&
+                  b.isInsidePlot(d.x + l, d.y)) ||
+                  d.hide()));
+          };
+          a.prototype.getStackBox = function (a, c, d, f, h, k, b) {
+            var g = c.axis.reversed,
+              e = a.inverted,
+              l = b.height + b.pos - (e ? a.plotLeft : a.plotTop);
+            c = (c.isNegative && !g) || (!c.isNegative && g);
+            return {
+              x: e
+                ? c
+                  ? f - b.right
+                  : f - k + b.pos - a.plotLeft
+                : d + a.xAxis[0].transB - a.plotLeft,
+              y: e ? b.height - d - h : c ? l - f - k : l - f,
+              width: e ? k : h,
+              height: e ? h : k,
+            };
+          };
+          return a;
+        })();
+      t.prototype.getStacks = function () {
+        var a = this,
+          c = a.inverted;
+        a.yAxis.forEach(function (a) {
+          a.stacking &&
+            a.stacking.stacks &&
+            a.hasVisibleSeries &&
+            (a.stacking.oldStacks = a.stacking.stacks);
+        });
+        a.series.forEach(function (d) {
+          var h = (d.xAxis && d.xAxis.options) || {};
+          !d.options.stacking ||
+            (!0 !== d.visible && !1 !== a.options.chart.ignoreHiddenSeries) ||
+            (d.stackKey = [
+              d.type,
+              f(d.options.stack, ""),
+              c ? h.top : h.left,
+              c ? h.height : h.width,
+            ].join());
+        });
+      };
+      C.compose(a);
+      x.prototype.setGroupedPoints = function () {
+        var a = this.yAxis.stacking;
+        this.options.centerInCategory &&
+        (this.is("column") || this.is("columnrange")) &&
+        !this.options.stacking &&
+        1 < this.chart.series.length
+          ? x.prototype.setStackedPoints.call(this, "group")
+          : a &&
+            l(a.stacks, function (c, d) {
+              "group" === d.slice(-5) &&
+                (l(c, function (a) {
+                  return a.destroy();
+                }),
+                delete a.stacks[d]);
+            });
+      };
+      x.prototype.setStackedPoints = function (a) {
+        var c = a || this.options.stacking;
+        if (
+          c &&
+          (!0 === this.visible ||
+            !1 === this.chart.options.chart.ignoreHiddenSeries)
+        ) {
+          var h = this.processedXData,
+            l = this.processedYData,
+            p = [],
+            n = l.length,
+            k = this.options,
+            b = k.threshold,
+            g = f(k.startFromThreshold && b, 0);
+          k = k.stack;
+          a = a ? this.type + "," + c : this.stackKey;
+          var e = "-" + a,
+            u = this.negStacks,
+            t = this.yAxis,
+            v = t.stacking.stacks,
+            E = t.stacking.oldStacks,
+            z,
+            x;
+          t.stacking.stacksTouched += 1;
+          for (x = 0; x < n; x++) {
+            var A = h[x];
+            var G = l[x];
+            var I = this.getStackIndicator(I, A, this.index);
+            var J = I.key;
+            var C = (z = u && G < (g ? 0 : b)) ? e : a;
+            v[C] || (v[C] = {});
+            v[C][A] ||
+              (E[C] && E[C][A]
+                ? ((v[C][A] = E[C][A]), (v[C][A].total = null))
+                : (v[C][A] = new w(t, t.options.stackLabels, z, A, k)));
+            C = v[C][A];
+            null !== G
+              ? ((C.points[J] = C.points[this.index] = [f(C.cumulative, g)]),
+                m(C.cumulative) || (C.base = J),
+                (C.touched = t.stacking.stacksTouched),
+                0 < I.index &&
+                  !1 === this.singleStacks &&
+                  (C.points[J][0] = C.points[this.index + "," + A + ",0"][0]))
+              : (C.points[J] = C.points[this.index] = null);
+            "percent" === c
+              ? ((z = z ? a : e),
+                u && v[z] && v[z][A]
+                  ? ((z = v[z][A]),
+                    (C.total = z.total =
+                      Math.max(z.total, C.total) + Math.abs(G) || 0))
+                  : (C.total = q(C.total + (Math.abs(G) || 0))))
+              : "group" === c
+              ? (d(G) && (G = G[0]),
+                null !== G && (C.total = (C.total || 0) + 1))
+              : (C.total = q(C.total + (G || 0)));
+            C.cumulative =
+              "group" === c
+                ? (C.total || 1) - 1
+                : f(C.cumulative, g) + (G || 0);
+            null !== G &&
+              (C.points[J].push(C.cumulative),
+              (p[x] = C.cumulative),
+              (C.hasValidPoints = !0));
+          }
+          "percent" === c && (t.stacking.usePercentage = !0);
+          "group" !== c && (this.stackedYData = p);
+          t.stacking.oldStacks = {};
+        }
+      };
+      x.prototype.modifyStacks = function () {
+        var a = this,
+          c = a.stackKey,
+          d = a.yAxis.stacking.stacks,
+          f = a.processedXData,
+          h,
+          l = a.options.stacking;
+        a[l + "Stacker"] &&
+          [c, "-" + c].forEach(function (c) {
+            for (var b = f.length, g, e; b--; )
+              if (
+                ((g = f[b]),
+                (h = a.getStackIndicator(h, g, a.index, c)),
+                (e = (g = d[c] && d[c][g]) && g.points[h.key]))
+              )
+                a[l + "Stacker"](e, g, b);
+          });
+      };
+      x.prototype.percentStacker = function (a, c, d) {
+        c = c.total ? 100 / c.total : 0;
+        a[0] = q(a[0] * c);
+        a[1] = q(a[1] * c);
+        this.stackedYData[d] = a[1];
+      };
+      x.prototype.getStackIndicator = function (a, c, d, f) {
+        !m(a) || a.x !== c || (f && a.key !== f)
+          ? (a = { x: c, index: 0, key: f })
+          : a.index++;
+        a.key = [d, c, a.index].join();
+        return a;
+      };
+      G.StackItem = w;
+      ("");
+      return G.StackItem;
+    }
+  );
+  L(
+    a,
+    "Series/Line/LineSeries.js",
+    [
+      a["Core/Series/Series.js"],
+      a["Core/Series/SeriesRegistry.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A) {
+      var u =
+          (this && this.__extends) ||
+          (function () {
+            var a = function (u, q) {
+              a =
+                Object.setPrototypeOf ||
+                ({ __proto__: [] } instanceof Array &&
+                  function (a, h) {
+                    a.__proto__ = h;
+                  }) ||
+                function (a, h) {
+                  for (var d in h) h.hasOwnProperty(d) && (a[d] = h[d]);
+                };
+              return a(u, q);
+            };
+            return function (u, q) {
+              function m() {
+                this.constructor = u;
+              }
+              a(u, q);
+              u.prototype =
+                null === q
+                  ? Object.create(q)
+                  : ((m.prototype = q.prototype), new m());
+            };
+          })(),
+        x = A.defined,
+        C = A.merge;
+      A = (function (t) {
+        function z() {
+          var a = (null !== t && t.apply(this, arguments)) || this;
+          a.data = void 0;
+          a.options = void 0;
+          a.points = void 0;
+          return a;
+        }
+        u(z, t);
+        z.prototype.drawGraph = function () {
+          var a = this,
+            m = this.options,
+            h = (this.gappedPath || this.getGraphPath).call(this),
+            d = this.chart.styledMode,
+            c = [["graph", "highcharts-graph"]];
+          d || c[0].push(m.lineColor || this.color || "#cccccc", m.dashStyle);
+          c = a.getZonesGraphs(c);
+          c.forEach(function (c, f) {
+            var l = c[0],
+              p = a[l],
+              q = p ? "animate" : "attr";
+            p
+              ? ((p.endX = a.preventGraphAnimation ? null : h.xMap),
+                p.animate({ d: h }))
+              : h.length &&
+                (a[l] = p =
+                  a.chart.renderer
+                    .path(h)
+                    .addClass(c[1])
+                    .attr({ zIndex: 1 })
+                    .add(a.group));
+            p &&
+              !d &&
+              ((l = {
+                stroke: c[2],
+                "stroke-width": m.lineWidth,
+                fill: (a.fillGraph && a.color) || "none",
+              }),
+              c[3]
+                ? (l.dashstyle = c[3])
+                : "square" !== m.linecap &&
+                  (l["stroke-linecap"] = l["stroke-linejoin"] = "round"),
+              p[q](l).shadow(2 > f && m.shadow));
+            p && ((p.startX = h.xMap), (p.isArea = h.isArea));
+          });
+        };
+        z.prototype.getGraphPath = function (a, m, h) {
+          var d = this,
+            c = d.options,
+            l = [],
+            f = [],
+            q,
+            p = c.step;
+          a = a || d.points;
+          var u = a.reversed;
+          u && a.reverse();
+          (p = { right: 1, center: 2 }[p] || (p && 3)) && u && (p = 4 - p);
+          a = this.getValidPoints(a, !1, !(c.connectNulls && !m && !h));
+          a.forEach(function (r, u) {
+            var w = r.plotX,
+              n = r.plotY,
+              k = a[u - 1];
+            (r.leftCliff || (k && k.rightCliff)) && !h && (q = !0);
+            r.isNull && !x(m) && 0 < u
+              ? (q = !c.connectNulls)
+              : r.isNull && !m
+              ? (q = !0)
+              : (0 === u || q
+                  ? (u = [["M", r.plotX, r.plotY]])
+                  : d.getPointSpline
+                  ? (u = [d.getPointSpline(a, r, u)])
+                  : p
+                  ? ((u =
+                      1 === p
+                        ? [["L", k.plotX, n]]
+                        : 2 === p
+                        ? [
+                            ["L", (k.plotX + w) / 2, k.plotY],
+                            ["L", (k.plotX + w) / 2, n],
+                          ]
+                        : [["L", w, k.plotY]]),
+                    u.push(["L", w, n]))
+                  : (u = [["L", w, n]]),
+                f.push(r.x),
+                p && (f.push(r.x), 2 === p && f.push(r.x)),
+                l.push.apply(l, u),
+                (q = !1));
+          });
+          l.xMap = f;
+          return (d.graphPath = l);
+        };
+        z.prototype.getZonesGraphs = function (a) {
+          this.zones.forEach(function (m, h) {
+            h = [
+              "zone-graph-" + h,
+              "highcharts-graph highcharts-zone-graph-" +
+                h +
+                " " +
+                (m.className || ""),
+            ];
+            this.chart.styledMode ||
+              h.push(
+                m.color || this.color,
+                m.dashStyle || this.options.dashStyle
+              );
+            a.push(h);
+          }, this);
+          return a;
+        };
+        z.defaultOptions = C(a.defaultOptions, {});
+        return z;
+      })(a);
+      t.registerSeriesType("line", A);
+      ("");
+      return A;
+    }
+  );
+  L(
+    a,
+    "Series/Area/AreaSeries.js",
+    [
+      a["Core/Color/Color.js"],
+      a["Core/Legend/LegendSymbol.js"],
+      a["Core/Series/SeriesRegistry.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G) {
+      var u =
+          (this && this.__extends) ||
+          (function () {
+            var a = function (d, c) {
+              a =
+                Object.setPrototypeOf ||
+                ({ __proto__: [] } instanceof Array &&
+                  function (a, c) {
+                    a.__proto__ = c;
+                  }) ||
+                function (a, c) {
+                  for (var d in c) c.hasOwnProperty(d) && (a[d] = c[d]);
+                };
+              return a(d, c);
+            };
+            return function (d, c) {
+              function h() {
+                this.constructor = d;
+              }
+              a(d, c);
+              d.prototype =
+                null === c
+                  ? Object.create(c)
+                  : ((h.prototype = c.prototype), new h());
+            };
+          })(),
+        C = a.parse,
+        I = A.seriesTypes.line;
+      a = G.extend;
+      var z = G.merge,
+        q = G.objectEach,
+        m = G.pick;
+      G = (function (a) {
+        function d() {
+          var c = (null !== a && a.apply(this, arguments)) || this;
+          c.data = void 0;
+          c.options = void 0;
+          c.points = void 0;
+          return c;
+        }
+        u(d, a);
+        d.prototype.drawGraph = function () {
+          this.areaPath = [];
+          a.prototype.drawGraph.apply(this);
+          var c = this,
+            d = this.areaPath,
+            f = this.options,
+            h = [["area", "highcharts-area", this.color, f.fillColor]];
+          this.zones.forEach(function (a, d) {
+            h.push([
+              "zone-area-" + d,
+              "highcharts-area highcharts-zone-area-" + d + " " + a.className,
+              a.color || c.color,
+              a.fillColor || f.fillColor,
+            ]);
+          });
+          h.forEach(function (a) {
+            var h = a[0],
+              l = c[h],
+              p = l ? "animate" : "attr",
+              q = {};
+            l
+              ? ((l.endX = c.preventGraphAnimation ? null : d.xMap),
+                l.animate({ d: d }))
+              : ((q.zIndex = 0),
+                (l = c[h] =
+                  c.chart.renderer.path(d).addClass(a[1]).add(c.group)),
+                (l.isArea = !0));
+            c.chart.styledMode ||
+              (q.fill = m(
+                a[3],
+                C(a[2]).setOpacity(m(f.fillOpacity, 0.75)).get()
+              ));
+            l[p](q);
+            l.startX = d.xMap;
+            l.shiftUnit = f.step ? 2 : 1;
+          });
+        };
+        d.prototype.getGraphPath = function (a) {
+          var c = I.prototype.getGraphPath,
+            d = this.options,
+            h = d.stacking,
+            p = this.yAxis,
+            q,
+            r = [],
+            u = [],
+            t = this.index,
+            n = p.stacking.stacks[this.stackKey],
+            k = d.threshold,
+            b = Math.round(p.getThreshold(d.threshold));
+          d = m(d.connectNulls, "percent" === h);
+          var g = function (c, e, d) {
+            var g = a[c];
+            c = h && n[g.x].points[t];
+            var f = g[d + "Null"] || 0;
+            d = g[d + "Cliff"] || 0;
+            g = !0;
+            if (d || f) {
+              var l = (f ? c[0] : c[1]) + d;
+              var m = c[0] + d;
+              g = !!f;
+            } else !h && a[e] && a[e].isNull && (l = m = k);
+            "undefined" !== typeof l &&
+              (u.push({
+                plotX: D,
+                plotY: null === l ? b : p.getThreshold(l),
+                isNull: g,
+                isCliff: !0,
+              }),
+              r.push({
+                plotX: D,
+                plotY: null === m ? b : p.getThreshold(m),
+                doCurve: !1,
+              }));
+          };
+          a = a || this.points;
+          h && (a = this.getStackPoints(a));
+          for (q = 0; q < a.length; q++) {
+            h ||
+              (a[q].leftCliff =
+                a[q].rightCliff =
+                a[q].leftNull =
+                a[q].rightNull =
+                  void 0);
+            var e = a[q].isNull;
+            var D = m(a[q].rectPlotX, a[q].plotX);
+            var H = h ? m(a[q].yBottom, b) : b;
+            if (!e || d)
+              d || g(q, q - 1, "left"),
+                (e && !h && d) ||
+                  (u.push(a[q]), r.push({ x: q, plotX: D, plotY: H })),
+                d || g(q, q + 1, "right");
+          }
+          q = c.call(this, u, !0, !0);
+          r.reversed = !0;
+          e = c.call(this, r, !0, !0);
+          (H = e[0]) && "M" === H[0] && (e[0] = ["L", H[1], H[2]]);
+          e = q.concat(e);
+          e.length && e.push(["Z"]);
+          c = c.call(this, u, !1, d);
+          e.xMap = q.xMap;
+          this.areaPath = e;
+          return c;
+        };
+        d.prototype.getStackPoints = function (a) {
+          var c = this,
+            d = [],
+            h = [],
+            p = this.xAxis,
+            u = this.yAxis,
+            r = u.stacking.stacks[this.stackKey],
+            t = {},
+            B = u.series,
+            n = B.length,
+            k = u.options.reversedStacks ? 1 : -1,
+            b = B.indexOf(c);
+          a = a || this.points;
+          if (this.options.stacking) {
+            for (var g = 0; g < a.length; g++)
+              (a[g].leftNull = a[g].rightNull = void 0), (t[a[g].x] = a[g]);
+            q(r, function (a, b) {
+              null !== a.total && h.push(b);
+            });
+            h.sort(function (a, b) {
+              return a - b;
+            });
+            var e = B.map(function (a) {
+              return a.visible;
+            });
+            h.forEach(function (a, g) {
+              var f = 0,
+                l,
+                q;
+              if (t[a] && !t[a].isNull)
+                d.push(t[a]),
+                  [-1, 1].forEach(function (d) {
+                    var f = 1 === d ? "rightNull" : "leftNull",
+                      m = 0,
+                      p = r[h[g + d]];
+                    if (p)
+                      for (var u = b; 0 <= u && u < n; ) {
+                        var v = B[u].index;
+                        l = p.points[v];
+                        l ||
+                          (v === c.index
+                            ? (t[a][f] = !0)
+                            : e[u] &&
+                              (q = r[a].points[v]) &&
+                              (m -= q[1] - q[0]));
+                        u += k;
+                      }
+                    t[a][1 === d ? "rightCliff" : "leftCliff"] = m;
+                  });
+              else {
+                for (var w = b; 0 <= w && w < n; ) {
+                  if ((l = r[a].points[B[w].index])) {
+                    f = l[1];
+                    break;
+                  }
+                  w += k;
+                }
+                f = m(f, 0);
+                f = u.translate(f, 0, 1, 0, 1);
+                d.push({
+                  isNull: !0,
+                  plotX: p.translate(a, 0, 0, 0, 1),
+                  x: a,
+                  plotY: f,
+                  yBottom: f,
+                });
+              }
+            });
+          }
+          return d;
+        };
+        d.defaultOptions = z(I.defaultOptions, { threshold: 0 });
+        return d;
+      })(I);
+      a(G.prototype, { singleStacks: !1, drawLegendSymbol: t.drawRectangle });
+      A.registerSeriesType("area", G);
+      ("");
+      return G;
+    }
+  );
+  L(
+    a,
+    "Series/Spline/SplineSeries.js",
+    [a["Core/Series/SeriesRegistry.js"], a["Core/Utilities.js"]],
+    function (a, t) {
+      var u =
+          (this && this.__extends) ||
+          (function () {
+            var a = function (u, q) {
+              a =
+                Object.setPrototypeOf ||
+                ({ __proto__: [] } instanceof Array &&
+                  function (a, h) {
+                    a.__proto__ = h;
+                  }) ||
+                function (a, h) {
+                  for (var d in h) h.hasOwnProperty(d) && (a[d] = h[d]);
+                };
+              return a(u, q);
+            };
+            return function (u, q) {
+              function m() {
+                this.constructor = u;
+              }
+              a(u, q);
+              u.prototype =
+                null === q
+                  ? Object.create(q)
+                  : ((m.prototype = q.prototype), new m());
+            };
+          })(),
+        G = a.seriesTypes.line,
+        x = t.merge,
+        C = t.pick;
+      t = (function (a) {
+        function t() {
+          var q = (null !== a && a.apply(this, arguments)) || this;
+          q.data = void 0;
+          q.options = void 0;
+          q.points = void 0;
+          return q;
+        }
+        u(t, a);
+        t.prototype.getPointSpline = function (a, m, h) {
+          var d = m.plotX || 0,
+            c = m.plotY || 0,
+            l = a[h - 1];
+          h = a[h + 1];
+          if (
+            l &&
+            !l.isNull &&
+            !1 !== l.doCurve &&
+            !m.isCliff &&
+            h &&
+            !h.isNull &&
+            !1 !== h.doCurve &&
+            !m.isCliff
+          ) {
+            a = l.plotY || 0;
+            var f = h.plotX || 0;
+            h = h.plotY || 0;
+            var q = 0;
+            var p = (1.5 * d + (l.plotX || 0)) / 2.5;
+            var u = (1.5 * c + a) / 2.5;
+            f = (1.5 * d + f) / 2.5;
+            var r = (1.5 * c + h) / 2.5;
+            f !== p && (q = ((r - u) * (f - d)) / (f - p) + c - r);
+            u += q;
+            r += q;
+            u > a && u > c
+              ? ((u = Math.max(a, c)), (r = 2 * c - u))
+              : u < a && u < c && ((u = Math.min(a, c)), (r = 2 * c - u));
+            r > h && r > c
+              ? ((r = Math.max(h, c)), (u = 2 * c - r))
+              : r < h && r < c && ((r = Math.min(h, c)), (u = 2 * c - r));
+            m.rightContX = f;
+            m.rightContY = r;
+          }
+          m = [
+            "C",
+            C(l.rightContX, l.plotX, 0),
+            C(l.rightContY, l.plotY, 0),
+            C(p, d, 0),
+            C(u, c, 0),
+            d,
+            c,
+          ];
+          l.rightContX = l.rightContY = void 0;
+          return m;
+        };
+        t.defaultOptions = x(G.defaultOptions);
+        return t;
+      })(G);
+      a.registerSeriesType("spline", t);
+      ("");
+      return t;
+    }
+  );
+  L(
+    a,
+    "Series/AreaSpline/AreaSplineSeries.js",
+    [
+      a["Series/Area/AreaSeries.js"],
+      a["Series/Spline/SplineSeries.js"],
+      a["Core/Legend/LegendSymbol.js"],
+      a["Core/Series/SeriesRegistry.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G, x) {
+      var u =
+          (this && this.__extends) ||
+          (function () {
+            var a = function (h, d) {
+              a =
+                Object.setPrototypeOf ||
+                ({ __proto__: [] } instanceof Array &&
+                  function (a, d) {
+                    a.__proto__ = d;
+                  }) ||
+                function (a, d) {
+                  for (var c in d) d.hasOwnProperty(c) && (a[c] = d[c]);
+                };
+              return a(h, d);
+            };
+            return function (h, d) {
+              function c() {
+                this.constructor = h;
+              }
+              a(h, d);
+              h.prototype =
+                null === d
+                  ? Object.create(d)
+                  : ((c.prototype = d.prototype), new c());
+            };
+          })(),
+        I = a.prototype,
+        z = x.extend,
+        q = x.merge;
+      x = (function (m) {
+        function h() {
+          var a = (null !== m && m.apply(this, arguments)) || this;
+          a.data = void 0;
+          a.points = void 0;
+          a.options = void 0;
+          return a;
+        }
+        u(h, m);
+        h.defaultOptions = q(t.defaultOptions, a.defaultOptions);
+        return h;
+      })(t);
+      z(x.prototype, {
+        getGraphPath: I.getGraphPath,
+        getStackPoints: I.getStackPoints,
+        drawGraph: I.drawGraph,
+        drawLegendSymbol: A.drawRectangle,
+      });
+      G.registerSeriesType("areaspline", x);
+      ("");
+      return x;
+    }
+  );
+  L(
+    a,
+    "Series/Column/ColumnSeries.js",
+    [
+      a["Core/Animation/AnimationUtilities.js"],
+      a["Core/Color/Color.js"],
+      a["Core/Globals.js"],
+      a["Core/Legend/LegendSymbol.js"],
+      a["Core/Series/Series.js"],
+      a["Core/Series/SeriesRegistry.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G, x, C, I) {
+      var u =
+          (this && this.__extends) ||
+          (function () {
+            var a = function (c, b) {
+              a =
+                Object.setPrototypeOf ||
+                ({ __proto__: [] } instanceof Array &&
+                  function (a, b) {
+                    a.__proto__ = b;
+                  }) ||
+                function (a, b) {
+                  for (var c in b) b.hasOwnProperty(c) && (a[c] = b[c]);
+                };
+              return a(c, b);
+            };
+            return function (c, b) {
+              function d() {
+                this.constructor = c;
+              }
+              a(c, b);
+              c.prototype =
+                null === b
+                  ? Object.create(b)
+                  : ((d.prototype = b.prototype), new d());
+            };
+          })(),
+        q = a.animObject,
+        m = t.parse,
+        h = A.hasTouch;
+      a = A.noop;
+      var d = I.clamp,
+        c = I.css,
+        l = I.defined,
+        f = I.extend,
+        w = I.fireEvent,
+        p = I.isArray,
+        K = I.isNumber,
+        r = I.merge,
+        y = I.pick,
+        B = I.objectEach;
+      I = (function (a) {
+        function k() {
+          var b = (null !== a && a.apply(this, arguments)) || this;
+          b.borderWidth = void 0;
+          b.data = void 0;
+          b.group = void 0;
+          b.options = void 0;
+          b.points = void 0;
+          return b;
+        }
+        u(k, a);
+        k.prototype.animate = function (a) {
+          var b = this,
+            c = this.yAxis,
+            h = b.options,
+            k = this.chart.inverted,
+            l = {},
+            n = k ? "translateX" : "translateY";
+          if (a)
+            (l.scaleY = 0.001),
+              (a = d(c.toPixels(h.threshold), c.pos, c.pos + c.len)),
+              k ? (l.translateX = a - c.len) : (l.translateY = a),
+              b.clipBox && b.setClip(),
+              b.group.attr(l);
+          else {
+            var m = Number(b.group.attr(n));
+            b.group.animate(
+              { scaleY: 1 },
+              f(q(b.options.animation), {
+                step: function (a, e) {
+                  b.group &&
+                    ((l[n] = m + e.pos * (c.pos - m)), b.group.attr(l));
+                },
+              })
+            );
+          }
+        };
+        k.prototype.init = function (b, c) {
+          a.prototype.init.apply(this, arguments);
+          var e = this;
+          b = e.chart;
+          b.hasRendered &&
+            b.series.forEach(function (a) {
+              a.type === e.type && (a.isDirty = !0);
+            });
+        };
+        k.prototype.getColumnMetrics = function () {
+          var a = this,
+            c = a.options,
+            e = a.xAxis,
+            d = a.yAxis,
+            f = e.options.reversedStacks;
+          f = (e.reversed && !f) || (!e.reversed && f);
+          var h = {},
+            k,
+            l = 0;
+          !1 === c.grouping
+            ? (l = 1)
+            : a.chart.series.forEach(function (b) {
+                var c = b.yAxis,
+                  e = b.options;
+                if (
+                  b.type === a.type &&
+                  (b.visible || !a.chart.options.chart.ignoreHiddenSeries) &&
+                  d.len === c.len &&
+                  d.pos === c.pos
+                ) {
+                  if (e.stacking && "group" !== e.stacking) {
+                    k = b.stackKey;
+                    "undefined" === typeof h[k] && (h[k] = l++);
+                    var g = h[k];
+                  } else !1 !== e.grouping && (g = l++);
+                  b.columnIndex = g;
+                }
+              });
+          var n = Math.min(
+              Math.abs(e.transA) *
+                ((e.ordinal && e.ordinal.slope) ||
+                  c.pointRange ||
+                  e.closestPointRange ||
+                  e.tickInterval ||
+                  1),
+              e.len
+            ),
+            m = n * c.groupPadding,
+            p = (n - 2 * m) / (l || 1);
+          c = Math.min(
+            c.maxPointWidth || e.len,
+            y(c.pointWidth, p * (1 - 2 * c.pointPadding))
+          );
+          a.columnMetrics = {
+            width: c,
+            offset:
+              (p - c) / 2 +
+              (m + ((a.columnIndex || 0) + (f ? 1 : 0)) * p - n / 2) *
+                (f ? -1 : 1),
+            paddedWidth: p,
+            columnCount: l,
+          };
+          return a.columnMetrics;
+        };
+        k.prototype.crispCol = function (a, c, e, d) {
+          var b = this.chart,
+            g = this.borderWidth,
+            f = -(g % 2 ? 0.5 : 0);
+          g = g % 2 ? 0.5 : 1;
+          b.inverted && b.renderer.isVML && (g += 1);
+          this.options.crisp &&
+            ((e = Math.round(a + e) + f), (a = Math.round(a) + f), (e -= a));
+          d = Math.round(c + d) + g;
+          f = 0.5 >= Math.abs(c) && 0.5 < d;
+          c = Math.round(c) + g;
+          d -= c;
+          f && d && (--c, (d += 1));
+          return { x: a, y: c, width: e, height: d };
+        };
+        k.prototype.adjustForMissingColumns = function (a, c, e, d) {
+          var b = this,
+            g = this.options.stacking;
+          if (!e.isNull && 1 < d.columnCount) {
+            var f = 0,
+              h = 0;
+            B(this.yAxis.stacking && this.yAxis.stacking.stacks, function (a) {
+              if ("number" === typeof e.x && (a = a[e.x.toString()])) {
+                var c = a.points[b.index],
+                  d = a.total;
+                g
+                  ? (c && (f = h), a.hasValidPoints && h++)
+                  : p(c) && ((f = c[1]), (h = d || 0));
+              }
+            });
+            a =
+              (e.plotX || 0) +
+              ((h - 1) * d.paddedWidth + c) / 2 -
+              c -
+              f * d.paddedWidth;
+          }
+          return a;
+        };
+        k.prototype.translate = function () {
+          var a = this,
+            c = a.chart,
+            e = a.options,
+            f = (a.dense = 2 > a.closestPointRange * a.xAxis.transA);
+          f = a.borderWidth = y(e.borderWidth, f ? 0 : 1);
+          var h = a.xAxis,
+            k = a.yAxis,
+            n = e.threshold,
+            m = (a.translatedThreshold = k.getThreshold(n)),
+            p = y(e.minPointLength, 5),
+            q = a.getColumnMetrics(),
+            r = q.width,
+            u = (a.pointXOffset = q.offset),
+            t = a.dataMin,
+            w = a.dataMax,
+            B = (a.barW = Math.max(r, 1 + 2 * f));
+          c.inverted && (m -= 0.5);
+          e.pointPadding && (B = Math.ceil(B));
+          x.prototype.translate.apply(a);
+          a.points.forEach(function (b) {
+            var g = y(b.yBottom, m),
+              f = 999 + Math.abs(g),
+              v = b.plotX || 0;
+            f = d(b.plotY, -f, k.len + f);
+            var E = Math.min(f, g),
+              D = Math.max(f, g) - E,
+              x = r,
+              H = v + u,
+              z = B;
+            p &&
+              Math.abs(D) < p &&
+              ((D = p),
+              (v = (!k.reversed && !b.negative) || (k.reversed && b.negative)),
+              K(n) &&
+                K(w) &&
+                b.y === n &&
+                w <= n &&
+                (k.min || 0) < n &&
+                (t !== w || (k.max || 0) <= n) &&
+                (v = !v),
+              (E = Math.abs(E - m) > p ? g - p : m - (v ? p : 0)));
+            l(b.options.pointWidth) &&
+              ((x = z = Math.ceil(b.options.pointWidth)),
+              (H -= Math.round((x - r) / 2)));
+            e.centerInCategory && (H = a.adjustForMissingColumns(H, x, b, q));
+            b.barX = H;
+            b.pointWidth = x;
+            b.tooltipPos = c.inverted
+              ? [
+                  d(
+                    k.len + k.pos - c.plotLeft - f,
+                    k.pos - c.plotLeft,
+                    k.len + k.pos - c.plotLeft
+                  ),
+                  h.len + h.pos - c.plotTop - H - z / 2,
+                  D,
+                ]
+              : [
+                  h.left - c.plotLeft + H + z / 2,
+                  d(
+                    f + k.pos - c.plotTop,
+                    k.pos - c.plotTop,
+                    k.len + k.pos - c.plotTop
+                  ),
+                  D,
+                ];
+            b.shapeType = a.pointClass.prototype.shapeType || "rect";
+            b.shapeArgs = a.crispCol.apply(
+              a,
+              b.isNull ? [H, m, z, 0] : [H, E, z, D]
+            );
+          });
+        };
+        k.prototype.drawGraph = function () {
+          this.group[this.dense ? "addClass" : "removeClass"](
+            "highcharts-dense-data"
+          );
+        };
+        k.prototype.pointAttribs = function (a, c) {
+          var b = this.options,
+            d = this.pointAttrToOptions || {},
+            g = d.stroke || "borderColor",
+            f = d["stroke-width"] || "borderWidth",
+            h = (a && a.color) || this.color,
+            k = (a && a[g]) || b[g] || h;
+          d = (a && a.options.dashStyle) || b.dashStyle;
+          var l = (a && a[f]) || b[f] || this[f] || 0,
+            n = y(a && a.opacity, b.opacity, 1);
+          if (a && this.zones.length) {
+            var p = a.getZone();
+            h =
+              a.options.color ||
+              (p && (p.color || a.nonZonedColor)) ||
+              this.color;
+            p &&
+              ((k = p.borderColor || k),
+              (d = p.dashStyle || d),
+              (l = p.borderWidth || l));
+          }
+          c &&
+            a &&
+            ((a = r(
+              b.states[c],
+              (a.options.states && a.options.states[c]) || {}
+            )),
+            (c = a.brightness),
+            (h =
+              a.color ||
+              ("undefined" !== typeof c && m(h).brighten(a.brightness).get()) ||
+              h),
+            (k = a[g] || k),
+            (l = a[f] || l),
+            (d = a.dashStyle || d),
+            (n = y(a.opacity, n)));
+          g = { fill: h, stroke: k, "stroke-width": l, opacity: n };
+          d && (g.dashstyle = d);
+          return g;
+        };
+        k.prototype.drawPoints = function () {
+          var a = this,
+            c = this.chart,
+            e = a.options,
+            d = c.renderer,
+            f = e.animationLimit || 250,
+            h;
+          a.points.forEach(function (b) {
+            var g = b.graphic,
+              k = !!g,
+              l = g && c.pointCount < f ? "animate" : "attr";
+            if (K(b.plotY) && null !== b.y) {
+              h = b.shapeArgs;
+              g && b.hasNewShapeType() && (g = g.destroy());
+              a.enabledDataSorting &&
+                (b.startXPos = a.xAxis.reversed
+                  ? -(h ? h.width || 0 : 0)
+                  : a.xAxis.width);
+              g ||
+                ((b.graphic = g = d[b.shapeType](h).add(b.group || a.group)) &&
+                  a.enabledDataSorting &&
+                  c.hasRendered &&
+                  c.pointCount < f &&
+                  (g.attr({ x: b.startXPos }), (k = !0), (l = "animate")));
+              if (g && k) g[l](r(h));
+              if (e.borderRadius) g[l]({ r: e.borderRadius });
+              c.styledMode ||
+                g[l](a.pointAttribs(b, b.selected && "select")).shadow(
+                  !1 !== b.allowShadow && e.shadow,
+                  null,
+                  e.stacking && !e.borderRadius
+                );
+              g &&
+                (g.addClass(b.getClassName(), !0),
+                g.attr({ visibility: b.visible ? "inherit" : "hidden" }));
+            } else g && (b.graphic = g.destroy());
+          });
+        };
+        k.prototype.drawTracker = function () {
+          var a = this,
+            d = a.chart,
+            e = d.pointer,
+            f = function (a) {
+              var b = e.getPointFromEvent(a);
+              "undefined" !== typeof b &&
+                ((e.isDirectTouch = !0), b.onMouseOver(a));
+            },
+            k;
+          a.points.forEach(function (a) {
+            k = p(a.dataLabels)
+              ? a.dataLabels
+              : a.dataLabel
+              ? [a.dataLabel]
+              : [];
+            a.graphic && (a.graphic.element.point = a);
+            k.forEach(function (b) {
+              b.div ? (b.div.point = a) : (b.element.point = a);
+            });
+          });
+          a._hasTracking ||
+            (a.trackerGroups.forEach(function (b) {
+              if (a[b]) {
+                a[b]
+                  .addClass("highcharts-tracker")
+                  .on("mouseover", f)
+                  .on("mouseout", function (a) {
+                    e.onTrackerMouseOut(a);
+                  });
+                if (h) a[b].on("touchstart", f);
+                !d.styledMode &&
+                  a.options.cursor &&
+                  a[b].css(c).css({ cursor: a.options.cursor });
+              }
+            }),
+            (a._hasTracking = !0));
+          w(this, "afterDrawTracker");
+        };
+        k.prototype.remove = function () {
+          var a = this,
+            c = a.chart;
+          c.hasRendered &&
+            c.series.forEach(function (b) {
+              b.type === a.type && (b.isDirty = !0);
+            });
+          x.prototype.remove.apply(a, arguments);
+        };
+        k.defaultOptions = r(x.defaultOptions, {
+          borderRadius: 0,
+          centerInCategory: !1,
+          groupPadding: 0.2,
+          marker: null,
+          pointPadding: 0.1,
+          minPointLength: 0,
+          cropThreshold: 50,
+          pointRange: null,
+          states: {
+            hover: { halo: !1, brightness: 0.1 },
+            select: { color: "#cccccc", borderColor: "#000000" },
+          },
+          dataLabels: { align: void 0, verticalAlign: void 0, y: void 0 },
+          startFromThreshold: !0,
+          stickyTracking: !1,
+          tooltip: { distance: 6 },
+          threshold: 0,
+          borderColor: "#ffffff",
+        });
+        return k;
+      })(x);
+      f(I.prototype, {
+        cropShoulder: 0,
+        directTouch: !0,
+        drawLegendSymbol: G.drawRectangle,
+        getSymbol: a,
+        negStacks: !0,
+        trackerGroups: ["group", "dataLabelsGroup"],
+      });
+      C.registerSeriesType("column", I);
+      ("");
+      ("");
+      return I;
+    }
+  );
+  L(
+    a,
+    "Core/Series/DataLabel.js",
+    [
+      a["Core/Animation/AnimationUtilities.js"],
+      a["Core/FormatUtilities.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A) {
+      var u = a.getDeferredAnimation,
+        x = t.format,
+        C = A.defined,
+        I = A.extend,
+        z = A.fireEvent,
+        q = A.isArray,
+        m = A.merge,
+        h = A.objectEach,
+        d = A.pick,
+        c = A.splat,
+        l;
+      (function (a) {
+        function f(a, b, c, e, f) {
+          var g = this,
+            h = this.chart,
+            k = this.isCartesian && h.inverted,
+            l = this.enabledDataSorting,
+            n = d(a.dlBox && a.dlBox.centerX, a.plotX, -9999),
+            m = d(a.plotY, -9999),
+            p = b.getBBox(),
+            q = c.rotation,
+            r = c.align,
+            u = h.isInsidePlot(n, Math.round(m), {
+              inverted: k,
+              paneCoordinates: !0,
+              series: g,
+            }),
+            t = function (c) {
+              l && g.xAxis && !w && g.setDataLabelStartPos(a, b, f, u, c);
+            },
+            w = "justify" === d(c.overflow, l ? "none" : "justify"),
+            B =
+              this.visible &&
+              !1 !== a.visible &&
+              (a.series.forceDL ||
+                (l && !w) ||
+                u ||
+                (d(c.inside, !!this.options.stacking) &&
+                  e &&
+                  h.isInsidePlot(n, k ? e.x + 1 : e.y + e.height - 1, {
+                    inverted: k,
+                    paneCoordinates: !0,
+                    series: g,
+                  })));
+          if (B) {
+            var y = h.renderer.fontMetrics(
+              h.styledMode ? void 0 : c.style.fontSize,
+              b
+            ).b;
+            e = I(
+              {
+                x: k ? this.yAxis.len - m : n,
+                y: Math.round(k ? this.xAxis.len - n : m),
+                width: 0,
+                height: 0,
+              },
+              e
+            );
+            I(c, { width: p.width, height: p.height });
+            q
+              ? ((w = !1),
+                (n = h.renderer.rotCorr(y, q)),
+                (n = {
+                  x: e.x + (c.x || 0) + e.width / 2 + n.x,
+                  y:
+                    e.y +
+                    (c.y || 0) +
+                    { top: 0, middle: 0.5, bottom: 1 }[c.verticalAlign] *
+                      e.height,
+                }),
+                t(n),
+                b[f ? "attr" : "animate"](n).attr({ align: r }),
+                (t = (q + 720) % 360),
+                (t = 180 < t && 360 > t),
+                "left" === r
+                  ? (n.y -= t ? p.height : 0)
+                  : "center" === r
+                  ? ((n.x -= p.width / 2), (n.y -= p.height / 2))
+                  : "right" === r &&
+                    ((n.x -= p.width), (n.y -= t ? 0 : p.height)),
+                (b.placed = !0),
+                (b.alignAttr = n))
+              : (t(e), b.align(c, void 0, e), (n = b.alignAttr));
+            w && 0 <= e.height
+              ? this.justifyDataLabel(b, c, n, p, e, f)
+              : d(c.crop, !0) &&
+                (B =
+                  h.isInsidePlot(n.x, n.y, {
+                    paneCoordinates: !0,
+                    series: g,
+                  }) &&
+                  h.isInsidePlot(n.x + p.width, n.y + p.height, {
+                    paneCoordinates: !0,
+                    series: g,
+                  }));
+            if (c.shape && !q)
+              b[f ? "attr" : "animate"]({
+                anchorX: k ? h.plotWidth - a.plotY : a.plotX,
+                anchorY: k ? h.plotHeight - a.plotX : a.plotY,
+              });
+          }
+          f && l && (b.placed = !1);
+          B || (l && !w) || (b.hide(!0), (b.placed = !1));
+        }
+        function l(a, b) {
+          var c = b.filter;
+          return c
+            ? ((b = c.operator),
+              (a = a[c.property]),
+              (c = c.value),
+              (">" === b && a > c) ||
+              ("<" === b && a < c) ||
+              (">=" === b && a >= c) ||
+              ("<=" === b && a <= c) ||
+              ("==" === b && a == c) ||
+              ("===" === b && a === c)
+                ? !0
+                : !1)
+            : !0;
+        }
+        function t() {
+          var a = this,
+            b = a.chart,
+            g = a.options,
+            e = a.points,
+            f = a.hasRendered || 0,
+            n = b.renderer,
+            m = g.dataLabels,
+            p,
+            r = m.animation;
+          r = m.defer ? u(b, r, a) : { defer: 0, duration: 0 };
+          m = y(
+            y(
+              b.options.plotOptions &&
+                b.options.plotOptions.series &&
+                b.options.plotOptions.series.dataLabels,
+              b.options.plotOptions &&
+                b.options.plotOptions[a.type] &&
+                b.options.plotOptions[a.type].dataLabels
+            ),
+            m
+          );
+          z(this, "drawDataLabels");
+          if (q(m) || m.enabled || a._hasPointLabels) {
+            var t = a.plotGroup(
+              "dataLabelsGroup",
+              "data-labels",
+              f ? "inherit" : "hidden",
+              m.zIndex || 6
+            );
+            t.attr({ opacity: +f });
+            !f &&
+              (f = a.dataLabelsGroup) &&
+              (a.visible && t.show(!0),
+              f[g.animation ? "animate" : "attr"]({ opacity: 1 }, r));
+            e.forEach(function (e) {
+              p = c(y(m, e.dlOptions || (e.options && e.options.dataLabels)));
+              p.forEach(function (c, f) {
+                var k =
+                    c.enabled && (!e.isNull || e.dataLabelOnNull) && l(e, c),
+                  m = e.connectors ? e.connectors[f] : e.connector,
+                  p = e.dataLabels ? e.dataLabels[f] : e.dataLabel,
+                  q = d(c.distance, e.labelDistance),
+                  r = !p;
+                if (k) {
+                  var u = e.getLabelConfig();
+                  var w = d(c[e.formatPrefix + "Format"], c.format);
+                  u = C(w)
+                    ? x(w, u, b)
+                    : (c[e.formatPrefix + "Formatter"] || c.formatter).call(
+                        u,
+                        c
+                      );
+                  w = c.style;
+                  var B = c.rotation;
+                  b.styledMode ||
+                    ((w.color = d(c.color, w.color, a.color, "#000000")),
+                    "contrast" === w.color
+                      ? ((e.contrastColor = n.getContrast(e.color || a.color)),
+                        (w.color =
+                          (!C(q) && c.inside) || 0 > q || g.stacking
+                            ? e.contrastColor
+                            : "#000000"))
+                      : delete e.contrastColor,
+                    g.cursor && (w.cursor = g.cursor));
+                  var v = {
+                    r: c.borderRadius || 0,
+                    rotation: B,
+                    padding: c.padding,
+                    zIndex: 1,
+                  };
+                  b.styledMode ||
+                    ((v.fill = c.backgroundColor),
+                    (v.stroke = c.borderColor),
+                    (v["stroke-width"] = c.borderWidth));
+                  h(v, function (a, b) {
+                    "undefined" === typeof a && delete v[b];
+                  });
+                }
+                !p || (k && C(u))
+                  ? k &&
+                    C(u) &&
+                    (p
+                      ? (v.text = u)
+                      : ((e.dataLabels = e.dataLabels || []),
+                        (p = e.dataLabels[f] =
+                          B
+                            ? n
+                                .text(u, 0, -9999, c.useHTML)
+                                .addClass("highcharts-data-label")
+                            : n.label(
+                                u,
+                                0,
+                                -9999,
+                                c.shape,
+                                null,
+                                null,
+                                c.useHTML,
+                                null,
+                                "data-label"
+                              )),
+                        f || (e.dataLabel = p),
+                        p.addClass(
+                          " highcharts-data-label-color-" +
+                            e.colorIndex +
+                            " " +
+                            (c.className || "") +
+                            (c.useHTML ? " highcharts-tracker" : "")
+                        )),
+                    (p.options = c),
+                    p.attr(v),
+                    b.styledMode || p.css(w).shadow(c.shadow),
+                    p.added || p.add(t),
+                    c.textPath &&
+                      !c.useHTML &&
+                      (p.setTextPath(
+                        (e.getDataLabelPath && e.getDataLabelPath(p)) ||
+                          e.graphic,
+                        c.textPath
+                      ),
+                      e.dataLabelPath &&
+                        !c.textPath.enabled &&
+                        (e.dataLabelPath = e.dataLabelPath.destroy())),
+                    a.alignDataLabel(e, p, c, null, r))
+                  : ((e.dataLabel = e.dataLabel && e.dataLabel.destroy()),
+                    e.dataLabels &&
+                      (1 === e.dataLabels.length
+                        ? delete e.dataLabels
+                        : delete e.dataLabels[f]),
+                    f || delete e.dataLabel,
+                    m &&
+                      ((e.connector = e.connector.destroy()),
+                      e.connectors &&
+                        (1 === e.connectors.length
+                          ? delete e.connectors
+                          : delete e.connectors[f])));
+              });
+            });
+          }
+          z(this, "afterDrawDataLabels");
+        }
+        function r(a, b, c, e, d, f) {
+          var g = this.chart,
+            h = b.align,
+            k = b.verticalAlign,
+            l = a.box ? 0 : a.padding || 0,
+            n = b.x;
+          n = void 0 === n ? 0 : n;
+          var m = b.y;
+          m = void 0 === m ? 0 : m;
+          var p = (c.x || 0) + l;
+          if (0 > p) {
+            "right" === h && 0 <= n
+              ? ((b.align = "left"), (b.inside = !0))
+              : (n -= p);
+            var q = !0;
+          }
+          p = (c.x || 0) + e.width - l;
+          p > g.plotWidth &&
+            ("left" === h && 0 >= n
+              ? ((b.align = "right"), (b.inside = !0))
+              : (n += g.plotWidth - p),
+            (q = !0));
+          p = c.y + l;
+          0 > p &&
+            ("bottom" === k && 0 <= m
+              ? ((b.verticalAlign = "top"), (b.inside = !0))
+              : (m -= p),
+            (q = !0));
+          p = (c.y || 0) + e.height - l;
+          p > g.plotHeight &&
+            ("top" === k && 0 >= m
+              ? ((b.verticalAlign = "bottom"), (b.inside = !0))
+              : (m += g.plotHeight - p),
+            (q = !0));
+          q && ((b.x = n), (b.y = m), (a.placed = !f), a.align(b, void 0, d));
+          return q;
+        }
+        function y(a, b) {
+          var c = [],
+            e;
+          if (q(a) && !q(b))
+            c = a.map(function (a) {
+              return m(a, b);
+            });
+          else if (q(b) && !q(a))
+            c = b.map(function (b) {
+              return m(a, b);
+            });
+          else if (q(a) || q(b))
+            for (e = Math.max(a.length, b.length); e--; ) c[e] = m(a[e], b[e]);
+          else c = m(a, b);
+          return c;
+        }
+        function B(a, b, c, e, d) {
+          var f = this.chart,
+            g = f.inverted,
+            h = this.xAxis,
+            k = h.reversed,
+            l = g ? b.height / 2 : b.width / 2;
+          a = (a = a.pointWidth) ? a / 2 : 0;
+          b.startXPos = g ? d.x : k ? -l - a : h.width - l + a;
+          b.startYPos = g ? (k ? this.yAxis.height - l + a : -l - a) : d.y;
+          e
+            ? "hidden" === b.visibility &&
+              (b.show(), b.attr({ opacity: 0 }).animate({ opacity: 1 }))
+            : b.attr({ opacity: 1 }).animate({ opacity: 0 }, void 0, b.hide);
+          f.hasRendered &&
+            (c && b.attr({ x: b.startXPos, y: b.startYPos }), (b.placed = !0));
+        }
+        var n = [];
+        a.compose = function (a) {
+          if (-1 === n.indexOf(a)) {
+            var b = a.prototype;
+            n.push(a);
+            b.alignDataLabel = f;
+            b.drawDataLabels = t;
+            b.justifyDataLabel = r;
+            b.setDataLabelStartPos = B;
+          }
+        };
+      })(l || (l = {}));
+      ("");
+      return l;
+    }
+  );
+  L(
+    a,
+    "Series/Column/ColumnDataLabel.js",
+    [
+      a["Core/Series/DataLabel.js"],
+      a["Core/Series/SeriesRegistry.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A) {
+      var u = t.series,
+        x = A.merge,
+        C = A.pick,
+        I;
+      (function (t) {
+        function q(a, d, c, l, f) {
+          var h = this.chart.inverted,
+            m = a.series,
+            q = (m.xAxis ? m.xAxis.len : this.chart.plotSizeX) || 0;
+          m = (m.yAxis ? m.yAxis.len : this.chart.plotSizeY) || 0;
+          var r = a.dlBox || a.shapeArgs,
+            t = C(a.below, a.plotY > C(this.translatedThreshold, m)),
+            B = C(c.inside, !!this.options.stacking);
+          r &&
+            ((l = x(r)),
+            0 > l.y && ((l.height += l.y), (l.y = 0)),
+            (r = l.y + l.height - m),
+            0 < r && r < l.height && (l.height -= r),
+            h &&
+              (l = {
+                x: m - l.y - l.height,
+                y: q - l.x - l.width,
+                width: l.height,
+                height: l.width,
+              }),
+            B ||
+              (h
+                ? ((l.x += t ? 0 : l.width), (l.width = 0))
+                : ((l.y += t ? l.height : 0), (l.height = 0))));
+          c.align = C(c.align, !h || B ? "center" : t ? "right" : "left");
+          c.verticalAlign = C(
+            c.verticalAlign,
+            h || B ? "middle" : t ? "top" : "bottom"
+          );
+          u.prototype.alignDataLabel.call(this, a, d, c, l, f);
+          c.inside && a.contrastColor && d.css({ color: a.contrastColor });
+        }
+        var m = [];
+        t.compose = function (h) {
+          a.compose(u);
+          -1 === m.indexOf(h) && (m.push(h), (h.prototype.alignDataLabel = q));
+        };
+      })(I || (I = {}));
+      return I;
+    }
+  );
+  L(
+    a,
+    "Series/Bar/BarSeries.js",
+    [
+      a["Series/Column/ColumnSeries.js"],
+      a["Core/Series/SeriesRegistry.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A) {
+      var u =
+          (this && this.__extends) ||
+          (function () {
+            var a = function (u, q) {
+              a =
+                Object.setPrototypeOf ||
+                ({ __proto__: [] } instanceof Array &&
+                  function (a, h) {
+                    a.__proto__ = h;
+                  }) ||
+                function (a, h) {
+                  for (var d in h) h.hasOwnProperty(d) && (a[d] = h[d]);
+                };
+              return a(u, q);
+            };
+            return function (u, q) {
+              function m() {
+                this.constructor = u;
+              }
+              a(u, q);
+              u.prototype =
+                null === q
+                  ? Object.create(q)
+                  : ((m.prototype = q.prototype), new m());
+            };
+          })(),
+        x = A.extend,
+        C = A.merge;
+      A = (function (t) {
+        function x() {
+          var a = (null !== t && t.apply(this, arguments)) || this;
+          a.data = void 0;
+          a.options = void 0;
+          a.points = void 0;
+          return a;
+        }
+        u(x, t);
+        x.defaultOptions = C(a.defaultOptions, {});
+        return x;
+      })(a);
+      x(A.prototype, { inverted: !0 });
+      t.registerSeriesType("bar", A);
+      ("");
+      return A;
+    }
+  );
+  L(
+    a,
+    "Series/Scatter/ScatterSeries.js",
+    [
+      a["Series/Column/ColumnSeries.js"],
+      a["Series/Line/LineSeries.js"],
+      a["Core/Series/SeriesRegistry.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G) {
+      var u =
+          (this && this.__extends) ||
+          (function () {
+            var a = function (m, h) {
+              a =
+                Object.setPrototypeOf ||
+                ({ __proto__: [] } instanceof Array &&
+                  function (a, c) {
+                    a.__proto__ = c;
+                  }) ||
+                function (a, c) {
+                  for (var d in c) c.hasOwnProperty(d) && (a[d] = c[d]);
+                };
+              return a(m, h);
+            };
+            return function (m, h) {
+              function d() {
+                this.constructor = m;
+              }
+              a(m, h);
+              m.prototype =
+                null === h
+                  ? Object.create(h)
+                  : ((d.prototype = h.prototype), new d());
+            };
+          })(),
+        C = G.addEvent,
+        I = G.extend,
+        z = G.merge;
+      G = (function (a) {
+        function m() {
+          var h = (null !== a && a.apply(this, arguments)) || this;
+          h.data = void 0;
+          h.options = void 0;
+          h.points = void 0;
+          return h;
+        }
+        u(m, a);
+        m.prototype.applyJitter = function () {
+          var a = this,
+            d = this.options.jitter,
+            c = this.points.length;
+          d &&
+            this.points.forEach(function (h, f) {
+              ["x", "y"].forEach(function (l, m) {
+                var p = "plot" + l.toUpperCase();
+                if (d[l] && !h.isNull) {
+                  var q = a[l + "Axis"];
+                  var u = d[l] * q.transA;
+                  if (q && !q.isLog) {
+                    var t = Math.max(0, h[p] - u);
+                    q = Math.min(q.len, h[p] + u);
+                    m = 1e4 * Math.sin(f + m * c);
+                    h[p] = t + (q - t) * (m - Math.floor(m));
+                    "x" === l && (h.clientX = h.plotX);
+                  }
+                }
+              });
+            });
+        };
+        m.prototype.drawGraph = function () {
+          this.options.lineWidth
+            ? a.prototype.drawGraph.call(this)
+            : this.graph && (this.graph = this.graph.destroy());
+        };
+        m.defaultOptions = z(t.defaultOptions, {
+          lineWidth: 0,
+          findNearestPointBy: "xy",
+          jitter: { x: 0, y: 0 },
+          marker: { enabled: !0 },
+          tooltip: {
+            headerFormat:
+              '<span style="color:{point.color}">\u25cf</span> <span style="font-size: 10px"> {series.name}</span><br/>',
+            pointFormat: "x: <b>{point.x}</b><br/>y: <b>{point.y}</b><br/>",
+          },
+        });
+        return m;
+      })(t);
+      I(G.prototype, {
+        drawTracker: a.prototype.drawTracker,
+        sorted: !1,
+        requireSorting: !1,
+        noSharedTooltip: !0,
+        trackerGroups: ["group", "markerGroup", "dataLabelsGroup"],
+        takeOrdinalPosition: !1,
+      });
+      C(G, "afterTranslate", function () {
+        this.applyJitter();
+      });
+      A.registerSeriesType("scatter", G);
+      ("");
+      return G;
+    }
+  );
+  L(
+    a,
+    "Series/CenteredUtilities.js",
+    [a["Core/Globals.js"], a["Core/Series/Series.js"], a["Core/Utilities.js"]],
+    function (a, t, A) {
+      var u = a.deg2rad,
+        x = A.isNumber,
+        C = A.pick,
+        I = A.relativeLength,
+        z;
+      (function (a) {
+        a.getCenter = function () {
+          var a = this.options,
+            h = this.chart,
+            d = 2 * (a.slicedOffset || 0),
+            c = h.plotWidth - 2 * d,
+            l = h.plotHeight - 2 * d,
+            f = a.center,
+            q = Math.min(c, l),
+            p = a.size,
+            u = a.innerSize || 0;
+          "string" === typeof p && (p = parseFloat(p));
+          "string" === typeof u && (u = parseFloat(u));
+          a = [
+            C(f[0], "50%"),
+            C(f[1], "50%"),
+            C(p && 0 > p ? void 0 : a.size, "100%"),
+            C(u && 0 > u ? void 0 : a.innerSize || 0, "0%"),
+          ];
+          !h.angular || this instanceof t || (a[3] = 0);
+          for (f = 0; 4 > f; ++f)
+            (p = a[f]),
+              (h = 2 > f || (2 === f && /%$/.test(p))),
+              (a[f] = I(p, [c, l, q, a[2]][f]) + (h ? d : 0));
+          a[3] > a[2] && (a[3] = a[2]);
+          return a;
+        };
+        a.getStartAndEndRadians = function (a, h) {
+          a = x(a) ? a : 0;
+          h = x(h) && h > a && 360 > h - a ? h : a + 360;
+          return { start: u * (a + -90), end: u * (h + -90) };
+        };
+      })(z || (z = {}));
+      ("");
+      return z;
+    }
+  );
+  L(
+    a,
+    "Series/Pie/PiePoint.js",
+    [
+      a["Core/Animation/AnimationUtilities.js"],
+      a["Core/Series/Point.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A) {
+      var u =
+          (this && this.__extends) ||
+          (function () {
+            var a = function (d, c) {
+              a =
+                Object.setPrototypeOf ||
+                ({ __proto__: [] } instanceof Array &&
+                  function (a, c) {
+                    a.__proto__ = c;
+                  }) ||
+                function (a, c) {
+                  for (var d in c) c.hasOwnProperty(d) && (a[d] = c[d]);
+                };
+              return a(d, c);
+            };
+            return function (d, c) {
+              function h() {
+                this.constructor = d;
+              }
+              a(d, c);
+              d.prototype =
+                null === c
+                  ? Object.create(c)
+                  : ((h.prototype = c.prototype), new h());
+            };
+          })(),
+        x = a.setAnimation,
+        C = A.addEvent,
+        I = A.defined;
+      a = A.extend;
+      var z = A.isNumber,
+        q = A.pick,
+        m = A.relativeLength;
+      t = (function (a) {
+        function d() {
+          var c = (null !== a && a.apply(this, arguments)) || this;
+          c.labelDistance = void 0;
+          c.options = void 0;
+          c.series = void 0;
+          return c;
+        }
+        u(d, a);
+        d.prototype.getConnectorPath = function () {
+          var a = this.labelPosition,
+            d = this.series.options.dataLabels,
+            f = this.connectorShapes,
+            h = d.connectorShape;
+          f[h] && (h = f[h]);
+          return h.call(
+            this,
+            { x: a.final.x, y: a.final.y, alignment: a.alignment },
+            a.connectorPosition,
+            d
+          );
+        };
+        d.prototype.getTranslate = function () {
+          return this.sliced
+            ? this.slicedTranslation
+            : { translateX: 0, translateY: 0 };
+        };
+        d.prototype.haloPath = function (a) {
+          var c = this.shapeArgs;
+          return this.sliced || !this.visible
+            ? []
+            : this.series.chart.renderer.symbols.arc(
+                c.x,
+                c.y,
+                c.r + a,
+                c.r + a,
+                { innerR: c.r - 1, start: c.start, end: c.end }
+              );
+        };
+        d.prototype.init = function () {
+          var c = this;
+          a.prototype.init.apply(this, arguments);
+          this.name = q(this.name, "Slice");
+          var d = function (a) {
+            c.slice("select" === a.type);
+          };
+          C(this, "select", d);
+          C(this, "unselect", d);
+          return this;
+        };
+        d.prototype.isValid = function () {
+          return z(this.y) && 0 <= this.y;
+        };
+        d.prototype.setVisible = function (a, d) {
+          var c = this,
+            h = this.series,
+            l = h.chart,
+            m = h.options.ignoreHiddenPoint;
+          d = q(d, m);
+          a !== this.visible &&
+            ((this.visible =
+              this.options.visible =
+              a =
+                "undefined" === typeof a ? !this.visible : a),
+            (h.options.data[h.data.indexOf(this)] = this.options),
+            ["graphic", "dataLabel", "connector", "shadowGroup"].forEach(
+              function (d) {
+                if (c[d]) c[d][a ? "show" : "hide"](a);
+              }
+            ),
+            this.legendItem && l.legend.colorizeItem(this, a),
+            a || "hover" !== this.state || this.setState(""),
+            m && (h.isDirty = !0),
+            d && l.redraw());
+        };
+        d.prototype.slice = function (a, d, f) {
+          var c = this.series;
+          x(f, c.chart);
+          q(d, !0);
+          this.sliced = this.options.sliced = I(a) ? a : !this.sliced;
+          c.options.data[c.data.indexOf(this)] = this.options;
+          this.graphic && this.graphic.animate(this.getTranslate());
+          this.shadowGroup && this.shadowGroup.animate(this.getTranslate());
+        };
+        return d;
+      })(t);
+      a(t.prototype, {
+        connectorShapes: {
+          fixedOffset: function (a, d, c) {
+            var h = d.breakAt;
+            d = d.touchingSliceAt;
+            return [
+              ["M", a.x, a.y],
+              c.softConnector
+                ? [
+                    "C",
+                    a.x + ("left" === a.alignment ? -5 : 5),
+                    a.y,
+                    2 * h.x - d.x,
+                    2 * h.y - d.y,
+                    h.x,
+                    h.y,
+                  ]
+                : ["L", h.x, h.y],
+              ["L", d.x, d.y],
+            ];
+          },
+          straight: function (a, d) {
+            d = d.touchingSliceAt;
+            return [
+              ["M", a.x, a.y],
+              ["L", d.x, d.y],
+            ];
+          },
+          crookedLine: function (a, d, c) {
+            d = d.touchingSliceAt;
+            var h = this.series,
+              f = h.center[0],
+              q = h.chart.plotWidth,
+              p = h.chart.plotLeft;
+            h = a.alignment;
+            var u = this.shapeArgs.r;
+            c = m(c.crookDistance, 1);
+            q =
+              "left" === h
+                ? f + u + (q + p - f - u) * (1 - c)
+                : p + (f - u) * c;
+            c = ["L", q, a.y];
+            f = !0;
+            if ("left" === h ? q > a.x || q < d.x : q < a.x || q > d.x) f = !1;
+            a = [["M", a.x, a.y]];
+            f && a.push(c);
+            a.push(["L", d.x, d.y]);
+            return a;
+          },
+        },
+      });
+      return t;
+    }
+  );
+  L(
+    a,
+    "Series/Pie/PieSeries.js",
+    [
+      a["Series/CenteredUtilities.js"],
+      a["Series/Column/ColumnSeries.js"],
+      a["Core/Globals.js"],
+      a["Core/Legend/LegendSymbol.js"],
+      a["Series/Pie/PiePoint.js"],
+      a["Core/Series/Series.js"],
+      a["Core/Series/SeriesRegistry.js"],
+      a["Core/Renderer/SVG/Symbols.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G, x, C, I, z, q) {
+      var m =
+          (this && this.__extends) ||
+          (function () {
+            var a = function (c, d) {
+              a =
+                Object.setPrototypeOf ||
+                ({ __proto__: [] } instanceof Array &&
+                  function (a, c) {
+                    a.__proto__ = c;
+                  }) ||
+                function (a, c) {
+                  for (var d in c) c.hasOwnProperty(d) && (a[d] = c[d]);
+                };
+              return a(c, d);
+            };
+            return function (c, d) {
+              function f() {
+                this.constructor = c;
+              }
+              a(c, d);
+              c.prototype =
+                null === d
+                  ? Object.create(d)
+                  : ((f.prototype = d.prototype), new f());
+            };
+          })(),
+        h = a.getStartAndEndRadians;
+      A = A.noop;
+      var d = q.clamp,
+        c = q.extend,
+        l = q.fireEvent,
+        f = q.merge,
+        u = q.pick,
+        p = q.relativeLength;
+      q = (function (a) {
+        function c() {
+          var c = (null !== a && a.apply(this, arguments)) || this;
+          c.center = void 0;
+          c.data = void 0;
+          c.maxLabelDistance = void 0;
+          c.options = void 0;
+          c.points = void 0;
+          return c;
+        }
+        m(c, a);
+        c.prototype.animate = function (a) {
+          var c = this,
+            d = c.points,
+            f = c.startAngleRad;
+          a ||
+            d.forEach(function (a) {
+              var b = a.graphic,
+                e = a.shapeArgs;
+              b &&
+                e &&
+                (b.attr({
+                  r: u(a.startR, c.center && c.center[3] / 2),
+                  start: f,
+                  end: f,
+                }),
+                b.animate(
+                  { r: e.r, start: e.start, end: e.end },
+                  c.options.animation
+                ));
+            });
+        };
+        c.prototype.drawEmpty = function () {
+          var a = this.startAngleRad,
+            c = this.endAngleRad,
+            d = this.options;
+          if (0 === this.total && this.center) {
+            var f = this.center[0];
+            var b = this.center[1];
+            this.graph ||
+              (this.graph = this.chart.renderer
+                .arc(f, b, this.center[1] / 2, 0, a, c)
+                .addClass("highcharts-empty-series")
+                .add(this.group));
+            this.graph.attr({
+              d: z.arc(f, b, this.center[2] / 2, 0, {
+                start: a,
+                end: c,
+                innerR: this.center[3] / 2,
+              }),
+            });
+            this.chart.styledMode ||
+              this.graph.attr({
+                "stroke-width": d.borderWidth,
+                fill: d.fillColor || "none",
+                stroke: d.color || "#cccccc",
+              });
+          } else this.graph && (this.graph = this.graph.destroy());
+        };
+        c.prototype.drawPoints = function () {
+          var a = this.chart.renderer;
+          this.points.forEach(function (c) {
+            c.graphic &&
+              c.hasNewShapeType() &&
+              (c.graphic = c.graphic.destroy());
+            c.graphic ||
+              ((c.graphic = a[c.shapeType](c.shapeArgs).add(c.series.group)),
+              (c.delayedRendering = !0));
+          });
+        };
+        c.prototype.generatePoints = function () {
+          a.prototype.generatePoints.call(this);
+          this.updateTotals();
+        };
+        c.prototype.getX = function (a, c, f) {
+          var h = this.center,
+            b = this.radii ? this.radii[f.index] || 0 : h[2] / 2;
+          a = Math.asin(d((a - h[1]) / (b + f.labelDistance), -1, 1));
+          return (
+            h[0] +
+            (c ? -1 : 1) * Math.cos(a) * (b + f.labelDistance) +
+            (0 < f.labelDistance
+              ? (c ? -1 : 1) * this.options.dataLabels.padding
+              : 0)
+          );
+        };
+        c.prototype.hasData = function () {
+          return !!this.processedXData.length;
+        };
+        c.prototype.redrawPoints = function () {
+          var a = this,
+            c = a.chart,
+            d = c.renderer,
+            h = a.options.shadow,
+            b,
+            g,
+            e,
+            l;
+          this.drawEmpty();
+          !h ||
+            a.shadowGroup ||
+            c.styledMode ||
+            (a.shadowGroup = d.g("shadow").attr({ zIndex: -1 }).add(a.group));
+          a.points.forEach(function (k) {
+            var n = {};
+            g = k.graphic;
+            if (!k.isNull && g) {
+              var m = void 0;
+              l = k.shapeArgs;
+              b = k.getTranslate();
+              c.styledMode ||
+                ((m = k.shadowGroup),
+                h &&
+                  !m &&
+                  (m = k.shadowGroup = d.g("shadow").add(a.shadowGroup)),
+                m && m.attr(b),
+                (e = a.pointAttribs(k, k.selected && "select")));
+              k.delayedRendering
+                ? (g.setRadialReference(a.center).attr(l).attr(b),
+                  c.styledMode ||
+                    g.attr(e).attr({ "stroke-linejoin": "round" }).shadow(h, m),
+                  (k.delayedRendering = !1))
+                : (g.setRadialReference(a.center),
+                  c.styledMode || f(!0, n, e),
+                  f(!0, n, l, b),
+                  g.animate(n));
+              g.attr({ visibility: k.visible ? "inherit" : "hidden" });
+              g.addClass(k.getClassName(), !0);
+            } else g && (k.graphic = g.destroy());
+          });
+        };
+        c.prototype.sortByAngle = function (a, c) {
+          a.sort(function (a, d) {
+            return "undefined" !== typeof a.angle && (d.angle - a.angle) * c;
+          });
+        };
+        c.prototype.translate = function (a) {
+          this.generatePoints();
+          var c = this.options,
+            d = c.slicedOffset,
+            f = d + (c.borderWidth || 0),
+            b = h(c.startAngle, c.endAngle),
+            g = (this.startAngleRad = b.start);
+          b = (this.endAngleRad = b.end) - g;
+          var e = this.points,
+            m = c.dataLabels.distance;
+          c = c.ignoreHiddenPoint;
+          var q = e.length,
+            r,
+            t = 0;
+          a || (this.center = a = this.getCenter());
+          for (r = 0; r < q; r++) {
+            var w = e[r];
+            var x = g + t * b;
+            !w.isValid() || (c && !w.visible) || (t += w.percentage / 100);
+            var y = g + t * b;
+            var z = {
+              x: a[0],
+              y: a[1],
+              r: a[2] / 2,
+              innerR: a[3] / 2,
+              start: Math.round(1e3 * x) / 1e3,
+              end: Math.round(1e3 * y) / 1e3,
+            };
+            w.shapeType = "arc";
+            w.shapeArgs = z;
+            w.labelDistance = u(
+              w.options.dataLabels && w.options.dataLabels.distance,
+              m
+            );
+            w.labelDistance = p(w.labelDistance, z.r);
+            this.maxLabelDistance = Math.max(
+              this.maxLabelDistance || 0,
+              w.labelDistance
+            );
+            y = (y + x) / 2;
+            y > 1.5 * Math.PI
+              ? (y -= 2 * Math.PI)
+              : y < -Math.PI / 2 && (y += 2 * Math.PI);
+            w.slicedTranslation = {
+              translateX: Math.round(Math.cos(y) * d),
+              translateY: Math.round(Math.sin(y) * d),
+            };
+            z = (Math.cos(y) * a[2]) / 2;
+            var A = (Math.sin(y) * a[2]) / 2;
+            w.tooltipPos = [a[0] + 0.7 * z, a[1] + 0.7 * A];
+            w.half = y < -Math.PI / 2 || y > Math.PI / 2 ? 1 : 0;
+            w.angle = y;
+            x = Math.min(f, w.labelDistance / 5);
+            w.labelPosition = {
+              natural: {
+                x: a[0] + z + Math.cos(y) * w.labelDistance,
+                y: a[1] + A + Math.sin(y) * w.labelDistance,
+              },
+              final: {},
+              alignment:
+                0 > w.labelDistance ? "center" : w.half ? "right" : "left",
+              connectorPosition: {
+                breakAt: {
+                  x: a[0] + z + Math.cos(y) * x,
+                  y: a[1] + A + Math.sin(y) * x,
+                },
+                touchingSliceAt: { x: a[0] + z, y: a[1] + A },
+              },
+            };
+          }
+          l(this, "afterTranslate");
+        };
+        c.prototype.updateTotals = function () {
+          var a = this.points,
+            c = a.length,
+            d = this.options.ignoreHiddenPoint,
+            f,
+            b = 0;
+          for (f = 0; f < c; f++) {
+            var g = a[f];
+            !g.isValid() || (d && !g.visible) || (b += g.y);
+          }
+          this.total = b;
+          for (f = 0; f < c; f++)
+            (g = a[f]),
+              (g.percentage = 0 < b && (g.visible || !d) ? (g.y / b) * 100 : 0),
+              (g.total = b);
+        };
+        c.defaultOptions = f(C.defaultOptions, {
+          center: [null, null],
+          clip: !1,
+          colorByPoint: !0,
+          dataLabels: {
+            allowOverlap: !0,
+            connectorPadding: 5,
+            connectorShape: "fixedOffset",
+            crookDistance: "70%",
+            distance: 30,
+            enabled: !0,
+            formatter: function () {
+              return this.point.isNull ? void 0 : this.point.name;
+            },
+            softConnector: !0,
+            x: 0,
+          },
+          fillColor: void 0,
+          ignoreHiddenPoint: !0,
+          inactiveOtherPoints: !0,
+          legendType: "point",
+          marker: null,
+          size: null,
+          showInLegend: !1,
+          slicedOffset: 10,
+          stickyTracking: !1,
+          tooltip: { followPointer: !0 },
+          borderColor: "#ffffff",
+          borderWidth: 1,
+          lineWidth: void 0,
+          states: { hover: { brightness: 0.1 } },
+        });
+        return c;
+      })(C);
+      c(q.prototype, {
+        axisTypes: [],
+        directTouch: !0,
+        drawGraph: void 0,
+        drawLegendSymbol: G.drawRectangle,
+        drawTracker: t.prototype.drawTracker,
+        getCenter: a.getCenter,
+        getSymbol: A,
+        isCartesian: !1,
+        noSharedTooltip: !0,
+        pointAttribs: t.prototype.pointAttribs,
+        pointClass: x,
+        requireSorting: !1,
+        searchPoint: A,
+        trackerGroups: ["group", "dataLabelsGroup"],
+      });
+      I.registerSeriesType("pie", q);
+      ("");
+      return q;
+    }
+  );
+  L(
+    a,
+    "Series/Pie/PieDataLabel.js",
+    [
+      a["Core/Series/DataLabel.js"],
+      a["Core/Globals.js"],
+      a["Core/Renderer/RendererUtilities.js"],
+      a["Core/Series/SeriesRegistry.js"],
+      a["Core/Utilities.js"],
+    ],
+    function (a, t, A, G, x) {
+      var u = t.noop,
+        I = A.distribute,
+        z = G.series,
+        q = x.arrayMax,
+        m = x.clamp,
+        h = x.defined,
+        d = x.merge,
+        c = x.pick,
+        l = x.relativeLength,
+        f;
+      (function (f) {
+        function p() {
+          var a = this,
+            f = a.data,
+            b = a.chart,
+            g = a.options.dataLabels || {},
+            e = g.connectorPadding,
+            l = b.plotWidth,
+            m = b.plotHeight,
+            p = b.plotLeft,
+            u = Math.round(b.chartWidth / 3),
+            r = a.center,
+            t = r[2] / 2,
+            w = r[1],
+            B = [[], []],
+            x = [0, 0, 0, 0],
+            y = a.dataLabelPositioners,
+            A,
+            C,
+            G,
+            K,
+            L,
+            F,
+            T,
+            N,
+            V,
+            W,
+            X,
+            R;
+          a.visible &&
+            (g.enabled || a._hasPointLabels) &&
+            (f.forEach(function (a) {
+              a.dataLabel &&
+                a.visible &&
+                a.dataLabel.shortened &&
+                (a.dataLabel
+                  .attr({ width: "auto" })
+                  .css({ width: "auto", textOverflow: "clip" }),
+                (a.dataLabel.shortened = !1));
+            }),
+            z.prototype.drawDataLabels.apply(a),
+            f.forEach(function (a) {
+              a.dataLabel &&
+                (a.visible
+                  ? (B[a.half].push(a),
+                    (a.dataLabel._pos = null),
+                    !h(g.style.width) &&
+                      !h(
+                        a.options.dataLabels &&
+                          a.options.dataLabels.style &&
+                          a.options.dataLabels.style.width
+                      ) &&
+                      a.dataLabel.getBBox().width > u &&
+                      (a.dataLabel.css({ width: Math.round(0.7 * u) + "px" }),
+                      (a.dataLabel.shortened = !0)))
+                  : ((a.dataLabel = a.dataLabel.destroy()),
+                    a.dataLabels &&
+                      1 === a.dataLabels.length &&
+                      delete a.dataLabels));
+            }),
+            B.forEach(function (d, f) {
+              var k = d.length,
+                n = [],
+                q;
+              if (k) {
+                a.sortByAngle(d, f - 0.5);
+                if (0 < a.maxLabelDistance) {
+                  var u = Math.max(0, w - t - a.maxLabelDistance);
+                  var v = Math.min(w + t + a.maxLabelDistance, b.plotHeight);
+                  d.forEach(function (a) {
+                    0 < a.labelDistance &&
+                      a.dataLabel &&
+                      ((a.top = Math.max(0, w - t - a.labelDistance)),
+                      (a.bottom = Math.min(
+                        w + t + a.labelDistance,
+                        b.plotHeight
+                      )),
+                      (q = a.dataLabel.getBBox().height || 21),
+                      (a.distributeBox = {
+                        target: a.labelPosition.natural.y - a.top + q / 2,
+                        size: q,
+                        rank: a.y,
+                      }),
+                      n.push(a.distributeBox));
+                  });
+                  u = v + q - u;
+                  I(n, u, u / 5);
+                }
+                for (X = 0; X < k; X++) {
+                  A = d[X];
+                  F = A.labelPosition;
+                  K = A.dataLabel;
+                  W = !1 === A.visible ? "hidden" : "inherit";
+                  V = u = F.natural.y;
+                  n &&
+                    h(A.distributeBox) &&
+                    ("undefined" === typeof A.distributeBox.pos
+                      ? (W = "hidden")
+                      : ((T = A.distributeBox.size),
+                        (V = y.radialDistributionY(A))));
+                  delete A.positionIndex;
+                  if (g.justify) N = y.justify(A, t, r);
+                  else
+                    switch (g.alignTo) {
+                      case "connectors":
+                        N = y.alignToConnectors(d, f, l, p);
+                        break;
+                      case "plotEdges":
+                        N = y.alignToPlotEdges(K, f, l, p);
+                        break;
+                      default:
+                        N = y.radialDistributionX(a, A, V, u);
+                    }
+                  K._attr = { visibility: W, align: F.alignment };
+                  R = A.options.dataLabels || {};
+                  K._pos = {
+                    x:
+                      N +
+                      c(R.x, g.x) +
+                      ({ left: e, right: -e }[F.alignment] || 0),
+                    y: V + c(R.y, g.y) - 10,
+                  };
+                  F.final.x = N;
+                  F.final.y = V;
+                  c(g.crop, !0) &&
+                    ((L = K.getBBox().width),
+                    (u = null),
+                    N - L < e && 1 === f
+                      ? ((u = Math.round(L - N + e)),
+                        (x[3] = Math.max(u, x[3])))
+                      : N + L > l - e &&
+                        0 === f &&
+                        ((u = Math.round(N + L - l + e)),
+                        (x[1] = Math.max(u, x[1]))),
+                    0 > V - T / 2
+                      ? (x[0] = Math.max(Math.round(-V + T / 2), x[0]))
+                      : V + T / 2 > m &&
+                        (x[2] = Math.max(Math.round(V + T / 2 - m), x[2])),
+                    (K.sideOverflow = u));
+                }
+              }
+            }),
+            0 === q(x) || this.verifyDataLabelOverflow(x)) &&
+            (this.placeDataLabels(),
+            this.points.forEach(function (e) {
+              R = d(g, e.options.dataLabels);
+              if ((C = c(R.connectorWidth, 1))) {
+                var f;
+                G = e.connector;
+                if (
+                  (K = e.dataLabel) &&
+                  K._pos &&
+                  e.visible &&
+                  0 < e.labelDistance
+                ) {
+                  W = K._attr.visibility;
+                  if ((f = !G))
+                    (e.connector = G =
+                      b.renderer
+                        .path()
+                        .addClass(
+                          "highcharts-data-label-connector  highcharts-color-" +
+                            e.colorIndex +
+                            (e.className ? " " + e.className : "")
+                        )
+                        .add(a.dataLabelsGroup)),
+                      b.styledMode ||
+                        G.attr({
+                          "stroke-width": C,
+                          stroke: R.connectorColor || e.color || "#666666",
+                        });
+                  G[f ? "attr" : "animate"]({ d: e.getConnectorPath() });
+                  G.attr("visibility", W);
+                } else G && (e.connector = G.destroy());
+              }
+            }));
+        }
+        function t() {
+          this.points.forEach(function (a) {
+            var c = a.dataLabel,
+              b;
+            c &&
+              a.visible &&
+              ((b = c._pos)
+                ? (c.sideOverflow &&
+                    ((c._attr.width = Math.max(
+                      c.getBBox().width - c.sideOverflow,
+                      0
+                    )),
+                    c.css({
+                      width: c._attr.width + "px",
+                      textOverflow:
+                        (this.options.dataLabels.style || {}).textOverflow ||
+                        "ellipsis",
+                    }),
+                    (c.shortened = !0)),
+                  c.attr(c._attr),
+                  c[c.moved ? "animate" : "attr"](b),
+                  (c.moved = !0))
+                : c && c.attr({ y: -9999 }));
+            delete a.distributeBox;
+          }, this);
+        }
+        function r(a) {
+          var c = this.center,
+            b = this.options,
+            d = b.center,
+            e = b.minSize || 80,
+            f = null !== b.size;
+          if (!f) {
+            if (null !== d[0]) var h = Math.max(c[2] - Math.max(a[1], a[3]), e);
+            else
+              (h = Math.max(c[2] - a[1] - a[3], e)),
+                (c[0] += (a[3] - a[1]) / 2);
+            null !== d[1]
+              ? (h = m(h, e, c[2] - Math.max(a[0], a[2])))
+              : ((h = m(h, e, c[2] - a[0] - a[2])),
+                (c[1] += (a[0] - a[2]) / 2));
+            h < c[2]
+              ? ((c[2] = h),
+                (c[3] = Math.min(l(b.innerSize || 0, h), h)),
+                this.translate(c),
+                this.drawDataLabels && this.drawDataLabels())
+              : (f = !0);
+          }
+          return f;
+        }
+        var w = [],
+          B = {
+            radialDistributionY: function (a) {
+              return a.top + a.distributeBox.pos;
+            },
+            radialDistributionX: function (a, c, b, d) {
+              return a.getX(
+                b < c.top + 2 || b > c.bottom - 2 ? d : b,
+                c.half,
+                c
+              );
+            },
+            justify: function (a, c, b) {
+              return b[0] + (a.half ? -1 : 1) * (c + a.labelDistance);
+            },
+            alignToPlotEdges: function (a, c, b, d) {
+              a = a.getBBox().width;
+              return c ? a + d : b - a - d;
+            },
+            alignToConnectors: function (a, c, b, d) {
+              var e = 0,
+                f;
+              a.forEach(function (a) {
+                f = a.dataLabel.getBBox().width;
+                f > e && (e = f);
+              });
+              return c ? e + d : b - e - d;
+            },
+          };
+        f.compose = function (c) {
+          a.compose(z);
+          -1 === w.indexOf(c) &&
+            (w.push(c),
+            (c = c.prototype),
+            (c.dataLabelPositioners = B),
+            (c.alignDataLabel = u),
+            (c.drawDataLabels = p),
+            (c.placeDataLabels = t),
+            (c.verifyDataLabelOverflow = r));
+        };
+      })(f || (f = {}));
+      return f;
+    }
+  );
+  L(
+    a,
+    "Extensions/OverlappingDataLabels.js",
+    [a["Core/Chart/Chart.js"], a["Core/Utilities.js"]],
+    function (a, t) {
+      function u(a, h) {
+        var d = !1;
+        if (a) {
+          var c = a.newOpacity;
+          a.oldOpacity !== c &&
+            (a.alignAttr && a.placed
+              ? (a[c ? "removeClass" : "addClass"](
+                  "highcharts-data-label-hidden"
+                ),
+                (d = !0),
+                (a.alignAttr.opacity = c),
+                a[a.isOld ? "animate" : "attr"](a.alignAttr, null, function () {
+                  h.styledMode || a.css({ pointerEvents: c ? "auto" : "none" });
+                }),
+                x(h, "afterHideOverlappingLabel"))
+              : a.attr({ opacity: c }));
+          a.isOld = !0;
+        }
+        return d;
+      }
+      var G = t.addEvent,
+        x = t.fireEvent,
+        C = t.isArray,
+        I = t.isNumber,
+        z = t.objectEach,
+        q = t.pick;
+      G(a, "render", function () {
+        var a = this,
+          h = [];
+        (this.labelCollectors || []).forEach(function (a) {
+          h = h.concat(a());
+        });
+        (this.yAxis || []).forEach(function (a) {
+          a.stacking &&
+            a.options.stackLabels &&
+            !a.options.stackLabels.allowOverlap &&
+            z(a.stacking.stacks, function (a) {
+              z(a, function (a) {
+                a.label && "hidden" !== a.label.visibility && h.push(a.label);
+              });
+            });
+        });
+        (this.series || []).forEach(function (d) {
+          var c = d.options.dataLabels;
+          d.visible &&
+            (!1 !== c.enabled || d._hasPointLabels) &&
+            ((c = function (c) {
+              return c.forEach(function (c) {
+                c.visible &&
+                  (C(c.dataLabels)
+                    ? c.dataLabels
+                    : c.dataLabel
+                    ? [c.dataLabel]
+                    : []
+                  ).forEach(function (d) {
+                    var f = d.options;
+                    d.labelrank = q(
+                      f.labelrank,
+                      c.labelrank,
+                      c.shapeArgs && c.shapeArgs.height
+                    );
+                    f.allowOverlap
+                      ? ((d.oldOpacity = d.opacity),
+                        (d.newOpacity = 1),
+                        u(d, a))
+                      : h.push(d);
+                  });
+              });
+            }),
+            c(d.nodes || []),
+            c(d.points));
+        });
+        this.hideOverlappingLabels(h);
+      });
+      a.prototype.hideOverlappingLabels = function (a) {
+        var h = this,
+          d = a.length,
+          c = h.renderer,
+          l,
+          f,
+          m,
+          p = !1;
+        var q = function (a) {
+          var d,
+            f = a.box ? 0 : a.padding || 0,
+            b = (d = 0),
+            g;
+          if (a && (!a.alignAttr || a.placed)) {
+            var e = a.alignAttr || { x: a.attr("x"), y: a.attr("y") };
+            var h = a.parentGroup;
+            a.width ||
+              ((d = a.getBBox()),
+              (a.width = d.width),
+              (a.height = d.height),
+              (d = c.fontMetrics(null, a.element).h));
+            var l = a.width - 2 * f;
+            (g = { left: "0", center: "0.5", right: "1" }[a.alignValue])
+              ? (b = +g * l)
+              : I(a.x) &&
+                Math.round(a.x) !== a.translateX &&
+                (b = a.x - a.translateX);
+            return {
+              x: e.x + (h.translateX || 0) + f - (b || 0),
+              y: e.y + (h.translateY || 0) + f - d,
+              width: a.width - 2 * f,
+              height: a.height - 2 * f,
+            };
+          }
+        };
+        for (f = 0; f < d; f++)
+          if ((l = a[f]))
+            (l.oldOpacity = l.opacity),
+              (l.newOpacity = 1),
+              (l.absoluteBox = q(l));
+        a.sort(function (a, c) {
+          return (c.labelrank || 0) - (a.labelrank || 0);
+        });
+        for (f = 0; f < d; f++) {
+          var r = (q = a[f]) && q.absoluteBox;
+          for (l = f + 1; l < d; ++l) {
+            var t = (m = a[l]) && m.absoluteBox;
+            !r ||
+              !t ||
+              q === m ||
+              0 === q.newOpacity ||
+              0 === m.newOpacity ||
+              t.x >= r.x + r.width ||
+              t.x + t.width <= r.x ||
+              t.y >= r.y + r.height ||
+              t.y + t.height <= r.y ||
+              ((q.labelrank < m.labelrank ? q : m).newOpacity = 0);
+          }
+        }
+        a.forEach(function (a) {
+          u(a, h) && (p = !0);
+        });
+        p && x(h, "afterHideAllOverlappingLabels");
+      };
+    }
+  );
+  L(a, "Core/Responsive.js", [a["Core/Utilities.js"]], function (a) {
+    var u = a.extend,
+      A = a.find,
+      G = a.isArray,
+      x = a.isObject,
+      C = a.merge,
+      I = a.objectEach,
+      z = a.pick,
+      q = a.splat,
+      m = a.uniqueKey,
+      h;
+    (function (a) {
+      var c = [];
+      a.compose = function (a) {
+        -1 === c.indexOf(a) && (c.push(a), u(a.prototype, d.prototype));
+        return a;
+      };
+      var d = (function () {
+        function a() {}
+        a.prototype.currentOptions = function (a) {
+          function c(a, f, h, k) {
+            var b;
+            I(a, function (a, e) {
+              if (!k && -1 < d.collectionsWithUpdate.indexOf(e) && f[e])
+                for (
+                  a = q(a), h[e] = [], b = 0;
+                  b < Math.max(a.length, f[e].length);
+                  b++
+                )
+                  f[e][b] &&
+                    (void 0 === a[b]
+                      ? (h[e][b] = f[e][b])
+                      : ((h[e][b] = {}), c(a[b], f[e][b], h[e][b], k + 1)));
+              else
+                x(a)
+                  ? ((h[e] = G(a) ? [] : {}), c(a, f[e] || {}, h[e], k + 1))
+                  : (h[e] = "undefined" === typeof f[e] ? null : f[e]);
+            });
+          }
+          var d = this,
+            f = {};
+          c(a, this.options, f, 0);
+          return f;
+        };
+        a.prototype.matchResponsiveRule = function (a, c) {
+          var d = a.condition;
+          (
+            d.callback ||
+            function () {
+              return (
+                this.chartWidth <= z(d.maxWidth, Number.MAX_VALUE) &&
+                this.chartHeight <= z(d.maxHeight, Number.MAX_VALUE) &&
+                this.chartWidth >= z(d.minWidth, 0) &&
+                this.chartHeight >= z(d.minHeight, 0)
+              );
+            }
+          ).call(this) && c.push(a._id);
+        };
+        a.prototype.setResponsive = function (a, c) {
+          var d = this,
+            f = this.options.responsive,
+            h = this.currentResponsive,
+            l = [];
+          !c &&
+            f &&
+            f.rules &&
+            f.rules.forEach(function (a) {
+              "undefined" === typeof a._id && (a._id = m());
+              d.matchResponsiveRule(a, l);
+            }, this);
+          c = C.apply(
+            void 0,
+            l
+              .map(function (a) {
+                return A((f || {}).rules || [], function (c) {
+                  return c._id === a;
+                });
+              })
+              .map(function (a) {
+                return a && a.chartOptions;
+              })
+          );
+          c.isResponsiveOptions = !0;
+          l = l.toString() || void 0;
+          l !== (h && h.ruleIds) &&
+            (h && this.update(h.undoOptions, a, !0),
+            l
+              ? ((h = this.currentOptions(c)),
+                (h.isResponsiveOptions = !0),
+                (this.currentResponsive = {
+                  ruleIds: l,
+                  mergedOptions: c,
+                  undoOptions: h,
+                }),
+                this.update(c, a, !0))
+              : (this.currentResponsive = void 0));
+        };
+        return a;
+      })();
+    })(h || (h = {}));
+    ("");
+    ("");
+    return h;
+  });
+  L(
+    a,
+    "masters/highcharts.src.js",
+    [
+      a["Core/Globals.js"],
+      a["Core/Utilities.js"],
+      a["Core/DefaultOptions.js"],
+      a["Core/Animation/Fx.js"],
+      a["Core/Animation/AnimationUtilities.js"],
+      a["Core/Renderer/HTML/AST.js"],
+      a["Core/FormatUtilities.js"],
+      a["Core/Renderer/RendererUtilities.js"],
+      a["Core/Renderer/SVG/SVGElement.js"],
+      a["Core/Renderer/SVG/SVGRenderer.js"],
+      a["Core/Renderer/HTML/HTMLElement.js"],
+      a["Core/Renderer/HTML/HTMLRenderer.js"],
+      a["Core/Axis/Axis.js"],
+      a["Core/Axis/DateTimeAxis.js"],
+      a["Core/Axis/LogarithmicAxis.js"],
+      a["Core/Axis/PlotLineOrBand/PlotLineOrBand.js"],
+      a["Core/Axis/Tick.js"],
+      a["Core/Tooltip.js"],
+      a["Core/Series/Point.js"],
+      a["Core/Pointer.js"],
+      a["Core/MSPointer.js"],
+      a["Core/Legend/Legend.js"],
+      a["Core/Chart/Chart.js"],
+      a["Core/Series/Series.js"],
+      a["Core/Series/SeriesRegistry.js"],
+      a["Series/Column/ColumnSeries.js"],
+      a["Series/Column/ColumnDataLabel.js"],
+      a["Series/Pie/PieSeries.js"],
+      a["Series/Pie/PieDataLabel.js"],
+      a["Core/Series/DataLabel.js"],
+      a["Core/Responsive.js"],
+      a["Core/Color/Color.js"],
+      a["Core/Time.js"],
+    ],
+    function (
+      a,
+      t,
+      A,
+      G,
+      x,
+      C,
+      I,
+      z,
+      q,
+      m,
+      h,
+      d,
+      c,
+      l,
+      f,
+      w,
+      p,
+      K,
+      r,
+      y,
+      B,
+      n,
+      k,
+      b,
+      g,
+      e,
+      D,
+      H,
+      v,
+      E,
+      L,
+      S,
+      P
+    ) {
+      a.animate = x.animate;
+      a.animObject = x.animObject;
+      a.getDeferredAnimation = x.getDeferredAnimation;
+      a.setAnimation = x.setAnimation;
+      a.stop = x.stop;
+      a.timers = G.timers;
+      a.AST = C;
+      a.Axis = c;
+      a.Chart = k;
+      a.chart = k.chart;
+      a.Fx = G;
+      a.Legend = n;
+      a.PlotLineOrBand = w;
+      a.Point = r;
+      a.Pointer = B.isRequired() ? B : y;
+      a.Series = b;
+      a.SVGElement = q;
+      a.SVGRenderer = m;
+      a.Tick = p;
+      a.Time = P;
+      a.Tooltip = K;
+      a.Color = S;
+      a.color = S.parse;
+      d.compose(m);
+      h.compose(q);
+      a.defaultOptions = A.defaultOptions;
+      a.getOptions = A.getOptions;
+      a.time = A.defaultTime;
+      a.setOptions = A.setOptions;
+      a.dateFormat = I.dateFormat;
+      a.format = I.format;
+      a.numberFormat = I.numberFormat;
+      a.addEvent = t.addEvent;
+      a.arrayMax = t.arrayMax;
+      a.arrayMin = t.arrayMin;
+      a.attr = t.attr;
+      a.clearTimeout = t.clearTimeout;
+      a.correctFloat = t.correctFloat;
+      a.createElement = t.createElement;
+      a.css = t.css;
+      a.defined = t.defined;
+      a.destroyObjectProperties = t.destroyObjectProperties;
+      a.discardElement = t.discardElement;
+      a.distribute = z.distribute;
+      a.erase = t.erase;
+      a.error = t.error;
+      a.extend = t.extend;
+      a.extendClass = t.extendClass;
+      a.find = t.find;
+      a.fireEvent = t.fireEvent;
+      a.getMagnitude = t.getMagnitude;
+      a.getStyle = t.getStyle;
+      a.inArray = t.inArray;
+      a.isArray = t.isArray;
+      a.isClass = t.isClass;
+      a.isDOMElement = t.isDOMElement;
+      a.isFunction = t.isFunction;
+      a.isNumber = t.isNumber;
+      a.isObject = t.isObject;
+      a.isString = t.isString;
+      a.keys = t.keys;
+      a.merge = t.merge;
+      a.normalizeTickInterval = t.normalizeTickInterval;
+      a.objectEach = t.objectEach;
+      a.offset = t.offset;
+      a.pad = t.pad;
+      a.pick = t.pick;
+      a.pInt = t.pInt;
+      a.relativeLength = t.relativeLength;
+      a.removeEvent = t.removeEvent;
+      a.seriesType = g.seriesType;
+      a.splat = t.splat;
+      a.stableSort = t.stableSort;
+      a.syncTimeout = t.syncTimeout;
+      a.timeUnits = t.timeUnits;
+      a.uniqueKey = t.uniqueKey;
+      a.useSerialIds = t.useSerialIds;
+      a.wrap = t.wrap;
+      D.compose(e);
+      E.compose(b);
+      l.compose(c);
+      f.compose(c);
+      v.compose(H);
+      w.compose(c);
+      L.compose(k);
+      return a;
+    }
+  );
+  a["masters/highcharts.src.js"]._modules = a;
+    return a["masters/highcharts.src.js"];
+   //#  sourceMappingURL = highcharts.js.map
 });
-//# sourceMappingURL=highcharts.js.map

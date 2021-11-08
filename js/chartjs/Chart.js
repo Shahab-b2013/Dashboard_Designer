@@ -1,14 +1,187 @@
-
 // function Chart(chartType){
-//   let pngChart = '_pie'//chartType
-//   if (
-//     pngChart === _pie ||
-//     pngChart === _column ||
-//     pngChart === _bar ||
-//     pngChart === _line ||
-//     pngChart === _area ||
-//       )
+
+function ChartProp(thisChart) {
+  const chartType = thisChart.userOptions.chart.type;
+  console.log(chartType);
+
+  //create modal form
+  ModalFormCtor("85%");
+
+  let div1 =
+    '<div id="div1" class="row col-lg-3 col-md-8 " style="border-radius:4px; border:1px solid #ccc; padding:10px; margin-left:10px"></div>';
+  $("#contentM").append(div1);
+
+  // let divSpace = '<div class="col-lg-1"></div>';
+  // $("#contentM").append(divSpace);
+
+  let div2 =
+    '<div class="col-lg-9 " style="border-radius:4px;border:1px solid #ccc; padding:0px"></div>';
+  $("#contentM").append(div2);
+
+  // let div1Items = '<div id="div1LBL" class="col-lg-12" style="padding-right:10px"></div>';
+  // $("#div1").append(div1LBL);
+  // let div1Element =
+  //   '<div id="div1Element" class="col-lg-8 " style=""></div>';
+  // $("#div1").append(div1Element);
+
+  //div1 Add Items
+  const ArrLbl = [
+    "Text",
+    "Name",
+    "chartType",
+    "categoryLabel",
+    "valueLabel",
+    "categoryName",
+    "catExpression",
+    "Operators",
+    "dataExpression",
+    "seriesText",
+    "seriesName",
+    "seriesType",
+    "StlyeColor",
+    "version",
+  ];
+  for (let i = 0; i < 14; i++) {
+    let div1Items =
+      '<div id="div1Items-'+i+'" class="row col-lg-12" style="margin:5px 0px 5px 0px;"></div>';
+    $("#div1").append(div1Items);
+
+    let lbl = document.createElement("label");
+    lbl.innerText = ArrLbl[i];
+    lbl.className = 'lbl';
+    $("#div1Items-" + i).append(lbl);
+
+    let textBox = document.createElement("input");
+    textBox.setAttribute("id", "text" + i);
+    // textBox.className = "TextBox";
+    textBox.style.left = "0px";
+    textBox.style.position = "absolute";
   
+    $("#div1Items-"+i).append(textBox);
+  }
+
+  //============================btn=====================
+  //create btn
+  let rowbtn = document.createElement("div");
+  rowbtn.style.margin = "10px 0px 10px 10px";
+  $("#chartModal").append(rowbtn);
+
+  //btnShow
+  let btnShow = document.createElement("button");
+  btnShow.className = "btn btn-primary";
+  btnShow.style.backgroundColor = "#134C96";
+  btnShow.style.borderRadius = "4px";
+  btnShow.innerHTML = "پیش نمایش";
+  // btnShow.onclick = () => showChart($("#selectType").val());
+  rowbtn.appendChild(btnShow);
+
+  //btnsubmit
+  let btnSubmit = document.createElement("button");
+  btnSubmit.className = "btn btn-primary";
+  btnSubmit.style.borderRadius = "4px";
+  btnSubmit.style.margin = "10px 10px 10px 10px";
+  btnSubmit.innerText = "ذخیره";
+  // btnSubmit.onclick = function () {
+  //   //old Id remove by sessionStorage
+  //   sessionStorage.removeItem(oldId);
+
+  //   //get svgid
+  //   var svg_xml = chartSvg.getSVG();
+  //   let parser = new DOMParser();
+  //   let docSvg = parser.parseFromString(svg_xml, "text/xml");
+  //   let getTag = docSvg.getElementsByTagName("clipPath")[0];
+  //   let getId = getTag.getAttribute("id");
+  //   svg_xml = '<?xml version="1.0" standalone="no"?>' + svg_xml;
+  //   let svg_Base64 = Base64.encode(svg_xml, false);
+
+  //   // setItem svgBase64 to sesseionStorage
+
+  //   let series =
+  //     "seriesName:" +
+  //     $("#seriesName").val() +
+  //     ";" +
+  //     "seriesText:" +
+  //     $("#seriesText").val() +
+  //     ";" +
+  //     "dataExpression:" +
+  //     $("#dataExpression").val() +
+  //     ";" +
+  //     "plotType:" +
+  //     $("#selectType").val() +
+  //     ";" +
+  //     "StlyeColor:" +
+  //     $("#StlyeColor").val() +
+  //     ";";
+
+  //   sessionStorage.setItem(
+  //     "oldChart",
+  //     "image;html=1;image=data:image/svg+xml," + svg_Base64
+  //   );
+  //   sessionStorage.setItem(
+  //     getId,
+  //     "image;html=1;image=data:image/svg+xml," +
+  //     svg_Base64 +
+  //     ";" +
+  //     "id:" +
+  //     getId +
+  //     ";" +
+  //     "name:" +
+  //     $("#name").val() +
+  //     ";" +
+  //     "text:" +
+  //     $("#textid").val() +
+  //     ";" +
+  //     "type:" +
+  //     $("#selectType").val() +
+  //     ";" +
+  //     "categoryLabel:" +
+  //     $("#categoryLabel").val() +
+  //     ";" +
+  //     "valueLabel:" +
+  //     $("#valueLabel").val() +
+  //     ";" +
+  //     "categoryName:" +
+  //     $("#categoryName").val() +
+  //     ";" +
+  //     "categoryExpression:" +
+  //     $("#catSelect").val() +
+  //     ";" +
+  //     "seriesType:" +
+  //     $("#seriesType").val() +
+  //     ";" +
+  //     "version:" +
+  //     $("#version").val() +
+  //     ";" +
+  //     series
+  //   );
+
+  //   //load chart
+  //   Action.loadChart("data:image/svg+xml," + svg_Base64);
+
+  //   //exit
+  //   editorUi.hideDialog();
+  // };
+  rowbtn.appendChild(btnSubmit);
+
+  //btn exit
+  let btnExit = document.createElement("button");
+  btnExit.className = "btn btn-light";
+  btnExit.style.borderRadius = "4px";
+  btnExit.innerText = "لغو";
+  btnExit.onclick = function () {
+    // editorUi.hideDialog();
+  };
+  rowbtn.appendChild(btnExit);
+
+  //   let pngChart = '_pie'//chartType
+  //   if (
+  //     pngChart === _pie ||
+  //     pngChart === _column ||
+  //     pngChart === _bar ||
+  //     pngChart === _line ||
+  //     pngChart === _area ||
+  //       )
+
   //   var chartSvg;
   //   let container = document.createElement("div");
   //   container.className = "containerside";
@@ -531,5 +704,4 @@
   // } else {
   //   Action.Image();
   // }
-// }
-
+}

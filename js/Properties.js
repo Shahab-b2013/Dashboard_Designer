@@ -264,52 +264,6 @@ function GroupProp(elem) {
   }
 }
 
-function ChartProp(prop) {
-  const chartType = prop.userOptions.chart.type;
 
-  // let div =
-  //   '<div class="col-lg-12 row"><div class="col-lg-5" id="div1"></div><div class=""></div><div class="col-lg-5" id="div2"></div></div>';
-  // $("#PanelPropId").append(div);
 
-  // for (let i = 0; i < 14; i++) {
-  //   const lblArray = [
-  //     "Text",
-  //     "Name",
-  //     "chartType",
-  //     "categoryLabel",
-  //     "valueLabel",
-  //     "categoryName",
-  //     "catExpression",
-  //     "Operators",
-  //     "dataExpression",
-  //     "seriesText",
-  //     "seriesName",
-  //     "seriesType",
-  //     "styleColor",
-  //     "version",
-  //   ];
-  //   let lbl = document.createElement("label");
-  //   lbl.innerText = lblArray[i] + ":";
-  //   lbl.className = "lbl container-fluid";
-  //   lbl.style.margin = "10px 0px 8px 10px";
-  //   $("#div1").append(lbl);
-
-  //   if (i == 2 || i == 6 || i == 7) {
-  //     let select = document.createElement("select");
-  //     select.className = "selectBox";
-  //     $("#div2").append(select);
-  //   } else if (i == 12) {
-  //     let colorInput = document.createElement("input");
-  //     colorInput.type = "color";
-  //     colorInput.style.width = '150px'
-  //     colorInput.value='#'
-  //     $("#div2").append(colorInput);
-  //   } else {
-  //     let textbox = document.createElement("input");
-  //     textbox.className = "Textbox";
-  //     $("#div2").append(textbox);
-  //   }
-  // }
-
-  console.log(chartType);
-}
+  
