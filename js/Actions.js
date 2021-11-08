@@ -460,11 +460,11 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 });
 
-function ModalFormCtor(width) {
+function ConstractorForm(width) {
   const div =
     '<div id="myModal" class="modal">' +
     '<div id="chartModal" class="modal-content" style="border: 1px solid #dcc896; border-radius: 4px;">' +
-    '<span class="close">&times;</span>' +
+    '<span class="close"></span>' +
     '<div id="contentM" class="row col-lg-12" style="margin-right:10px;"></div>' +
     "</div>" +
     "</div>";

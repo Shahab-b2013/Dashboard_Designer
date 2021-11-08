@@ -224,16 +224,15 @@ br {
 }
 
 .Textbox {
-  margin: 5px;
-  width: 200px;
+  left: 0px;
+  position: absolute;
 }
 .selectBox {
   height: 30px;
   width: 200px;
-  margin: 5px;
+  margin: 0px;
   font-size: inherit;
   border: 1px solid #ccc;
-  border-radius: 4px;
   background-color: #efefef;
   cursor: pointer;
 }
@@ -256,7 +255,6 @@ br {
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.3); /* Black w/ opacity */
-  
 }
 
 /* Modal Content */
@@ -274,7 +272,7 @@ br {
   float: right;
   font-size: 28px;
   font-weight: bold;
-  }
+}
 
 .close:hover,
 .close:focus {

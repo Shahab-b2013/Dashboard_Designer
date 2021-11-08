@@ -270,10 +270,10 @@
         if (formGroup.GroupDisplayMode == "GroupWithTitle") {
           $("#form-group-body-" + formGroup.FormGroupBoxID + "-0").append(
             '<h4 class="group-title">' +
-              formGroup.Label +
-              "<br /><small>" +
-              formGroup.Description +
-              "</small></h4>"
+            formGroup.Label +
+            "<br /><small>" +
+            formGroup.Description +
+            "</small></h4>"
           );
         }
       });
@@ -409,61 +409,62 @@
 
     return;
   }
+}
 
-  function PieChart(parentID) {
+  function PieChart(id) {
     try {
-    let chart= Highcharts.chart("container", {
-       chart: {
-         type: "pie",
-         options3d: {
-           enabled: true,
-           alpha: 45,
-           beta: 0,
-         },
-       },
-       title: {
-         text: "Browser market shares at a specific website, 2014",
-       },
-       accessibility: {
-         point: {
-           valueSuffix: "%",
-         },
-       },
-       tooltip: {
-         pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
-       },
-       plotOptions: {
-         pie: {
-           allowPointSelect: true,
-           cursor: "pointer",
-           depth: 35,
-           dataLabels: {
-             enabled: true,
-             format: "{point.name}",
-           },
-         },
-       },
-       series: [
-         {
-           type: "pie",
-           name: "Browser share",
-           data: [
-             ["Firefox", 45.0],
-             ["IE", 26.8],
-             {
-               name: "Chrome",
-               y: 12.8,
-               sliced: true,
-               selected: true,
-             },
-             ["Safari", 8.5],
-             ["Opera", 6.2],
-             ["Others", 0.7],
-           ],
-         },
-       ],
-     });
-      $("#" + parentID).append(chart);
+      let chart = Highcharts.chart("container", {
+        chart: {
+          type: "pie",
+          options3d: {
+            enabled: true,
+            alpha: 45,
+            beta: 0,
+          },
+        },
+        title: {
+          text: "Browser market shares at a specific website, 2014",
+        },
+        accessibility: {
+          point: {
+            valueSuffix: "%",
+          },
+        },
+        tooltip: {
+          pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: "pointer",
+            depth: 35,
+            dataLabels: {
+              enabled: true,
+              format: "{point.name}",
+            },
+          },
+        },
+        series: [
+          {
+            type: "pie",
+            name: "Browser share",
+            data: [
+              ["Firefox", 45.0],
+              ["IE", 26.8],
+              {
+                name: "Chrome",
+                y: 12.8,
+                sliced: true,
+                selected: true,
+              },
+              ["Safari", 8.5],
+              ["Opera", 6.2],
+              ["Others", 0.7],
+            ],
+          },
+        ],
+      });
+      $("#" + id).append(chart);
     } catch (e) {
       // raiseError(e, "#form-group-" + itemObj.FormItemID);
 
@@ -607,7 +608,7 @@
                       "#form-item-" + $$FormItems[itemObj.ParentName].FormItemID
                     ].defaultValue;
                 }
-              } catch (e) {}
+              } catch (e) { }
             }
           }
         }
@@ -1430,37 +1431,37 @@
     if (_prcStateOptions.TaskHasServics > 0) {
       $(parentID).append(
         '<div class="form-group ">' +
-          '<label>خدمات انجام شده</label><div class="input-group">' +
-          '<div class="input-group-addon"><span class="glyphicon glyphicon-check"></span></div>' +
-          '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="task-services"></select></div>' +
-          "</div>"
+        '<label>خدمات انجام شده</label><div class="input-group">' +
+        '<div class="input-group-addon"><span class="glyphicon glyphicon-check"></span></div>' +
+        '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="task-services"></select></div>' +
+        "</div>"
       );
     }
 
     if (_prcStateOptions.TaskHasReport > 0) {
       $(parentID).append(
         '<div class="form-group">' +
-          '<label>توضیحات</label><div class="input-group">' +
-          '<div class="input-group-addon"><span class="glyphicon glyphicon-edit"></span></div>' +
-          '<textarea class="form-control form-input noDrop" ondragover="allowDrop(event)" id="task-report" rows="5"></textarea></div>' +
-          "</div>"
+        '<label>توضیحات</label><div class="input-group">' +
+        '<div class="input-group-addon"><span class="glyphicon glyphicon-edit"></span></div>' +
+        '<textarea class="form-control form-input noDrop" ondragover="allowDrop(event)" id="task-report" rows="5"></textarea></div>' +
+        "</div>"
       );
     }
 
     if (_prcStateOptions.TaskHasSpentTime > 0) {
       $(parentID).append(
         '<div class="form-group"><label>زمان صرف شده</label>' +
-          '<div class="row">' +
-          '<div class="col-md-2" class="form-time-label">' +
-          '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="task-spent-day"></select></div>' +
-          '<div class="col-md-1 form-time-box">&nbsp;&nbsp; روز </div>' +
-          '<div class="col-md-2 form-time-label">' +
-          '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="task-spent-hour"></select></div>' +
-          '<div class="col-md-2 form-time-box">&nbsp;&nbsp; ساعت </div>' +
-          '<div class="col-md-2 form-time-label">' +
-          '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="task-spent-minute"></select></div>' +
-          '<div class="col-md-1 form-time-box">&nbsp;&nbsp; دقیقه </div>' +
-          "</div></div>"
+        '<div class="row">' +
+        '<div class="col-md-2" class="form-time-label">' +
+        '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="task-spent-day"></select></div>' +
+        '<div class="col-md-1 form-time-box">&nbsp;&nbsp; روز </div>' +
+        '<div class="col-md-2 form-time-label">' +
+        '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="task-spent-hour"></select></div>' +
+        '<div class="col-md-2 form-time-box">&nbsp;&nbsp; ساعت </div>' +
+        '<div class="col-md-2 form-time-label">' +
+        '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="task-spent-minute"></select></div>' +
+        '<div class="col-md-1 form-time-box">&nbsp;&nbsp; دقیقه </div>' +
+        "</div></div>"
       );
 
       for (i = 0; i < 8; i++) {
@@ -1489,17 +1490,17 @@
     $.each(_prcStateActLinks, function (index, actLink) {
       $("#row-links").append(
         '<div class="col-md-3"><a class="form-link" data-context-id=' +
-          actLink.ActivityContextID +
-          ' id="act-link-' +
-          actLink.ActivityContextID +
-          '"><span class="fa ' +
-          actLink.Icon +
-          '"></span>&nbsp;' +
-          actLink.Label +
-          "</a></div>"
+        actLink.ActivityContextID +
+        ' id="act-link-' +
+        actLink.ActivityContextID +
+        '"><span class="fa ' +
+        actLink.Icon +
+        '"></span>&nbsp;' +
+        actLink.Label +
+        "</a></div>"
       );
 
-      $("#act-link-" + actLink.ActivityContextID).click(function () {});
+      $("#act-link-" + actLink.ActivityContextID).click(function () { });
     });
   };
 
@@ -2149,225 +2150,225 @@
   function htmlDecode(value) {
     return $("<textarea/>").html(value).text();
   }
-}
 
-function triggerDefaultEvent(target, defValue) {
-  var _isChecked = defValue;
 
-  $.each(
-    jQuery.parseJSON($$FormItems[target].ActionOnChange),
-    function (index, event) {
-      if (event.value.indexOf("[" + _isChecked + "]") != -1) {
-        $.each(event.actions, function (index, action) {
-          if (action.targetType == "FormItem") {
-            if (action.actionType == "Hide") {
-              $("#form-group-" + $$FormItems[action.target].FormItemID).css(
-                "display",
-                "none"
-              );
+  function triggerDefaultEvent(target, defValue) {
+    var _isChecked = defValue;
+
+    $.each(
+      jQuery.parseJSON($$FormItems[target].ActionOnChange),
+      function (index, event) {
+        if (event.value.indexOf("[" + _isChecked + "]") != -1) {
+          $.each(event.actions, function (index, action) {
+            if (action.targetType == "FormItem") {
+              if (action.actionType == "Hide") {
+                $("#form-group-" + $$FormItems[action.target].FormItemID).css(
+                  "display",
+                  "none"
+                );
+              }
+
+              if (action.actionType == "Show") {
+                $("#form-group-" + $$FormItems[action.target].FormItemID).css(
+                  "display",
+                  "block"
+                );
+              }
             }
 
-            if (action.actionType == "Show") {
-              $("#form-group-" + $$FormItems[action.target].FormItemID).css(
-                "display",
-                "block"
-              );
-            }
-          }
+            if (action.targetType == "FormGroupBox") {
+              if (action.actionType == "Hide") {
+                $("#form-group-" + $$FormGroups[action.target]).css(
+                  "display",
+                  "none"
+                );
+              }
 
-          if (action.targetType == "FormGroupBox") {
-            if (action.actionType == "Hide") {
-              $("#form-group-" + $$FormGroups[action.target]).css(
-                "display",
-                "none"
-              );
+              if (action.actionType == "Show") {
+                $("#form-group-" + $$FormGroups[action.target]).css(
+                  "display",
+                  "block"
+                );
+              }
             }
-
-            if (action.actionType == "Show") {
-              $("#form-group-" + $$FormGroups[action.target]).css(
-                "display",
-                "block"
-              );
-            }
-          }
-        });
+          });
+        }
       }
-    }
-  );
-}
-
-function $fi(target) {
-  return $("#form-item-" + $$FormItems[target].FormItemID);
-}
-
-function $fig(target) {
-  return $("#form-group-" + $$FormItems[target].FormItemID);
-}
-
-function $gfi(target) {
-  if ($$FormItems[target].InputType != "CheckBox") {
-    return $("#form-item-" + $$FormItems[target].FormItemID).val();
-  } else {
-    return $gcfi(target);
-  }
-}
-
-function $sfi(target, val) {
-  $("#form-item-" + $$FormItems[target].FormItemID).val(val);
-}
-
-function $sfiCss(target, name, val) {
-  $("#form-group-" + $$FormItems[target].FormItemID).css(name, val);
-}
-
-function $gcfi(target) {
-  if ($("#form-item-" + $$FormItems[target].FormItemID).is(":checked")) {
-    return 1;
-  } else {
-    return 0;
-  }
-}
-
-function $activityParams(targets) {
-  var activiyParams = new Array();
-
-  $.each(targets, function (index, target) {
-    activiyParams.push({
-      ParamIndex: 0,
-      ParamName: target,
-      ParamValue: $gfi(target),
-      FileIsExist: 2,
-      FileAttachCode: "",
-    });
-  });
-
-  return activiyParams;
-}
-
-// function localize(value) {
-//   if ($$Lang != "Fa") {
-//     //En, Ar, ...
-
-//     switch (value) {
-//       case "اختیاری":
-//         return "Optional";
-//     }
-//   }
-
-//   return value;
-// }
-
-function isCanvasBlank(canvas) {
-  canvas = canvas.get(0);
-
-  try {
-    const context = canvas.getContext("2d");
-
-    const pixelBuffer = new Uint32Array(
-      context.getImageData(
-        0,
-        0,
-        canvas.width - 200,
-        canvas.height - 100
-      ).data.buffer
     );
-    return !pixelBuffer.some((color) => color !== 0);
-  } catch {
-    return false;
   }
-}
 
-function $fiToggle(target, s, e) {
-  if ($fig(target + "_" + s).css("display") == "none") {
-    $fig(target + "_" + s).css("display", "block");
-  } else {
-    for (i = s; i <= e; i++) {
-      if ($fig(target + "_" + i).css("display") == "block") {
-        $fig(target + "_" + i).css("display", "none");
+  function $fi(target) {
+    return $("#form-item-" + $$FormItems[target].FormItemID);
+  }
 
-        $fi(target + "_" + i).selectpicker("val", null);
+  function $fig(target) {
+    return $("#form-group-" + $$FormItems[target].FormItemID);
+  }
 
-        $fig(target + "_" + i)
-          .find(".input-group-addon")
-          .find(">:first-child")
-          .removeClass("glyphicon-minus");
+  function $gfi(target) {
+    if ($$FormItems[target].InputType != "CheckBox") {
+      return $("#form-item-" + $$FormItems[target].FormItemID).val();
+    } else {
+      return $gcfi(target);
+    }
+  }
 
-        $fig(target + "_" + i)
-          .find(".input-group-addon")
-          .find(">:first-child")
-          .addClass("glyphicon-plus");
+  function $sfi(target, val) {
+    $("#form-item-" + $$FormItems[target].FormItemID).val(val);
+  }
+
+  function $sfiCss(target, name, val) {
+    $("#form-group-" + $$FormItems[target].FormItemID).css(name, val);
+  }
+
+  function $gcfi(target) {
+    if ($("#form-item-" + $$FormItems[target].FormItemID).is(":checked")) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  function $activityParams(targets) {
+    var activiyParams = new Array();
+
+    $.each(targets, function (index, target) {
+      activiyParams.push({
+        ParamIndex: 0,
+        ParamName: target,
+        ParamValue: $gfi(target),
+        FileIsExist: 2,
+        FileAttachCode: "",
+      });
+    });
+
+    return activiyParams;
+  }
+
+  // function localize(value) {
+  //   if ($$Lang != "Fa") {
+  //     //En, Ar, ...
+
+  //     switch (value) {
+  //       case "اختیاری":
+  //         return "Optional";
+  //     }
+  //   }
+
+  //   return value;
+  // }
+
+  function isCanvasBlank(canvas) {
+    canvas = canvas.get(0);
+
+    try {
+      const context = canvas.getContext("2d");
+
+      const pixelBuffer = new Uint32Array(
+        context.getImageData(
+          0,
+          0,
+          canvas.width - 200,
+          canvas.height - 100
+        ).data.buffer
+      );
+      return !pixelBuffer.some((color) => color !== 0);
+    } catch {
+      return false;
+    }
+  }
+
+  function $fiToggle(target, s, e) {
+    if ($fig(target + "_" + s).css("display") == "none") {
+      $fig(target + "_" + s).css("display", "block");
+    } else {
+      for (i = s; i <= e; i++) {
+        if ($fig(target + "_" + i).css("display") == "block") {
+          $fig(target + "_" + i).css("display", "none");
+
+          $fi(target + "_" + i).selectpicker("val", null);
+
+          $fig(target + "_" + i)
+            .find(".input-group-addon")
+            .find(">:first-child")
+            .removeClass("glyphicon-minus");
+
+          $fig(target + "_" + i)
+            .find(".input-group-addon")
+            .find(">:first-child")
+            .addClass("glyphicon-plus");
+        }
       }
     }
   }
-}
 
-function radioButtonList(enumTypeID) {
-  var _enumTypeID = enumTypeID;
+  function radioButtonList(enumTypeID) {
+    var _enumTypeID = enumTypeID;
 
-  var _enumList;
+    var _enumList;
 
-  // this.renderContext = function (itemID, defaultValue) {
-  //   $.ajax({
-  //     url: "../App_Sys/Services/Action.asmx/GetEnumData",
+    // this.renderContext = function (itemID, defaultValue) {
+    //   $.ajax({
+    //     url: "../App_Sys/Services/Action.asmx/GetEnumData",
 
-  //     contentType: "application/json; charset=utf-8",
+    //     contentType: "application/json; charset=utf-8",
 
-  //     type: "POST",
+    //     type: "POST",
 
-  //     dataType: "json",
+    //     dataType: "json",
 
-  //     data:
-  //       '{"id":"' +
-  //       _enumTypeID +
-  //       '","responseToken":"' +
-  //       genResponseKey() +
-  //       '"}',
+    //     data:
+    //       '{"id":"' +
+    //       _enumTypeID +
+    //       '","responseToken":"' +
+    //       genResponseKey() +
+    //       '"}',
 
-  //     async: false,
+    //     async: false,
 
-  //     error: function (jqXHR, textStatus, errorThrown) {
-  //       alert("Operation error \n\r " + errorThrown);
-  //     },
+    //     error: function (jqXHR, textStatus, errorThrown) {
+    //       alert("Operation error \n\r " + errorThrown);
+    //     },
 
-  //     success: function (data) {
-  //       data = data.d;
+    //     success: function (data) {
+    //       data = data.d;
 
-  //       if (data[0].errorCode) {
-  //         alert(
-  //           "Operation error \n\r " +
-  //             data[0].errorMessage.replace("<br/>", "\n\r")
-  //         );
-  //       }
+    //       if (data[0].errorCode) {
+    //         alert(
+    //           "Operation error \n\r " +
+    //             data[0].errorMessage.replace("<br/>", "\n\r")
+    //         );
+    //       }
 
-  //       setRequestToken(data[data.length - 1].requestToken);
+    //       setRequestToken(data[data.length - 1].requestToken);
 
-  //       data.pop();
+    //       data.pop();
 
-  //       _enumList = data;
-  //     },
-  //   });
+    //       _enumList = data;
+    //     },
+    //   });
 
-  //   var content = "";
+    //   var content = "";
 
-  $.each(_enumList, function (index, enumItem) {
-    var defaultState = "";
+    $.each(_enumList, function (index, enumItem) {
+      var defaultState = "";
 
-    if (enumItem.value == defaultValue) {
-      defaultState = "checked";
-    }
+      if (enumItem.value == defaultValue) {
+        defaultState = "checked";
+      }
 
-    content +=
-      '<label class="radio-inline noDrop" style="padding-right: 0px;"><input type="radio" class="noDrop" ondragover="allowDrop(event)" value="' +
-      enumItem.value +
-      '" name="optionsRadios-' +
-      itemID +
-      '" ' +
-      defaultState +
-      ">&nbsp;" +
-      enumItem.label +
-      "</label>";
-  });
+      content +=
+        '<label class="radio-inline noDrop" style="padding-right: 0px;"><input type="radio" class="noDrop" ondragover="allowDrop(event)" value="' +
+        enumItem.value +
+        '" name="optionsRadios-' +
+        itemID +
+        '" ' +
+        defaultState +
+        ">&nbsp;" +
+        enumItem.label +
+        "</label>";
+    });
 
-  return content;
-  // };
-}
+    return content;
+    // };
+  }
