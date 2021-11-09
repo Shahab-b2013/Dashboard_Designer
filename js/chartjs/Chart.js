@@ -1,12 +1,12 @@
-// function Chart(chartType){
-
+/**this function called from highchart
+ **exporting.js setting function
+ **/
 function ChartProp(thisChart) {
   const chartType = thisChart.userOptions.chart.type;
   console.log(chartType);
 
   //create modal form
   ConstractorForm("85%");
-
   let div1 =
     '<div id="div1" class="row col-lg-3 col-md-8 col-xs-12" style="border-radius:4px; border:1px solid #ccc; padding:10px 5px 10px 25px; margin-left:10px"></div>';
   $("#contentM").append(div1);
@@ -68,7 +68,7 @@ function ChartProp(thisChart) {
       //textBox
       let textBox = document.createElement("input");
       textBox.setAttribute("id", "text-" + i);
-      textBox.style.border='1px solid #ccc'
+      textBox.style.border = "1px solid #ccc";
       textBox.style.left = "0px";
       textBox.style.position = "absolute";
       $("#div1Items-" + i).append(textBox);
@@ -187,9 +187,6 @@ function ChartProp(thisChart) {
     $("#myModal").remove();
   };
   rowbtn.appendChild(btnExit);
-
-
-
 
   PieChart1();
   function PieChart1() {

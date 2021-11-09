@@ -178,7 +178,7 @@
 
         if (formGroup.ColumnLayout == "OnceColumn") {
           if (columnWidth == "default") {
-            columnWidth = "col-lg-7 col-md-10";
+            columnWidth = "col-lg-11";
           }
 
           content +=
@@ -188,13 +188,13 @@
             formGroup.FormGroupBoxID +
             '-0"> <figure class="highcharts-figure" id="figure' +
             formGroup.FormGroupBoxID +
-            '-0"><div id="container"></div></figure></div><div class="col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-1' +
+            '-0"><div id="container"></div></figure></div><div class="form-gorup-body col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-1' +
             formGroup.FormGroupBoxID +
             '"></div>';
         }
 
         if (formGroup.ColumnLayout == "TwoColumn") {
-          columnWidth = "col-md-4";
+          columnWidth = "col-md-5";
 
           content +=
             '<div class="' +
@@ -206,7 +206,7 @@
             formGroup.FormGroupBoxID +
             '-0"> <figure class="highcharts-figure" id="figure' +
             formGroup.FormGroupBoxID +
-            '-0"><div id="container"></div></figure></div><div class="col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-2-0' +
+            '-0"><div id="container"></div></figure></div><div class="form-gorup-body col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-2-0' +
             formGroup.FormGroupBoxID +
             '"></div><div class="' +
             columnWidth +
@@ -217,14 +217,14 @@
             formGroup.FormGroupBoxID +
             '-1"> <figure class="highcharts-figure" id="figure' +
             formGroup.FormGroupBoxID +
-            '-1"><div id="container"></div></figure></div><div class="col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-2-1' +
+            '-1"><div id="container"></div></figure></div><div class="form-gorup-body col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-2-1' +
             formGroup.FormGroupBoxID +
             '"></div>';
         }
 
         if (formGroup.ColumnLayout == "ThreeColumn") {
           if (formGroup.GroupDisplayMode == "GroupWithBox") {
-            columnWidth = "col-md-2";
+            columnWidth = "col-md-3";
           } else {
             columnWidth = "col-md-3";
           }
@@ -237,7 +237,7 @@
             formGroup.FormGroupBoxID +
             '-0"> <figure class="highcharts-figure" id="figure' +
             formGroup.FormGroupBoxID +
-            '-0"><div id="container"></div></figure></div><div class="col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-3-0' +
+            '-0"><div id="container"></div></figure></div><div class="form-gorup-body col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-3-0' +
             formGroup.FormGroupBoxID +
             '"></div><div class="' +
             columnWidth +
@@ -246,7 +246,7 @@
             formGroup.FormGroupBoxID +
             '-1"> <figure class="highcharts-figure" id="figure' +
             formGroup.FormGroupBoxID +
-            '-1"><div id="container"></div></figure></div><div class="col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-3-1' +
+            '-1"><div id="container"></div></figure></div><div class="form-gorup-body col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-3-1' +
             formGroup.FormGroupBoxID +
             '"></div><div class="' +
             columnWidth +
@@ -255,7 +255,7 @@
             formGroup.FormGroupBoxID +
             '-2"><figure class="highcharts-figure" id="figure' +
             formGroup.FormGroupBoxID +
-            '-2"><div id="container"></div></figure></div><div class="col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-3-2' +
+            '-2"><div id="container"></div></figure></div><div class="form-gorup-body col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-3-2' +
             formGroup.FormGroupBoxID +
             '"></div>';
         }

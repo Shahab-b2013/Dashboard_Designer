@@ -14,7 +14,7 @@ body {
   height: 40px;
   width: 100%;
   color: white;
-  font: 16px var(--mainFont);
+  font: 19px var(--mainFont);
 }
 /**/
 #geToolbar {
@@ -34,11 +34,11 @@ body {
 #RightPanel {
   background-color: var(--mainbackground);
   font: 1rem var(--mainFont);
-  margin: 10px 50px 10px 30px;
   border: 1px solid #ccc;
   border-radius: 3px;
-  padding: 10px;
-  height: 800px;
+  padding-right: 20px;
+  padding-left: 5px;
+  height: 857px;
   overflow: hidden;
 }
 
@@ -50,6 +50,7 @@ body {
   border: 1px solid #ccc;
   margin: 5px 5px 10px 5px;
   padding: 0px 10px 10px 10px;
+  height: 300px;
 }
 ::placeholder {
   font: 10px var(--mainFont);
@@ -59,14 +60,13 @@ body {
   border: 1px solid #ccc;
   margin: 5px;
   padding: 10px;
-  height: 400px;
 }
 
 #geContent {
   background-color: var(--mainbackground);
   font: 1rem var(--mainFont);
-  margin: 10px 0px 10px 20px;
-  height: 800px;
+  /* margin: 10px 0px 10px 20px; */
+  height: 857px;
   border: 1px solid #ccc;
   border-radius: 3px;
   overflow: auto;
@@ -91,7 +91,7 @@ body {
   background: linear-gradient(#0091ea, #2e4681);
   background-color: #2e4681;
   color: white;
-  font: 1.2rem var(--mainFont);
+  font: 16px var(--mainFont);
   border-radius: 4px;
   padding: 5px;
   z-index: 1;
@@ -99,7 +99,9 @@ body {
   position: sticky;
   top: 0;
 }
-
+#rightPanelID{
+  margin-top: 20px;
+}
 .headerDiv {
   color: black;
   font: 1rem var(--mainFont);

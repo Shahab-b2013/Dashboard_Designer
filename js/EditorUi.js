@@ -10,24 +10,15 @@ function createDivs() {
   TopDiv.innerHTML = " داشبورد امن پرداز";
   Container.appendChild(TopDiv);
 
-  //Toolbar
-  let Toolbar = createDiv("container-fluid", "geToolbar");
-  Toolbar.innerHTML = "toolbar";
-  Container.appendChild(Toolbar);
-
-  //------------------------
-
   //rowPanel
   let row = createDiv("row", "rowId");
   Container.appendChild(row);
-
- 
 
   //Panel
   CreatePanel();
 
   //Content create form
-  let Content = createDiv("col-lg-8" + ' noDrop', "geContent");
+  let Content = createDiv("col-lg-10" + " noDrop", "geContent");
   row.appendChild(Content);
 
   //content Header
@@ -39,7 +30,6 @@ function createDivs() {
   divupTopHeader.style.top = "0";
   Content.appendChild(divupTopHeader);
 
-  
   let contentHeader = document.createElement("div");
   contentHeader.className = "divHeader";
   contentHeader.setAttribute("id", "ContentHeader");

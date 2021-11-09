@@ -27,22 +27,15 @@ function createLbl(className, id) {
 
 //====================================================================RigthPanel============================================================
 function CreatePanel() {
-  let RightPanel = createDiv("col-lg-3", "RightPanel");
+  let RightPanel = createDiv("col-lg-2", "RightPanel");
   $("#rowId").append(RightPanel);
-
-  //div Header
-  let divHeader = document.createElement("div");
-  divHeader.className = "headerDiv";
-  divHeader.innerHTML = "افزودن نمودار";
-  divHeader.style.backgroundColor = "#ffffff";
-  RightPanel.appendChild(divHeader);
 
   //FildsPanel Header
   let panelHeader = document.createElement("div");
   panelHeader.className = "divHeader";
   panelHeader.innerHTML = "نمودار ها";
   panelHeader.style.background = "linear-gradient(#61892f99,#527428)";
-  panelHeader.style.gridColumn = "1/span 4";
+  panelHeader.setAttribute("id", "rightPanelID");
   RightPanel.appendChild(panelHeader);
 
   //FildsPanel
@@ -57,14 +50,16 @@ function CreatePanel() {
     item.setAttribute("src", "data:image/png;base64," + value);
     item.className = "noDrop";
     item.setAttribute("draggable", true);
-    item.addEventListener("dragstart", (ev) => drag(ev));
     item.setAttribute("id", index);
     item.setAttribute("width", "45");
     item.setAttribute("height", "45");
-    item.style.cursor = "move";
+    item.addEventListener("dragstart", (ev) => drag(ev));
+    item.addEventListener("mousedown", () => (item.style.cursor = "grabbing"));
+    item.addEventListener("mouseup", () => (item.style.cursor = "grab"));
     item.style.alignSelf = "center";
     item.style.justifySelf = "center";
     item.style.marginTop = "12px";
+    item.style.cursor = "grab";
     FildsPanel.appendChild(item);
 
     //label
@@ -72,80 +67,81 @@ function CreatePanel() {
     lbl.setAttribute("id", "lbl" + index);
 
     if (index == 0) {
-      lbl.innerHTML = "نمودار ستونی ";
-      lbl.style.gridColumn = "2";
-      lbl.style.gridRow = "2";
+      lbl.innerHTML = " ستونی ";
       item.style.gridColumn = "1";
-      item.style.gridRow = "2";
+      item.style.gridRow = "1";
+      lbl.style.gridColumn = "2";
+      lbl.style.gridRow = "1";
       item.setAttribute("width", "45");
       item.setAttribute("height", "45");
     } else if (index == 1) {
-      lbl.innerHTML = "نمودار دایره ای";
-      lbl.style.gridColumn = "2";
-      lbl.style.gridRow = "3";
-      item.style.gridColumn = "1";
-      item.style.gridRow = "3";
+      item.style.gridColumn = "3";
+      item.style.gridRow = "1";
+      lbl.innerHTML = " دایره ای";
+      lbl.style.gridColumn = "4";
+      lbl.style.gridRow = "1";
       item.setAttribute("width", "45");
       item.setAttribute("height", "45");
     } else if (index == 2) {
-      lbl.innerHTML = "نمودار میله ای";
-      lbl.style.gridColumn = "2";
-      lbl.style.gridRow = "4";
       item.style.gridColumn = "1";
-      item.style.gridRow = "4";
+      item.style.gridRow = "2";
+      lbl.innerHTML = " میله ای";
+      lbl.style.gridColumn = "2";
+      lbl.style.gridRow = "2";
       item.setAttribute("width", "45");
       item.setAttribute("height", "45");
     } else if (index == 3) {
-      lbl.innerHTML = "نمودار خطی";
-      lbl.style.gridColumn = "4";
-      lbl.style.gridRow = "2";
       item.style.gridColumn = "3";
       item.style.gridRow = "2";
+      lbl.innerHTML = " خطی";
+      lbl.style.gridColumn = "4";
+      lbl.style.gridRow = "2";
       item.setAttribute("width", "50");
       item.setAttribute("height", "40");
     } else if (index == 4) {
-      lbl.innerHTML = "نمودار مساحت";
-      lbl.style.gridColumn = "4";
-      lbl.style.gridRow = "3";
-      item.style.gridColumn = "3";
+      item.style.gridColumn = "1";
       item.style.gridRow = "3";
+      lbl.innerHTML = " مساحت";
+      lbl.style.gridColumn = "2";
+      lbl.style.gridRow = "3";
       item.setAttribute("width", "50");
       item.setAttribute("height", "50");
     } else if (index == 5) {
+      item.style.gridColumn = "3";
+      item.style.gridRow = "3";
       lbl.innerHTML = "گروه";
       lbl.style.gridColumn = "4";
-      lbl.style.gridRow = "4";
-      item.style.gridColumn = "3";
-      item.style.gridRow = "4";
+      lbl.style.gridRow = "3";
       item.setAttribute("width", "50");
       item.setAttribute("height", "50");
     }
-    // else if (index == 6) {
-    //   lbl.innerHTML = "گروه";
-    //   lbl.style.gridColumn = "2";
-    //   lbl.style.gridRow = "5";
-    //   item.style.gridColumn = "1";
-    //   item.style.gridRow = "5";
-    //   item.setAttribute("width", "40");
-    //   item.setAttribute("height", "40");
-    // }
     lbl.style.marginTop = "27px";
     lbl.style.marginRight = "0px";
     lbl.className = "lbl";
     FildsPanel.appendChild(lbl);
   });
 
-  //PanelProp Header   //todo
+  //PanelProp Header
   let PanelPropHeader = document.createElement("div");
   PanelPropHeader.className = "divHeader";
   PanelPropHeader.innerHTML = "تنظیمات ";
-  PanelPropHeader.style.gridColumn = "1/span 4";
   PanelPropHeader.style.gridRow = "1";
   RightPanel.appendChild(PanelPropHeader);
 
   //Properties
   let PropPanel = createDiv("", "PanelPropId");
   RightPanel.appendChild(PropPanel);
+
+  //PanelProp2 Header
+  let PanelProp2Header = document.createElement("div");
+  PanelProp2Header.className = "divHeader";
+  PanelProp2Header.innerHTML = "تنظیمات2 ";
+  PanelProp2Header.style.gridRow = "1";
+  RightPanel.appendChild(PanelProp2Header);
+
+  //Properties2
+  let PropPanel2 = createDiv("", "PanelPropId2");
+  RightPanel.appendChild(PropPanel2);
 }
 function createInput(type, opt, id) {
   let input;
@@ -243,6 +239,8 @@ function TextboxFns(ev) {
     txtContent.addEventListener("dblclick", (e) => TextboxProp(e.target.id));
     $("#" + rowId).append(txtContent);
   }
+  //set cursor rightPanel item
+  $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
 }
 
 function DropdownFns(ev) {
@@ -255,6 +253,8 @@ function DropdownFns(ev) {
   itemsPanel.addEventListener("dragover", (event) => allowDrop(event));
   itemsPanel.addEventListener("dblclick", (e) => DropdownProp(e.target.id));
   $("#" + rowId).append(itemsPanel);
+  //set cursor rightPanel item
+  $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
 }
 
 function LabelFns(ev) {
@@ -262,6 +262,8 @@ function LabelFns(ev) {
     //form-group and lbl
     rowContent(ev);
   }
+  //set cursor rightPanel item
+  $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
 }
 
 function CheckboxFns(ev) {
@@ -285,6 +287,9 @@ function CheckboxFns(ev) {
   lbl.addEventListener("dblclick", (ev) => labelProp(ev.target.id));
   lbl.setAttribute("for", itemsPanel.id);
   $("#" + rowId).append(lbl);
+
+  //set cursor rightPanel item
+  $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
 }
 
 function Group(ev) {
@@ -295,13 +300,11 @@ function Group(ev) {
       .parent()
       .attr("id");
     let id = 0;
-    // id = +GroupId.replace("form-group-", "");
     $("#" + parent)
       .children()
       .each(function () {
         if ($(this).hasClass("form-group-box")) {
           let nextId = +$(this).attr("id").replace("form-group-", "");
-          console.log(nextId);
           if (nextId > id) {
             id = nextId;
           }
@@ -337,6 +340,8 @@ function Group(ev) {
           )
         );
     });
+    //set cursor rightPanel item
+    $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
   }
 }
 

@@ -183,7 +183,7 @@ function GroupProp(elem) {
   br();
 
   //Set Column
-  item = lbl("تعداد ستون ", "colId");
+  item = lbl("تعداد چارت ", "colId");
   for (let i = 0; i < 3; i++) {
     item = document.createElement("input");
     item.type = "button";
@@ -194,69 +194,15 @@ function GroupProp(elem) {
     item.style.marginRight = "5px";
     item.style.font = '12px  "IRANSansWeb", Tahoma';
     item.onclick = (e) => {
-      let groupDivIdArray = [];
-      function groupDivId(elem) {
-        let parnetnodeID = elem.parentNode.parentNode.id;
-        parnetnodeID = document.getElementById(parnetnodeID);
-        for (let q = 0; q < parnetnodeID.childNodes.length; q++) {
-          if (parnetnodeID.childNodes[q].id) {
-            let id = parnetnodeID.childNodes[q].id;
-
-            if ($("#" + id).hasClass("form-group-body")) {
-              groupDivIdArray.push(id);
-            }
-          }
-        }
-        return [...new Set(groupDivIdArray)];
-      }
       switch (+$("#" + e.target.id).val()) {
         case 1:
-          $("#" + groupDivId(elem)[0]).attr(
-            "class",
-            "form-group-body col-md-7"
-          );
-          for (let k = 1; k < groupDivId(elem).length; k++) {
-            const elements = $("#" + groupDivId(elem)[k]).children();
-            for (let j = 0; j < elements.length; j++) {
-              const id = elements[j].id;
-              if ($("#" + id).hasClass("form-group")) {
-                $("#" + groupDivId(elem)[0]).append($("#" + id));
-              }
-            }
-            $("#" + groupDivId(elem)[k]).remove();
-          }
+          DivSplit_1(elem);
           break;
         case 2:
-          // if is only div1
-          if (groupDivId(elem).length < 2) {
-            $("#" + groupDivId(elem)[0]).attr(
-              "class",
-              "form-group-body col-md-4"
-            );
-            const div2ID = groupDivId(elem)[0].replace("-0", "-1");
-            let div2 =
-              '<div class="form-group-body col-md-4" style="border-radius:4px" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
-              div2ID +
-              '"></div>';
-            //get mindiv
-            let minidiv = $("#" + groupDivId(elem)[0]).next()[0].id;
-            $("#" + minidiv).after($(div2));
-
-            let div1Items = $("#" + groupDivId(elem)[0]).children();
-            for (
-              let k = Math.round(div1Items.length / 2);
-              k < div1Items.length;
-              k++
-            ) {
-              const elementId = div1Items[k].id;
-              $("#" + div2ID).append($("#" + elementId));
-            }
-          }
+          DivSplit_2(elem);
           break;
         case 3:
-          // let parentId = elem.parentNode.parentNode.id + "-0";
-          // parentId = parentId.replace("form-group-", "form-group-body-");
-          // $("#" + parentId).attr("class", "col-md-3");
+          DivSplit_3(elem);
           break;
       }
     };
@@ -264,6 +210,129 @@ function GroupProp(elem) {
   }
 }
 
+function DivSplit_1(elem) {
+  removeDiv(elem);
+  if (groupDivId(elem).length == 1) {
+    setDiv1(elem, 11);
+  }
+}
+function DivSplit_2(elem) {
+  removeDiv(elem);
+  if (groupDivId(elem).length == 1) {
+    setDiv1(elem, 5);
+    CreateDiv2(elem, 5);
+  }
+}
+function DivSplit_3(elem) {
+  removeDiv(elem);
+  if (groupDivId(elem).length == 1) {
+    setDiv1(elem, 3);
+    CreateDiv2(elem, 3);
+    CreateDiv3(elem, 3);
+  }
+  if (groupDivId(elem).length == 2) {
+    setDiv1(elem, 3);
+    setDiv2(elem, 3);
+    CreateDiv3(elem, 3);
+  }
+}
 
 
-  
+
+function setDiv1(elem, colNum) {
+  $("#" + groupDivId(elem)[0]).attr(
+    "class",
+    "form-group-body col-md-" + colNum
+  );
+  PieChart($("#" + groupDivId(elem)[0]));
+}
+function setDiv2(elem, colNum) {
+  $("#" + groupDivId(elem)[1]).attr(
+    "class",
+    "form-group-body col-md-" + colNum
+  );
+  PieChart($("#" + groupDivId(elem)[1]));
+}
+function CreateDiv2(elem, colNum) {
+  const div2ID = groupDivId(elem)[0].replace("0-0", "0-1");
+  let div2 =
+    '<div class="form-group-body col-md-' +
+    colNum +
+    '" style="border-radius:4px" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
+    div2ID +
+    '"></div>';
+  //set div2
+  let minidiv1ID = $("#" + groupDivId(elem)[0]).next()[0].id;
+  $("#" + minidiv1ID).after($(div2));
+  //set mindiv2
+  let minidiv2 =
+    '<div class="form-gorup-body col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-2' +
+    div2ID +
+    '"></div>';
+  $("#" + div2ID).after($(minidiv2));
+
+  //div1 and div2 set Element
+  let div1Items = $("#" + groupDivId(elem)[0]).children();
+  for (
+    //set lenght/2 in div1
+    let k = Math.round(div1Items.length / 2);
+    k < div1Items.length;
+    k++
+  ) {
+    //set lenght/2 in div2
+    const elementId = div1Items[k].id;
+    $("#" + div2ID).append($("#" + elementId));
+  }
+  //chart refresh
+  PieChart(div2ID);
+}
+
+function CreateDiv3(elem, colNum) {
+  //create div3
+  const div3ID = groupDivId(elem)[1].replace("0-1", "0-2");
+  let div3 =
+    '<div class="form-group-body col-md-' +
+    colNum +
+    '" style="border-radius:4px" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
+    div3ID +
+    '"></div>';
+  //get mindiv2
+  let minidiv2GetID = $("#" + groupDivId(elem)[1]).next()[0].id;
+  $("#" + minidiv2GetID).after($(div3));
+  //set mindiv3
+  let minidiv3 =
+    '<div class="form-gorup-body col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-3' +
+    div3ID +
+    '"></div>';
+  $("#" + div3ID).after($(minidiv3));
+
+  //chart refresh
+  PieChart(div3ID);
+}
+
+//if div.child==empty then
+function removeDiv(elem) {
+  const groupArr = groupDivId(elem);
+  for (let k = 0; k < groupArr.length; k++) {
+    console.log(k);
+    const elements = +$("#" + groupArr[k]).children().length;
+    if (elements === 0) {
+      $("#" + groupArr[k]).remove();
+    }
+  }
+}
+function groupDivId(elem) {
+  let groupDivIdArray = [];
+  let parnetnodeID = elem.parentNode.parentNode.id;
+  parnetnodeID = document.getElementById(parnetnodeID);
+  for (let q = 0; q < parnetnodeID.childNodes.length; q++) {
+    if (parnetnodeID.childNodes[q].id) {
+      let id = parnetnodeID.childNodes[q].id;
+
+      if ($("#" + id).hasClass("form-group-body")) {
+        groupDivIdArray.push(id);
+      }
+    }
+  }
+  return [...new Set(groupDivIdArray)];
+}
