@@ -17,32 +17,32 @@
     DataActivityID: "",
     charts: [
       {
-        RowId: 1010300,
-        ActivityID: 1010300,
-        Visibility: "",
+        FormItemID: 101030007,
+        ActivityParamID: 101030007,
+        ActionControlID: "",
+        Label: "پست الکترونیکی",
+        Type: "pie",
+
+        FormID: 1010300,
         ColumnIndex: 0,
+        ActivityID: 1010300,
+        EntityAttributeID: 1010310,
+
         FormGroupBoxID: 10103000,
-        id: "highcharts-kzimcwq-199-",
-        name: "",
-        text: "ttyu",
-        type: "Pie",
-        categoryLabel: "#empty",
-        valueLabel: "#empty",
-        categoryName: "",
-        categoryExpression: "[data2]",
-        seriesType: "",
-        version: "",
-        series: [
-          {
-            name: "",
-            text: "",
-            dataExpression: "Sum([data2])",
-            plotType: "bar",
-            StlyeColor: "#994848",
-            version: "",
-          },
-        ],
-        style: "",
+      },
+      {
+        FormItemID: 101030008,
+        ActivityParamID: 101030007,
+        ActionControlID: "",
+        Label: "پست الکترونیکی",
+        Type: "pie",
+        ColumnIndex: 1,
+        FormID: 1010300,
+
+        ActivityID: 1010300,
+        EntityAttributeID: 1010310,
+
+        FormGroupBoxID: 10103000,
       },
     ],
     //     {
@@ -91,7 +91,7 @@
     //         },
     //       ],
     //       style:
-    //         "image;html=1;image=data:image/svg+xml,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjxzdmcgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgY2xhc3M9ImhpZ2hjaGFydHMtcm9vdCIgc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0x1Y2lkYSBHcmFuZGUmcXVvdDssICZxdW90O0x1Y2lkYSBTYW5zIFVuaWNvZGUmcXVvdDssIEFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7Zm9udC1zaXplOjEycHg7IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMzU1IiB2aWV3Qm94PSIwIDAgNjAwIDM1NSI+PGRlc2M+Q3JlYXRlZCB3aXRoIEhpZ2hjaGFydHMgOS4xLjI8L2Rlc2M+PGRlZnM+PGNsaXBQYXRoIGlkPSJoaWdoY2hhcnRzLXNsdHNrMjEtMTI0LSI+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjQ0MyIgaGVpZ2h0PSIyNzgiIGZpbGw9Im5vbmUiPjwvcmVjdD48L2NsaXBQYXRoPjwvZGVmcz48cmVjdCBmaWxsPSIjZmZmZmZmIiBjbGFzcz0iaGlnaGNoYXJ0cy1iYWNrZ3JvdW5kIiB4PSIwIiB5PSIwIiB3aWR0aD0iNjAwIiBoZWlnaHQ9IjM1NSIgcng9IjAiIHJ5PSIwIj48L3JlY3Q+PHJlY3QgZmlsbD0ibm9uZSIgY2xhc3M9ImhpZ2hjaGFydHMtcGxvdC1iYWNrZ3JvdW5kIiB4PSI1NyIgeT0iNDAiIHdpZHRoPSI0NDMiIGhlaWdodD0iMjc4Ij48L3JlY3Q+PGcgY2xhc3M9ImhpZ2hjaGFydHMtZ3JpZCBoaWdoY2hhcnRzLXhheGlzLWdyaWQiIGRhdGEtei1pbmRleD0iMSI+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlLWRhc2hhcnJheT0ibm9uZSIgZGF0YS16LWluZGV4PSIxIiBjbGFzcz0iaGlnaGNoYXJ0cy1ncmlkLWxpbmUiIGQ9Ik0gMTE5LjUgNDAgTCAxMTkuNSAzMTgiIG9wYWNpdHk9IjEiPjwvcGF0aD48cGF0aCBmaWxsPSJub25lIiBzdHJva2UtZGFzaGFycmF5PSJub25lIiBkYXRhLXotaW5kZXg9IjEiIGNsYXNzPSJoaWdoY2hhcnRzLWdyaWQtbGluZSIgZD0iTSAxODMuNSA0MCBMIDE4My41IDMxOCIgb3BhY2l0eT0iMSI+PC9wYXRoPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZS1kYXNoYXJyYXk9Im5vbmUiIGRhdGEtei1pbmRleD0iMSIgY2xhc3M9ImhpZ2hjaGFydHMtZ3JpZC1saW5lIiBkPSJNIDI0Ni41IDQwIEwgMjQ2LjUgMzE4IiBvcGFjaXR5PSIxIj48L3BhdGg+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlLWRhc2hhcnJheT0ibm9uZSIgZGF0YS16LWluZGV4PSIxIiBjbGFzcz0iaGlnaGNoYXJ0cy1ncmlkLWxpbmUiIGQ9Ik0gMzA5LjUgNDAgTCAzMDkuNSAzMTgiIG9wYWNpdHk9IjEiPjwvcGF0aD48cGF0aCBmaWxsPSJub25lIiBzdHJva2UtZGFzaGFycmF5PSJub25lIiBkYXRhLXotaW5kZXg9IjEiIGNsYXNzPSJoaWdoY2hhcnRzLWdyaWQtbGluZSIgZD0iTSAzNzIuNSA0MCBMIDM3Mi41IDMxOCIgb3BhY2l0eT0iMSI+PC9wYXRoPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZS1kYXNoYXJyYXk9Im5vbmUiIGRhdGEtei1pbmRleD0iMSIgY2xhc3M9ImhpZ2hjaGFydHMtZ3JpZC1saW5lIiBkPSJNIDQzNi41IDQwIEwgNDM2LjUgMzE4IiBvcGFjaXR5PSIxIj48L3BhdGg+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlLWRhc2hhcnJheT0ibm9uZSIgZGF0YS16LWluZGV4PSIxIiBjbGFzcz0iaGlnaGNoYXJ0cy1ncmlkLWxpbmUiIGQ9Ik0gNDk5LjUgNDAgTCA0OTkuNSAzMTgiIG9wYWNpdHk9IjEiPjwvcGF0aD48cGF0aCBmaWxsPSJub25lIiBzdHJva2UtZGFzaGFycmF5PSJub25lIiBkYXRhLXotaW5kZXg9IjEiIGNsYXNzPSJoaWdoY2hhcnRzLWdyaWQtbGluZSIgZD0iTSA1Ni41IDQwIEwgNTYuNSAzMTgiIG9wYWNpdHk9IjEiPjwvcGF0aD48L2c+PGcgY2xhc3M9ImhpZ2hjaGFydHMtZ3JpZCBoaWdoY2hhcnRzLXlheGlzLWdyaWQiIGRhdGEtei1pbmRleD0iMSI+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTZlNmU2IiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1kYXNoYXJyYXk9Im5vbmUiIGRhdGEtei1pbmRleD0iMSIgY2xhc3M9ImhpZ2hjaGFydHMtZ3JpZC1saW5lIiBkPSJNIDU3IDMxOC41IEwgNTAwIDMxOC41IiBvcGFjaXR5PSIxIj48L3BhdGg+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTZlNmU2IiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1kYXNoYXJyYXk9Im5vbmUiIGRhdGEtei1pbmRleD0iMSIgY2xhc3M9ImhpZ2hjaGFydHMtZ3JpZC1saW5lIiBkPSJNIDU3IDIyNS41IEwgNTAwIDIyNS41IiBvcGFjaXR5PSIxIj48L3BhdGg+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTZlNmU2IiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1kYXNoYXJyYXk9Im5vbmUiIGRhdGEtei1pbmRleD0iMSIgY2xhc3M9ImhpZ2hjaGFydHMtZ3JpZC1saW5lIiBkPSJNIDU3IDEzMy41IEwgNTAwIDEzMy41IiBvcGFjaXR5PSIxIj48L3BhdGg+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTZlNmU2IiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1kYXNoYXJyYXk9Im5vbmUiIGRhdGEtei1pbmRleD0iMSIgY2xhc3M9ImhpZ2hjaGFydHMtZ3JpZC1saW5lIiBkPSJNIDU3IDM5LjUgTCA1MDAgMzkuNSIgb3BhY2l0eT0iMSI+PC9wYXRoPjwvZz48cmVjdCBmaWxsPSJub25lIiBjbGFzcz0iaGlnaGNoYXJ0cy1wbG90LWJvcmRlciIgZGF0YS16LWluZGV4PSIxIiB4PSI1NyIgeT0iNDAiIHdpZHRoPSI0NDMiIGhlaWdodD0iMjc4Ij48L3JlY3Q+PGcgY2xhc3M9ImhpZ2hjaGFydHMtYXhpcyBoaWdoY2hhcnRzLXhheGlzIiBkYXRhLXotaW5kZXg9IjIiPjxwYXRoIGZpbGw9Im5vbmUiIGNsYXNzPSJoaWdoY2hhcnRzLWF4aXMtbGluZSIgc3Ryb2tlPSIjY2NkNmViIiBzdHJva2Utd2lkdGg9IjEiIGRhdGEtei1pbmRleD0iNyIgZD0iTSA1NyAzMTguNSBMIDUwMCAzMTguNSI+PC9wYXRoPjwvZz48ZyBjbGFzcz0iaGlnaGNoYXJ0cy1heGlzIGhpZ2hjaGFydHMteWF4aXMiIGRhdGEtei1pbmRleD0iMiI+PHRleHQgeD0iMjUiIGRhdGEtei1pbmRleD0iNyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCwwKSByb3RhdGUoMjcwIDI1IDE3OSkiIGNsYXNzPSJoaWdoY2hhcnRzLWF4aXMtdGl0bGUiIHN0eWxlPSJjb2xvcjojMTU0MzYwO2ZvbnQtc2l6ZToxM3B4O2ZvbnQtZmFtaWx5OklSQU5TYW5zV2ViO2ZpbGw6IzE1NDM2MDsiIHk9IjE3OSI+I2VtcHR5PC90ZXh0PjxwYXRoIGZpbGw9Im5vbmUiIGNsYXNzPSJoaWdoY2hhcnRzLWF4aXMtbGluZSIgZGF0YS16LWluZGV4PSI3IiBkPSJNIDU3IDQwIEwgNTcgMzE4Ij48L3BhdGg+PC9nPjxnIGNsYXNzPSJoaWdoY2hhcnRzLXNlcmllcy1ncm91cCIgZGF0YS16LWluZGV4PSIzIj48ZyBjbGFzcz0iaGlnaGNoYXJ0cy1zZXJpZXMgaGlnaGNoYXJ0cy1zZXJpZXMtMCBoaWdoY2hhcnRzLWFyZWFzcGxpbmUtc2VyaWVzIiBkYXRhLXotaW5kZXg9IjAuMSIgb3BhY2l0eT0iMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTcsNDApIHNjYWxlKDEgMSkiIGNsaXAtcGF0aD0idXJsKCNoaWdoY2hhcnRzLXNsdHNrMjEtMTI0LSkiPjxwYXRoIGZpbGw9InJnYigxODcsMTk0LDIwNikiIGZpbGwtb3BhY2l0eT0iMC43NSIgZD0iTSAzMS42NDI4NTcxNDI4NTcgMTg1LjMzMzMzMzMzMzMzMzMxIEMgMzEuNjQyODU3MTQyODU3IDE4NS4zMzMzMzMzMzMzMzMzMSA2OS42MTQyODU3MTQyODU0IDkyLjY2NjY2NjY2NjY2NjY2IDk0LjkyODU3MTQyODU3MSA5Mi42NjY2NjY2NjY2NjY2NiBDIDEyMC4yNDI4NTcxNDI4NTg2MSA5Mi42NjY2NjY2NjY2NjY2NiAxMzIuOTAwMDAwMDAwMDAyNDIgMTg1LjMzMzMzMzMzMzMzMzMxIDE1OC4yMTQyODU3MTQyOSAxODUuMzMzMzMzMzMzMzMzMzEgQyAxODMuNTI4NTcxNDI4NTc0MDMgMTg1LjMzMzMzMzMzMzMzMzMxIDE5Ni4xODU3MTQyODU3MTYgOTIuNjY2NjY2NjY2NjY2NjYgMjIxLjUgOTIuNjY2NjY2NjY2NjY2NjYgQyAyNDYuODE0Mjg1NzE0Mjg0IDkyLjY2NjY2NjY2NjY2NjY2IDI1OS40NzE0Mjg1NzE0MjYgMTg1LjMzMzMzMzMzMzMzMzMxIDI4NC43ODU3MTQyODU3MSAxODUuMzMzMzMzMzMzMzMzMzEgQyAzMTAuMDk5OTk5OTk5OTk4IDE4NS4zMzMzMzMzMzMzMzMzMSAzMjIuNzU3MTQyODU3MTQxOTYgMTg1LjMzMzMzMzMzMzMzMzMxIDM0OC4wNzE0Mjg1NzE0MyAxODUuMzMzMzMzMzMzMzMzMzEgQyAzNzMuMzg1NzE0Mjg1NzEzOTYgMTg1LjMzMzMzMzMzMzMzMzMxIDQxMS4zNTcxNDI4NTcxNCAxODUuMzMzMzMzMzMzMzMzMzEgNDExLjM1NzE0Mjg1NzE0IDE4NS4zMzMzMzMzMzMzMzMzMSBMIDQxMS4zNTcxNDI4NTcxNCAyNzggQyA0MTEuMzU3MTQyODU3MTQgMjc4IDM3My4zODU3MTQyODU3MTM5NiAyNzggMzQ4LjA3MTQyODU3MTQzIDI3OCBDIDMyMi43NTcxNDI4NTcxNDE5NiAyNzggMzEwLjA5OTk5OTk5OTk5OCAyNzggMjg0Ljc4NTcxNDI4NTcxIDI3OCBDIDI1OS40NzE0Mjg1NzE0MjYgMjc4IDI0Ni44MTQyODU3MTQyODQgMjc4IDIyMS41IDI3OCBDIDE5Ni4xODU3MTQyODU3MTYgMjc4IDE4My41Mjg1NzE0Mjg1NzQwMyAyNzggMTU4LjIxNDI4NTcxNDI5IDI3OCBDIDEzMi45MDAwMDAwMDAwMDI0MiAyNzggMTIwLjI0Mjg1NzE0Mjg1ODYxIDI3OCA5NC45Mjg1NzE0Mjg1NzEgMjc4IEMgNjkuNjE0Mjg1NzE0Mjg1NCAyNzggMzEuNjQyODU3MTQyODU3IDI3OCAzMS42NDI4NTcxNDI4NTcgMjc4IFoiIGNsYXNzPSJoaWdoY2hhcnRzLWFyZWEiIGRhdGEtei1pbmRleD0iMCI+PC9wYXRoPjxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0gMzEuNjQyODU3MTQyODU3IDE4NS4zMzMzMzMzMzMzMzMzMSBDIDMxLjY0Mjg1NzE0Mjg1NyAxODUuMzMzMzMzMzMzMzMzMzEgNjkuNjE0Mjg1NzE0Mjg1NCA5Mi42NjY2NjY2NjY2NjY2NiA5NC45Mjg1NzE0Mjg1NzEgOTIuNjY2NjY2NjY2NjY2NjYgQyAxMjAuMjQyODU3MTQyODU4NjEgOTIuNjY2NjY2NjY2NjY2NjYgMTMyLjkwMDAwMDAwMDAwMjQyIDE4NS4zMzMzMzMzMzMzMzMzMSAxNTguMjE0Mjg1NzE0MjkgMTg1LjMzMzMzMzMzMzMzMzMxIEMgMTgzLjUyODU3MTQyODU3NDAzIDE4NS4zMzMzMzMzMzMzMzMzMSAxOTYuMTg1NzE0Mjg1NzE2IDkyLjY2NjY2NjY2NjY2NjY2IDIyMS41IDkyLjY2NjY2NjY2NjY2NjY2IEMgMjQ2LjgxNDI4NTcxNDI4NCA5Mi42NjY2NjY2NjY2NjY2NiAyNTkuNDcxNDI4NTcxNDI2IDE4NS4zMzMzMzMzMzMzMzMzMSAyODQuNzg1NzE0Mjg1NzEgMTg1LjMzMzMzMzMzMzMzMzMxIEMgMzEwLjA5OTk5OTk5OTk5OCAxODUuMzMzMzMzMzMzMzMzMzEgMzIyLjc1NzE0Mjg1NzE0MTk2IDE4NS4zMzMzMzMzMzMzMzMzMSAzNDguMDcxNDI4NTcxNDMgMTg1LjMzMzMzMzMzMzMzMzMxIEMgMzczLjM4NTcxNDI4NTcxMzk2IDE4NS4zMzMzMzMzMzMzMzMzMSA0MTEuMzU3MTQyODU3MTQgMTg1LjMzMzMzMzMzMzMzMzMxIDQxMS4zNTcxNDI4NTcxNCAxODUuMzMzMzMzMzMzMzMzMzEiIGNsYXNzPSJoaWdoY2hhcnRzLWdyYXBoIiBkYXRhLXotaW5kZXg9IjEiIHN0cm9rZT0iI2JiYzJjZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD48L2c+PGcgY2xhc3M9ImhpZ2hjaGFydHMtbWFya2VycyBoaWdoY2hhcnRzLXNlcmllcy0wIGhpZ2hjaGFydHMtYXJlYXNwbGluZS1zZXJpZXMiIGRhdGEtei1pbmRleD0iMC4xIiBvcGFjaXR5PSIxIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1Nyw0MCkgc2NhbGUoMSAxKSIgY2xpcC1wYXRoPSJub25lIj48cGF0aCBmaWxsPSIjYmJjMmNlIiBkPSJNIDMxIDE4OSBBIDQgNCAwIDEgMSAzMS4wMDM5OTk5OTkzMzMzMzUgMTg4Ljk5OTk5ODAwMDAwMDE4IFoiIG9wYWNpdHk9IjEiIGNsYXNzPSJoaWdoY2hhcnRzLXBvaW50Ij48L3BhdGg+PHBhdGggZmlsbD0iI2JiYzJjZSIgZD0iTSA5NCA5NyBBIDQgNCAwIDEgMSA5NC4wMDM5OTk5OTkzMzMzMyA5Ni45OTk5OTgwMDAwMDAxNiBaIiBvcGFjaXR5PSIxIiBjbGFzcz0iaGlnaGNoYXJ0cy1wb2ludCI+PC9wYXRoPjxwYXRoIGZpbGw9IiNiYmMyY2UiIGQ9Ik0gMTU4IDE4OSBBIDQgNCAwIDEgMSAxNTguMDAzOTk5OTk5MzMzMzMgMTg4Ljk5OTk5ODAwMDAwMDE4IFoiIG9wYWNpdHk9IjEiIGNsYXNzPSJoaWdoY2hhcnRzLXBvaW50Ij48L3BhdGg+PHBhdGggZmlsbD0iI2JiYzJjZSIgZD0iTSAyMjEgOTcgQSA0IDQgMCAxIDEgMjIxLjAwMzk5OTk5OTMzMzMzIDk2Ljk5OTk5ODAwMDAwMDE2IFoiIG9wYWNpdHk9IjEiIGNsYXNzPSJoaWdoY2hhcnRzLXBvaW50Ij48L3BhdGg+PHBhdGggZmlsbD0iI2JiYzJjZSIgZD0iTSAyODQgMTg5IEEgNCA0IDAgMSAxIDI4NC4wMDM5OTk5OTkzMzMzNiAxODguOTk5OTk4MDAwMDAwMTggWiIgb3BhY2l0eT0iMSIgY2xhc3M9ImhpZ2hjaGFydHMtcG9pbnQiPjwvcGF0aD48cGF0aCBmaWxsPSIjYmJjMmNlIiBkPSJNIDM0OCAxODkgQSA0IDQgMCAxIDEgMzQ4LjAwMzk5OTk5OTMzMzM2IDE4OC45OTk5OTgwMDAwMDAxOCBaIiBvcGFjaXR5PSIxIiBjbGFzcz0iaGlnaGNoYXJ0cy1wb2ludCI+PC9wYXRoPjxwYXRoIGZpbGw9IiNiYmMyY2UiIGQ9Ik0gNDExIDE4OSBBIDQgNCAwIDEgMSA0MTEuMDAzOTk5OTk5MzMzMzYgMTg4Ljk5OTk5ODAwMDAwMDE4IFoiIG9wYWNpdHk9IjEiIGNsYXNzPSJoaWdoY2hhcnRzLXBvaW50Ij48L3BhdGg+PC9nPjwvZz48ZyBjbGFzcz0iaGlnaGNoYXJ0cy1sYWJlbCBoaWdoY2hhcnRzLXNlcmllcy1sYWJlbCBoaWdoY2hhcnRzLXNlcmllcy1sYWJlbC0wIGhpZ2hjaGFydHMtY29sb3Itbm9uZSIgb3BhY2l0eT0iMSIgZGF0YS16LWluZGV4PSIzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMzAsMjE2KSI+PHBhdGggZmlsbD0ibm9uZSIgY2xhc3M9ImhpZ2hjaGFydHMtbGFiZWwtYm94IiBkPSJNIDAgMCIgc3Ryb2tlPSIjYmJjMmNlIiBzdHJva2Utd2lkdGg9IjEiPjwvcGF0aD48dGV4dCB4PSIwIiBkYXRhLXotaW5kZXg9IjEiIHN0eWxlPSJjb2xvcjojMDAwMDAwO2ZvbnQtd2VpZ2h0OmJvbGQ7ZmlsbDojMDAwMDAwOyIgeT0iMTIiPltkYXRhMl08L3RleHQ+PC9nPjx0ZXh0IHg9IjMwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImhpZ2hjaGFydHMtdGl0bGUiIGRhdGEtei1pbmRleD0iNCIgc3R5bGU9ImNvbG9yOiMxNTQzNjA7Zm9udC1zaXplOjE0cHg7Zm9udC1mYW1pbHk6SVJBTlNhbnNXZWI7Zm9udC13ZWlnaHQ6Qm9sZDtmaWxsOiMxNTQzNjA7IiB5PSIyMSI+c2VmPC90ZXh0Pjx0ZXh0IHg9IjMwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImhpZ2hjaGFydHMtc3VidGl0bGUiIGRhdGEtei1pbmRleD0iNCIgc3R5bGU9ImNvbG9yOiM2NjY2NjY7ZmlsbDojNjY2NjY2OyIgeT0iMzkiPjwvdGV4dD48dGV4dCB4PSIxMCIgdGV4dC1hbmNob3I9InN0YXJ0IiBjbGFzcz0iaGlnaGNoYXJ0cy1jYXB0aW9uIiBkYXRhLXotaW5kZXg9IjQiIHN0eWxlPSJjb2xvcjojNjY2NjY2O2ZpbGw6IzY2NjY2NjsiIHk9IjM1MiI+PC90ZXh0PjxnIGNsYXNzPSJoaWdoY2hhcnRzLWRhdGEtbGFiZWxzIGhpZ2hjaGFydHMtc2VyaWVzLTAgaGlnaGNoYXJ0cy1hcmVhc3BsaW5lLXNlcmllcyIgZGF0YS16LWluZGV4PSI2IiBvcGFjaXR5PSIxIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1Nyw0MCkgc2NhbGUoMSAxKSI+PGcgY2xhc3M9ImhpZ2hjaGFydHMtbGFiZWwgaGlnaGNoYXJ0cy1kYXRhLWxhYmVsIGhpZ2hjaGFydHMtZGF0YS1sYWJlbC1jb2xvci11bmRlZmluZWQiIGRhdGEtei1pbmRleD0iMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzAsMTcwKSIgc3R5bGU9ImN1cnNvcjpwb2ludGVyOyI+PHRleHQgeD0iNSIgZGF0YS16LWluZGV4PSIxIiB5PSIxOCIgc3R5bGU9ImNvbG9yOiNGRkZGRkY7Zm9udC1mYW1pbHk6SVJBTlNhbnNXZWI7Zm9udC1zaXplOjEzcHg7Zm9udC13ZWlnaHQ6Ym9sZDtmaWxsOiNGRkZGRkY7Ij48dHNwYW4gY2xhc3M9ImhpZ2hjaGFydHMtdGV4dC1vdXRsaW5lIiBmaWxsPSIjMDAwMDAwIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMnB4IiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHlsZT0iIj4xPHRzcGFuIHg9IjUiIHk9IjE4Ij7igIs8L3RzcGFuPjwvdHNwYW4+MTwvdGV4dD48L2c+PGcgY2xhc3M9ImhpZ2hjaGFydHMtbGFiZWwgaGlnaGNoYXJ0cy1kYXRhLWxhYmVsIGhpZ2hjaGFydHMtZGF0YS1sYWJlbC1jb2xvci11bmRlZmluZWQiIGRhdGEtei1pbmRleD0iMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTMsNzgpIiBzdHlsZT0iY3Vyc29yOnBvaW50ZXI7Ij48dGV4dCB4PSI1IiBkYXRhLXotaW5kZXg9IjEiIHk9IjE4IiBzdHlsZT0iY29sb3I6I0ZGRkZGRjtmb250LWZhbWlseTpJUkFOU2Fuc1dlYjtmb250LXNpemU6MTNweDtmb250LXdlaWdodDpib2xkO2ZpbGw6I0ZGRkZGRjsiPjx0c3BhbiBjbGFzcz0iaGlnaGNoYXJ0cy10ZXh0LW91dGxpbmUiIGZpbGw9IiMwMDAwMDAiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIycHgiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjI8dHNwYW4geD0iNSIgeT0iMTgiPuKAizwvdHNwYW4+PC90c3Bhbj4yPC90ZXh0PjwvZz48ZyBjbGFzcz0iaGlnaGNoYXJ0cy1sYWJlbCBoaWdoY2hhcnRzLWRhdGEtbGFiZWwgaGlnaGNoYXJ0cy1kYXRhLWxhYmVsLWNvbG9yLXVuZGVmaW5lZCIgZGF0YS16LWluZGV4PSIxIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTcsMTcwKSIgc3R5bGU9ImN1cnNvcjpwb2ludGVyOyI+PHRleHQgeD0iNSIgZGF0YS16LWluZGV4PSIxIiB5PSIxOCIgc3R5bGU9ImNvbG9yOiNGRkZGRkY7Zm9udC1mYW1pbHk6SVJBTlNhbnNXZWI7Zm9udC1zaXplOjEzcHg7Zm9udC13ZWlnaHQ6Ym9sZDtmaWxsOiNGRkZGRkY7Ij48dHNwYW4gY2xhc3M9ImhpZ2hjaGFydHMtdGV4dC1vdXRsaW5lIiBmaWxsPSIjMDAwMDAwIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMnB4IiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4xPHRzcGFuIHg9IjUiIHk9IjE4Ij7igIs8L3RzcGFuPjwvdHNwYW4+MTwvdGV4dD48L2c+PGcgY2xhc3M9ImhpZ2hjaGFydHMtbGFiZWwgaGlnaGNoYXJ0cy1kYXRhLWxhYmVsIGhpZ2hjaGFydHMtZGF0YS1sYWJlbC1jb2xvci11bmRlZmluZWQiIGRhdGEtei1pbmRleD0iMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjIwLDc4KSIgc3R5bGU9ImN1cnNvcjpwb2ludGVyOyI+PHRleHQgeD0iNSIgZGF0YS16LWluZGV4PSIxIiB5PSIxOCIgc3R5bGU9ImNvbG9yOiNGRkZGRkY7Zm9udC1mYW1pbHk6SVJBTlNhbnNXZWI7Zm9udC1zaXplOjEzcHg7Zm9udC13ZWlnaHQ6Ym9sZDtmaWxsOiNGRkZGRkY7Ij48dHNwYW4gY2xhc3M9ImhpZ2hjaGFydHMtdGV4dC1vdXRsaW5lIiBmaWxsPSIjMDAwMDAwIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMnB4IiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4yPHRzcGFuIHg9IjUiIHk9IjE4Ij7igIs8L3RzcGFuPjwvdHNwYW4+MjwvdGV4dD48L2c+PGcgY2xhc3M9ImhpZ2hjaGFydHMtbGFiZWwgaGlnaGNoYXJ0cy1kYXRhLWxhYmVsIGhpZ2hjaGFydHMtZGF0YS1sYWJlbC1jb2xvci11bmRlZmluZWQiIGRhdGEtei1pbmRleD0iMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjgzLDE3MCkiIHN0eWxlPSJjdXJzb3I6cG9pbnRlcjsiPjx0ZXh0IHg9IjUiIGRhdGEtei1pbmRleD0iMSIgeT0iMTgiIHN0eWxlPSJjb2xvcjojRkZGRkZGO2ZvbnQtZmFtaWx5OklSQU5TYW5zV2ViO2ZvbnQtc2l6ZToxM3B4O2ZvbnQtd2VpZ2h0OmJvbGQ7ZmlsbDojRkZGRkZGOyI+PHRzcGFuIGNsYXNzPSJoaWdoY2hhcnRzLXRleHQtb3V0bGluZSIgZmlsbD0iIzAwMDAwMCIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utd2lkdGg9IjJweCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+MTx0c3BhbiB4PSI1IiB5PSIxOCI+4oCLPC90c3Bhbj48L3RzcGFuPjE8L3RleHQ+PC9nPjxnIGNsYXNzPSJoaWdoY2hhcnRzLWxhYmVsIGhpZ2hjaGFydHMtZGF0YS1sYWJlbCBoaWdoY2hhcnRzLWRhdGEtbGFiZWwtY29sb3ItdW5kZWZpbmVkIiBkYXRhLXotaW5kZXg9IjEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM0NywxNzApIiBzdHlsZT0iY3Vyc29yOnBvaW50ZXI7Ij48dGV4dCB4PSI1IiBkYXRhLXotaW5kZXg9IjEiIHk9IjE4IiBzdHlsZT0iY29sb3I6I0ZGRkZGRjtmb250LWZhbWlseTpJUkFOU2Fuc1dlYjtmb250LXNpemU6MTNweDtmb250LXdlaWdodDpib2xkO2ZpbGw6I0ZGRkZGRjsiPjx0c3BhbiBjbGFzcz0iaGlnaGNoYXJ0cy10ZXh0LW91dGxpbmUiIGZpbGw9IiMwMDAwMDAiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIycHgiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjE8dHNwYW4geD0iNSIgeT0iMTgiPuKAizwvdHNwYW4+PC90c3Bhbj4xPC90ZXh0PjwvZz48ZyBjbGFzcz0iaGlnaGNoYXJ0cy1sYWJlbCBoaWdoY2hhcnRzLWRhdGEtbGFiZWwgaGlnaGNoYXJ0cy1kYXRhLWxhYmVsLWNvbG9yLXVuZGVmaW5lZCIgZGF0YS16LWluZGV4PSIxIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MTAsMTcwKSIgc3R5bGU9ImN1cnNvcjpwb2ludGVyOyI+PHRleHQgeD0iNSIgZGF0YS16LWluZGV4PSIxIiB5PSIxOCIgc3R5bGU9ImNvbG9yOiNGRkZGRkY7Zm9udC1mYW1pbHk6SVJBTlNhbnNXZWI7Zm9udC1zaXplOjEzcHg7Zm9udC13ZWlnaHQ6Ym9sZDtmaWxsOiNGRkZGRkY7Ij48dHNwYW4gY2xhc3M9ImhpZ2hjaGFydHMtdGV4dC1vdXRsaW5lIiBmaWxsPSIjMDAwMDAwIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMnB4IiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4xPHRzcGFuIHg9IjUiIHk9IjE4Ij7igIs8L3RzcGFuPjwvdHNwYW4+MTwvdGV4dD48L2c+PC9nPjxnIGNsYXNzPSJoaWdoY2hhcnRzLWF4aXMtbGFiZWxzIGhpZ2hjaGFydHMteGF4aXMtbGFiZWxzIiBkYXRhLXotaW5kZXg9IjciPjx0ZXh0IHg9Ijg4LjY0Mjg1NzE0Mjg1Mjg2IiBzdHlsZT0iY29sb3I6IzY2NjY2NjtjdXJzb3I6ZGVmYXVsdDtmb250LXNpemU6MTFweDtmaWxsOiM2NjY2NjY7IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDApIiB5PSIzMzciIG9wYWNpdHk9IjEiPnZhbHVlMTwvdGV4dD48dGV4dCB4PSIxNTEuOTI4NTcxNDI4NTcyODciIHN0eWxlPSJjb2xvcjojNjY2NjY2O2N1cnNvcjpkZWZhdWx0O2ZvbnQtc2l6ZToxMXB4O2ZpbGw6IzY2NjY2NjsiIHRleHQtYW5jaG9yPSJtaWRkbGUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsMCkiIHk9IjMzNyIgb3BhY2l0eT0iMSI+dmFsdWUyPC90ZXh0Pjx0ZXh0IHg9IjIxNS4yMTQyODU3MTQyODI4NSIgc3R5bGU9ImNvbG9yOiM2NjY2NjY7Y3Vyc29yOmRlZmF1bHQ7Zm9udC1zaXplOjExcHg7ZmlsbDojNjY2NjY2OyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCwwKSIgeT0iMzM3IiBvcGFjaXR5PSIxIj52YWx1ZTM8L3RleHQ+PHRleHQgeD0iMjc4LjUwMDAwMDAwMDAwMjg0IiBzdHlsZT0iY29sb3I6IzY2NjY2NjtjdXJzb3I6ZGVmYXVsdDtmb250LXNpemU6MTFweDtmaWxsOiM2NjY2NjY7IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDApIiB5PSIzMzciIG9wYWNpdHk9IjEiPnZhbHVlNDwvdGV4dD48dGV4dCB4PSIzNDEuNzg1NzE0Mjg1NzEyODYiIHN0eWxlPSJjb2xvcjojNjY2NjY2O2N1cnNvcjpkZWZhdWx0O2ZvbnQtc2l6ZToxMXB4O2ZpbGw6IzY2NjY2NjsiIHRleHQtYW5jaG9yPSJtaWRkbGUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsMCkiIHk9IjMzNyIgb3BhY2l0eT0iMSI+dmFsdWU1PC90ZXh0Pjx0ZXh0IHg9IjQwNS4wNzE0Mjg1NzE0MzI4IiBzdHlsZT0iY29sb3I6IzY2NjY2NjtjdXJzb3I6ZGVmYXVsdDtmb250LXNpemU6MTFweDtmaWxsOiM2NjY2NjY7IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDApIiB5PSIzMzciIG9wYWNpdHk9IjEiPnZhbHVlNjwvdGV4dD48dGV4dCB4PSI0NjguMzU3MTQyODU3MTQyODMiIHN0eWxlPSJjb2xvcjojNjY2NjY2O2N1cnNvcjpkZWZhdWx0O2ZvbnQtc2l6ZToxMXB4O2ZpbGw6IzY2NjY2NjsiIHRleHQtYW5jaG9yPSJtaWRkbGUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsMCkiIHk9IjMzNyIgb3BhY2l0eT0iMSI+dmFsdWU3PC90ZXh0PjwvZz48ZyBjbGFzcz0iaGlnaGNoYXJ0cy1heGlzLWxhYmVscyBoaWdoY2hhcnRzLXlheGlzLWxhYmVscyIgZGF0YS16LWluZGV4PSI3Ij48dGV4dCB4PSI0MiIgc3R5bGU9ImNvbG9yOiM2NjY2NjY7Y3Vyc29yOmRlZmF1bHQ7Zm9udC1zaXplOjExcHg7ZmlsbDojNjY2NjY2OyIgdGV4dC1hbmNob3I9ImVuZCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCwwKSIgeT0iMzIyIiBvcGFjaXR5PSIxIj4wPC90ZXh0Pjx0ZXh0IHg9IjQyIiBzdHlsZT0iY29sb3I6IzY2NjY2NjtjdXJzb3I6ZGVmYXVsdDtmb250LXNpemU6MTFweDtmaWxsOiM2NjY2NjY7IiB0ZXh0LWFuY2hvcj0iZW5kIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDApIiB5PSIyMjkiIG9wYWNpdHk9IjEiPjE8L3RleHQ+PHRleHQgeD0iNDIiIHN0eWxlPSJjb2xvcjojNjY2NjY2O2N1cnNvcjpkZWZhdWx0O2ZvbnQtc2l6ZToxMXB4O2ZpbGw6IzY2NjY2NjsiIHRleHQtYW5jaG9yPSJlbmQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsMCkiIHk9IjEzNyIgb3BhY2l0eT0iMSI+MjwvdGV4dD48dGV4dCB4PSI0MiIgc3R5bGU9ImNvbG9yOiM2NjY2NjY7Y3Vyc29yOmRlZmF1bHQ7Zm9udC1zaXplOjExcHg7ZmlsbDojNjY2NjY2OyIgdGV4dC1hbmNob3I9ImVuZCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCwwKSIgeT0iNDQiIG9wYWNpdHk9IjEiPjM8L3RleHQ+PC9nPjwvc3ZnPg==;;parent=35;x=910;y=0;width=460;height=400;",
+    //        ;;parent=35;x=910;y=0;width=460;height=400;",
     //     },
     //   ],
 
@@ -103,7 +103,7 @@
         Label: "",
         GroupIndex: 0,
         GroupDisplayMode: "GroupWithBox",
-        ColumnLayout: "OnceColumn",
+        ColumnLayout: "TwoColumn",
         ColumnWidth: "default",
         Visibility: "",
         Enabled: true,
@@ -186,9 +186,7 @@
             columnWidth +
             ' col-sm-12  col-xs-12 form-group-body" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
             formGroup.FormGroupBoxID +
-            '-0"> <figure class="highcharts-figure" id="figure' +
-            formGroup.FormGroupBoxID +
-            '-0"><div id="container"></div></figure></div><div class="form-gorup-body col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-1' +
+            '-0"> </div><div class="form-gorup-body col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-1' +
             formGroup.FormGroupBoxID +
             '"></div>';
         }
@@ -204,9 +202,7 @@
             ' ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)"' +
             ' id="form-group-body-' +
             formGroup.FormGroupBoxID +
-            '-0"> <figure class="highcharts-figure" id="figure' +
-            formGroup.FormGroupBoxID +
-            '-0"><div id="container"></div></figure></div><div class="form-gorup-body col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-2-0' +
+            '-0"> </div><div class="form-gorup-body col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-2-0' +
             formGroup.FormGroupBoxID +
             '"></div><div class="' +
             columnWidth +
@@ -215,9 +211,7 @@
             ' ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)"' +
             ' id="form-group-body-' +
             formGroup.FormGroupBoxID +
-            '-1"> <figure class="highcharts-figure" id="figure' +
-            formGroup.FormGroupBoxID +
-            '-1"><div id="container"></div></figure></div><div class="form-gorup-body col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-2-1' +
+            '-1"> </div><div class="form-gorup-body col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-2-1' +
             formGroup.FormGroupBoxID +
             '"></div>';
         }
@@ -270,86 +264,13 @@
         if (formGroup.GroupDisplayMode == "GroupWithTitle") {
           $("#form-group-body-" + formGroup.FormGroupBoxID + "-0").append(
             '<h4 class="group-title">' +
-            formGroup.Label +
-            "<br /><small>" +
-            formGroup.Description +
-            "</small></h4>"
+              formGroup.Label +
+              "<br /><small>" +
+              formGroup.Description +
+              "</small></h4>"
           );
         }
       });
-    } catch (e) {
-      //   raiseError(e, bodyID);
-
-      return;
-    }
-  } else {
-    try {
-      content = '<div class="row form-group-box">';
-
-      var columnWidth = formGroup.ColumnWidth;
-
-      if (formGroup.ColumnLayout == "OnceColumn") {
-        if (columnWidth == "default") {
-          columnWidth = "col-lg-7 col-md-10";
-        }
-
-        content +=
-          '<div class="' +
-          columnWidth +
-          '" id="form-group-mbody-' +
-          formGroup.FormID +
-          '-0"> <figure class="highcharts-figure" id="figure' +
-          formGroup.FormGroupBoxID +
-          '-0"><div id="container"></div></figure></div>';
-      }
-
-      if (formGroup.ColumnLayout == "TwoColumn") {
-        columnWidth = "col-md-4";
-
-        content +=
-          '<div class="' +
-          columnWidth +
-          '" id="form-group-mbody-' +
-          formGroup.FormID +
-          '-0"> <figure class="highcharts-figure" id="figure' +
-          formGroup.FormGroupBoxID +
-          '-0"><div id="container"></div></figure></div><div class="col-md-1 noDrop" ondragover="allowDrop(event)"></div><div class="' +
-          columnWidth +
-          '" id="form-group-mbody-' +
-          formGroup.FormID +
-          '-1"> <figure class="highcharts-figure" id="figure' +
-          formGroup.FormGroupBoxID +
-          '-1"><div id="container"></div></figure></div><div class="col-md-1 noDrop" ondragover="allowDrop(event)"></div>';
-      }
-
-      if (formGroup.ColumnLayout == "ThreeColumn") {
-        columnWidth = "col-md-3";
-
-        content +=
-          '<div class="' +
-          columnWidth +
-          '" id="form-group-mbody-' +
-          formGroup.FormID +
-          '-0"> <figure class="highcharts-figure" id="figure' +
-          formGroup.FormID +
-          '-0"><div id="container"></div></figure></div><div class="col-md-1 noDrop" ondragover="allowDrop(event)"></div><div class="' +
-          columnWidth +
-          '" id="form-group-mbody-' +
-          formGroup.FormID +
-          '-1"> <figure class="highcharts-figure" id="figure' +
-          formGroup.FormID +
-          '-1"><div id="container"></div></figure></div><div class="col-md-1 noDrop" ondragover="allowDrop(event)"></div><div class="' +
-          columnWidth +
-          '" id="form-group-mbody-' +
-          formGroup.FormID +
-          '-2"><figure class="highcharts-figure" id="figure' +
-          formGroup.FormID +
-          '-2"><div id="container"></div></figure></div><div class="col-md-1 noDrop" ondragover="allowDrop(event)"></div>';
-      }
-
-      content += "</div>";
-
-      $(bodyID).append(content);
     } catch (e) {
       //   raiseError(e, bodyID);
 
@@ -376,12 +297,11 @@
           formItem.ColumnIndex;
       } else {
         parentID =
-          "#form-group-mbody-" + formItem.RowId + "-" + formItem.ColumnIndex;
+          "#form-group-mbody-" + formItem.FormID + "-" + formItem.ColumnIndex;
       }
-    
-      switch (formItem.type) {
-        case "Pie":
-          PieChart(parentID);
+      switch (formItem.Type) {
+        case "pie":
+          PieChart(parentID,index);
           break;
 
         // case "TextBox":
@@ -411,1046 +331,999 @@
   }
 }
 
-  function PieChart(id) {
-    try {
-      let chart = Highcharts.chart("container", {
-        chart: {
-          type: "pie",
-          options3d: {
-            enabled: true,
-            alpha: 45,
-            beta: 0,
-          },
-        },
-        title: {
-          text: "Browser market shares at a specific website, 2014",
-        },
-        accessibility: {
-          point: {
-            valueSuffix: "%",
-          },
-        },
-        tooltip: {
-          pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
-        },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: "pointer",
-            depth: 35,
-            dataLabels: {
-              enabled: true,
-              format: "{point.name}",
-            },
-          },
-        },
-        series: [
-          {
-            type: "pie",
-            name: "Browser share",
-            data: [
-              ["Firefox", 45.0],
-              ["IE", 26.8],
-              {
-                name: "Chrome",
-                y: 12.8,
-                sliced: true,
-                selected: true,
-              },
-              ["Safari", 8.5],
-              ["Opera", 6.2],
-              ["Others", 0.7],
-            ],
-          },
-        ],
-      });
-      $("#" + id).append(chart);
-    } catch (e) {
-      // raiseError(e, "#form-group-" + itemObj.FormItemID);
+function PieChart(id,index) {
+  let img = document.createElement("img");
+  img.setAttribute("src", "data:image/png;base64," + imgArray[index]);
+  img.ondblclick = (e) => chartEdit(e);
+ 
+  //drag
+  // img.setAttribute("id", "img" + id);
+  // img.addEventListener("dragover",(e)=> allowDrop(e));
+  // img.setAttribute("draggable", true);
+  // img.addEventListener("dragstart", (e) => drag(e));
 
-      return;
+  // img.addEventListener(("ondrop", (e) => drop(e)));
+
+  $(id).append(img);
+}
+
+function renderTextBox(itemObj, parentID, activityID) {
+  try {
+    var placeholder = "";
+    //   if (!itemObj.IsRequired && _reportID == null) {
+    //     placeholder = localize("اختیاری");
+    //   }
+    var toggle = "";
+    if (itemObj.UnitToDisplay == "ریال") {
+      itemObj.UnitToDisplay = $$Currency;
     }
-  }
 
-  function renderTextBox(itemObj, parentID, activityID) {
-    try {
-      var placeholder = "";
-      //   if (!itemObj.IsRequired && _reportID == null) {
-      //     placeholder = localize("اختیاری");
-      //   }
-      var toggle = "";
-      if (itemObj.UnitToDisplay == "ریال") {
-        itemObj.UnitToDisplay = $$Currency;
-      }
+    var itemContent =
+      toggle +
+      '<div style="' +
+      (itemObj.Visibility == "DefaultHidden" ? "display:none" : "") +
+      '" class="form-group noDrop" ondragover="allowDrop(event)" draggable="true" ondragover="allowDrop(event)" ondragstart="drag(event)" id="form-group-' +
+      itemObj.FormItemID +
+      '"><label class="form-item-lbl noDrop" ondragover="allowDrop(event)" id=' +
+      '"' +
+      itemObj.FormItemID +
+      '"' +
+      " " +
+      'for="form-item-' +
+      itemObj.FormItemID +
+      '"' +
+      'ondblclick="labelProp(id)' +
+      '">' +
+      itemObj.Label +
+      (itemObj.UnitToDisplay != "" ? " (" + itemObj.UnitToDisplay + ") " : "") +
+      '</label><div class="input-group" ><div class="input-group-addon"><span class="glyphicon glyphicon-edit"></span></div><input disabled  type="text"  title="' +
+      (_reportID == null ? itemObj.Name : "") +
+      '" class="form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-' +
+      itemObj.FormItemID +
+      '"  ondblclick="TextboxProp()" placeholder="' +
+      placeholder +
+      '">';
 
-      var itemContent =
-        toggle +
-        '<div style="' +
-        (itemObj.Visibility == "DefaultHidden" ? "display:none" : "") +
-        '" class="form-group noDrop" ondragover="allowDrop(event)" draggable="true" ondragover="allowDrop(event)" ondragstart="drag(event)" id="form-group-' +
-        itemObj.FormItemID +
-        '"><label class="form-item-lbl noDrop" ondragover="allowDrop(event)" id=' +
-        '"' +
-        itemObj.FormItemID +
-        '"' +
-        " " +
-        'for="form-item-' +
-        itemObj.FormItemID +
-        '"' +
-        'ondblclick="labelProp(id)' +
-        '">' +
-        itemObj.Label +
-        (itemObj.UnitToDisplay != ""
-          ? " (" + itemObj.UnitToDisplay + ") "
-          : "") +
-        '</label><div class="input-group" ><div class="input-group-addon"><span class="glyphicon glyphicon-edit"></span></div><input disabled  type="text"  title="' +
-        (_reportID == null ? itemObj.Name : "") +
-        '" class="form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-' +
-        itemObj.FormItemID +
-        '"  ondblclick="TextboxProp()" placeholder="' +
-        placeholder +
-        '">';
+    itemContent += toggle + "</div>";
 
-      itemContent += toggle + "</div>";
+    if (
+      itemObj.SubTextVisible ||
+      (itemObj.Description != "" && itemObj.Description != null)
+    ) {
+      itemContent +=
+        '<small class="text-muted">' + itemObj.Description + "</small>";
+    }
+    itemContent += "</div>";
 
+    var itemInputID = "#form-item-" + itemObj.FormItemID;
+    $(parentID).append(itemContent);
+
+    if (
+      $._isDefault.toLowerCase() &&
+      (itemObj.Name == "Label" || itemObj.Name == "ChangeLabel")
+    ) {
+      $(itemInputID).prop("disabled", true);
+    }
+    if (itemObj.AttributeTypeName == "LocalString" && $$Lang != "Fa") {
+      itemObj.RegexFormat = "";
+    }
+    if (
+      !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
       if (
-        itemObj.SubTextVisible ||
-        (itemObj.Description != "" && itemObj.Description != null)
+        itemObj.RegexFormat != "" &&
+        itemObj.MaskAlias == "" &&
+        itemObj.MaskFormat == ""
       ) {
-        itemContent +=
-          '<small class="text-muted">' + itemObj.Description + "</small>";
+        $(itemInputID).attr("data-inputmask-regex", itemObj.RegexFormat);
+        $(itemInputID).inputmask("Regex");
       }
-      itemContent += "</div>";
-
-      var itemInputID = "#form-item-" + itemObj.FormItemID;
-      $(parentID).append(itemContent);
-
-      if (
-        $._isDefault.toLowerCase() &&
-        (itemObj.Name == "Label" || itemObj.Name == "ChangeLabel")
-      ) {
-        $(itemInputID).prop("disabled", true);
+      if (itemObj.MaskAlias != "") {
+        $(itemInputID).attr(
+          "data-inputmask",
+          '"alias": "' + itemObj.MaskAlias + '"'
+        );
+        $(itemInputID).inputmask();
       }
-      if (itemObj.AttributeTypeName == "LocalString" && $$Lang != "Fa") {
-        itemObj.RegexFormat = "";
+      if (itemObj.MaskFormat != "") {
+        $(itemInputID).attr(
+          "data-inputmask",
+          '"mask": "' + itemObj.MaskFormat + '"'
+        );
+        $(itemInputID).inputmask();
       }
-      if (
-        !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        )
-      ) {
+    }
+    if (itemObj.Direction == "rtl" && $$Dir == "RTL") {
+      $(itemInputID).attr("dir", "rtl");
+      $(itemInputID).attr("data-inputmask", "'type':'reverse'");
+      $(itemInputID).css("text-align", "right");
+    } else {
+      $(itemInputID).attr("dir", "ltr");
+      $(itemInputID).css("text-align", "left");
+    }
+    if (itemObj.MaxValueLenght != "") {
+      $(itemInputID).attr("maxlength", itemObj.MaxValueLenght);
+    }
+    if (itemObj.IsReadOnly) {
+      $(itemInputID).attr("readonly", "readonly");
+    }
+    if (itemObj.Width != "") {
+      $(itemInputID).css("width", itemObj.Width);
+    }
+    if (itemObj.InputType == "AutoTextBox") {
+      var filterVal1 = "";
+      if (itemObj.ParentName != "") {
         if (
-          itemObj.RegexFormat != "" &&
-          itemObj.MaskAlias == "" &&
-          itemObj.MaskFormat == ""
+          itemObj.ParentName == _parObjType ||
+          itemObj.ParentName == "Parent_" + _parObjType
         ) {
-          $(itemInputID).attr("data-inputmask-regex", itemObj.RegexFormat);
-          $(itemInputID).inputmask("Regex");
-        }
-        if (itemObj.MaskAlias != "") {
-          $(itemInputID).attr(
-            "data-inputmask",
-            '"alias": "' + itemObj.MaskAlias + '"'
-          );
-          $(itemInputID).inputmask();
-        }
-        if (itemObj.MaskFormat != "") {
-          $(itemInputID).attr(
-            "data-inputmask",
-            '"mask": "' + itemObj.MaskFormat + '"'
-          );
-          $(itemInputID).inputmask();
-        }
-      }
-      if (itemObj.Direction == "rtl" && $$Dir == "RTL") {
-        $(itemInputID).attr("dir", "rtl");
-        $(itemInputID).attr("data-inputmask", "'type':'reverse'");
-        $(itemInputID).css("text-align", "right");
-      } else {
-        $(itemInputID).attr("dir", "ltr");
-        $(itemInputID).css("text-align", "left");
-      }
-      if (itemObj.MaxValueLenght != "") {
-        $(itemInputID).attr("maxlength", itemObj.MaxValueLenght);
-      }
-      if (itemObj.IsReadOnly) {
-        $(itemInputID).attr("readonly", "readonly");
-      }
-      if (itemObj.Width != "") {
-        $(itemInputID).css("width", itemObj.Width);
-      }
-      if (itemObj.InputType == "AutoTextBox") {
-        var filterVal1 = "";
-        if (itemObj.ParentName != "") {
+          filterVal1 = _parObjKey;
+        } else {
+          filterVal1 = $(
+            "#form-item-" + $$FormItems[itemObj.ParentName].FormItemID
+          ).val();
           if (
-            itemObj.ParentName == _parObjType ||
-            itemObj.ParentName == "Parent_" + _parObjType
+            filterVal1 == null ||
+            filterVal1 == "" ||
+            filterVal1 == "0" ||
+            filterVal1 === undefined
           ) {
-            filterVal1 = _parObjKey;
-          } else {
-            filterVal1 = $(
-              "#form-item-" + $$FormItems[itemObj.ParentName].FormItemID
-            ).val();
-            if (
-              filterVal1 == null ||
-              filterVal1 == "" ||
-              filterVal1 == "0" ||
-              filterVal1 === undefined
-            ) {
-              try {
-                if (
+            try {
+              if (
+                $$AjaxSelects[
+                  "#form-item-" + $$FormItems[itemObj.ParentName].FormItemID
+                ].status == 0
+              ) {
+                filterVal1 =
                   $$AjaxSelects[
                     "#form-item-" + $$FormItems[itemObj.ParentName].FormItemID
-                  ].status == 0
-                ) {
-                  filterVal1 =
-                    $$AjaxSelects[
-                      "#form-item-" + $$FormItems[itemObj.ParentName].FormItemID
-                    ].defaultValue;
-                }
-              } catch (e) { }
-            }
+                  ].defaultValue;
+              }
+            } catch (e) {}
           }
         }
-        filterVal1 = filterVal1 == "" || filterVal1 == null ? "0" : filterVal1;
-        var $autoComplete = new autoComplete(
-          itemObj.EntityAttributeID,
-          itemObj.ActionControlID
-        );
-        $autoComplete.renderContext(
-          "#form-item-" + itemObj.FormItemID,
-          activityID,
-          filterVal1,
-          itemObj.ParentName
-        );
       }
-      $(itemInputID).val(getDefaultValue(itemObj));
-      if (itemObj.ActionOnChange != "") {
-        $(itemInputID).change(function () {
-          var inlineFunction = new Function(
-            $$FormItems[this.title].ActionOnChange
-          );
-          inlineFunction();
-        });
-      }
-      if (itemObj.Visibility == "Disabled") {
-        $(itemInputID).prop("disabled", true);
-        $(itemInputID).addClass("form-input-dis");
-        $(itemInputID).removeClass("form-input");
-      }
-    } catch (e) {
-      // raiseError(e, "#form-group-" + itemObj.FormItemID);
-      return;
-    }
-  }
-
-  function renderNumericRangeBox(itemObj, parentID) {
-    try {
-      var itemContent =
-        '<div style="' +
-        (itemObj.Visibility == "DefaultHidden" ? "display:none" : "") +
-        '" class="form-group noDrop" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" id="form-group-' +
-        itemObj.FormItemID +
-        '"><label class="form-item-lbl noDrop" ondragover="allowDrop(event)" id="form-group-lbl' +
-        itemObj.FormItemID +
-        '"' +
-        ' ondblclick="labelProp(id)">' +
-        itemObj.Label +
-        '</label><div class="input-group"><div class="input-group-addon"><span class="glyphicon glyphicon-edit"></span></div><input disabled type="text" class="form-control form-input noDrop" ondragover="allowDrop(event)" style="width:50%;margin:0px 0px 0px 0%" id="form-item-from-' +
-        itemObj.FormItemID +
-        '" ondblclick="TextboxProp(id)" placeholder="از"><input disabled  type="text" class="form-control form-input noDrop" ondragover="allowDrop(event)" style="width:50%" id="form-item-to-' +
-        itemObj.FormItemID +
-        '" ondblclick="TextboxProp(id)" placeholder="تا" ></div>';
-
-      if (itemObj.SubTextVisible) {
-        itemContent +=
-          '<small class="text-muted">' + itemObj.Description + "</small>";
-      }
-
-      itemContent += "</div>";
-
-      var itemInputID = "#form-item-from-" + itemObj.FormItemID;
-
-      var itemInputID2 = "#form-item-to-" + itemObj.FormItemID;
-
-      $(parentID).append(itemContent);
-
-      if (itemObj.RegexFormat != "") {
-        $(itemInputID).attr("data-inputmask-regex", itemObj.RegexFormat);
-
-        $(itemInputID).inputmask("Regex");
-
-        $(itemInputID2).attr("data-inputmask-regex", itemObj.RegexFormat);
-
-        $(itemInputID2).inputmask("Regex");
-      }
-
-      $(itemInputID).attr("dir", "ltr");
-
-      $(itemInputID).css("text-align", "left");
-
-      $(itemInputID2).attr("dir", "ltr");
-
-      $(itemInputID2).css("text-align", "left");
-
-      if (itemObj.MaxValueLenght != "") {
-        $(itemInputID).attr("maxlength", itemObj.MaxValueLenght);
-
-        $(itemInputID2).attr("maxlength", itemObj.MaxValueLenght);
-      }
-    } catch (e) {
-      //   raiseError(e, "#form-group-" + itemObj.FormItemID);
-
-      return;
-    }
-  }
-
-  function renderFileBrowse(itemObj, parentID) {
-    try {
-      itemObj.DefaultValue = getDefaultValue(itemObj);
-      var index = itemObj.DefaultValue.indexOf("data-file-attach-code");
-
-      if (index > -1) {
-        _fileExist[itemObj.Name] = "1";
-
-        var index2 = itemObj.DefaultValue.indexOf("' title");
-
-        _fileAttachCode[itemObj.Name] = itemObj.DefaultValue.substring(
-          23 + index,
-          index2
-        );
-
-        itemObj.DefaultValue =
-          '<img src="App_Res/' +
-          itemObj.LocationPath.replace("../../App_Res/", "") +
-          _fileAttachCode[itemObj.Name] +
-          '"/>';
-      }
-
-      if (itemObj.DefaultValue == "") {
-        _fileExist[itemObj.Name] = "0";
-
-        _fileAttachCode[itemObj.Name] = "";
-
-        itemObj.DefaultValue = null;
-      }
-
-      var placeholder = "";
-
-      //   if (!itemObj.IsRequired) {
-      //     placeholder =
-      //   "<span class='form-input-placeholder'>" +
-      //   localize("اختیاری") +
-      //   "</span>";
-      //   }
-
-      var itemContent =
-        '<div style="' +
-        (itemObj.Visibility == "DefaultHidden" ? "display:none" : "") +
-        '" class="form-group noDrop" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" id="form-group-' +
-        itemObj.FormItemID +
-        '" data-item-name="' +
-        itemObj.Name +
-        '"><label' +
-        " " +
-        'class="form-item-lbl noDrop" ondragover="allowDrop(event)"' +
-        "    " +
-        'id="form-group-uu' +
-        itemObj.FormItemID +
-        '"' +
-        'ondblclick="labelProp(id)"' +
-        '">' +
-        itemObj.Label +
-        '</label><div><input disabled  type="file"  class="form-control form-input noDrop  file" ondragover="allowDrop(event)" data-show-preview="false" data-show-remove="false" data-show-upload="false"  id="form-item-' +
-        itemObj.FormItemID +
-        '"></div>';
-
-      if (itemObj.SubTextVisible) {
-        itemContent +=
-          '<small class="text-muted">' + itemObj.Description + "</small>";
-      }
-
-      itemContent += "</div>";
-
-      $(parentID).append(itemContent);
-
-      if (itemObj.AttributeTypeName == "Image") {
-        var maxSize = itemObj.MaxValue.split("*");
-
-        var minSize = itemObj.MinValue.split("*");
-
-        $("#form-item-" + itemObj.FormItemID).fileinput({
-          maxImageWidth: maxSize[0],
-          maxImageHeight: maxSize[1],
-          minImageWidth: minSize[0],
-          minImageHeight: minSize[1],
-          allowedFileExtensions: itemObj.RegexFormat,
-          allowedFileTypes: ["image"],
-          showPreview: true,
-          maxFileSize: itemObj.MaxValueLenght,
-          initialPreview: [itemObj.DefaultValue],
-        });
-      } else {
-        $("#form-item-" + itemObj.FormItemID).fileinput({
-          allowedFileExtensions: itemObj.RegexFormat,
-          maxFileSize: itemObj.MaxValueLenght,
-        });
-      }
-
-      if (itemObj.DefaultValue == null) {
-        $("#form-group-" + itemObj.FormItemID + " .file-caption-name").html(
-          placeholder
-        );
-      }
-
-      if (itemObj.Width != "") {
-        $("#form-item-" + itemObj.FormItemID).css("width", itemObj.Width);
-      }
-
-      $("#form-item-" + itemObj.FormItemID).on(
-        "fileimageloaded",
-        function (event, previewId) {
-          setTimeout("alignSideBarHeight();", 1 * 100);
-        }
+      filterVal1 = filterVal1 == "" || filterVal1 == null ? "0" : filterVal1;
+      var $autoComplete = new autoComplete(
+        itemObj.EntityAttributeID,
+        itemObj.ActionControlID
       );
-
-      $("#form-item-" + itemObj.FormItemID).on(
-        "fileloaded",
-        function (event, previewId) {
-          setTimeout("alignSideBarHeight();", 1 * 100);
-        }
+      $autoComplete.renderContext(
+        "#form-item-" + itemObj.FormItemID,
+        activityID,
+        filterVal1,
+        itemObj.ParentName
       );
-
-      $("#form-item-" + itemObj.FormItemID).on(
-        "fileerror",
-        function (event, previewId) {
-          setTimeout("alignSideBarHeight();", 1 * 100);
-        }
-      );
-    } catch (e) {
-      // raiseError(e, "#form-group-" + itemObj.FormItemID);
-
-      return;
     }
-  }
-
-  function renderCheckBox(itemObj, parentID) {
-    try {
-      var itemContent =
-        '<div class="form-group noDrop" draggable="true" ondragstart="drag(event)"+ style="' +
-        (itemObj.Visibility == "DefaultHidden" ? "display:none" : "") +
-        '" id="form-group-' +
-        itemObj.FormItemID +
-        '"><div class="checkbox noDrop"><input class="noDrop" ondragover="allowDrop(event)" type="checkbox" title="' +
-        itemObj.Name +
-        '" id="form-item-' +
-        itemObj.FormItemID +
-        '"/>&nbsp;' +
-        " <label" +
-        " " +
-        'class="form-item-lbl noDrop" ondragover="allowDrop(event)"' +
-        " " +
-        'id="form-item-lbl-' +
-        itemObj.FormItemID +
-        '"' +
-        'ondblclick="labelProp(id)"' +
-        '" class="input-checkbox-label">' +
-        itemObj.Label +
-        "</label></div>";
-
-      if (itemObj.SubTextVisible) {
-        itemContent +=
-          '<small class="text-muted">' + itemObj.Description + "</small>";
-      }
-
-      itemContent += "</div>";
-
-      $(parentID).append(itemContent);
-
-      // if (getDefaultValue(itemObj) == "True") {
-      //   $("#form-item-" + itemObj.FormItemID).attr("checked", "checked");
-      // }
-
-      // if (itemObj.Visibility == "Disabled") {
-      //   $("#form-item-" + itemObj.FormItemID).attr("disabled", "disabled");
-      // }
-
-      // $("#form-item-" + itemObj.FormItemID)
-      //   .iCheck({
-      //     checkboxClass: "icheckbox_square-green",
-
-      //     radioClass: "iradio_square-green",
-      //   })
-      //   .on("ifChanged", function (e) {
-      //     var isChecked = e.currentTarget.checked;
-
-      //     if ($$FormItems[e.currentTarget.title] === undefined) {
-      //       return;
-      //     }
-
-      //     if ($$FormItems[e.currentTarget.title].ActionOnChange == "") {
-      //       return;
-      //     }
-
-      //     // $.each(
-      //     //   jQuery.parseJSON($$FormItems[e.currentTarget.title].ActionOnChange),
-      //     //   function (index, event) {
-      //     //     if (event.value.indexOf("[" + isChecked + "]") != -1) {
-      //     //       $.each(event.actions, function (index, action) {
-      //     //         if (action.targetType == "FormItem") {
-      //     //           if (action.actionType == "Hide") {
-      //     //             $(
-      //     //               "#form-group-" + $$FormItems[action.target].FormItemID
-      //     //             ).css("display", "none");
-      //     //           }
-
-      //     //           if (action.actionType == "Show") {
-      //     //             $(
-      //     //               "#form-group-" + $$FormItems[action.target].FormItemID
-      //     //             ).css("display", "block");
-      //     //           }
-
-      //     //           if (action.actionType == "ChangeValue") {
-      //     //             var inlineFunction = new Function(action.actionCallback);
-
-      //     //             inlineFunction();
-      //     //           }
-      //     //         }
-
-      //     //         if (action.targetType == "FormGroupBox") {
-      //     //           if (action.actionType == "Hide") {
-      //     //             $("#form-group-" + $$FormGroups[action.target]).css(
-      //     //               "display",
-      //     //               "none"
-      //     //             );
-      //     //           }
-
-      //     //           if (action.actionType == "Show") {
-      //     //             $("#form-group-" + $$FormGroups[action.target]).css(
-      //     //               "display",
-      //     //               "block"
-      //     //             );
-      //     //           }
-      //     //         }
-      //     //       });
-      //     //     }
-      //     //   }
-      //     // );
-      //   });
-
-      // if (itemObj.ActionOnChange != "") {
-      //   setTimeout(
-      //     "triggerDefaultEvent('" +
-      //       itemObj.Name +
-      //       "','" +
-      //       getDefaultValue(itemObj).toLowerCase() +
-      //       "')",
-      //     500
-      //   );
-      // }
-    } catch (e) {
-      // raiseError(e, "#form-group-" + itemObj.FormItemID);
-
-      return;
+    $(itemInputID).val(getDefaultValue(itemObj));
+    if (itemObj.ActionOnChange != "") {
+      $(itemInputID).change(function () {
+        var inlineFunction = new Function(
+          $$FormItems[this.title].ActionOnChange
+        );
+        inlineFunction();
+      });
     }
-  }
-
-  function renderRadioButtonList(itemObj, parentID) {
-    try {
-      var itemContent =
-        '<div class="form-group noDrop" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" style="' +
-        (itemObj.Visibility == "DefaultHidden" ? "display:none" : "") +
-        '" id="form-group-' +
-        itemObj.FormItemID +
-        '"><div class="checkbox noDrop" ondragover="allowDrop(event)"> <input class="noDrop" ondragover="allowDrop(event)" type="radio" title="' +
-        itemObj.Name +
-        '" id="form-item-' +
-        itemObj.FormItemID +
-        '"/>&nbsp;' +
-        '<label class="form-item-lbl noDrop" ondragover="allowDrop(event)" id="form-item-lbl' +
-        itemObj.FormItemID +
-        '"' +
-        "  " +
-        'ondblclick="labelProp(id)"' +
-        " " +
-        'class="input-checkbox-label"> ' +
-        itemObj.Label +
-        "</label></div>";
-
-      if (itemObj.SubTextVisible) {
-        itemContent +=
-          '<small class="text-muted">' + itemObj.Description + "</small>";
-      }
-
-      itemContent += "</div>";
-
-      $(parentID).append(itemContent);
-
-      // var itemContent =
-      //   '<div class="form-group" id="form-group-' +
-      //   itemObj.FormItemID +
-      //   '"><label>' +
-      //   itemObj.Label +
-      //   "</label><div>";
-
-      // var $radioButtonList = new radioButtonList(itemObj.EnumTypeID);
-
-      // itemContent += $radioButtonList.renderContext(
-      //   itemObj.FormItemID,
-      //   itemObj.DefaultValue
-      // );
-      // itemContent +=
-      //   '</div><input type="radio" id="form-item-' +
-      //   itemObj.FormItemID +
-      //   '" value="' +
-      //   itemObj.DefaultValue +
-      //   '">';
-
-      // if (itemObj.SubTextVisible) {
-      //   itemContent +=
-      //     '<small class="text-muted">' + itemObj.Description + "</small>";
-      // }
-
-      // itemContent += "</div>";
-
-      // $(parentID).append(itemContent);
-      // $(
-      //   "input[type=radio][name=optionsRadios-" + itemObj.FormItemID + "]"
-      // ).change(function () {
-      //   if ($(this).is(":checked")) {
-      //     $("#form-item-" + itemObj.FormItemID).val(this.value);
-      //   }
-      // });
-
-      // $(
-      //   "input[type=radio][name=optionsRadios-" + itemObj.FormItemID + "]"
-      // ).iCheck({
-      //   checkboxClass: "icheckbox_square-green",
-
-      //   radioClass: "iradio_square-green",
-
-      //   increaseArea: "20%", // optional
-      // });
-    } catch (e) {
-      // itemContent += "</div></div>";
-
-      // $(parentID).append(itemContent);
-
-      //  raiseError(e, "#form-group-" + itemObj.FormItemID);
-
-      return;
+    if (itemObj.Visibility == "Disabled") {
+      $(itemInputID).prop("disabled", true);
+      $(itemInputID).addClass("form-input-dis");
+      $(itemInputID).removeClass("form-input");
     }
+  } catch (e) {
+    // raiseError(e, "#form-group-" + itemObj.FormItemID);
+    return;
   }
+}
 
-  function renderDateBox(itemObj, parentID) {
-    try {
-      var placeholder = "";
+function renderNumericRangeBox(itemObj, parentID) {
+  try {
+    var itemContent =
+      '<div style="' +
+      (itemObj.Visibility == "DefaultHidden" ? "display:none" : "") +
+      '" class="form-group noDrop" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" id="form-group-' +
+      itemObj.FormItemID +
+      '"><label class="form-item-lbl noDrop" ondragover="allowDrop(event)" id="form-group-lbl' +
+      itemObj.FormItemID +
+      '"' +
+      ' ondblclick="labelProp(id)">' +
+      itemObj.Label +
+      '</label><div class="input-group"><div class="input-group-addon"><span class="glyphicon glyphicon-edit"></span></div><input disabled type="text" class="form-control form-input noDrop" ondragover="allowDrop(event)" style="width:50%;margin:0px 0px 0px 0%" id="form-item-from-' +
+      itemObj.FormItemID +
+      '" ondblclick="TextboxProp(id)" placeholder="از"><input disabled  type="text" class="form-control form-input noDrop" ondragover="allowDrop(event)" style="width:50%" id="form-item-to-' +
+      itemObj.FormItemID +
+      '" ondblclick="TextboxProp(id)" placeholder="تا" ></div>';
 
-      //   if (!jQuery.parseJSON(itemObj.IsRequired)) {
-      //     placeholder = localize("اختیاری");
-      //   }
-
-      var itemContent =
-        '<div draggable="true" ondragstart="drag(event)" style="' +
-        (itemObj.Visibility == "DefaultHidden" ? "display:none" : "") +
-        '" class="form-group noDrop" ondragover="allowDrop(event)" id="form-group-' +
-        itemObj.FormItemID +
-        '"><label class="form-item-lbl noDrop" ondragover="allowDrop(event)"  for="form-item-' +
-        itemObj.FormItemID +
-        '">' +
-        'ondblclick="labelProp()"' +
-        itemObj.Label +
-        '</label><div class="input-group"><div id="picker-' +
-        itemObj.FormItemID +
-        '" data-mdpersiandatetimepickershowing="false" title="" data-original-title="" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1393,&quot;Month&quot;:10,&quot;Day&quot;:9,&quot;Hour&quot;:0,&quot;Minute&quot;:0,&quot;Second&quot;:0}" data-mdpersiandatetimepicker="" style="cursor: pointer;" class="input-group-addon" data-mddatetimepicker="true" data-targetselector="#form-item-' +
-        itemObj.FormItemID +
-        '" data-trigger="click"  data-placement="top" data-englishnumber="true" ><span class="glyphicon glyphicon-calendar"></span></div><input disabled  type="text" class="form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-' +
-        itemObj.FormItemID +
-        '" placeholder="' +
-        placeholder +
-        '" data-mdpersiandatetimepickershowing="false" title="" data-original-title="" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1393,&quot;Month&quot;:10,&quot;Day&quot;:9,&quot;Hour&quot;:0,&quot;Minute&quot;:0,&quot;Second&quot;:0}" data-mdpersiandatetimepicker="" data-mddatetimepicker="true" data-targetselector="#form-item-' +
-        itemObj.FormItemID +
-        '" data-trigger="click"  data-placement="top" data-englishnumber="true" dir="ltr"></div>';
-
-      if (itemObj.SubTextVisible) {
-        itemContent +=
-          '<small class="text-muted">' + itemObj.Description + "</small>";
-      }
-
-      itemContent += "</div>";
-
-      $(parentID).append(itemContent);
-
-      var pickerID = "#picker-" + itemObj.FormItemID;
-
-      var itemInputID = "#form-item-" + itemObj.FormItemID;
-
-      if (itemObj.Width != "") {
-        $(itemInputID).css("width", itemObj.Width);
-      }
-
-      $(itemInputID).css("text-align", "left");
-
-      if (itemObj.InputType == "DateTimeBox") {
-        $(pickerID).attr("data-enabletimepicker", "true");
-
-        $(itemInputID).attr("data-enabletimepicker", "true");
-
-        $(itemInputID).attr("data-inputmask", '"mask": "x/m/d h:s"');
-
-        $(itemInputID).inputmask();
-      } else {
-        $(itemInputID).attr("data-inputmask", '"alias": "shamsi"');
-
-        $(itemInputID).inputmask();
-      }
-
-      EnableMdDateTimePickers();
-
-      $(itemInputID).val(getDefaultValue(itemObj));
-    } catch (e) {
-      raiseError(e, "#form-group-" + itemObj.FormItemID);
-
-      return;
-    }
-  }
-
-  function renderDateRangeBox(itemObj, parentID) {
-    try {
-      var placeholder = "";
-
-      //   if (!jQuery.parseJSON(itemObj.IsRequired)) {
-      //     placeholder = localize("اختیاری");
-      //   }
-
-      var itemContent =
-        '<div  class="noDrop" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" id="form-group-' +
-        "" +
-        itemObj.FormItemID +
-        '"><label class="form-item-lbl noDrop" ondragover="allowDrop(event)" for="form-item-' +
-        itemObj.FormItemID +
-        '" ondblclick="labelProp(id)">' +
-        itemObj.Label +
-        "</label>";
-
+    if (itemObj.SubTextVisible) {
       itemContent +=
-        '<div class="input-group"><div id="picker-' +
-        itemObj.FormItemID +
-        '" data-mdpersiandatetimepickershowing="false" title="" data-original-title="" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1393,&quot;Month&quot;:10,&quot;Day&quot;:9,&quot;Hour&quot;:0,&quot;Minute&quot;:0,&quot;Second&quot;:0}" data-mdpersiandatetimepicker="" style="cursor: pointer;" class="input-group-addon" data-mddatetimepicker="true" data-targetselector="#form-item-from-' +
-        itemObj.FormItemID +
-        '" data-trigger="click"  data-placement="top" data-englishnumber="true"  ><span class="glyphicon glyphicon-calendar"></span></div><input disabled type="text"  form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-from-' +
-        itemObj.FormItemID +
-        '" placeholder="از" dir="ltr" data-mdpersiandatetimepickershowing="false" title="" data-original-title="" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1393,&quot;Month&quot;:10,&quot;Day&quot;:9,&quot;Hour&quot;:0,&quot;Minute&quot;:0,&quot;Second&quot;:0}" data-mdpersiandatetimepicker="" data-mddatetimepicker="true" data-targetselector="#form-item-from-' +
-        itemObj.FormItemID +
-        '" data-trigger="click"  data-placement="top"  data-englishnumber="true">';
+        '<small class="text-muted">' + itemObj.Description + "</small>";
+    }
 
+    itemContent += "</div>";
+
+    var itemInputID = "#form-item-from-" + itemObj.FormItemID;
+
+    var itemInputID2 = "#form-item-to-" + itemObj.FormItemID;
+
+    $(parentID).append(itemContent);
+
+    if (itemObj.RegexFormat != "") {
+      $(itemInputID).attr("data-inputmask-regex", itemObj.RegexFormat);
+
+      $(itemInputID).inputmask("Regex");
+
+      $(itemInputID2).attr("data-inputmask-regex", itemObj.RegexFormat);
+
+      $(itemInputID2).inputmask("Regex");
+    }
+
+    $(itemInputID).attr("dir", "ltr");
+
+    $(itemInputID).css("text-align", "left");
+
+    $(itemInputID2).attr("dir", "ltr");
+
+    $(itemInputID2).css("text-align", "left");
+
+    if (itemObj.MaxValueLenght != "") {
+      $(itemInputID).attr("maxlength", itemObj.MaxValueLenght);
+
+      $(itemInputID2).attr("maxlength", itemObj.MaxValueLenght);
+    }
+  } catch (e) {
+    //   raiseError(e, "#form-group-" + itemObj.FormItemID);
+
+    return;
+  }
+}
+
+function renderFileBrowse(itemObj, parentID) {
+  try {
+    itemObj.DefaultValue = getDefaultValue(itemObj);
+    var index = itemObj.DefaultValue.indexOf("data-file-attach-code");
+
+    if (index > -1) {
+      _fileExist[itemObj.Name] = "1";
+
+      var index2 = itemObj.DefaultValue.indexOf("' title");
+
+      _fileAttachCode[itemObj.Name] = itemObj.DefaultValue.substring(
+        23 + index,
+        index2
+      );
+
+      itemObj.DefaultValue =
+        '<img src="App_Res/' +
+        itemObj.LocationPath.replace("../../App_Res/", "") +
+        _fileAttachCode[itemObj.Name] +
+        '"/>';
+    }
+
+    if (itemObj.DefaultValue == "") {
+      _fileExist[itemObj.Name] = "0";
+
+      _fileAttachCode[itemObj.Name] = "";
+
+      itemObj.DefaultValue = null;
+    }
+
+    var placeholder = "";
+
+    //   if (!itemObj.IsRequired) {
+    //     placeholder =
+    //   "<span class='form-input-placeholder'>" +
+    //   localize("اختیاری") +
+    //   "</span>";
+    //   }
+
+    var itemContent =
+      '<div style="' +
+      (itemObj.Visibility == "DefaultHidden" ? "display:none" : "") +
+      '" class="form-group noDrop" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" id="form-group-' +
+      itemObj.FormItemID +
+      '" data-item-name="' +
+      itemObj.Name +
+      '"><label' +
+      " " +
+      'class="form-item-lbl noDrop" ondragover="allowDrop(event)"' +
+      "    " +
+      'id="form-group-uu' +
+      itemObj.FormItemID +
+      '"' +
+      'ondblclick="labelProp(id)"' +
+      '">' +
+      itemObj.Label +
+      '</label><div><input disabled  type="file"  class="form-control form-input noDrop  file" ondragover="allowDrop(event)" data-show-preview="false" data-show-remove="false" data-show-upload="false"  id="form-item-' +
+      itemObj.FormItemID +
+      '"></div>';
+
+    if (itemObj.SubTextVisible) {
       itemContent +=
-        '<div id="picker-' +
-        itemObj.FormItemID +
-        '" data-mdpersiandatetimepickershowing="false" title="" data-original-title="" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1393,&quot;Month&quot;:10,&quot;Day&quot;:9,&quot;Hour&quot;:0,&quot;Minute&quot;:0,&quot;Second&quot;:0}" data-mdpersiandatetimepicker="" style="cursor: pointer;" class="input-group-addon" data-mddatetimepicker="true" data-targetselector="#form-item-to-' +
-        itemObj.FormItemID +
-        '" data-trigger="click"  data-placement="top" data-englishnumber="true" ><span class="glyphicon glyphicon-calendar"></span></div><input disabled type="text" form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-to-' +
-        itemObj.FormItemID +
-        '" placeholder="تا" dir="ltr"  data-mdpersiandatetimepickershowing="false" title="" data-original-title="" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1393,&quot;Month&quot;:10,&quot;Day&quot;:9,&quot;Hour&quot;:0,&quot;Minute&quot;:0,&quot;Second&quot;:0}" data-mdpersiandatetimepicker="" data-mddatetimepicker="true" data-targetselector="#form-item-to-' +
-        itemObj.FormItemID +
-        '" data-trigger="click"  data-placement="top" data-englishnumber="true"></div>';
+        '<small class="text-muted">' + itemObj.Description + "</small>";
+    }
 
-      if (itemObj.SubTextVisible) {
-        itemContent +=
-          '<small class="text-muted">' + itemObj.Description + "</small>";
+    itemContent += "</div>";
+
+    $(parentID).append(itemContent);
+
+    if (itemObj.AttributeTypeName == "Image") {
+      var maxSize = itemObj.MaxValue.split("*");
+
+      var minSize = itemObj.MinValue.split("*");
+
+      $("#form-item-" + itemObj.FormItemID).fileinput({
+        maxImageWidth: maxSize[0],
+        maxImageHeight: maxSize[1],
+        minImageWidth: minSize[0],
+        minImageHeight: minSize[1],
+        allowedFileExtensions: itemObj.RegexFormat,
+        allowedFileTypes: ["image"],
+        showPreview: true,
+        maxFileSize: itemObj.MaxValueLenght,
+        initialPreview: [itemObj.DefaultValue],
+      });
+    } else {
+      $("#form-item-" + itemObj.FormItemID).fileinput({
+        allowedFileExtensions: itemObj.RegexFormat,
+        maxFileSize: itemObj.MaxValueLenght,
+      });
+    }
+
+    if (itemObj.DefaultValue == null) {
+      $("#form-group-" + itemObj.FormItemID + " .file-caption-name").html(
+        placeholder
+      );
+    }
+
+    if (itemObj.Width != "") {
+      $("#form-item-" + itemObj.FormItemID).css("width", itemObj.Width);
+    }
+
+    $("#form-item-" + itemObj.FormItemID).on(
+      "fileimageloaded",
+      function (event, previewId) {
+        setTimeout("alignSideBarHeight();", 1 * 100);
       }
+    );
 
-      itemContent += "</div>";
+    $("#form-item-" + itemObj.FormItemID).on(
+      "fileloaded",
+      function (event, previewId) {
+        setTimeout("alignSideBarHeight();", 1 * 100);
+      }
+    );
 
-      $(parentID).append(itemContent);
+    $("#form-item-" + itemObj.FormItemID).on(
+      "fileerror",
+      function (event, previewId) {
+        setTimeout("alignSideBarHeight();", 1 * 100);
+      }
+    );
+  } catch (e) {
+    // raiseError(e, "#form-group-" + itemObj.FormItemID);
 
-      var itemInputID = "#form-item-from-" + itemObj.FormItemID;
+    return;
+  }
+}
 
-      var itemInputID2 = "#form-item-to-" + itemObj.FormItemID;
+function renderCheckBox(itemObj, parentID) {
+  try {
+    var itemContent =
+      '<div class="form-group noDrop" draggable="true" ondragstart="drag(event)"+ style="' +
+      (itemObj.Visibility == "DefaultHidden" ? "display:none" : "") +
+      '" id="form-group-' +
+      itemObj.FormItemID +
+      '"><div class="checkbox noDrop"><input class="noDrop" ondragover="allowDrop(event)" type="checkbox" title="' +
+      itemObj.Name +
+      '" id="form-item-' +
+      itemObj.FormItemID +
+      '"/>&nbsp;' +
+      " <label" +
+      " " +
+      'class="form-item-lbl noDrop" ondragover="allowDrop(event)"' +
+      " " +
+      'id="form-item-lbl-' +
+      itemObj.FormItemID +
+      '"' +
+      'ondblclick="labelProp(id)"' +
+      '" class="input-checkbox-label">' +
+      itemObj.Label +
+      "</label></div>";
 
-      $(itemInputID).css("text-align", "left");
+    if (itemObj.SubTextVisible) {
+      itemContent +=
+        '<small class="text-muted">' + itemObj.Description + "</small>";
+    }
 
+    itemContent += "</div>";
+
+    $(parentID).append(itemContent);
+
+    // if (getDefaultValue(itemObj) == "True") {
+    //   $("#form-item-" + itemObj.FormItemID).attr("checked", "checked");
+    // }
+
+    // if (itemObj.Visibility == "Disabled") {
+    //   $("#form-item-" + itemObj.FormItemID).attr("disabled", "disabled");
+    // }
+
+    // $("#form-item-" + itemObj.FormItemID)
+    //   .iCheck({
+    //     checkboxClass: "icheckbox_square-green",
+
+    //     radioClass: "iradio_square-green",
+    //   })
+    //   .on("ifChanged", function (e) {
+    //     var isChecked = e.currentTarget.checked;
+
+    //     if ($$FormItems[e.currentTarget.title] === undefined) {
+    //       return;
+    //     }
+
+    //     if ($$FormItems[e.currentTarget.title].ActionOnChange == "") {
+    //       return;
+    //     }
+
+    //     // $.each(
+    //     //   jQuery.parseJSON($$FormItems[e.currentTarget.title].ActionOnChange),
+    //     //   function (index, event) {
+    //     //     if (event.value.indexOf("[" + isChecked + "]") != -1) {
+    //     //       $.each(event.actions, function (index, action) {
+    //     //         if (action.targetType == "FormItem") {
+    //     //           if (action.actionType == "Hide") {
+    //     //             $(
+    //     //               "#form-group-" + $$FormItems[action.target].FormItemID
+    //     //             ).css("display", "none");
+    //     //           }
+
+    //     //           if (action.actionType == "Show") {
+    //     //             $(
+    //     //               "#form-group-" + $$FormItems[action.target].FormItemID
+    //     //             ).css("display", "block");
+    //     //           }
+
+    //     //           if (action.actionType == "ChangeValue") {
+    //     //             var inlineFunction = new Function(action.actionCallback);
+
+    //     //             inlineFunction();
+    //     //           }
+    //     //         }
+
+    //     //         if (action.targetType == "FormGroupBox") {
+    //     //           if (action.actionType == "Hide") {
+    //     //             $("#form-group-" + $$FormGroups[action.target]).css(
+    //     //               "display",
+    //     //               "none"
+    //     //             );
+    //     //           }
+
+    //     //           if (action.actionType == "Show") {
+    //     //             $("#form-group-" + $$FormGroups[action.target]).css(
+    //     //               "display",
+    //     //               "block"
+    //     //             );
+    //     //           }
+    //     //         }
+    //     //       });
+    //     //     }
+    //     //   }
+    //     // );
+    //   });
+
+    // if (itemObj.ActionOnChange != "") {
+    //   setTimeout(
+    //     "triggerDefaultEvent('" +
+    //       itemObj.Name +
+    //       "','" +
+    //       getDefaultValue(itemObj).toLowerCase() +
+    //       "')",
+    //     500
+    //   );
+    // }
+  } catch (e) {
+    // raiseError(e, "#form-group-" + itemObj.FormItemID);
+
+    return;
+  }
+}
+
+function renderRadioButtonList(itemObj, parentID) {
+  try {
+    var itemContent =
+      '<div class="form-group noDrop" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" style="' +
+      (itemObj.Visibility == "DefaultHidden" ? "display:none" : "") +
+      '" id="form-group-' +
+      itemObj.FormItemID +
+      '"><div class="checkbox noDrop" ondragover="allowDrop(event)"> <input class="noDrop" ondragover="allowDrop(event)" type="radio" title="' +
+      itemObj.Name +
+      '" id="form-item-' +
+      itemObj.FormItemID +
+      '"/>&nbsp;' +
+      '<label class="form-item-lbl noDrop" ondragover="allowDrop(event)" id="form-item-lbl' +
+      itemObj.FormItemID +
+      '"' +
+      "  " +
+      'ondblclick="labelProp(id)"' +
+      " " +
+      'class="input-checkbox-label"> ' +
+      itemObj.Label +
+      "</label></div>";
+
+    if (itemObj.SubTextVisible) {
+      itemContent +=
+        '<small class="text-muted">' + itemObj.Description + "</small>";
+    }
+
+    itemContent += "</div>";
+
+    $(parentID).append(itemContent);
+
+    // var itemContent =
+    //   '<div class="form-group" id="form-group-' +
+    //   itemObj.FormItemID +
+    //   '"><label>' +
+    //   itemObj.Label +
+    //   "</label><div>";
+
+    // var $radioButtonList = new radioButtonList(itemObj.EnumTypeID);
+
+    // itemContent += $radioButtonList.renderContext(
+    //   itemObj.FormItemID,
+    //   itemObj.DefaultValue
+    // );
+    // itemContent +=
+    //   '</div><input type="radio" id="form-item-' +
+    //   itemObj.FormItemID +
+    //   '" value="' +
+    //   itemObj.DefaultValue +
+    //   '">';
+
+    // if (itemObj.SubTextVisible) {
+    //   itemContent +=
+    //     '<small class="text-muted">' + itemObj.Description + "</small>";
+    // }
+
+    // itemContent += "</div>";
+
+    // $(parentID).append(itemContent);
+    // $(
+    //   "input[type=radio][name=optionsRadios-" + itemObj.FormItemID + "]"
+    // ).change(function () {
+    //   if ($(this).is(":checked")) {
+    //     $("#form-item-" + itemObj.FormItemID).val(this.value);
+    //   }
+    // });
+
+    // $(
+    //   "input[type=radio][name=optionsRadios-" + itemObj.FormItemID + "]"
+    // ).iCheck({
+    //   checkboxClass: "icheckbox_square-green",
+
+    //   radioClass: "iradio_square-green",
+
+    //   increaseArea: "20%", // optional
+    // });
+  } catch (e) {
+    // itemContent += "</div></div>";
+
+    // $(parentID).append(itemContent);
+
+    //  raiseError(e, "#form-group-" + itemObj.FormItemID);
+
+    return;
+  }
+}
+
+function renderDateBox(itemObj, parentID) {
+  try {
+    var placeholder = "";
+
+    //   if (!jQuery.parseJSON(itemObj.IsRequired)) {
+    //     placeholder = localize("اختیاری");
+    //   }
+
+    var itemContent =
+      '<div draggable="true" ondragstart="drag(event)" style="' +
+      (itemObj.Visibility == "DefaultHidden" ? "display:none" : "") +
+      '" class="form-group noDrop" ondragover="allowDrop(event)" id="form-group-' +
+      itemObj.FormItemID +
+      '"><label class="form-item-lbl noDrop" ondragover="allowDrop(event)"  for="form-item-' +
+      itemObj.FormItemID +
+      '">' +
+      'ondblclick="labelProp()"' +
+      itemObj.Label +
+      '</label><div class="input-group"><div id="picker-' +
+      itemObj.FormItemID +
+      '" data-mdpersiandatetimepickershowing="false" title="" data-original-title="" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1393,&quot;Month&quot;:10,&quot;Day&quot;:9,&quot;Hour&quot;:0,&quot;Minute&quot;:0,&quot;Second&quot;:0}" data-mdpersiandatetimepicker="" style="cursor: pointer;" class="input-group-addon" data-mddatetimepicker="true" data-targetselector="#form-item-' +
+      itemObj.FormItemID +
+      '" data-trigger="click"  data-placement="top" data-englishnumber="true" ><span class="glyphicon glyphicon-calendar"></span></div><input disabled  type="text" class="form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-' +
+      itemObj.FormItemID +
+      '" placeholder="' +
+      placeholder +
+      '" data-mdpersiandatetimepickershowing="false" title="" data-original-title="" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1393,&quot;Month&quot;:10,&quot;Day&quot;:9,&quot;Hour&quot;:0,&quot;Minute&quot;:0,&quot;Second&quot;:0}" data-mdpersiandatetimepicker="" data-mddatetimepicker="true" data-targetselector="#form-item-' +
+      itemObj.FormItemID +
+      '" data-trigger="click"  data-placement="top" data-englishnumber="true" dir="ltr"></div>';
+
+    if (itemObj.SubTextVisible) {
+      itemContent +=
+        '<small class="text-muted">' + itemObj.Description + "</small>";
+    }
+
+    itemContent += "</div>";
+
+    $(parentID).append(itemContent);
+
+    var pickerID = "#picker-" + itemObj.FormItemID;
+
+    var itemInputID = "#form-item-" + itemObj.FormItemID;
+
+    if (itemObj.Width != "") {
+      $(itemInputID).css("width", itemObj.Width);
+    }
+
+    $(itemInputID).css("text-align", "left");
+
+    if (itemObj.InputType == "DateTimeBox") {
+      $(pickerID).attr("data-enabletimepicker", "true");
+
+      $(itemInputID).attr("data-enabletimepicker", "true");
+
+      $(itemInputID).attr("data-inputmask", '"mask": "x/m/d h:s"');
+
+      $(itemInputID).inputmask();
+    } else {
       $(itemInputID).attr("data-inputmask", '"alias": "shamsi"');
 
       $(itemInputID).inputmask();
-
-      $(itemInputID2).css("text-align", "left");
-
-      $(itemInputID2).attr("data-inputmask", '"alias": "shamsi"');
-
-      $(itemInputID2).inputmask();
-
-      EnableMdDateTimePickers();
-    } catch (e) {
-      raiseError(e, "#form-group-" + itemObj.FormItemID);
-
-      return;
     }
+
+    EnableMdDateTimePickers();
+
+    $(itemInputID).val(getDefaultValue(itemObj));
+  } catch (e) {
+    raiseError(e, "#form-group-" + itemObj.FormItemID);
+
+    return;
   }
+}
 
-  //Not implemented
-  function renderTreeSelectList(itemObj, parentID) {
-    try {
-      var itemContent =
-        '<div class="form-group noDrop" draggable="true" ondragstart="drag(event)" id="form-group-' +
-        itemObj.FormItemID +
-        '"><label class="form-item-lbl noDrop"  for="form-item-' +
-        itemObj.FormItemID +
-        '" ondblclick="labelProp(id)">' +
-        itemObj.Label +
-        '</label><div class="input-group"><div class="input-group-addon"><span class="glyphicon glyphicon-share"></span></div><select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-' +
-        itemObj.FormItemID +
-        '"> </select></div>';
+function renderDateRangeBox(itemObj, parentID) {
+  try {
+    var placeholder = "";
 
-      if (itemObj.SubTextVisible) {
-        itemContent +=
-          '<small class="text-muted">' + itemObj.Description + "</small>";
-      }
+    //   if (!jQuery.parseJSON(itemObj.IsRequired)) {
+    //     placeholder = localize("اختیاری");
+    //   }
 
-      itemContent += "</div>";
+    var itemContent =
+      '<div  class="noDrop" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" id="form-group-' +
+      "" +
+      itemObj.FormItemID +
+      '"><label class="form-item-lbl noDrop" ondragover="allowDrop(event)" for="form-item-' +
+      itemObj.FormItemID +
+      '" ondblclick="labelProp(id)">' +
+      itemObj.Label +
+      "</label>";
 
-      $(parentID).append(itemContent);
-    } catch (e) {
-      // raiseError(e, "#form-group-" + itemObj.FormItemID);
+    itemContent +=
+      '<div class="input-group"><div id="picker-' +
+      itemObj.FormItemID +
+      '" data-mdpersiandatetimepickershowing="false" title="" data-original-title="" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1393,&quot;Month&quot;:10,&quot;Day&quot;:9,&quot;Hour&quot;:0,&quot;Minute&quot;:0,&quot;Second&quot;:0}" data-mdpersiandatetimepicker="" style="cursor: pointer;" class="input-group-addon" data-mddatetimepicker="true" data-targetselector="#form-item-from-' +
+      itemObj.FormItemID +
+      '" data-trigger="click"  data-placement="top" data-englishnumber="true"  ><span class="glyphicon glyphicon-calendar"></span></div><input disabled type="text"  form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-from-' +
+      itemObj.FormItemID +
+      '" placeholder="از" dir="ltr" data-mdpersiandatetimepickershowing="false" title="" data-original-title="" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1393,&quot;Month&quot;:10,&quot;Day&quot;:9,&quot;Hour&quot;:0,&quot;Minute&quot;:0,&quot;Second&quot;:0}" data-mdpersiandatetimepicker="" data-mddatetimepicker="true" data-targetselector="#form-item-from-' +
+      itemObj.FormItemID +
+      '" data-trigger="click"  data-placement="top"  data-englishnumber="true">';
 
-      return;
-    }
-  }
+    itemContent +=
+      '<div id="picker-' +
+      itemObj.FormItemID +
+      '" data-mdpersiandatetimepickershowing="false" title="" data-original-title="" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1393,&quot;Month&quot;:10,&quot;Day&quot;:9,&quot;Hour&quot;:0,&quot;Minute&quot;:0,&quot;Second&quot;:0}" data-mdpersiandatetimepicker="" style="cursor: pointer;" class="input-group-addon" data-mddatetimepicker="true" data-targetselector="#form-item-to-' +
+      itemObj.FormItemID +
+      '" data-trigger="click"  data-placement="top" data-englishnumber="true" ><span class="glyphicon glyphicon-calendar"></span></div><input disabled type="text" form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-to-' +
+      itemObj.FormItemID +
+      '" placeholder="تا" dir="ltr"  data-mdpersiandatetimepickershowing="false" title="" data-original-title="" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1393,&quot;Month&quot;:10,&quot;Day&quot;:9,&quot;Hour&quot;:0,&quot;Minute&quot;:0,&quot;Second&quot;:0}" data-mdpersiandatetimepicker="" data-mddatetimepicker="true" data-targetselector="#form-item-to-' +
+      itemObj.FormItemID +
+      '" data-trigger="click"  data-placement="top" data-englishnumber="true"></div>';
 
-  function renderSecureBox(itemObj, parentID) {
-    try {
-      var placeholder = "";
-
-      //   if (!jQuery.parseJSON(itemObj.IsRequired)) {
-      //     placeholder = localize("اختیاری");
-      //   }
-
-      var itemContent =
-        '<div class="form-group noDrop" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" id="form-group-' +
-        itemObj.FormItemID +
-        '"><label class="form-item-lbl noDrop" ondragover="allowDrop(event)"  for="form-item-' +
-        itemObj.FormItemID +
-        '" ondblclick="labelProp(id)">' +
-        itemObj.Label +
-        '</label><div class="input-group"><div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div><input disabled type="password" class="form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-' +
-        itemObj.FormItemID +
-        '" placeholder="' +
-        placeholder +
-        '"></div>';
-
-      if (itemObj.SubTextVisible) {
-        itemContent +=
-          '<small class="text-muted">' + itemObj.Description + "</small>";
-      }
-
-      itemContent += "</div>";
-
-      $(parentID).append(itemContent);
-
-      var itemInputID = "#form-item-" + itemObj.FormItemID;
-
-      if (itemObj.Width != "") {
-        $(itemInputID).css("width", itemObj.Width);
-      }
-
-      $(itemInputID).attr("dir", "ltr");
-
-      $(itemInputID).css("text-align", "left");
-
-      $(itemInputID).val("xxxxxxxxxxxxxxxxxxxxxxxxxx");
-    } catch (e) {
-      // raiseError(e, "#form-group-" + itemObj.FormItemID);
-
-      return;
-    }
-  }
-
-  function renderPasswordBox(itemObj, parentID) {
-    try {
-      var placeholder = "";
-
-      //   if (!itemObj.IsRequired) {
-      //     placeholder = localize("اختیاری");
-      //   }
-
-      var itemContent =
-        '<div class="form-group noDrop" ondragover="allowDrop(event)" id="form-group-' +
-        itemObj.FormItemID +
-        '"' +
-        '  draggable="true" ondragstart="drag(event)" ' +
-        "><label " +
-        'class="form-item-lbl noDrop" ondragover="allowDrop(event)"' +
-        "id=" +
-        '"' +
-        itemObj.FormItemID +
-        '"' +
-        ' for="form-item-' +
-        itemObj.FormItemID +
-        '"' +
-        'ondblclick="labelProp(id)' +
-        '">' +
-        itemObj.Label +
-        ' </label><div class="input-group"><div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div><input disabled type="password" class="form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-' +
-        itemObj.FormItemID +
-        '" placeholder="' +
-        placeholder +
-        '" ondblclick="PasswordProp(id)"></div></div>';
-      //تکرار
+    if (itemObj.SubTextVisible) {
       itemContent +=
-        '<div class="form-group noDrop" ondragover="allowDrop(event)"  id="form-group-' +
-        itemObj.FormItemID +
-        "-rep" +
-        '"' +
-        '  draggable="true" ondragstart="drag(event)" ' +
-        "><label " +
-        'class="form-item-lbl noDrop"  ondragover="allowDrop(event)" id=' +
-        '"' +
-        itemObj.FormItemID +
-        "-1" +
-        '"' +
-        ' for="form-item-' +
-        itemObj.FormItemID +
-        '-rep"' +
-        'ondblclick="labelProp(id)' +
-        '">' +
-        "تکرار " +
-        itemObj.Label +
-        '</label><div class="input-group"><div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div><input  ondblclick="PasswordProp(id)" disabled type="password" class="form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-' +
-        itemObj.FormItemID +
-        '-rep" placeholder="' +
-        placeholder +
-        '"></div>';
-
-      if (itemObj.SubTextVisible) {
-        itemContent +=
-          '<small class="text-muted">' + itemObj.Description + "</small>";
-      }
-
-      itemContent += "</div>";
-
-      $(parentID).append(itemContent);
-
-      var itemInputID = "#form-item-" + itemObj.FormItemID;
-
-      if (itemObj.Width != "") {
-        $(itemInputID).css("width", itemObj.Width);
-
-        $(itemInputID + "-rep").css("width", itemObj.Width);
-      }
-
-      $(itemInputID).attr("dir", "ltr");
-
-      $(itemInputID).css("text-align", "left");
-
-      $(itemInputID).val("");
-
-      $(itemInputID + "-rep").attr("dir", "ltr");
-
-      $(itemInputID + "-rep").css("text-align", "left");
-
-      $(itemInputID + "-rep").val("");
-    } catch (e) {
-      // raiseError(e, "#form-group-" + itemObj.FormItemID);
-
-      return;
+        '<small class="text-muted">' + itemObj.Description + "</small>";
     }
+
+    itemContent += "</div>";
+
+    $(parentID).append(itemContent);
+
+    var itemInputID = "#form-item-from-" + itemObj.FormItemID;
+
+    var itemInputID2 = "#form-item-to-" + itemObj.FormItemID;
+
+    $(itemInputID).css("text-align", "left");
+
+    $(itemInputID).attr("data-inputmask", '"alias": "shamsi"');
+
+    $(itemInputID).inputmask();
+
+    $(itemInputID2).css("text-align", "left");
+
+    $(itemInputID2).attr("data-inputmask", '"alias": "shamsi"');
+
+    $(itemInputID2).inputmask();
+
+    EnableMdDateTimePickers();
+  } catch (e) {
+    raiseError(e, "#form-group-" + itemObj.FormItemID);
+
+    return;
+  }
+}
+
+//Not implemented
+function renderTreeSelectList(itemObj, parentID) {
+  try {
+    var itemContent =
+      '<div class="form-group noDrop" draggable="true" ondragstart="drag(event)" id="form-group-' +
+      itemObj.FormItemID +
+      '"><label class="form-item-lbl noDrop"  for="form-item-' +
+      itemObj.FormItemID +
+      '" ondblclick="labelProp(id)">' +
+      itemObj.Label +
+      '</label><div class="input-group"><div class="input-group-addon"><span class="glyphicon glyphicon-share"></span></div><select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-' +
+      itemObj.FormItemID +
+      '"> </select></div>';
+
+    if (itemObj.SubTextVisible) {
+      itemContent +=
+        '<small class="text-muted">' + itemObj.Description + "</small>";
+    }
+
+    itemContent += "</div>";
+
+    $(parentID).append(itemContent);
+  } catch (e) {
+    // raiseError(e, "#form-group-" + itemObj.FormItemID);
+
+    return;
+  }
+}
+
+function renderSecureBox(itemObj, parentID) {
+  try {
+    var placeholder = "";
+
+    //   if (!jQuery.parseJSON(itemObj.IsRequired)) {
+    //     placeholder = localize("اختیاری");
+    //   }
+
+    var itemContent =
+      '<div class="form-group noDrop" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" id="form-group-' +
+      itemObj.FormItemID +
+      '"><label class="form-item-lbl noDrop" ondragover="allowDrop(event)"  for="form-item-' +
+      itemObj.FormItemID +
+      '" ondblclick="labelProp(id)">' +
+      itemObj.Label +
+      '</label><div class="input-group"><div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div><input disabled type="password" class="form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-' +
+      itemObj.FormItemID +
+      '" placeholder="' +
+      placeholder +
+      '"></div>';
+
+    if (itemObj.SubTextVisible) {
+      itemContent +=
+        '<small class="text-muted">' + itemObj.Description + "</small>";
+    }
+
+    itemContent += "</div>";
+
+    $(parentID).append(itemContent);
+
+    var itemInputID = "#form-item-" + itemObj.FormItemID;
+
+    if (itemObj.Width != "") {
+      $(itemInputID).css("width", itemObj.Width);
+    }
+
+    $(itemInputID).attr("dir", "ltr");
+
+    $(itemInputID).css("text-align", "left");
+
+    $(itemInputID).val("xxxxxxxxxxxxxxxxxxxxxxxxxx");
+  } catch (e) {
+    // raiseError(e, "#form-group-" + itemObj.FormItemID);
+
+    return;
+  }
+}
+
+function renderPasswordBox(itemObj, parentID) {
+  try {
+    var placeholder = "";
+
+    //   if (!itemObj.IsRequired) {
+    //     placeholder = localize("اختیاری");
+    //   }
+
+    var itemContent =
+      '<div class="form-group noDrop" ondragover="allowDrop(event)" id="form-group-' +
+      itemObj.FormItemID +
+      '"' +
+      '  draggable="true" ondragstart="drag(event)" ' +
+      "><label " +
+      'class="form-item-lbl noDrop" ondragover="allowDrop(event)"' +
+      "id=" +
+      '"' +
+      itemObj.FormItemID +
+      '"' +
+      ' for="form-item-' +
+      itemObj.FormItemID +
+      '"' +
+      'ondblclick="labelProp(id)' +
+      '">' +
+      itemObj.Label +
+      ' </label><div class="input-group"><div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div><input disabled type="password" class="form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-' +
+      itemObj.FormItemID +
+      '" placeholder="' +
+      placeholder +
+      '" ondblclick="PasswordProp(id)"></div></div>';
+    //تکرار
+    itemContent +=
+      '<div class="form-group noDrop" ondragover="allowDrop(event)"  id="form-group-' +
+      itemObj.FormItemID +
+      "-rep" +
+      '"' +
+      '  draggable="true" ondragstart="drag(event)" ' +
+      "><label " +
+      'class="form-item-lbl noDrop"  ondragover="allowDrop(event)" id=' +
+      '"' +
+      itemObj.FormItemID +
+      "-1" +
+      '"' +
+      ' for="form-item-' +
+      itemObj.FormItemID +
+      '-rep"' +
+      'ondblclick="labelProp(id)' +
+      '">' +
+      "تکرار " +
+      itemObj.Label +
+      '</label><div class="input-group"><div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div><input  ondblclick="PasswordProp(id)" disabled type="password" class="form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-' +
+      itemObj.FormItemID +
+      '-rep" placeholder="' +
+      placeholder +
+      '"></div>';
+
+    if (itemObj.SubTextVisible) {
+      itemContent +=
+        '<small class="text-muted">' + itemObj.Description + "</small>";
+    }
+
+    itemContent += "</div>";
+
+    $(parentID).append(itemContent);
+
+    var itemInputID = "#form-item-" + itemObj.FormItemID;
+
+    if (itemObj.Width != "") {
+      $(itemInputID).css("width", itemObj.Width);
+
+      $(itemInputID + "-rep").css("width", itemObj.Width);
+    }
+
+    $(itemInputID).attr("dir", "ltr");
+
+    $(itemInputID).css("text-align", "left");
+
+    $(itemInputID).val("");
+
+    $(itemInputID + "-rep").attr("dir", "ltr");
+
+    $(itemInputID + "-rep").css("text-align", "left");
+
+    $(itemInputID + "-rep").val("");
+  } catch (e) {
+    // raiseError(e, "#form-group-" + itemObj.FormItemID);
+
+    return;
+  }
+}
+
+function renderTextView(itemObj, parentID) {
+  try {
+    var value = getDefaultValue(itemObj);
+
+    if (itemObj.Visibility == "VisibleIfValue") {
+      if (value == null || value == "") {
+        return;
+      }
+    }
+
+    if (itemObj.AttributeTypeName == "Boolean") {
+      if (value == "True") {
+        value =
+          '<input class="view-checkbox noDrop" ondragover="allowDrop(event)" type="checkbox" checked disabled/>';
+      } else {
+        value =
+          '<input class="view-checkbox noDrop" ondragover="allowDrop(event)" type="checkbox" disabled/>';
+      }
+    }
+
+    var itemContent =
+      '<div class="form-group noDrop" ondragover="allowDrop(event)" id="form-group-' +
+      'draggable="true" ondragstart="drag(event)"' +
+      itemObj.FormItemID +
+      '">' +
+      (itemObj.AttributeTypeName == "Boolean" ? value : "") +
+      '&nbsp;<label class="form-item-lbl noDrop" ondragover="allowDrop(event)"  for="form-item-' +
+      itemObj.FormItemID +
+      '" ondblclick="labelProp(id)">' +
+      itemObj.Label +
+      "&nbsp;" +
+      (itemObj.AttributeTypeName == "Boolean" ? "" : ":") +
+      '&nbsp;</label><span class="form-text-view" id="form-item-' +
+      itemObj.FormItemID +
+      '"></span>';
+
+    if (itemObj.SubTextVisible) {
+      itemContent +=
+        '<small class="text-muted">' + itemObj.Description + "</small>";
+    }
+
+    itemContent += "</div>";
+
+    $(parentID).append(itemContent);
+
+    if (itemObj.Width != "") {
+      $("#form-item-" + itemObj.FormItemID).css("width", itemObj.Width);
+    }
+
+    //   if (_objKeys.length > 1) {
+    //     $("#form-item-" + itemObj.FormItemID).html(
+    //       _objKeys.length + localize("مورد ")
+    //     );
+    //   }
+
+    if (itemObj.AttributeTypeName != "Boolean") {
+      if (_objKeys.length == 1) {
+        $("#form-item-" + itemObj.FormItemID).html(value);
+      }
+    }
+  } catch (e) {
+    // raiseError(e, "#form-group-" + itemObj.FormItemID);
+
+    return;
+  }
+}
+
+renderTaskProceedingsArea = function (parentID) {
+  if (!_prcStateOptions.StateHasTask) {
+    return;
   }
 
-  function renderTextView(itemObj, parentID) {
-    try {
-      var value = getDefaultValue(itemObj);
-
-      if (itemObj.Visibility == "VisibleIfValue") {
-        if (value == null || value == "") {
-          return;
-        }
-      }
-
-      if (itemObj.AttributeTypeName == "Boolean") {
-        if (value == "True") {
-          value =
-            '<input class="view-checkbox noDrop" ondragover="allowDrop(event)" type="checkbox" checked disabled/>';
-        } else {
-          value =
-            '<input class="view-checkbox noDrop" ondragover="allowDrop(event)" type="checkbox" disabled/>';
-        }
-      }
-
-      var itemContent =
-        '<div class="form-group noDrop" ondragover="allowDrop(event)" id="form-group-' +
-        'draggable="true" ondragstart="drag(event)"' +
-        itemObj.FormItemID +
-        '">' +
-        (itemObj.AttributeTypeName == "Boolean" ? value : "") +
-        '&nbsp;<label class="form-item-lbl noDrop" ondragover="allowDrop(event)"  for="form-item-' +
-        itemObj.FormItemID +
-        '" ondblclick="labelProp(id)">' +
-        itemObj.Label +
-        "&nbsp;" +
-        (itemObj.AttributeTypeName == "Boolean" ? "" : ":") +
-        '&nbsp;</label><span class="form-text-view" id="form-item-' +
-        itemObj.FormItemID +
-        '"></span>';
-
-      if (itemObj.SubTextVisible) {
-        itemContent +=
-          '<small class="text-muted">' + itemObj.Description + "</small>";
-      }
-
-      itemContent += "</div>";
-
-      $(parentID).append(itemContent);
-
-      if (itemObj.Width != "") {
-        $("#form-item-" + itemObj.FormItemID).css("width", itemObj.Width);
-      }
-
-      //   if (_objKeys.length > 1) {
-      //     $("#form-item-" + itemObj.FormItemID).html(
-      //       _objKeys.length + localize("مورد ")
-      //     );
-      //   }
-
-      if (itemObj.AttributeTypeName != "Boolean") {
-        if (_objKeys.length == 1) {
-          $("#form-item-" + itemObj.FormItemID).html(value);
-        }
-      }
-    } catch (e) {
-      // raiseError(e, "#form-group-" + itemObj.FormItemID);
-
-      return;
-    }
-  }
-
-  renderTaskProceedingsArea = function (parentID) {
-    if (!_prcStateOptions.StateHasTask) {
-      return;
-    }
-
-    if (_prcStateOptions.TaskHasServics > 0) {
-      $(parentID).append(
-        '<div class="form-group ">' +
+  if (_prcStateOptions.TaskHasServics > 0) {
+    $(parentID).append(
+      '<div class="form-group ">' +
         '<label>خدمات انجام شده</label><div class="input-group">' +
         '<div class="input-group-addon"><span class="glyphicon glyphicon-check"></span></div>' +
         '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="task-services"></select></div>' +
         "</div>"
-      );
-    }
+    );
+  }
 
-    if (_prcStateOptions.TaskHasReport > 0) {
-      $(parentID).append(
-        '<div class="form-group">' +
+  if (_prcStateOptions.TaskHasReport > 0) {
+    $(parentID).append(
+      '<div class="form-group">' +
         '<label>توضیحات</label><div class="input-group">' +
         '<div class="input-group-addon"><span class="glyphicon glyphicon-edit"></span></div>' +
         '<textarea class="form-control form-input noDrop" ondragover="allowDrop(event)" id="task-report" rows="5"></textarea></div>' +
         "</div>"
-      );
-    }
+    );
+  }
 
-    if (_prcStateOptions.TaskHasSpentTime > 0) {
-      $(parentID).append(
-        '<div class="form-group"><label>زمان صرف شده</label>' +
+  if (_prcStateOptions.TaskHasSpentTime > 0) {
+    $(parentID).append(
+      '<div class="form-group"><label>زمان صرف شده</label>' +
         '<div class="row">' +
         '<div class="col-md-2" class="form-time-label">' +
         '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="task-spent-day"></select></div>' +
@@ -1462,34 +1335,34 @@
         '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="task-spent-minute"></select></div>' +
         '<div class="col-md-1 form-time-box">&nbsp;&nbsp; دقیقه </div>' +
         "</div></div>"
-      );
-
-      for (i = 0; i < 8; i++) {
-        $("#task-spent-day").append(
-          $("<option></option>").attr("value", i).text(i)
-        );
-
-        $("#task-spent-hour").append(
-          $("<option></option>").attr("value", i).text(i)
-        );
-      }
-
-      for (i = 0; i < 12; i++) {
-        $("#task-spent-minute").append(
-          $("<option></option>")
-            .attr("value", i * 5)
-            .text(i * 5)
-        );
-      }
-    }
-
-    $(parentID).append(
-      '<div class="form-group"><label>سایر فرم ها</label><div class="row" id="row-links"></div></div>'
     );
 
-    $.each(_prcStateActLinks, function (index, actLink) {
-      $("#row-links").append(
-        '<div class="col-md-3"><a class="form-link" data-context-id=' +
+    for (i = 0; i < 8; i++) {
+      $("#task-spent-day").append(
+        $("<option></option>").attr("value", i).text(i)
+      );
+
+      $("#task-spent-hour").append(
+        $("<option></option>").attr("value", i).text(i)
+      );
+    }
+
+    for (i = 0; i < 12; i++) {
+      $("#task-spent-minute").append(
+        $("<option></option>")
+          .attr("value", i * 5)
+          .text(i * 5)
+      );
+    }
+  }
+
+  $(parentID).append(
+    '<div class="form-group"><label>سایر فرم ها</label><div class="row" id="row-links"></div></div>'
+  );
+
+  $.each(_prcStateActLinks, function (index, actLink) {
+    $("#row-links").append(
+      '<div class="col-md-3"><a class="form-link" data-context-id=' +
         actLink.ActivityContextID +
         ' id="act-link-' +
         actLink.ActivityContextID +
@@ -1498,877 +1371,874 @@
         '"></span>&nbsp;' +
         actLink.Label +
         "</a></div>"
-      );
-
-      $("#act-link-" + actLink.ActivityContextID).click(function () { });
-    });
-  };
-
-  renderProcessStatingArea = function (parentID) {
-    if (_prcStateOptions.IsStartState && _prcTranscations.getLength() == 1) {
-      return;
-    }
-
-    $(parentID).append(
-      '<div class="form-group"><label>وضعیت جدید</label><div class="input-group"><div class="input-group-addon"><span class="glyphicon glyphicon-check"></span></div><select id="process-final-actions" class="form-control form-input noDrop" ondragover="allowDrop(event)"></select></div></div>'
     );
 
-    var content = '<div class="form-group">';
+    $("#act-link-" + actLink.ActivityContextID).click(function () {});
+  });
+};
 
-    content +=
-      '<div class="row" id="refer-area-1"><div class="col-md-1" class="form-taskrefer-setp">&nbsp;گام 1&nbsp;<span class="fa fa-caret-left"></span></div>' +
-      '<div class="col-md-1" id="taskrefer-label-group-1" class="form-taskrefer-label">تیم&nbsp;&nbsp;</div>' +
-      '<div class="col-md-4" id="taskrefer-box-group-1" class="form-taskrefer-box">' +
-      '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-group-1"></select></div>' +
-      '<div class="col-md-2" id="taskrefer-label-user-1" class="form-taskrefer-label">&nbsp;&nbsp;کارشناس&nbsp;&nbsp;</div>' +
-      '<div class="col-md-4" id="taskrefer-box-user-1" class="form-taskrefer-box">' +
-      '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-user-1"></select></div>' +
-      "<br /> " +
-      "</div>";
+renderProcessStatingArea = function (parentID) {
+  if (_prcStateOptions.IsStartState && _prcTranscations.getLength() == 1) {
+    return;
+  }
 
-    content +=
-      '<div class="row" id="refer-area-2"><div class="col-md-2" class="form-taskrefer-setp">&nbsp;گام 2&nbsp;<span class="fa fa-caret-left"></span></div>' +
-      '<div class="col-md-2" id="taskrefer-label-group-2" class="form-taskrefer-label">تیم&nbsp;&nbsp;</div>' +
-      '<div class="col-md-4" id="taskrefer-box-group-2" class="form-taskrefer-box">' +
-      '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-group-2"></select></div>' +
-      '<div class="col-md-2" id="taskrefer-label-user-2" class="form-taskrefer-label">&nbsp;&nbsp;کارشناس&nbsp;&nbsp;</div>' +
-      '<div class="col-md-4" id="taskrefer-box-user-2" class="form-taskrefer-box">' +
-      '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-user-2"></select></div>' +
-      "<br /> " +
-      "</div>";
+  $(parentID).append(
+    '<div class="form-group"><label>وضعیت جدید</label><div class="input-group"><div class="input-group-addon"><span class="glyphicon glyphicon-check"></span></div><select id="process-final-actions" class="form-control form-input noDrop" ondragover="allowDrop(event)"></select></div></div>'
+  );
 
-    content +=
-      '<div class="row" id="refer-area-3"><div class="col-md-3" class="form-taskrefer-setp">&nbsp;گام 3&nbsp;<span class="fa fa-caret-left"></span></div>' +
-      '<div class="col-md-2" id="taskrefer-label-group-3" class="form-taskrefer-label">تیم&nbsp;&nbsp;</div>' +
-      '<div class="col-md-4" id="taskrefer-box-group-3" class="form-taskrefer-box">' +
-      '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-group-3"></select></div>' +
-      '<div class="col-md-2" id="taskrefer-label-user-3" class="form-taskrefer-label">&nbsp;&nbsp;کارشناس&nbsp;&nbsp;</div>' +
-      '<div class="col-md-4" id="taskrefer-box-user-3" class="form-taskrefer-box">' +
-      '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-user-3"></select></div>' +
-      "<br /> " +
-      "</div>";
+  var content = '<div class="form-group">';
 
-    content +=
-      '<div class="row" id="refer-area-4"><div class="col-md-4" class="form-taskrefer-setp">&nbsp;گام 4&nbsp;<span class="fa fa-caret-left"></span></div>' +
-      '<div class="col-md-2" id="taskrefer-label-group-4" class="form-taskrefer-label">تیم&nbsp;&nbsp;</div>' +
-      '<div class="col-md-4" id="taskrefer-box-group-4" class="form-taskrefer-box">' +
-      '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-group-4"></select></div>' +
-      '<div class="col-md-2" id="taskrefer-label-user-4" class="form-taskrefer-label">&nbsp;&nbsp;کارشناس&nbsp;&nbsp;</div>' +
-      '<div class="col-md-4" id="taskrefer-box-user-4" class="form-taskrefer-box">' +
-      '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-user-4"></select></div>' +
-      "<br /> " +
-      "</div>";
+  content +=
+    '<div class="row" id="refer-area-1"><div class="col-md-1" class="form-taskrefer-setp">&nbsp;گام 1&nbsp;<span class="fa fa-caret-left"></span></div>' +
+    '<div class="col-md-1" id="taskrefer-label-group-1" class="form-taskrefer-label">تیم&nbsp;&nbsp;</div>' +
+    '<div class="col-md-4" id="taskrefer-box-group-1" class="form-taskrefer-box">' +
+    '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-group-1"></select></div>' +
+    '<div class="col-md-2" id="taskrefer-label-user-1" class="form-taskrefer-label">&nbsp;&nbsp;کارشناس&nbsp;&nbsp;</div>' +
+    '<div class="col-md-4" id="taskrefer-box-user-1" class="form-taskrefer-box">' +
+    '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-user-1"></select></div>' +
+    "<br /> " +
+    "</div>";
 
-    content +=
-      '<div class="row" id="refer-area-5"><div class="col-md-5" class="form-taskrefer-setp">&nbsp;ارجاع گیرنده&nbsp;<span class="fa fa-caret-left"></span></div>' +
-      '<div class="col-md-2" id="taskrefer-label-user-5" class="form-taskrefer-label">&nbsp;&nbsp;کاربر&nbsp;&nbsp;</div>' +
-      '<div class="col-md-5" id="taskrefer-box-user-5" class="form-taskrefer-box">' +
-      '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-user-5"></select></div>' +
-      "<br /> " +
-      "</div>";
+  content +=
+    '<div class="row" id="refer-area-2"><div class="col-md-2" class="form-taskrefer-setp">&nbsp;گام 2&nbsp;<span class="fa fa-caret-left"></span></div>' +
+    '<div class="col-md-2" id="taskrefer-label-group-2" class="form-taskrefer-label">تیم&nbsp;&nbsp;</div>' +
+    '<div class="col-md-4" id="taskrefer-box-group-2" class="form-taskrefer-box">' +
+    '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-group-2"></select></div>' +
+    '<div class="col-md-2" id="taskrefer-label-user-2" class="form-taskrefer-label">&nbsp;&nbsp;کارشناس&nbsp;&nbsp;</div>' +
+    '<div class="col-md-4" id="taskrefer-box-user-2" class="form-taskrefer-box">' +
+    '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-user-2"></select></div>' +
+    "<br /> " +
+    "</div>";
 
-    content += "</div>";
+  content +=
+    '<div class="row" id="refer-area-3"><div class="col-md-3" class="form-taskrefer-setp">&nbsp;گام 3&nbsp;<span class="fa fa-caret-left"></span></div>' +
+    '<div class="col-md-2" id="taskrefer-label-group-3" class="form-taskrefer-label">تیم&nbsp;&nbsp;</div>' +
+    '<div class="col-md-4" id="taskrefer-box-group-3" class="form-taskrefer-box">' +
+    '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-group-3"></select></div>' +
+    '<div class="col-md-2" id="taskrefer-label-user-3" class="form-taskrefer-label">&nbsp;&nbsp;کارشناس&nbsp;&nbsp;</div>' +
+    '<div class="col-md-4" id="taskrefer-box-user-3" class="form-taskrefer-box">' +
+    '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-user-3"></select></div>' +
+    "<br /> " +
+    "</div>";
 
-    $(parentID).append(content);
+  content +=
+    '<div class="row" id="refer-area-4"><div class="col-md-4" class="form-taskrefer-setp">&nbsp;گام 4&nbsp;<span class="fa fa-caret-left"></span></div>' +
+    '<div class="col-md-2" id="taskrefer-label-group-4" class="form-taskrefer-label">تیم&nbsp;&nbsp;</div>' +
+    '<div class="col-md-4" id="taskrefer-box-group-4" class="form-taskrefer-box">' +
+    '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-group-4"></select></div>' +
+    '<div class="col-md-2" id="taskrefer-label-user-4" class="form-taskrefer-label">&nbsp;&nbsp;کارشناس&nbsp;&nbsp;</div>' +
+    '<div class="col-md-4" id="taskrefer-box-user-4" class="form-taskrefer-box">' +
+    '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-user-4"></select></div>' +
+    "<br /> " +
+    "</div>";
 
-    $(parentID).append(
-      '<div class="form-group" id="sla-type-area"><label>تعیین SLA</label><div class="input-group"><div class="input-group-addon"><span class="glyphicon glyphicon-check"></span></div><select id="process-slas" class="form-control form-input noDrop"></select></div></div>'
+  content +=
+    '<div class="row" id="refer-area-5"><div class="col-md-5" class="form-taskrefer-setp">&nbsp;ارجاع گیرنده&nbsp;<span class="fa fa-caret-left"></span></div>' +
+    '<div class="col-md-2" id="taskrefer-label-user-5" class="form-taskrefer-label">&nbsp;&nbsp;کاربر&nbsp;&nbsp;</div>' +
+    '<div class="col-md-5" id="taskrefer-box-user-5" class="form-taskrefer-box">' +
+    '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="refer-user-5"></select></div>' +
+    "<br /> " +
+    "</div>";
+
+  content += "</div>";
+
+  $(parentID).append(content);
+
+  $(parentID).append(
+    '<div class="form-group" id="sla-type-area"><label>تعیین SLA</label><div class="input-group"><div class="input-group-addon"><span class="glyphicon glyphicon-check"></span></div><select id="process-slas" class="form-control form-input noDrop"></select></div></div>'
+  );
+
+  content = '<div class="form-group">';
+
+  content +=
+    '<div class="row" id="sla-area-1"><div class="col-md-2" class="form-sla-setp">&nbsp;مهلت مراجعه&nbsp;<span class="fa fa-caret-left"></span></div>' +
+    '<div class="col-md-2" class="form-time-label">' +
+    '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="sla-start-day"></select></div>' +
+    '<div class="col-md-1" class="form-time-box">&nbsp;&nbsp; روز </div>' +
+    '<div class="col-md-2" class="form-time-label">' +
+    '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="sla-start-hour"></select></div>' +
+    '<div class="col-md-2" class="form-time-box">&nbsp;&nbsp; ساعت </div>' +
+    '<div class="col-md-2" class="form-time-label">' +
+    '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="sla-start-minute"></select></div>' +
+    '<div class="col-md-1"  class="form-time-box">&nbsp;&nbsp; دقیقه </div>' +
+    "</div><br />";
+
+  content +=
+    '<div class="row" id="sla-area-2"><div class="col-md-2" class="form-sla-setp">&nbsp;مهلت انجام&nbsp;<span class="fa fa-caret-left"></span></div>' +
+    '<div class="col-md-2" class="form-time-label">' +
+    '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="sla-resolve-day"></select></div>' +
+    '<div class="col-md-1" class="form-time-box">&nbsp;&nbsp; روز </div>' +
+    '<div class="col-md-2" class="form-time-label">' +
+    '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="sla-resolve-hour"></select></div>' +
+    '<div class="col-md-2" class="form-time-box">&nbsp;&nbsp; ساعت </div>' +
+    '<div class="col-md-2" class="form-time-label">' +
+    '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="sla-resolve-minute"></select></div>' +
+    '<div class="col-md-1"  class="form-time-box">&nbsp;&nbsp; دقیقه </div>' +
+    "</div>";
+
+  content += "</div>";
+
+  $(parentID).append(content);
+
+  for (i = 0; i < 8; i++) {
+    $("#sla-start-day").append($("<option></option>").attr("value", i).text(i));
+
+    $("#sla-start-hour").append(
+      $("<option></option>").attr("value", i).text(i)
     );
 
-    content = '<div class="form-group">';
+    $("#sla-resolve-day").append(
+      $("<option></option>").attr("value", i).text(i)
+    );
 
-    content +=
-      '<div class="row" id="sla-area-1"><div class="col-md-2" class="form-sla-setp">&nbsp;مهلت مراجعه&nbsp;<span class="fa fa-caret-left"></span></div>' +
-      '<div class="col-md-2" class="form-time-label">' +
-      '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="sla-start-day"></select></div>' +
-      '<div class="col-md-1" class="form-time-box">&nbsp;&nbsp; روز </div>' +
-      '<div class="col-md-2" class="form-time-label">' +
-      '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="sla-start-hour"></select></div>' +
-      '<div class="col-md-2" class="form-time-box">&nbsp;&nbsp; ساعت </div>' +
-      '<div class="col-md-2" class="form-time-label">' +
-      '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="sla-start-minute"></select></div>' +
-      '<div class="col-md-1"  class="form-time-box">&nbsp;&nbsp; دقیقه </div>' +
-      "</div><br />";
+    $("#sla-resolve-hour").append(
+      $("<option></option>").attr("value", i).text(i)
+    );
+  }
 
-    content +=
-      '<div class="row" id="sla-area-2"><div class="col-md-2" class="form-sla-setp">&nbsp;مهلت انجام&nbsp;<span class="fa fa-caret-left"></span></div>' +
-      '<div class="col-md-2" class="form-time-label">' +
-      '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="sla-resolve-day"></select></div>' +
-      '<div class="col-md-1" class="form-time-box">&nbsp;&nbsp; روز </div>' +
-      '<div class="col-md-2" class="form-time-label">' +
-      '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="sla-resolve-hour"></select></div>' +
-      '<div class="col-md-2" class="form-time-box">&nbsp;&nbsp; ساعت </div>' +
-      '<div class="col-md-2" class="form-time-label">' +
-      '<select class="form-control form-input noDrop" ondragover="allowDrop(event)" id="sla-resolve-minute"></select></div>' +
-      '<div class="col-md-1"  class="form-time-box">&nbsp;&nbsp; دقیقه </div>' +
-      "</div>";
+  for (i = 0; i < 12; i++) {
+    $("#sla-start-minute").append(
+      $("<option></option>")
+        .attr("value", i * 5)
+        .text(i * 5)
+    );
 
-    content += "</div>";
+    $("#sla-resolve-minute").append(
+      $("<option></option>")
+        .attr("value", i * 5)
+        .text(i * 5)
+    );
+  }
 
-    $(parentID).append(content);
-
-    for (i = 0; i < 8; i++) {
-      $("#sla-start-day").append(
-        $("<option></option>").attr("value", i).text(i)
-      );
-
-      $("#sla-start-hour").append(
-        $("<option></option>").attr("value", i).text(i)
-      );
-
-      $("#sla-resolve-day").append(
-        $("<option></option>").attr("value", i).text(i)
-      );
-
-      $("#sla-resolve-hour").append(
-        $("<option></option>").attr("value", i).text(i)
-      );
-    }
-
-    for (i = 0; i < 12; i++) {
-      $("#sla-start-minute").append(
-        $("<option></option>")
-          .attr("value", i * 5)
-          .text(i * 5)
-      );
-
-      $("#sla-resolve-minute").append(
-        $("<option></option>")
-          .attr("value", i * 5)
-          .text(i * 5)
-      );
-    }
-
-    if (!_prcStateOptions.IsStartState) {
-      $.each(_prcTaskStatuses, function (index, taskStatus) {
-        $("#process-final-actions").append(
-          $("<option></option>")
-            .attr("value", taskStatus.TaskStatusID)
-            .text(taskStatus.Label)
-        );
-      });
-    }
-
-    $.each(_prcTranscations.getList(), function (index, transacation) {
+  if (!_prcStateOptions.IsStartState) {
+    $.each(_prcTaskStatuses, function (index, taskStatus) {
       $("#process-final-actions").append(
         $("<option></option>")
-          .attr("value", transacation.StateTransactionID)
-          .text(transacation.Label)
+          .attr("value", taskStatus.TaskStatusID)
+          .text(taskStatus.Label)
       );
     });
+  }
 
-    $("#process-final-actions").change(function () {
-      if (this.value < 100) {
-        return; //action is a internal task status
+  $.each(_prcTranscations.getList(), function (index, transacation) {
+    $("#process-final-actions").append(
+      $("<option></option>")
+        .attr("value", transacation.StateTransactionID)
+        .text(transacation.Label)
+    );
+  });
+
+  $("#process-final-actions").change(function () {
+    if (this.value < 100) {
+      return; //action is a internal task status
+    }
+
+    var transacation = _prcTranscations.getListByFilter(
+      "StateTransactionID",
+      this.value
+    )[0];
+
+    var taskAssignmentType = transacation.TaskAssignmentType.split("-");
+
+    var startSLAStatus = transacation.StartSLAStatus.split("-");
+
+    var resolveSLAStatus = transacation.ResolveSLAStatus.split("-");
+
+    if (taskAssignmentType[0] == "UserBased") {
+      if (
+        taskAssignmentType[1] == "Individual" ||
+        taskAssignmentType[1] == "Collective"
+      ) {
+        if (
+          taskAssignmentType[2] == "ToGroupedUser" ||
+          taskAssignmentType[2] == "ToSelfgroupUser" ||
+          taskAssignmentType[2] == "ToGroup"
+        ) {
+          $("#refer-area-1").show();
+
+          $("#refer-area-2").hide();
+
+          $("#refer-area-3").hide();
+
+          $("#refer-area-4").hide();
+
+          $("#refer-area-5").hide();
+        }
+
+        if (taskAssignmentType[2] == "User") {
+          $("#refer-area-1").hide();
+
+          $("#refer-area-2").hide();
+
+          $("#refer-area-3").hide();
+
+          $("#refer-area-4").hide();
+
+          $("#refer-area-5").show();
+
+          var $selectList = new selectList(4, null);
+
+          $selectList.renderContext(
+            "#refer-user-5",
+            false,
+            _formOptions.ActivityID,
+            true,
+            ""
+          );
+        }
       }
 
-      var transacation = _prcTranscations.getListByFilter(
-        "StateTransactionID",
-        this.value
-      )[0];
+      if (taskAssignmentType[1] == "Collective") {
+        if (taskAssignmentType[2] == "ToGroup") {
+          $("#taskrefer-label-group-1").show();
 
-      var taskAssignmentType = transacation.TaskAssignmentType.split("-");
+          $("#taskrefer-box-group-1").show();
 
-      var startSLAStatus = transacation.StartSLAStatus.split("-");
+          $("#taskrefer-label-user-1").hide();
 
-      var resolveSLAStatus = transacation.ResolveSLAStatus.split("-");
+          $("#taskrefer-box-user-1").hide();
 
-      if (taskAssignmentType[0] == "UserBased") {
-        if (
-          taskAssignmentType[1] == "Individual" ||
-          taskAssignmentType[1] == "Collective"
-        ) {
-          if (
-            taskAssignmentType[2] == "ToGroupedUser" ||
-            taskAssignmentType[2] == "ToSelfgroupUser" ||
-            taskAssignmentType[2] == "ToGroup"
-          ) {
-            $("#refer-area-1").show();
-
-            $("#refer-area-2").hide();
-
-            $("#refer-area-3").hide();
-
-            $("#refer-area-4").hide();
-
-            $("#refer-area-5").hide();
-          }
-
-          if (taskAssignmentType[2] == "User") {
-            $("#refer-area-1").hide();
-
-            $("#refer-area-2").hide();
-
-            $("#refer-area-3").hide();
-
-            $("#refer-area-4").hide();
-
-            $("#refer-area-5").show();
-
-            var $selectList = new selectList(4, null);
+          if ($("#refer-group-1").children("option").length == 0) {
+            var $selectList = new selectList(1, null);
 
             $selectList.renderContext(
-              "#refer-user-5",
+              "#refer-group-1",
               false,
               _formOptions.ActivityID,
               true,
-              ""
+              "",
+              "ToGroupedUser"
             );
           }
         }
+      }
 
-        if (taskAssignmentType[1] == "Collective") {
-          if (taskAssignmentType[2] == "ToGroup") {
-            $("#taskrefer-label-group-1").show();
+      if (taskAssignmentType[1] == "Individual") {
+        if (
+          taskAssignmentType[2] == "ToGroupedUser" ||
+          taskAssignmentType[2] == "ToSelfgroupUser"
+        ) {
+          $("#taskrefer-label-group-1").show();
 
-            $("#taskrefer-box-group-1").show();
+          $("#taskrefer-box-group-1").show();
 
-            $("#taskrefer-label-user-1").hide();
+          $("#taskrefer-label-user-1").show();
 
-            $("#taskrefer-box-user-1").hide();
+          $("#taskrefer-box-user-1").show();
+        }
 
-            if ($("#refer-group-1").children("option").length == 0) {
-              var $selectList = new selectList(1, null);
+        if (taskAssignmentType[2] == "ToGroupedUser") {
+          var $selectList = new selectList(1, null);
 
-              $selectList.renderContext(
-                "#refer-group-1",
-                false,
-                _formOptions.ActivityID,
-                true,
-                "",
-                "ToGroupedUser"
+          $selectList.renderContext(
+            "#refer-group-1",
+            false,
+            _formOptions.ActivityID,
+            true,
+            "",
+            "ToGroupedUser"
+          );
+        }
+
+        if (taskAssignmentType[2] == "ToSelfgroupUser") {
+          var $selectList = new selectList(1, null);
+
+          $selectList.renderContext(
+            "#refer-group-1",
+            false,
+            _formOptions.ActivityID,
+            true,
+            "",
+            "ToSelfgroupUser"
+          );
+        }
+      }
+
+      if (
+        taskAssignmentType[1] == "Sequence" ||
+        taskAssignmentType[1] == "Paralell"
+      ) {
+        if (
+          taskAssignmentType[2] == "ToGroupedUser" ||
+          taskAssignmentType[2] == "ToSelfgroupUser"
+        ) {
+          $("#refer-area-1").show();
+
+          $("#refer-area-2").show();
+
+          $("#refer-area-3").show();
+
+          $("#refer-area-4").show();
+
+          $("#refer-area-5").hide();
+        }
+
+        if (taskAssignmentType[2] == "ToGroupedUser") {
+          var $selectList = new selectList(1, null);
+
+          $selectList.renderContext(
+            "#refer-group-1",
+            false,
+            _formOptions.ActivityID,
+            true,
+            "",
+            "ToGroupedUser"
+          );
+
+          $selectList.renderContext(
+            "#refer-group-2",
+            false,
+            _formOptions.ActivityID,
+            true,
+            "",
+            "ToGroupedUser"
+          );
+
+          $selectList.renderContext(
+            "#refer-group-3",
+            false,
+            _formOptions.ActivityID,
+            true,
+            "",
+            "ToGroupedUser"
+          );
+
+          $selectList.renderContext(
+            "#refer-group-4",
+            false,
+            _formOptions.ActivityID,
+            true,
+            "",
+            "ToGroupedUser"
+          );
+        }
+
+        if (taskAssignmentType[2] == "ToSelfgroupUser") {
+          var $selectList = new selectList(1, null);
+
+          $selectList.renderContext(
+            "#refer-group-1",
+            false,
+            _formOptions.ActivityID,
+            true,
+            "",
+            "ToSelfgroupUser"
+          );
+
+          $selectList.renderContext(
+            "#refer-group-2",
+            false,
+            _formOptions.ActivityID,
+            true,
+            "",
+            "ToSelfgroupUser"
+          );
+
+          $selectList.renderContext(
+            "#refer-group-3",
+            false,
+            _formOptions.ActivityID,
+            true,
+            "",
+            "ToSelfgroupUser"
+          );
+
+          $selectList.renderContext(
+            "#refer-group-4",
+            false,
+            _formOptions.ActivityID,
+            true,
+            "",
+            "ToSelfgroupUser"
+          );
+        }
+      }
+    }
+
+    if (
+      startSLAStatus[0] == "UserBased" ||
+      resolveSLAStatus[0] == "UserBased"
+    ) {
+      $("#sla-type-area").show();
+
+      var $selectList = new selectList(3, null);
+
+      $selectList.renderContext(
+        "#process-slas",
+        false,
+        _formOptions.ActivityID,
+        true,
+        "1"
+      ); //Open >> without SLA
+    } else {
+      $("#sla-type-area").hide();
+    }
+  });
+
+  $("#process-slas").change(function () {
+    var slaExpression = $("#process-slas :selected").text();
+
+    if (slaExpression.indexOf("مراجعه") == -1) {
+      $("#sla-area-1").show();
+    } else {
+      $("#sla-area-1").hide();
+    }
+
+    if (slaExpression.indexOf("انجام") == -1) {
+      $("#sla-area-2").show();
+    } else {
+      $("#sla-area-2").hide();
+    }
+
+    if (slaExpression.indexOf("بدون") > -1) {
+      $("#sla-area-1").hide();
+
+      $("#sla-area-2").hide();
+    }
+  });
+
+  $("#refer-group-1").change(function () {
+    var $selectList = new selectList(2, null);
+
+    $selectList.renderContext(
+      "#refer-user-1",
+      false,
+      _formOptions.ActivityID,
+      true,
+      "",
+      $("#refer-group-1").val()
+    );
+  });
+
+  $("#refer-group-2").change(function () {
+    var $selectList = new selectList(2, null);
+
+    $selectList.renderContext(
+      "#refer-user-2",
+      false,
+      _formOptions.ActivityID,
+      true,
+      "",
+      $("#refer-group-2").val()
+    );
+  });
+
+  $("#refer-group-3").change(function () {
+    var $selectList = new selectList(2, null);
+
+    $selectList.renderContext(
+      "#refer-user-3",
+      false,
+      _formOptions.ActivityID,
+      true,
+      "",
+      $("#refer-group-3").val()
+    );
+  });
+
+  $("#refer-group-4").change(function () {
+    var $selectList = new selectList(2, null);
+
+    $selectList.renderContext(
+      "#refer-user-4",
+      false,
+      _formOptions.ActivityID,
+      true,
+      "",
+      $("#refer-group-4").val()
+    );
+  });
+};
+
+function renderTextArea(itemObj, parentID) {
+  try {
+    var placeholder = "";
+
+    //   if (!jQuery.parseJSON(itemObj.IsRequired) && _reportID == null) {
+    //     placeholder = localize("اختیاری");
+    //   }
+
+    var itemContent =
+      '<div class="form-group noDrop" ondragover="allowDrop(event)"  style="' +
+      (itemObj.Visibility == "DefaultHidden" ? "display:none" : "") +
+      'draggable="true" ondragstart="drag(event)"' +
+      '" id="form-group-' +
+      itemObj.FormItemID +
+      '"><label for="form-item-' +
+      itemObj.FormItemID +
+      '">' +
+      itemObj.Label +
+      '</label><div class="input-group" ><div class="input-group-addon"><span class="glyphicon glyphicon-edit"></span></div><textarea class="form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-' +
+      itemObj.FormItemID +
+      '"  onclick="TextboxProp(id)" placeholder="' +
+      placeholder +
+      '" rows="7"></textarea></div>';
+
+    if (
+      itemObj.SubTextVisible ||
+      (itemObj.Description != "" && itemObj.Description != null)
+    ) {
+      itemContent +=
+        '<small class="text-muted">' + itemObj.Description + "</small>";
+    }
+
+    itemContent += "</div>";
+
+    $(parentID).append(itemContent);
+
+    var itemInputID = "#form-item-" + itemObj.FormItemID;
+
+    if (itemObj.Width != "") {
+      $(itemInputID).css("width", itemObj.Width);
+    }
+
+    if (itemObj.Direction == "rtl" && $$Dir == "RTL") {
+      $(itemInputID).attr("dir", "rtl");
+
+      $(itemInputID).css("text-align", "right");
+    } else {
+      $(itemInputID).attr("dir", "ltr");
+
+      $(itemInputID).css("text-align", "left");
+    }
+
+    $("#form-item-" + itemObj.FormItemID).val(
+      getDefaultValue(itemObj).replace(/<br\/>/g, "\n")
+    );
+  } catch (e) {
+    // raiseError(e, "#form-group-" + itemObj.FormItemID);
+
+    return;
+  }
+}
+
+function renderSignatureBox(itemObj, parentID) {
+  try {
+    var placeholder = "";
+
+    //   if (itemObj.IsRequired) {
+    //     placeholder = localize("اختیاری");
+    //   }
+
+    var itemContent =
+      '<div class="form-group noDrop" ondragover="allowDrop(event)"  style="' +
+      (itemObj.Visibility == "DefaultHidden" ? "display:none" : "") +
+      '" id="form-group-' +
+      'draggable="true" ondragstart="drag(event)"' +
+      itemObj.FormItemID +
+      '"><label class="noDrop" for="form-item-' +
+      itemObj.FormItemID +
+      '">' +
+      itemObj.Label +
+      '</label><div class="input-group"><div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div><div class="form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-' +
+      itemObj.FormItemID +
+      '" style="height:300px;text-align:center;cursor: url(App_Res/Images/Page/16/Edit.png), auto;">' +
+      placeholder +
+      '</div><div class="input-group-addon" onclick=""><span class="glyphicon glyphicon-erase" style="cursor:pointer" title="از نو" onclick="$(\'#form-item-' +
+      itemObj.FormItemID +
+      "').html('');$('#form-item-" +
+      itemObj.FormItemID +
+      "').jSignature()\"></span></div></div>";
+
+    if (itemObj.SubTextVisible) {
+      itemContent +=
+        '<small class="text-muted">' + itemObj.Description + "</small>";
+    }
+
+    itemContent += "</div>";
+
+    $(parentID).append(itemContent);
+
+    if (itemObj.Width != "") {
+      $("#form-item-" + itemObj.FormItemID).css("width", itemObj.Width);
+    }
+
+    var value = getDefaultValue(itemObj);
+
+    if (value == "" || value == null) {
+      $("#form-item-" + itemObj.FormItemID).jSignature();
+    } else {
+      $("#form-item-" + itemObj.FormItemID).html(getDefaultValue(itemObj));
+    }
+  } catch (e) {
+    // raiseError(e, "#form-group-" + itemObj.FormItemID);
+
+    return;
+  }
+}
+
+function getDefaultValue(itemObj) {
+  var defaultValue = itemObj.DefaultValue;
+
+  // if (_data) {
+  //   if (itemObj.DataName.indexOf("Setting") == -1) {
+  //     defaultValue = _data[itemObj.DataName];
+  //   } else {
+  //     defaultValue = _data[itemObj.Name];
+  //   }
+  // }
+
+  // if (defaultValue == "") {
+  //   if (
+  //     itemObj.Name == _parObjType ||
+  //     itemObj.Name == "Parent_" + _parObjType
+  //   ) {
+  //     defaultValue = JSON.stringify(_parObjKey);
+
+  //     //Sepad Compatibility
+  //     if (_parObjType == "CallID") {
+  //       defaultValue = JSON.stringify(_objKeys[0]);
+  //     }
+
+  //     defaultValue = jQuery.parseJSON(defaultValue);
+  //   }
+  // }
+
+  // if (
+  //   itemObj.AttributeTypeName == "ShortTime" &&
+  //   defaultValue === undefined
+  // ) {
+  //   defaultValue = "00:00";
+  // }
+
+  // if (defaultValue == null) return "";
+
+  // if (!isNaN(defaultValue)) {
+  //   defaultValue = defaultValue.toString();
+  // }
+
+  // defaultValue = defaultValue.trim();
+
+  // $$PageParams[itemObj.Name] = defaultValue;
+
+  // if (itemObj.AttributeTypeName == "LongTime" && defaultValue == "") {
+  //   defaultValue = "000:00";
+  // }
+
+  return htmlDecode(defaultValue);
+}
+
+function htmlDecode(value) {
+  return $("<textarea/>").html(value).text();
+}
+
+function triggerDefaultEvent(target, defValue) {
+  var _isChecked = defValue;
+
+  $.each(
+    jQuery.parseJSON($$FormItems[target].ActionOnChange),
+    function (index, event) {
+      if (event.value.indexOf("[" + _isChecked + "]") != -1) {
+        $.each(event.actions, function (index, action) {
+          if (action.targetType == "FormItem") {
+            if (action.actionType == "Hide") {
+              $("#form-group-" + $$FormItems[action.target].FormItemID).css(
+                "display",
+                "none"
+              );
+            }
+
+            if (action.actionType == "Show") {
+              $("#form-group-" + $$FormItems[action.target].FormItemID).css(
+                "display",
+                "block"
               );
             }
           }
-        }
 
-        if (taskAssignmentType[1] == "Individual") {
-          if (
-            taskAssignmentType[2] == "ToGroupedUser" ||
-            taskAssignmentType[2] == "ToSelfgroupUser"
-          ) {
-            $("#taskrefer-label-group-1").show();
-
-            $("#taskrefer-box-group-1").show();
-
-            $("#taskrefer-label-user-1").show();
-
-            $("#taskrefer-box-user-1").show();
-          }
-
-          if (taskAssignmentType[2] == "ToGroupedUser") {
-            var $selectList = new selectList(1, null);
-
-            $selectList.renderContext(
-              "#refer-group-1",
-              false,
-              _formOptions.ActivityID,
-              true,
-              "",
-              "ToGroupedUser"
-            );
-          }
-
-          if (taskAssignmentType[2] == "ToSelfgroupUser") {
-            var $selectList = new selectList(1, null);
-
-            $selectList.renderContext(
-              "#refer-group-1",
-              false,
-              _formOptions.ActivityID,
-              true,
-              "",
-              "ToSelfgroupUser"
-            );
-          }
-        }
-
-        if (
-          taskAssignmentType[1] == "Sequence" ||
-          taskAssignmentType[1] == "Paralell"
-        ) {
-          if (
-            taskAssignmentType[2] == "ToGroupedUser" ||
-            taskAssignmentType[2] == "ToSelfgroupUser"
-          ) {
-            $("#refer-area-1").show();
-
-            $("#refer-area-2").show();
-
-            $("#refer-area-3").show();
-
-            $("#refer-area-4").show();
-
-            $("#refer-area-5").hide();
-          }
-
-          if (taskAssignmentType[2] == "ToGroupedUser") {
-            var $selectList = new selectList(1, null);
-
-            $selectList.renderContext(
-              "#refer-group-1",
-              false,
-              _formOptions.ActivityID,
-              true,
-              "",
-              "ToGroupedUser"
-            );
-
-            $selectList.renderContext(
-              "#refer-group-2",
-              false,
-              _formOptions.ActivityID,
-              true,
-              "",
-              "ToGroupedUser"
-            );
-
-            $selectList.renderContext(
-              "#refer-group-3",
-              false,
-              _formOptions.ActivityID,
-              true,
-              "",
-              "ToGroupedUser"
-            );
-
-            $selectList.renderContext(
-              "#refer-group-4",
-              false,
-              _formOptions.ActivityID,
-              true,
-              "",
-              "ToGroupedUser"
-            );
-          }
-
-          if (taskAssignmentType[2] == "ToSelfgroupUser") {
-            var $selectList = new selectList(1, null);
-
-            $selectList.renderContext(
-              "#refer-group-1",
-              false,
-              _formOptions.ActivityID,
-              true,
-              "",
-              "ToSelfgroupUser"
-            );
-
-            $selectList.renderContext(
-              "#refer-group-2",
-              false,
-              _formOptions.ActivityID,
-              true,
-              "",
-              "ToSelfgroupUser"
-            );
-
-            $selectList.renderContext(
-              "#refer-group-3",
-              false,
-              _formOptions.ActivityID,
-              true,
-              "",
-              "ToSelfgroupUser"
-            );
-
-            $selectList.renderContext(
-              "#refer-group-4",
-              false,
-              _formOptions.ActivityID,
-              true,
-              "",
-              "ToSelfgroupUser"
-            );
-          }
-        }
-      }
-
-      if (
-        startSLAStatus[0] == "UserBased" ||
-        resolveSLAStatus[0] == "UserBased"
-      ) {
-        $("#sla-type-area").show();
-
-        var $selectList = new selectList(3, null);
-
-        $selectList.renderContext(
-          "#process-slas",
-          false,
-          _formOptions.ActivityID,
-          true,
-          "1"
-        ); //Open >> without SLA
-      } else {
-        $("#sla-type-area").hide();
-      }
-    });
-
-    $("#process-slas").change(function () {
-      var slaExpression = $("#process-slas :selected").text();
-
-      if (slaExpression.indexOf("مراجعه") == -1) {
-        $("#sla-area-1").show();
-      } else {
-        $("#sla-area-1").hide();
-      }
-
-      if (slaExpression.indexOf("انجام") == -1) {
-        $("#sla-area-2").show();
-      } else {
-        $("#sla-area-2").hide();
-      }
-
-      if (slaExpression.indexOf("بدون") > -1) {
-        $("#sla-area-1").hide();
-
-        $("#sla-area-2").hide();
-      }
-    });
-
-    $("#refer-group-1").change(function () {
-      var $selectList = new selectList(2, null);
-
-      $selectList.renderContext(
-        "#refer-user-1",
-        false,
-        _formOptions.ActivityID,
-        true,
-        "",
-        $("#refer-group-1").val()
-      );
-    });
-
-    $("#refer-group-2").change(function () {
-      var $selectList = new selectList(2, null);
-
-      $selectList.renderContext(
-        "#refer-user-2",
-        false,
-        _formOptions.ActivityID,
-        true,
-        "",
-        $("#refer-group-2").val()
-      );
-    });
-
-    $("#refer-group-3").change(function () {
-      var $selectList = new selectList(2, null);
-
-      $selectList.renderContext(
-        "#refer-user-3",
-        false,
-        _formOptions.ActivityID,
-        true,
-        "",
-        $("#refer-group-3").val()
-      );
-    });
-
-    $("#refer-group-4").change(function () {
-      var $selectList = new selectList(2, null);
-
-      $selectList.renderContext(
-        "#refer-user-4",
-        false,
-        _formOptions.ActivityID,
-        true,
-        "",
-        $("#refer-group-4").val()
-      );
-    });
-  };
-
-  function renderTextArea(itemObj, parentID) {
-    try {
-      var placeholder = "";
-
-      //   if (!jQuery.parseJSON(itemObj.IsRequired) && _reportID == null) {
-      //     placeholder = localize("اختیاری");
-      //   }
-
-      var itemContent =
-        '<div class="form-group noDrop" ondragover="allowDrop(event)"  style="' +
-        (itemObj.Visibility == "DefaultHidden" ? "display:none" : "") +
-        'draggable="true" ondragstart="drag(event)"' +
-        '" id="form-group-' +
-        itemObj.FormItemID +
-        '"><label for="form-item-' +
-        itemObj.FormItemID +
-        '">' +
-        itemObj.Label +
-        '</label><div class="input-group" ><div class="input-group-addon"><span class="glyphicon glyphicon-edit"></span></div><textarea class="form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-' +
-        itemObj.FormItemID +
-        '"  onclick="TextboxProp(id)" placeholder="' +
-        placeholder +
-        '" rows="7"></textarea></div>';
-
-      if (
-        itemObj.SubTextVisible ||
-        (itemObj.Description != "" && itemObj.Description != null)
-      ) {
-        itemContent +=
-          '<small class="text-muted">' + itemObj.Description + "</small>";
-      }
-
-      itemContent += "</div>";
-
-      $(parentID).append(itemContent);
-
-      var itemInputID = "#form-item-" + itemObj.FormItemID;
-
-      if (itemObj.Width != "") {
-        $(itemInputID).css("width", itemObj.Width);
-      }
-
-      if (itemObj.Direction == "rtl" && $$Dir == "RTL") {
-        $(itemInputID).attr("dir", "rtl");
-
-        $(itemInputID).css("text-align", "right");
-      } else {
-        $(itemInputID).attr("dir", "ltr");
-
-        $(itemInputID).css("text-align", "left");
-      }
-
-      $("#form-item-" + itemObj.FormItemID).val(
-        getDefaultValue(itemObj).replace(/<br\/>/g, "\n")
-      );
-    } catch (e) {
-      // raiseError(e, "#form-group-" + itemObj.FormItemID);
-
-      return;
-    }
-  }
-
-  function renderSignatureBox(itemObj, parentID) {
-    try {
-      var placeholder = "";
-
-      //   if (itemObj.IsRequired) {
-      //     placeholder = localize("اختیاری");
-      //   }
-
-      var itemContent =
-        '<div class="form-group noDrop" ondragover="allowDrop(event)"  style="' +
-        (itemObj.Visibility == "DefaultHidden" ? "display:none" : "") +
-        '" id="form-group-' +
-        'draggable="true" ondragstart="drag(event)"' +
-        itemObj.FormItemID +
-        '"><label class="noDrop" for="form-item-' +
-        itemObj.FormItemID +
-        '">' +
-        itemObj.Label +
-        '</label><div class="input-group"><div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div><div class="form-control form-input noDrop" ondragover="allowDrop(event)" id="form-item-' +
-        itemObj.FormItemID +
-        '" style="height:300px;text-align:center;cursor: url(App_Res/Images/Page/16/Edit.png), auto;">' +
-        placeholder +
-        '</div><div class="input-group-addon" onclick=""><span class="glyphicon glyphicon-erase" style="cursor:pointer" title="از نو" onclick="$(\'#form-item-' +
-        itemObj.FormItemID +
-        "').html('');$('#form-item-" +
-        itemObj.FormItemID +
-        "').jSignature()\"></span></div></div>";
-
-      if (itemObj.SubTextVisible) {
-        itemContent +=
-          '<small class="text-muted">' + itemObj.Description + "</small>";
-      }
-
-      itemContent += "</div>";
-
-      $(parentID).append(itemContent);
-
-      if (itemObj.Width != "") {
-        $("#form-item-" + itemObj.FormItemID).css("width", itemObj.Width);
-      }
-
-      var value = getDefaultValue(itemObj);
-
-      if (value == "" || value == null) {
-        $("#form-item-" + itemObj.FormItemID).jSignature();
-      } else {
-        $("#form-item-" + itemObj.FormItemID).html(getDefaultValue(itemObj));
-      }
-    } catch (e) {
-      // raiseError(e, "#form-group-" + itemObj.FormItemID);
-
-      return;
-    }
-  }
-
-  function getDefaultValue(itemObj) {
-    var defaultValue = itemObj.DefaultValue;
-
-    // if (_data) {
-    //   if (itemObj.DataName.indexOf("Setting") == -1) {
-    //     defaultValue = _data[itemObj.DataName];
-    //   } else {
-    //     defaultValue = _data[itemObj.Name];
-    //   }
-    // }
-
-    // if (defaultValue == "") {
-    //   if (
-    //     itemObj.Name == _parObjType ||
-    //     itemObj.Name == "Parent_" + _parObjType
-    //   ) {
-    //     defaultValue = JSON.stringify(_parObjKey);
-
-    //     //Sepad Compatibility
-    //     if (_parObjType == "CallID") {
-    //       defaultValue = JSON.stringify(_objKeys[0]);
-    //     }
-
-    //     defaultValue = jQuery.parseJSON(defaultValue);
-    //   }
-    // }
-
-    // if (
-    //   itemObj.AttributeTypeName == "ShortTime" &&
-    //   defaultValue === undefined
-    // ) {
-    //   defaultValue = "00:00";
-    // }
-
-    // if (defaultValue == null) return "";
-
-    // if (!isNaN(defaultValue)) {
-    //   defaultValue = defaultValue.toString();
-    // }
-
-    // defaultValue = defaultValue.trim();
-
-    // $$PageParams[itemObj.Name] = defaultValue;
-
-    // if (itemObj.AttributeTypeName == "LongTime" && defaultValue == "") {
-    //   defaultValue = "000:00";
-    // }
-
-    return htmlDecode(defaultValue);
-  }
-
-  function htmlDecode(value) {
-    return $("<textarea/>").html(value).text();
-  }
-
-
-  function triggerDefaultEvent(target, defValue) {
-    var _isChecked = defValue;
-
-    $.each(
-      jQuery.parseJSON($$FormItems[target].ActionOnChange),
-      function (index, event) {
-        if (event.value.indexOf("[" + _isChecked + "]") != -1) {
-          $.each(event.actions, function (index, action) {
-            if (action.targetType == "FormItem") {
-              if (action.actionType == "Hide") {
-                $("#form-group-" + $$FormItems[action.target].FormItemID).css(
-                  "display",
-                  "none"
-                );
-              }
-
-              if (action.actionType == "Show") {
-                $("#form-group-" + $$FormItems[action.target].FormItemID).css(
-                  "display",
-                  "block"
-                );
-              }
+          if (action.targetType == "FormGroupBox") {
+            if (action.actionType == "Hide") {
+              $("#form-group-" + $$FormGroups[action.target]).css(
+                "display",
+                "none"
+              );
             }
 
-            if (action.targetType == "FormGroupBox") {
-              if (action.actionType == "Hide") {
-                $("#form-group-" + $$FormGroups[action.target]).css(
-                  "display",
-                  "none"
-                );
-              }
-
-              if (action.actionType == "Show") {
-                $("#form-group-" + $$FormGroups[action.target]).css(
-                  "display",
-                  "block"
-                );
-              }
+            if (action.actionType == "Show") {
+              $("#form-group-" + $$FormGroups[action.target]).css(
+                "display",
+                "block"
+              );
             }
-          });
-        }
+          }
+        });
       }
+    }
+  );
+}
+
+function $fi(target) {
+  return $("#form-item-" + $$FormItems[target].FormItemID);
+}
+
+function $fig(target) {
+  return $("#form-group-" + $$FormItems[target].FormItemID);
+}
+
+function $gfi(target) {
+  if ($$FormItems[target].InputType != "CheckBox") {
+    return $("#form-item-" + $$FormItems[target].FormItemID).val();
+  } else {
+    return $gcfi(target);
+  }
+}
+
+function $sfi(target, val) {
+  $("#form-item-" + $$FormItems[target].FormItemID).val(val);
+}
+
+function $sfiCss(target, name, val) {
+  $("#form-group-" + $$FormItems[target].FormItemID).css(name, val);
+}
+
+function $gcfi(target) {
+  if ($("#form-item-" + $$FormItems[target].FormItemID).is(":checked")) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+function $activityParams(targets) {
+  var activiyParams = new Array();
+
+  $.each(targets, function (index, target) {
+    activiyParams.push({
+      ParamIndex: 0,
+      ParamName: target,
+      ParamValue: $gfi(target),
+      FileIsExist: 2,
+      FileAttachCode: "",
+    });
+  });
+
+  return activiyParams;
+}
+
+// function localize(value) {
+//   if ($$Lang != "Fa") {
+//     //En, Ar, ...
+
+//     switch (value) {
+//       case "اختیاری":
+//         return "Optional";
+//     }
+//   }
+
+//   return value;
+// }
+
+function isCanvasBlank(canvas) {
+  canvas = canvas.get(0);
+
+  try {
+    const context = canvas.getContext("2d");
+
+    const pixelBuffer = new Uint32Array(
+      context.getImageData(
+        0,
+        0,
+        canvas.width - 200,
+        canvas.height - 100
+      ).data.buffer
     );
+    return !pixelBuffer.some((color) => color !== 0);
+  } catch {
+    return false;
   }
+}
 
-  function $fi(target) {
-    return $("#form-item-" + $$FormItems[target].FormItemID);
-  }
+function $fiToggle(target, s, e) {
+  if ($fig(target + "_" + s).css("display") == "none") {
+    $fig(target + "_" + s).css("display", "block");
+  } else {
+    for (i = s; i <= e; i++) {
+      if ($fig(target + "_" + i).css("display") == "block") {
+        $fig(target + "_" + i).css("display", "none");
 
-  function $fig(target) {
-    return $("#form-group-" + $$FormItems[target].FormItemID);
-  }
+        $fi(target + "_" + i).selectpicker("val", null);
 
-  function $gfi(target) {
-    if ($$FormItems[target].InputType != "CheckBox") {
-      return $("#form-item-" + $$FormItems[target].FormItemID).val();
-    } else {
-      return $gcfi(target);
-    }
-  }
+        $fig(target + "_" + i)
+          .find(".input-group-addon")
+          .find(">:first-child")
+          .removeClass("glyphicon-minus");
 
-  function $sfi(target, val) {
-    $("#form-item-" + $$FormItems[target].FormItemID).val(val);
-  }
-
-  function $sfiCss(target, name, val) {
-    $("#form-group-" + $$FormItems[target].FormItemID).css(name, val);
-  }
-
-  function $gcfi(target) {
-    if ($("#form-item-" + $$FormItems[target].FormItemID).is(":checked")) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
-
-  function $activityParams(targets) {
-    var activiyParams = new Array();
-
-    $.each(targets, function (index, target) {
-      activiyParams.push({
-        ParamIndex: 0,
-        ParamName: target,
-        ParamValue: $gfi(target),
-        FileIsExist: 2,
-        FileAttachCode: "",
-      });
-    });
-
-    return activiyParams;
-  }
-
-  // function localize(value) {
-  //   if ($$Lang != "Fa") {
-  //     //En, Ar, ...
-
-  //     switch (value) {
-  //       case "اختیاری":
-  //         return "Optional";
-  //     }
-  //   }
-
-  //   return value;
-  // }
-
-  function isCanvasBlank(canvas) {
-    canvas = canvas.get(0);
-
-    try {
-      const context = canvas.getContext("2d");
-
-      const pixelBuffer = new Uint32Array(
-        context.getImageData(
-          0,
-          0,
-          canvas.width - 200,
-          canvas.height - 100
-        ).data.buffer
-      );
-      return !pixelBuffer.some((color) => color !== 0);
-    } catch {
-      return false;
-    }
-  }
-
-  function $fiToggle(target, s, e) {
-    if ($fig(target + "_" + s).css("display") == "none") {
-      $fig(target + "_" + s).css("display", "block");
-    } else {
-      for (i = s; i <= e; i++) {
-        if ($fig(target + "_" + i).css("display") == "block") {
-          $fig(target + "_" + i).css("display", "none");
-
-          $fi(target + "_" + i).selectpicker("val", null);
-
-          $fig(target + "_" + i)
-            .find(".input-group-addon")
-            .find(">:first-child")
-            .removeClass("glyphicon-minus");
-
-          $fig(target + "_" + i)
-            .find(".input-group-addon")
-            .find(">:first-child")
-            .addClass("glyphicon-plus");
-        }
+        $fig(target + "_" + i)
+          .find(".input-group-addon")
+          .find(">:first-child")
+          .addClass("glyphicon-plus");
       }
     }
   }
+}
 
-  function radioButtonList(enumTypeID) {
-    var _enumTypeID = enumTypeID;
+function radioButtonList(enumTypeID) {
+  var _enumTypeID = enumTypeID;
 
-    var _enumList;
+  var _enumList;
 
-    // this.renderContext = function (itemID, defaultValue) {
-    //   $.ajax({
-    //     url: "../App_Sys/Services/Action.asmx/GetEnumData",
+  // this.renderContext = function (itemID, defaultValue) {
+  //   $.ajax({
+  //     url: "../App_Sys/Services/Action.asmx/GetEnumData",
 
-    //     contentType: "application/json; charset=utf-8",
+  //     contentType: "application/json; charset=utf-8",
 
-    //     type: "POST",
+  //     type: "POST",
 
-    //     dataType: "json",
+  //     dataType: "json",
 
-    //     data:
-    //       '{"id":"' +
-    //       _enumTypeID +
-    //       '","responseToken":"' +
-    //       genResponseKey() +
-    //       '"}',
+  //     data:
+  //       '{"id":"' +
+  //       _enumTypeID +
+  //       '","responseToken":"' +
+  //       genResponseKey() +
+  //       '"}',
 
-    //     async: false,
+  //     async: false,
 
-    //     error: function (jqXHR, textStatus, errorThrown) {
-    //       alert("Operation error \n\r " + errorThrown);
-    //     },
+  //     error: function (jqXHR, textStatus, errorThrown) {
+  //       alert("Operation error \n\r " + errorThrown);
+  //     },
 
-    //     success: function (data) {
-    //       data = data.d;
+  //     success: function (data) {
+  //       data = data.d;
 
-    //       if (data[0].errorCode) {
-    //         alert(
-    //           "Operation error \n\r " +
-    //             data[0].errorMessage.replace("<br/>", "\n\r")
-    //         );
-    //       }
+  //       if (data[0].errorCode) {
+  //         alert(
+  //           "Operation error \n\r " +
+  //             data[0].errorMessage.replace("<br/>", "\n\r")
+  //         );
+  //       }
 
-    //       setRequestToken(data[data.length - 1].requestToken);
+  //       setRequestToken(data[data.length - 1].requestToken);
 
-    //       data.pop();
+  //       data.pop();
 
-    //       _enumList = data;
-    //     },
-    //   });
+  //       _enumList = data;
+  //     },
+  //   });
 
-    //   var content = "";
+  //   var content = "";
 
-    $.each(_enumList, function (index, enumItem) {
-      var defaultState = "";
+  $.each(_enumList, function (index, enumItem) {
+    var defaultState = "";
 
-      if (enumItem.value == defaultValue) {
-        defaultState = "checked";
-      }
+    if (enumItem.value == defaultValue) {
+      defaultState = "checked";
+    }
 
-      content +=
-        '<label class="radio-inline noDrop" style="padding-right: 0px;"><input type="radio" class="noDrop" ondragover="allowDrop(event)" value="' +
-        enumItem.value +
-        '" name="optionsRadios-' +
-        itemID +
-        '" ' +
-        defaultState +
-        ">&nbsp;" +
-        enumItem.label +
-        "</label>";
-    });
+    content +=
+      '<label class="radio-inline noDrop" style="padding-right: 0px;"><input type="radio" class="noDrop" ondragover="allowDrop(event)" value="' +
+      enumItem.value +
+      '" name="optionsRadios-' +
+      itemID +
+      '" ' +
+      defaultState +
+      ">&nbsp;" +
+      enumItem.label +
+      "</label>";
+  });
 
-    return content;
-    // };
-  }
+  return content;
+  // };
+}

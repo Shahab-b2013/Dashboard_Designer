@@ -150,7 +150,6 @@
           },
           // viewData: "View data table",
           // hideData: "Hide data table",
-          setting: "تنظیمات",
         },
       });
       E(f, "render", function () {
@@ -536,12 +535,7 @@
               this.downloadXLS();
             },
           },
-          setting: {
-            textKey: "setting",
-            onclick: function () {
-              ChartProp(this);
-            },
-          },
+         
           // viewData: {
           //   textKey: "viewData",
           //   onclick: function () {
@@ -554,7 +548,6 @@
             "separator",
             "downloadCSV",
             "downloadXLS",
-            "setting"
             // "viewData"
           ));
       c.map && (c.map.prototype.exportKey = "name");

@@ -222,6 +222,10 @@ function DivSplit_2(elem) {
     setDiv1(elem, 5);
     CreateDiv2(elem, 5);
   }
+    if (groupDivId(elem).length == 2) {
+      setDiv1(elem, 5);
+      setDiv2(elem, 5);
+    }
 }
 function DivSplit_3(elem) {
   removeDiv(elem);
@@ -244,14 +248,12 @@ function setDiv1(elem, colNum) {
     "class",
     "form-group-body col-md-" + colNum
   );
-  PieChart($("#" + groupDivId(elem)[0]));
 }
 function setDiv2(elem, colNum) {
   $("#" + groupDivId(elem)[1]).attr(
     "class",
     "form-group-body col-md-" + colNum
   );
-  PieChart($("#" + groupDivId(elem)[1]));
 }
 function CreateDiv2(elem, colNum) {
   const div2ID = groupDivId(elem)[0].replace("0-0", "0-1");
@@ -283,8 +285,6 @@ function CreateDiv2(elem, colNum) {
     const elementId = div1Items[k].id;
     $("#" + div2ID).append($("#" + elementId));
   }
-  //chart refresh
-  PieChart(div2ID);
 }
 
 function CreateDiv3(elem, colNum) {
@@ -306,8 +306,6 @@ function CreateDiv3(elem, colNum) {
     '"></div>';
   $("#" + div3ID).after($(minidiv3));
 
-  //chart refresh
-  PieChart(div3ID);
 }
 
 //if div.child==empty then
