@@ -1,9 +1,9 @@
 function chartEdit(e) {
+  let imgid = e.target.id;
   const chartType = "pie";
-  console.log(chartType);
 
   //create modal form
-  ConstractorForm("85%");
+  ConstractorForm("85%",'geContent');
   let div1 =
     '<div id="div1" class="row col-lg-3 col-md-8 col-xs-12" style="border-radius:4px; border:1px solid #ccc; padding:10px 5px 10px 25px; margin-left:10px"></div>';
   $("#contentM").append(div1);
@@ -71,42 +71,9 @@ function chartEdit(e) {
       $("#div1Items-" + i).append(textBox);
     }
   }
-
-  //============================btn=====================
-  //create btn
-  let rowbtn = document.createElement("div");
-  rowbtn.style.margin = "0px 10px";
-  $("#chartModal").append(rowbtn);
-
-  //btnShow
-  let btnShow = document.createElement("button");
-  btnShow.className = "btn btn-primary";
-  btnShow.style.backgroundColor = "#134C96";
-  btnShow.style.borderRadius = "4px";
-  btnShow.innerHTML = "پیش نمایش";
-  // btnShow.onclick = () => showChart($("#selectType").val());
-  rowbtn.appendChild(btnShow);
-
-  //btnsubmit
-  let btnSubmit = document.createElement("button");
-  btnSubmit.className = "btn btn-primary";
-  btnSubmit.style.borderRadius = "4px";
-  btnSubmit.style.margin = "10px 10px 10px 10px";
-  btnSubmit.innerText = "ذخیره";
-  rowbtn.appendChild(btnSubmit);
-
-  //btn exit
-  let btnExit = document.createElement("button");
-  btnExit.className = "btn btn-light";
-  btnExit.style.borderRadius = "4px";
-  btnExit.innerText = "لغو";
-  btnExit.onclick = function () {
-    $("#myModal").remove();
-  };
-  rowbtn.appendChild(btnExit);
-
+  var chart;
   if (chartType == "pie") {
-    let chart = Highcharts.chart("container", {
+    chart = Highcharts.chart("container", {
       chart: {
         type: "pie",
         options3d: {
@@ -160,4 +127,62 @@ function chartEdit(e) {
 
     $("#div2").append(chart);
   }
+
+  //============================btn=====================
+  //create btn
+  let rowbtn = document.createElement("div");
+  rowbtn.style.margin = "0px 10px";
+  $("#chartModal").append(rowbtn);
+
+  //btnShow
+  let btnShow = document.createElement("button");
+  btnShow.className = "btn btn-primary";
+  btnShow.style.backgroundColor = "#134C96";
+  btnShow.style.borderRadius = "4px";
+  btnShow.innerHTML = "پیش نمایش";
+  // btnShow.onclick = () => showChart($("#selectType").val());
+  rowbtn.appendChild(btnShow);
+
+  //btnsubmit
+  let btnSubmit = document.createElement("button");
+  btnSubmit.className = "btn btn-primary";
+  btnSubmit.style.borderRadius = "4px";
+  btnSubmit.style.margin = "10px 10px 10px 10px";
+  btnSubmit.innerText = "ذخیره";
+  btnSubmit.onclick = (e) => {
+    //get svgid
+    var svg_xml = chart.getSVG();
+    const index = svg_xml.indexOf("</div>") + 6;
+    svg_xml = svg_xml.slice(index, 9e9);
+
+    //Dom
+    const parser = new DOMParser();
+    const docSvg = parser.parseFromString(svg_xml, "text/xml");
+
+    //get id
+    let getTag = docSvg.getElementsByTagName("clipPath")[0];
+    const getId = getTag.getAttribute("id");
+
+    //get svgTag
+    const svgTag = docSvg.getElementsByTagName("svg")[0];
+
+    //base64
+    let svg_Base64 = Base64.encode(svg_xml, false);
+
+    //update chart
+    $("#" + imgid).attr("src", "data:image/svg+xml;base64," + svg_Base64);
+
+    $("#myModal").remove();
+  };
+  rowbtn.appendChild(btnSubmit);
+
+  //btn exit
+  let btnExit = document.createElement("button");
+  btnExit.className = "btn btn-light";
+  btnExit.style.borderRadius = "4px";
+  btnExit.innerText = "لغو";
+  btnExit.onclick = function () {
+    $("#myModal").remove();
+  };
+  rowbtn.appendChild(btnExit);
 }

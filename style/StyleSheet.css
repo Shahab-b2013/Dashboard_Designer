@@ -282,3 +282,9 @@ br {
   text-decoration: none;
   cursor: pointer;
 }
+.fit-image{
+object-fit: contain;
+height:100%; 
+width: 100%;
+
+}

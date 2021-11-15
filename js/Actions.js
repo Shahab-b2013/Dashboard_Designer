@@ -426,6 +426,7 @@ function dragEnter(event) {
   if (event.target.id) {
     if ($("#" + event.target.id).hasClass("form-group-body")) {
       $("#" + event.target.id).css("border", "1px solid #ccc");
+       $("#" + event.target.id).css("border-radius", "10px");
     }
   }
 }
@@ -465,7 +466,7 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 });
 
-function ConstractorForm(width) {
+function ConstractorForm(width,parent) {
   const div =
     '<div id="myModal" class="modal">' +
     '<div id="chartModal" class="modal-content" style="border: 1px solid #dcc896; border-radius: 4px;">' +
@@ -473,7 +474,7 @@ function ConstractorForm(width) {
     '<div id="contentM" class="row col-lg-12" style="margin-right:10px;"></div>' +
     "</div>" +
     "</div>";
-  $("#geContent").append(div);
+  $("#"+parent).append(div);
 
   // Get the modal
   var modal = document.getElementById("myModal");

@@ -213,7 +213,7 @@ function GroupProp(elem) {
 function DivSplit_1(elem) {
   removeDiv(elem);
   if (groupDivId(elem).length == 1) {
-    setDiv1(elem, 11);
+    setDiv1(elem, 12);
   }
 }
 function DivSplit_2(elem) {
@@ -222,32 +222,33 @@ function DivSplit_2(elem) {
     setDiv1(elem, 5);
     CreateDiv2(elem, 5);
   }
-    if (groupDivId(elem).length == 2) {
-      setDiv1(elem, 5);
-      setDiv2(elem, 5);
-    }
+  if (groupDivId(elem).length == 2) {
+    setDiv1(elem, 5);
+    setDiv2(elem, 5);
+  }
 }
 function DivSplit_3(elem) {
   removeDiv(elem);
   if (groupDivId(elem).length == 1) {
     setDiv1(elem, 3);
     CreateDiv2(elem, 3);
-    CreateDiv3(elem, 3);
+    setTimeout(() => {
+      // CreateDiv3(elem, 3);
+    }, 1000);
   }
   if (groupDivId(elem).length == 2) {
-    setDiv1(elem, 3);
-    setDiv2(elem, 3);
-    CreateDiv3(elem, 3);
+    setDiv1(elem, 4);
+    setDiv2(elem, 4);
+    CreateDiv3(elem, 4);
   }
 }
-
-
 
 function setDiv1(elem, colNum) {
   $("#" + groupDivId(elem)[0]).attr(
     "class",
-    "form-group-body col-md-" + colNum
+    "form-group-body  col-md-" + colNum
   );
+  
 }
 function setDiv2(elem, colNum) {
   $("#" + groupDivId(elem)[1]).attr(
@@ -256,63 +257,37 @@ function setDiv2(elem, colNum) {
   );
 }
 function CreateDiv2(elem, colNum) {
-  const div2ID = groupDivId(elem)[0].replace("0-0", "0-1");
+  let div1ID = groupDivId(elem)[0];
+  let div2ID = div1ID.substring(0, div1ID.length - 1).concat("1"); //Delete/Add last chart from id
   let div2 =
     '<div class="form-group-body col-md-' +
     colNum +
-    '" style="border-radius:4px" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
+    '" style="height:370px;margin-bottom:10px;" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
     div2ID +
     '"></div>';
   //set div2
-  let minidiv1ID = $("#" + groupDivId(elem)[0]).next()[0].id;
-  $("#" + minidiv1ID).after($(div2));
-  //set mindiv2
-  let minidiv2 =
-    '<div class="form-gorup-body col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-2' +
-    div2ID +
-    '"></div>';
-  $("#" + div2ID).after($(minidiv2));
-
-  //div1 and div2 set Element
-  let div1Items = $("#" + groupDivId(elem)[0]).children();
-  for (
-    //set lenght/2 in div1
-    let k = Math.round(div1Items.length / 2);
-    k < div1Items.length;
-    k++
-  ) {
-    //set lenght/2 in div2
-    const elementId = div1Items[k].id;
-    $("#" + div2ID).append($("#" + elementId));
-  }
+  $("#" + groupDivId(elem)[0]).after($(div2));
 }
 
 function CreateDiv3(elem, colNum) {
   //create div3
-  const div3ID = groupDivId(elem)[1].replace("0-1", "0-2");
+  let div2ID = groupDivId(elem)[1];
+  div3ID = div2ID.substring(0, div2ID.length - 1).concat("2"); //Delete/Add last chart from id
+
   let div3 =
     '<div class="form-group-body col-md-' +
     colNum +
-    '" style="border-radius:4px" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
+    '" style="height:370px;margin-bottom:10px;" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
     div3ID +
     '"></div>';
-  //get mindiv2
-  let minidiv2GetID = $("#" + groupDivId(elem)[1]).next()[0].id;
-  $("#" + minidiv2GetID).after($(div3));
-  //set mindiv3
-  let minidiv3 =
-    '<div class="form-gorup-body col-md-1 noDrop" ondragover="allowDrop(event)" id="miniDiv-3' +
-    div3ID +
-    '"></div>';
-  $("#" + div3ID).after($(minidiv3));
-
+  //set div3
+  $("#" + groupDivId(elem)[1]).after($(div3));
 }
 
 //if div.child==empty then
 function removeDiv(elem) {
   const groupArr = groupDivId(elem);
   for (let k = 0; k < groupArr.length; k++) {
-    console.log(k);
     const elements = +$("#" + groupArr[k]).children().length;
     if (elements === 0) {
       $("#" + groupArr[k]).remove();
