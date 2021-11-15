@@ -48,7 +48,7 @@
             version: "",
           },
         ],
-        style: sessionStorage.getItem("oldChart"),
+        style: localStorage.getItem("oldChart"),
       },
       {
         FormItemID: 101030007,
@@ -291,7 +291,7 @@
           content +=
             '<div class="' +
             columnWidth +
-            ' col-sm-12  col-xs-12 form-group-body"   ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
+            ' col-sm-12  col-xs-12 form-group-body"  ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
             formGroup.FormGroupBoxID +
             '-0" style="height:370px;margin-bottom:10px;"> </div>';
         }
@@ -387,42 +387,117 @@
         parentID =
           "#form-group-mbody-" + formItem.FormID + "-" + formItem.ColumnIndex;
       }
+
       var transferid;
-      let img = document.createElement("img");
-      img.setAttribute("id", "img-" + formItem.FormGroupBoxID + index);
-      img.setAttribute("src", "data:image/svg+xml;base64," + formItem.style);
-      img.addEventListener("dblclick", (e) => chartEdit(e));
+      let img =
+        '<img class="fit-image" onmouseover="btnModal(this)" onmouseleave="btnUnModal(this)"  style=" border:1px solid #ccc;border-radius:10px"   src="data:image/svg+xml;base64,' +
+        formItem.style +
+        '" id="img-' +
+        formItem.FormGroupBoxID +
+        index +
+        '"></img>';
+      $(parentID).append(img);
+
+      //  onmouseout="btnUnModal(this)"
+
+      // img.addEventListener("dblclick", (e) => chartEdit(e));
       // img.addEventListener("mouseenter", (e) => {
       //   console.log('trans   ' + e.target.id)
       //   transferid=e.target.id
       // });
 
-      img.setAttribute("draggable", true);
-      img.addEventListener("drag", (e) => {
-        // drag(e);
-      });
-      img.addEventListener("drop", (e) => {
-        // let oneID = e.dataTransfer.getData('text');
-        // let twoID = e.target.id;
-        // let empty = $("#" + oneID).css("top");
-        // $("#" + twoID).css("top", empty);
-        // $("#" + oneID).css("top", $("#" + twoID).css("Totopp"));
-        //  empty = $("#" + oneID).css("left");
-        // $("#" + twoID).css("left", empty);
-        // $("#" + oneID).css("left", $("#" + twoID).css("left"));
-        // console.log(oneID)
-        // console.log(twoID);
-        // e.preventDefault();
-        //  $("#" + e.target.id).append(document.getElementById(oneID));
-      });
-      img.style.border = "1px solid #ccc";
-      img.style.borderRadius = "10px";
-      img.className = "fit-image";
-      $(parentID).append(img);
+      // img.setAttribute("draggable", true);
+      // img.addEventListener("dragstart", (ev) => drag(ev));
+      // img.addEventListener("mousedown", () => (item.style.cursor = "grabbing"));
+      // img.addEventListener("mouseup", () => (item.style.cursor = "grab"));
+      // img.addEventListener("drop", (e) => {
+      //   e.preventDefault();
+      //   let oneID = e.dataTransfer.getData("text");
+
+      //   let twoID = e.target.id;
+      //   console.log("t" + twoID);
+      //   let empty = $("#" + oneID).css("top");
+      //   console.log("empty" + empty);
+      //   $("#" + twoID).css("top", empty);
+      //   $("#" + oneID).css("top", $("#" + twoID).css("Totopp"));
+      //   empty = $("#" + oneID).css("left");
+      //   $("#" + twoID).css("left", empty);
+      //   $("#" + oneID).css("left", $("#" + twoID).css("left"));
+      //   console.log(oneID);
+      //   console.log(twoID);
+
+      //   $("#" + e.target.id).append(document.getElementById(oneID));
+      // });
+
+      // img.style.position = "absolute";
     });
   } catch (e) {
     // raiseError(e, bodyID);
 
     return;
   }
+}
+function btnModal(x) {
+  let parent = $("#" + x.id).parent()[0].id;
+  let div =
+    '<div id="modalDiv" class="modal" style=" position:absolute;">' +
+    '<div id="chartEdit" class="row" style="position:absolute;left:50%;top:50%;"><span id="spanEdit"  class="btn btn-light glyphicon glyphicon-edit" onclick="chartEdit(event)" style="width:80px;margin-left:10px"></span>' +
+    '<span  id="spanDelete" class="btn btn-light glyphicon glyphicon-trash"   onclick="chartDelete(event)" style="width:80px;"></span>' +
+    "</div></div>";
+
+  $("#" + parent).append(div);
+  // Get the modal
+  var modal = document.getElementById("modalDiv");
+  modal.style.display = "block";
+
+  // // Get the <span> element that closes the modal
+  // var span = document.getElementsByClassName("close")[0];
+
+  // // When the user clicks on <span> (x), close the modal
+  // span.onclick = function () {
+  //   modal.style.display = "none";
+  // };
+
+  $("#modalContent").css("width", "50%");
+  // $("#chartModal").css("height", height);
+}
+
+function btnUnModal(x) {
+  // $(".modal").remove();
+}
+function chartDelete(e) {
+  let parent = $("#" + e.target.id)
+    .parent()
+    .parent()
+    .parent()[0].id;
+
+  let imgid = $("#" + parent)
+    .children()
+    .eq(0)[0].id;
+  
+  // let modal = 
+  
+
+  //   '<div class="modal fade" id="exampleModalCenter" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">' +
+  //   '<div class="modal-dialog modal-dialog-centered" role="document">' +
+  //   '<div class="modal-content">' +
+    // '<div class="modal-header">' +
+    // '<h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>' +
+    // '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+    // '<span aria-hidden="true">&times;</span>' +
+    // '</button>' +
+    // '</div>' +
+    // '<div class="modal-body">' +
+        
+    // '</div>' +
+    // '<div class="modal-footer">' +
+    // '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>' +
+    // '<button type="button" class="btn btn-primary">Save changes</button>' +
+    // '</div>' +
+//     '</div>' +
+//     '</div >' +
+//     '</div>';
+// $("#" + parent).append(modal);
+  
+  $("#" + imgid).remove();
 }

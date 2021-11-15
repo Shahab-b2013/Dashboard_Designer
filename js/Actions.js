@@ -395,6 +395,7 @@ function drag(ev) {
   if (ev.target.id) ev.dataTransfer.setData("text", ev.target.id);
 }
 
+//groupbtn
 function Group_Btn(GroupId) {
   return (
     '<div id="' +
@@ -408,7 +409,7 @@ function Group_Btn(GroupId) {
     "EditGroup></span>" +
     '<span style="width:35px;padding:5px" class="btn btn-light glyphicon glyphicon-arrow-up" title="انتقال گروه به بالا" onclick="GroupMoveUp(event);" id=' +
     GroupId +
-    'moveup></span><span style="width:35px;padding:5px" class="btn btn-light glyphicon glyphicon-arrow-down"  data-placement="top" title="انتقال گروه به پایین" onclick="GroupMoveDown(event)" id=' +
+    'moveup></span><span style="width:35px;padding:5px;" class="btn btn-light glyphicon glyphicon-arrow-down"  data-placement="top" title="انتقال گروه به پایین" onclick="GroupMoveDown(event)" id=' +
     GroupId +
     "movedown></span ></div>"
   );
@@ -426,7 +427,7 @@ function dragEnter(event) {
   if (event.target.id) {
     if ($("#" + event.target.id).hasClass("form-group-body")) {
       $("#" + event.target.id).css("border", "1px solid #ccc");
-       $("#" + event.target.id).css("border-radius", "10px");
+      $("#" + event.target.id).css("border-radius", "10px");
     }
   }
 }
@@ -466,16 +467,17 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 });
 
-function ConstractorForm(width,parent) {
-  const div =
-    '<div id="myModal" class="modal">' +
+function FormConstractor(width, parent) {
+
+  let div =
+    '<div id="myModal" class="modal" style="">' +
     '<div id="chartModal" class="modal-content" style="border: 1px solid #dcc896; border-radius: 4px;">' +
     '<span class="close"></span>' +
     '<div id="contentM" class="row col-lg-12" style="margin-right:10px;"></div>' +
     "</div>" +
     "</div>";
-  $("#"+parent).append(div);
 
+  $("#" + parent).append(div);
   // Get the modal
   var modal = document.getElementById("myModal");
   modal.style.display = "block";

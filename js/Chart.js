@@ -1,9 +1,17 @@
 function chartEdit(e) {
-  let imgid = e.target.id;
+  let parent = $("#" + e.target.id)
+    .parent()
+    .parent()
+    .parent()[0].id;
+ 
+  let imgid = $("#" + parent).children().eq(0)[0].id;
+    
+
+  
   const chartType = "pie";
 
   //create modal form
-  ConstractorForm("85%",'geContent');
+  FormConstractor("85%", "geContent");
   let div1 =
     '<div id="div1" class="row col-lg-3 col-md-8 col-xs-12" style="border-radius:4px; border:1px solid #ccc; padding:10px 5px 10px 25px; margin-left:10px"></div>';
   $("#contentM").append(div1);
@@ -129,7 +137,7 @@ function chartEdit(e) {
   }
 
   //============================btn=====================
-  //create btn
+ // create btn
   let rowbtn = document.createElement("div");
   rowbtn.style.margin = "0px 10px";
   $("#chartModal").append(rowbtn);
@@ -171,7 +179,7 @@ function chartEdit(e) {
 
     //update chart
     $("#" + imgid).attr("src", "data:image/svg+xml;base64," + svg_Base64);
-
+    localStorage.setItem("oldChart", svg_Base64);
     $("#myModal").remove();
   };
   rowbtn.appendChild(btnSubmit);
