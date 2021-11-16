@@ -1,13 +1,7 @@
 function chartEdit(e) {
-  let parent = $("#" + e.target.id)
-    .parent()
-    .parent()
-    .parent()[0].id;
- 
-  let imgid = $("#" + parent).children().eq(0)[0].id;
-    
+  let imgid = $("#" + e.target.id).parent()[0].id;
+  imgid = imgid.replaceAll("rowbtn-img-", "img-");
 
-  
   const chartType = "pie";
 
   //create modal form
@@ -18,7 +12,7 @@ function chartEdit(e) {
 
   let div2 =
     '<div id="div2" class="col-lg-9 col-md-8 col-xs-12 " style="border-radius:4px;border:1px solid #ccc; padding:0px"><figure class="highcharts-figure">' +
-    '<div id="container"></div></figure></div>';
+    '<div id="containers"></div></figure></div>';
   $("#contentM").append(div2);
 
   //div1 Add Items
@@ -79,65 +73,141 @@ function chartEdit(e) {
       $("#div1Items-" + i).append(textBox);
     }
   }
-  var chart;
-  if (chartType == "pie") {
-    chart = Highcharts.chart("container", {
-      chart: {
-        type: "pie",
-        options3d: {
-          enabled: true,
-          alpha: 45,
-          beta: 0,
+
+  //===============================show chart ============================
+
+
+
+  //create chart
+  function showChart(chartType) {
+    let _cat, _series, _name;
+
+    //create chart function
+
+    function chartItems(_series, _cat) {
+      _TitleOptions.text = "";
+      _GeneralOptions.type = chartType;
+      _YAxisOptions.title.text = "";
+      _XAxisOptions.categories = _cat;
+      _SeriesPlotOptions.color = "";
+
+      if (chartType == "pie") {
+        _GeneralOptions.options3d.enabled = true;
+        _LegendOptions.enabled = true;
+      } else {
+        _GeneralOptions.options3d.enabled = false;
+        _LegendOptions.enabled = false;
+      }
+
+      chartSvg = Highcharts.chart("containers", {
+        chart: _GeneralOptions,
+        colors: _ColorsOptions,
+        credits: _CreditsOptions,
+        legend: _LegendOptions,
+        title: _TitleOptions,
+        xAxis: _XAxisOptions,
+        yAxis: _YAxisOptions,
+        plotOptions: {
+          series: _SeriesPlotOptions,
+          areaspline: _AreaPlotOptions,
+          bar: _BarPlotOptions,
+          column: _ColumnPlotOptions,
+          line: _LinePlotOptions,
+          pie: _PiePlotOptions,
         },
-      },
-      title: {
-        text: "Browser market shares at a specific website, 2014",
-      },
-      accessibility: {
-        point: {
-          valueSuffix: "%",
-        },
-      },
-      tooltip: {
-        pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
-      },
-      plotOptions: {
-        pie: {
-          allowPointSelect: true,
-          cursor: "pointer",
-          depth: 35,
-          dataLabels: {
-            enabled: true,
-            format: "{point.name}",
-          },
-        },
-      },
-      series: [
+        series: _series,
+      });
+    }
+
+    //pie
+    if (chartType == "pie") {
+      _cat = "";
+      _name = "";
+      _series = [
         {
-          type: "pie",
-          name: "Browser share",
+          name: _name,
           data: [
-            ["Firefox", 45.0],
-            ["IE", 26.8],
-            {
-              name: "Chrome",
-              y: 12.8,
-              sliced: true,
-              selected: true,
-            },
-            ["Safari", 8.5],
-            ["Opera", 6.2],
-            ["Others", 0.7],
+            ["value1", 8],
+            ["value2", 7],
+            ["value3", 2],
+            ["value4", 1],
+            ["value5", 5],
           ],
         },
-      ],
-    });
+      ];
 
-    $("#div2").append(chart);
+      chartItems(_series, _cat);
+    }
+
+    // bar
+    else if (chartType == "bar") {
+      _cat = ["Africa", "America", "Asia", "Europe", "Oceania"];
+      _name = $("#catSelect").val();
+      _series = [
+        {
+          name: _name,
+          data: [
+            ["value1", 8],
+            ["value2", 7],
+            ["value3", 2],
+            ["value4", 1],
+            ["value5", 5],
+          ],
+        },
+      ];
+
+      chartItems(_series, _cat);
+    }
+
+    //line
+    else if (chartType == "line") {
+      _cat = [
+        "value1",
+        "value2",
+        "value3",
+        "value4",
+        "value5",
+        "value6",
+        "value7",
+        "value8",
+        "value9",
+      ];
+      _name = "";
+      _series = [
+        {
+          name: _name,
+          data: [2, 1, 1, 1, 1, 5, 3, 3, 1],
+        },
+      ];
+
+      chartItems(_series, _cat);
+    }
+
+    //areaspline
+    else if (chartType == "areaspline") {
+      _cat = [
+        "value1",
+        "value2",
+        "value3",
+        "value4",
+        "value5",
+        "value6",
+        "value7",
+      ];
+      _name = "";
+
+      _series = [
+        {
+          name: _name,
+          data: [1, 2, 1, 2, 1, 1, 1],
+        },
+      ];
+      chartItems(_series, _cat);
+    }
   }
 
   //============================btn=====================
- // create btn
+  // create btn
   let rowbtn = document.createElement("div");
   rowbtn.style.margin = "0px 10px";
   $("#chartModal").append(rowbtn);
@@ -149,6 +219,7 @@ function chartEdit(e) {
   btnShow.style.borderRadius = "4px";
   btnShow.innerHTML = "پیش نمایش";
   // btnShow.onclick = () => showChart($("#selectType").val());
+  btnShow.onclick = () => showChart("pie");
   rowbtn.appendChild(btnShow);
 
   //btnsubmit
@@ -159,7 +230,7 @@ function chartEdit(e) {
   btnSubmit.innerText = "ذخیره";
   btnSubmit.onclick = (e) => {
     //get svgid
-    var svg_xml = chart.getSVG();
+    var svg_xml = chartSvg.getSVG();
     const index = svg_xml.indexOf("</div>") + 6;
     svg_xml = svg_xml.slice(index, 9e9);
 
@@ -167,12 +238,12 @@ function chartEdit(e) {
     const parser = new DOMParser();
     const docSvg = parser.parseFromString(svg_xml, "text/xml");
 
-    //get id
-    let getTag = docSvg.getElementsByTagName("clipPath")[0];
-    const getId = getTag.getAttribute("id");
+    // //get id
+    // let getTag = docSvg.getElementsByTagName("clipPath")[0];
+    // const getId = getTag.getAttribute("id");
 
-    //get svgTag
-    const svgTag = docSvg.getElementsByTagName("svg")[0];
+    // //get svgTag
+    // const svgTag = docSvg.getElementsByTagName("svg")[0];
 
     //base64
     let svg_Base64 = Base64.encode(svg_xml, false);
@@ -181,6 +252,7 @@ function chartEdit(e) {
     $("#" + imgid).attr("src", "data:image/svg+xml;base64," + svg_Base64);
     localStorage.setItem("oldChart", svg_Base64);
     $("#myModal").remove();
+    $("#" + imgid);
   };
   rowbtn.appendChild(btnSubmit);
 
@@ -193,4 +265,8 @@ function chartEdit(e) {
     $("#myModal").remove();
   };
   rowbtn.appendChild(btnExit);
+
+  //close rowbtn
+  const hideRowBtn = $("#" + e.target.id).parent()[0].id;
+  $("#" + hideRowBtn).css("display", "none");
 }

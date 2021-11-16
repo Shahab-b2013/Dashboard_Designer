@@ -56,10 +56,10 @@ function CreatePanel() {
     item.addEventListener("dragstart", (ev) => drag(ev));
     item.addEventListener("mousedown", () => (item.style.cursor = "grabbing"));
     item.addEventListener("mouseup", () => (item.style.cursor = "grab"));
+    item.addEventListener("mouseover", () => (item.style.cursor = "grab"));
     item.style.alignSelf = "center";
     item.style.justifySelf = "center";
     item.style.marginTop = "12px";
-    item.style.cursor = "grab";
     FildsPanel.appendChild(item);
 
     //label
@@ -224,77 +224,98 @@ function rowContent(ev) {
 }
 
 //==========================================================================================Action Items =========================================================================
-function TextboxFns(ev) {
-  if ($("#" + ev.target.id).hasClass("form-group-body")) {
-    //form-group and lbl
-    let rowId = rowContent(ev);
-    let id = rowId.replace("form-group-", "form-group-item-");
-    //text
-    let txtContent = document.createElement("input");
-    txtContent.type = "text";
-    txtContent.className = "form-control form-input noDrop";
-    txtContent.setAttribute("id", id);
-    txtContent.setAttribute("draggable", true);
-    txtContent.addEventListener("dragstart", (e) => drag(e));
-    txtContent.addEventListener("dblclick", (e) => TextboxProp(e.target.id));
-    $("#" + rowId).append(txtContent);
+// function TextboxFns(ev) {
+//   if ($("#" + ev.target.id).hasClass("form-group-body")) {
+//     //form-group and lbl
+//     let rowId = rowContent(ev);
+//     let id = rowId.replace("form-group-", "form-group-item-");
+//     //text
+//     let txtContent = document.createElement("input");
+//     txtContent.type = "text";
+//     txtContent.className = "form-control form-input noDrop";
+//     txtContent.setAttribute("id", id);
+//     txtContent.setAttribute("draggable", true);
+//     txtContent.addEventListener("dragstart", (e) => drag(e));
+//     txtContent.addEventListener("dblclick", (e) => TextboxProp(e.target.id));
+//     $("#" + rowId).append(txtContent);
+//   }
+//   //set cursor rightPanel item
+//   $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
+// }
+
+// function DropdownFns(ev) {
+//   //form-group and lbl
+//   let rowId = rowContent(ev);
+//   //dropdown
+//   let itemsPanel = document.createElement("select");
+//   itemsPanel.className = "dropdown";
+//   itemsPanel.setAttribute("id", "selectAfertDrag-" + createID());
+//   itemsPanel.addEventListener("dragover", (event) => allowDrop(event));
+//   itemsPanel.addEventListener("dblclick", (e) => DropdownProp(e.target.id));
+//   $("#" + rowId).append(itemsPanel);
+//   //set cursor rightPanel item
+//   $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
+// }
+
+// function LabelFns(ev) {
+//   if ($("#" + ev.target.id).hasClass("form-group-body")) {
+//     //form-group and lbl
+//     rowContent(ev);
+//   }
+//   //set cursor rightPanel item
+//   $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
+// }
+function createImgChart(e, formItem, parentID) {
+  const style = formItem ? formItem.style : imgArray[6]; //base64
+  const colIndex = formItem
+    ? formItem.ColumnIndex
+    : e.target.id.substr(e.target.id.length - 1);
+  const ID = formItem ? formItem.FormGroupBoxID : replaceFn(e);
+  function replaceFn(e) {
+    let id = e.target.id.replaceAll("form-group-body-", "");
+    id = id.slice(0, -2);
+    return id;
   }
-  //set cursor rightPanel item
-  $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
+  const parent = parentID ? parentID : e.target.id;
+  let img =
+    '<img class="fit-image noDrop" onmouseenter="rowbtnOn(event)" onmouseleave="rowbtnOff(event)" style=" border:1px solid #ccc;border-radius:10px"   src="data:image/svg+xml;base64,' +
+    style +
+    '" id="img-' +
+    ID +
+    "-" +
+    colIndex +
+    '"><div class="row" onmouseenter="rowbtnOn2(event)" style="display:none;float: left;margin:-50px 0px 0px 20px;" id="rowbtn-img-' +
+    ID +
+    "-" +
+    colIndex +
+    '"><span id="spanDelete' +
+    ID +
+    "-" +
+    colIndex +
+    '" class="btn btn-light glyphicon glyphicon-trash" onclick="chartDelete(event)" style="margin-left:10px"></span>' +
+    '<span  id="spanEdit' +
+    ID +
+    "-" +
+    colIndex +
+    '" class="btn btn-light glyphicon glyphicon-cog" onclick="chartEdit(event)" style=""></span></div></img>';
+  $("#" + parent)
+    .append(img)
+    .css("border", "");
 }
 
-function DropdownFns(ev) {
-  //form-group and lbl
-  let rowId = rowContent(ev);
-  //dropdown
-  let itemsPanel = document.createElement("select");
-  itemsPanel.className = "dropdown";
-  itemsPanel.setAttribute("id", "selectAfertDrag-" + createID());
-  itemsPanel.addEventListener("dragover", (event) => allowDrop(event));
-  itemsPanel.addEventListener("dblclick", (e) => DropdownProp(e.target.id));
-  $("#" + rowId).append(itemsPanel);
-  //set cursor rightPanel item
-  $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
-}
-
-function LabelFns(ev) {
-  if ($("#" + ev.target.id).hasClass("form-group-body")) {
-    //form-group and lbl
-    rowContent(ev);
+function ColumnFns(e) {}
+function PieFns(e) {
+  if ($("#" + e.target.id).hasClass("form-group-body")) {
+    createImgChart(e, null, null);
   }
-  //set cursor rightPanel item
-  $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
 }
-
-function CheckboxFns(ev) {
-  //form-group
-  let rowId = rowContent(ev);
-  //checkbox
-  let itemsPanel = document.createElement("input");
-  itemsPanel.type = "checkbox";
-  itemsPanel.className = "checkbox";
-  itemsPanel.setAttribute("id", "checkAferDrag-" + createID());
-  itemsPanel.addEventListener("dragover", (event) => allowDrop(event));
-  itemsPanel.addEventListener("dblclick", (e) => CheckboxProp(e.target.id));
-  $("#" + rowId).append(itemsPanel);
-  //lbl
-  let getId = "form-item-lbl-" + createID();
-  let lbl = document.createElement("label");
-  lbl.innerText = "متن انتخابی ...";
-  lbl.className = "lbl";
-  lbl.style.margin = "0px 0px 10px 0px";
-  lbl.setAttribute("id", getId);
-  lbl.addEventListener("dblclick", (ev) => labelProp(ev.target.id));
-  lbl.setAttribute("for", itemsPanel.id);
-  $("#" + rowId).append(lbl);
-
-  //set cursor rightPanel item
-  $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
-}
-
-function Group(ev) {
-  if ($("#" + ev.target.id).hasClass("rowBtnGroup")) {
-    let GroupId = ev.target.id;
+function BarFns(e) {}
+function LineFns(e) {}
+function AreaFns(e) {}
+function ColumnFns(e) {}
+function Group(e) {
+  if ($("#" + e.target.id).hasClass("rowBtnGroup")) {
+    let GroupId = e.target.id;
     const parent = $("#" + GroupId)
       .parent()
       .parent()
@@ -320,16 +341,8 @@ function Group(ev) {
               "form-group-" +
               id +
               '" class="row form-group-box" ondragover="allowDrop(event)"  >' +
-              '<div class="col-lg-2 col-md-2 group-info noDrop" id="group-info-' +
-              id +
-              '"' +
-              '><h4 class="group-title">' +
-              "نام پیش فرض" +
-              "<br /><small>" +
-              "" +
-              "</small></h4></div>" +
               '<div style="padding:10px;" class="' +
-              "col-lg-7 col-md-10 form-group-body" +
+              "col-lg-10 col-md-10 form-group-body" +
               ' col-sm-12  col-xs-12" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
               id +
               '-0"></div><div class="col-md-1" id="miniDiv-1' +
@@ -340,8 +353,6 @@ function Group(ev) {
           )
         );
     });
-    //set cursor rightPanel item
-    $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
   }
 }
 
@@ -384,15 +395,20 @@ function drop(ev) {
     }
   }
 }
-function allowDrop(ev) {
-  if (ev.target.id) {
-    if (!$("#" + ev.target.id).hasClass("noDrop")) {
-      ev.preventDefault();
+function allowDrop(e) {
+  if (e.target.id) {
+    if (!$("#" + e.target.id).hasClass("noDrop")) {
+      if ($("#" + e.target.id).children().length == 0) {
+        $("#" + e.target.id).css("border", "1px solid #ccc");
+        $("#" + e.target.id).css("border-radius", "10px");
+        e.preventDefault();
+      }
     }
   }
 }
-function drag(ev) {
-  if (ev.target.id) ev.dataTransfer.setData("text", ev.target.id);
+
+function drag(e) {
+  if (e.target.id) e.dataTransfer.setData("text", e.target.id);
 }
 
 //groupbtn
@@ -415,34 +431,42 @@ function Group_Btn(GroupId) {
   );
 }
 
-function DeleteGroup(event) {
-  let parentId = event.target.parentNode.parentNode.id;
+function DeleteGroup(e) {
+  let parentId = e.target.parentNode.parentNode.id;
 
   $("#" + parentId).children().length < 1
     ? $("#" + parentId).remove()
     : alert("حذف گروه به دلیل داشتن آیتم ممکن نیست،لطفاً آیتم ها را به");
 }
 
-function dragEnter(event) {
-  if (event.target.id) {
-    if ($("#" + event.target.id).hasClass("form-group-body")) {
-      $("#" + event.target.id).css("border", "1px solid #ccc");
-      $("#" + event.target.id).css("border-radius", "10px");
+function dragEnter(e) {
+  if (e.target.id) {
+    if ($("#" + e.target.id).children().length == 0) {
+      if ($("#" + e.target.id).hasClass("form-group-body")) {
+        $("#" + e.target.id).css("border", "1px solid #ccc");
+        $("#" + e.target.id).css("border-radius", "10px");
+      }
     }
   }
 }
-function onMouseOut(event) {
-  if (event.target.id) {
-    $("#" + event.target.id).css("border", "");
+function onMouseOut(e) {
+  if (!$("#" + e.target.id).hasClass("noDrop")) {
+    if ($("#" + e.target.id).children().length == 0) {
+      $("#" + e.target.id).css("border", "");
+    }
   }
 }
-function dragLeave(event) {
-  if (event.target.id) {
-    $("#" + event.target.id).css("border", "");
+function dragLeave(e) {
+  if (e.target.id) {
+    if (!$("#" + e.target.id).hasClass("noDrop")) {
+      if ($("#" + e.target.id).children().length == 0) {
+        $("#" + e.target.id).css("border", "");
+      }
+    }
   }
 }
-function GroupMoveUp(event) {
-  let oldID = $("#" + event.target.parentNode.parentNode.id);
+function GroupMoveUp(e) {
+  let oldID = $("#" + e.target.parentNode.parentNode.id);
   let cloned = oldID.clone(true);
 
   let newID = oldID.prev()[0].id;
@@ -452,8 +476,8 @@ function GroupMoveUp(event) {
   }
 }
 
-function GroupMoveDown(event) {
-  let oldID = $("#" + event.target.parentNode.parentNode.id);
+function GroupMoveDown(e) {
+  let oldID = $("#" + e.target.parentNode.parentNode.id);
   let cloned = oldID.clone(true);
   if (oldID.next()[0]) {
     let newID = oldID.next()[0].id;
@@ -468,7 +492,6 @@ $(function () {
 });
 
 function FormConstractor(width, parent) {
-
   let div =
     '<div id="myModal" class="modal" style="">' +
     '<div id="chartModal" class="modal-content" style="border: 1px solid #dcc896; border-radius: 4px;">' +
@@ -479,11 +502,11 @@ function FormConstractor(width, parent) {
 
   $("#" + parent).append(div);
   // Get the modal
-  var modal = document.getElementById("myModal");
+  let modal = document.getElementById("myModal");
   modal.style.display = "block";
 
   // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
+  let span = document.getElementsByClassName("close")[0];
 
   // When the user clicks on <span> (x), close the modal
   span.onclick = function () {
@@ -491,5 +514,4 @@ function FormConstractor(width, parent) {
   };
 
   $("#chartModal").css("width", width);
-  // $("#chartModal").css("height", height);
 }

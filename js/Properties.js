@@ -248,7 +248,6 @@ function setDiv1(elem, colNum) {
     "class",
     "form-group-body  col-md-" + colNum
   );
-  
 }
 function setDiv2(elem, colNum) {
   $("#" + groupDivId(elem)[1]).attr(
@@ -258,7 +257,8 @@ function setDiv2(elem, colNum) {
 }
 function CreateDiv2(elem, colNum) {
   let div1ID = groupDivId(elem)[0];
-  let div2ID = div1ID.substring(0, div1ID.length - 1).concat("1"); //Delete/Add last chart from id
+  let lastCharId = +div1ID.substr(div1ID.length - 1) + 1;
+  let div2ID = div1ID.substring(0, div1ID.length - 1).concat(lastCharId); //Delete/Add last chart from id
   let div2 =
     '<div class="form-group-body col-md-' +
     colNum +
@@ -272,7 +272,8 @@ function CreateDiv2(elem, colNum) {
 function CreateDiv3(elem, colNum) {
   //create div3
   let div2ID = groupDivId(elem)[1];
-  div3ID = div2ID.substring(0, div2ID.length - 1).concat("2"); //Delete/Add last chart from id
+  let lastCharId = +div2ID.substr(div2ID.length - 1) + 1;
+  div3ID = div2ID.substring(0, div2ID.length - 1).concat(lastCharId); //Delete/Add last chart from id
 
   let div3 =
     '<div class="form-group-body col-md-' +
@@ -289,7 +290,7 @@ function removeDiv(elem) {
   const groupArr = groupDivId(elem);
   for (let k = 0; k < groupArr.length; k++) {
     const elements = +$("#" + groupArr[k]).children().length;
-    if (elements === 0) {
+    if (elements < 2) {
       $("#" + groupArr[k]).remove();
     }
   }

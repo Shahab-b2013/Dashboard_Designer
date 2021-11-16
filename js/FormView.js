@@ -279,7 +279,7 @@
           (formGroup.Visibility == "DefaultHidden" ? "display:none" : "") +
           '" id="form-group-' +
           formGroup.FormGroupBoxID +
-          '"  class="row form-group-box"  ondragover="allowDrop(event)">';
+          '"  class="row form-group-box"  ondragleave="onMouseOut(event)">';
 
         var columnWidth = formGroup.ColumnWidth;
 
@@ -375,129 +375,59 @@
   var _formItems = _json;
   var itemsGrouping = _formGroups.ItemsGrouping;
   $("#ContentHeader").html(_formItems.Label);
-  try {
-    $.each(_formItems.charts, function (index, formItem) {
-      if (itemsGrouping) {
-        parentID =
-          "#form-group-body-" +
-          formItem.FormGroupBoxID +
-          "-" +
-          formItem.ColumnIndex;
-      } else {
-        parentID =
-          "#form-group-mbody-" + formItem.FormID + "-" + formItem.ColumnIndex;
-      }
 
-      var transferid;
-      let img =
-        '<img class="fit-image" onmouseover="btnModal(this)" onmouseleave="btnUnModal(this)"  style=" border:1px solid #ccc;border-radius:10px"   src="data:image/svg+xml;base64,' +
-        formItem.style +
-        '" id="img-' +
+  $.each(_formItems.charts, function (index, formItem) {
+    if (itemsGrouping) {
+      parentID =
+        "form-group-body-" +
         formItem.FormGroupBoxID +
-        index +
-        '"></img>';
-      $(parentID).append(img);
+        "-" +
+        formItem.ColumnIndex;
+    } else {
+      parentID =
+        "form-group-mbody-" + formItem.FormID + "-" + formItem.ColumnIndex;
+    }
 
-      //  onmouseout="btnUnModal(this)"
-
-      // img.addEventListener("dblclick", (e) => chartEdit(e));
-      // img.addEventListener("mouseenter", (e) => {
-      //   console.log('trans   ' + e.target.id)
-      //   transferid=e.target.id
-      // });
-
-      // img.setAttribute("draggable", true);
-      // img.addEventListener("dragstart", (ev) => drag(ev));
-      // img.addEventListener("mousedown", () => (item.style.cursor = "grabbing"));
-      // img.addEventListener("mouseup", () => (item.style.cursor = "grab"));
-      // img.addEventListener("drop", (e) => {
-      //   e.preventDefault();
-      //   let oneID = e.dataTransfer.getData("text");
-
-      //   let twoID = e.target.id;
-      //   console.log("t" + twoID);
-      //   let empty = $("#" + oneID).css("top");
-      //   console.log("empty" + empty);
-      //   $("#" + twoID).css("top", empty);
-      //   $("#" + oneID).css("top", $("#" + twoID).css("Totopp"));
-      //   empty = $("#" + oneID).css("left");
-      //   $("#" + twoID).css("left", empty);
-      //   $("#" + oneID).css("left", $("#" + twoID).css("left"));
-      //   console.log(oneID);
-      //   console.log(twoID);
-
-      //   $("#" + e.target.id).append(document.getElementById(oneID));
-      // });
-
-      // img.style.position = "absolute";
-    });
-  } catch (e) {
-    // raiseError(e, bodyID);
-
-    return;
-  }
+    createImgChart(null, formItem, parentID);
+  });
 }
-function btnModal(x) {
-  let parent = $("#" + x.id).parent()[0].id;
-  let div =
-    '<div id="modalDiv" class="modal" style=" position:absolute;">' +
-    '<div id="chartEdit" class="row" style="position:absolute;left:50%;top:50%;"><span id="spanEdit"  class="btn btn-light glyphicon glyphicon-edit" onclick="chartEdit(event)" style="width:80px;margin-left:10px"></span>' +
-    '<span  id="spanDelete" class="btn btn-light glyphicon glyphicon-trash"   onclick="chartDelete(event)" style="width:80px;"></span>' +
-    "</div></div>";
-
-  $("#" + parent).append(div);
-  // Get the modal
-  var modal = document.getElementById("modalDiv");
-  modal.style.display = "block";
-
-  // // Get the <span> element that closes the modal
-  // var span = document.getElementsByClassName("close")[0];
-
-  // // When the user clicks on <span> (x), close the modal
-  // span.onclick = function () {
-  //   modal.style.display = "none";
-  // };
-
-  $("#modalContent").css("width", "50%");
-  // $("#chartModal").css("height", height);
+function rowbtnOn(e) {
+  $("#rowbtn-" + e.target.id).css("display", "block");
 }
-
-function btnUnModal(x) {
-  // $(".modal").remove();
+function rowbtnOn2(e) {
+  $("#" + e.target.id).css("display", "block");
+}
+function rowbtnOff(e) {
+  $("#rowbtn-" + e.target.id).css("display", "none");
 }
 function chartDelete(e) {
-  let parent = $("#" + e.target.id)
-    .parent()
-    .parent()
-    .parent()[0].id;
 
-  let imgid = $("#" + parent)
-    .children()
-    .eq(0)[0].id;
   
-  // let modal = 
-  
+  //img remove
+  let parent = $("#" + e.target.id).parent()[0].id;
+  // if ($("#" + parent).children().length > 2) {
+    let div =
+      '<div id="myModal" class="modal" style="">' +
+      '<div id="chartModal" class="" style="position: relative;width:30%;top:30%;background-color:#fff; margin: auto; overflow: auto; border: 1px solid #ccc; border-radius: 4px;">' +
+      '<div id="contentM" class="row col-lg-12" style="padding: 10px 16px 0px 0px;margin: 20px 0px 40px 0px;">آیا از حذف ای چارت جاری مطمعن هستید ؟</div><hr style="margin:0px;width:100%;">' +
+      '<div class="row" style="padding:16px;margin:0px"><span id="del" class="btn btn-danger" onclick="del(event)"> حذف</span>' +
+      '<span id="closed" class="btn btn-secondary" style="width:60px;margin-Right:10px;" onclick="closed()"> لغو</span></div></div></div>';
 
-  //   '<div class="modal fade" id="exampleModalCenter" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">' +
-  //   '<div class="modal-dialog modal-dialog-centered" role="document">' +
-  //   '<div class="modal-content">' +
-    // '<div class="modal-header">' +
-    // '<h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>' +
-    // '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
-    // '<span aria-hidden="true">&times;</span>' +
-    // '</button>' +
-    // '</div>' +
-    // '<div class="modal-body">' +
-        
-    // '</div>' +
-    // '<div class="modal-footer">' +
-    // '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>' +
-    // '<button type="button" class="btn btn-primary">Save changes</button>' +
-    // '</div>' +
-//     '</div>' +
-//     '</div >' +
-//     '</div>';
-// $("#" + parent).append(modal);
-  
+    $("#" + parent).append(div);
+    // Get the modal
+    $("#myModal").css("display", "block");
+  // }
+}
+function del(e) {
+  let parent = $("#myModal").parent()[0].id;
+
+  let imgid = parent.replaceAll("rowbtn-img-", "img-");
   $("#" + imgid).remove();
+
+  //rowbtn remove
+  let rowbtn = imgid.replaceAll("img-", "rowbtn-img-");
+  $("#" + rowbtn).remove();
+}
+function closed() {
+  $("#myModal").css("display", "none");
 }
