@@ -232,11 +232,10 @@ function DivSplit_3(elem) {
   if (groupDivId(elem).length == 1) {
     setDiv1(elem, 3);
     CreateDiv2(elem, 3);
-    setTimeout(() => {
-      // CreateDiv3(elem, 3);
-    }, 1000);
+    CreateDiv3(elem, 3);
   }
   if (groupDivId(elem).length == 2) {
+    removeDiv(elem);
     setDiv1(elem, 4);
     setDiv2(elem, 4);
     CreateDiv3(elem, 4);
@@ -262,9 +261,9 @@ function CreateDiv2(elem, colNum) {
   let div2 =
     '<div class="form-group-body col-md-' +
     colNum +
-    '" style="height:370px;margin-bottom:10px;" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
+    '" style="height:370px;margin-bottom:10px;white-space:pre-wrap;text-align:center;" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
     div2ID +
-    '"></div>';
+    '" ></div>';
   //set div2
   $("#" + groupDivId(elem)[0]).after($(div2));
 }
@@ -278,17 +277,19 @@ function CreateDiv3(elem, colNum) {
   let div3 =
     '<div class="form-group-body col-md-' +
     colNum +
-    '" style="height:370px;margin-bottom:10px;" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
+    '" style="height:370px;margin-bottom:10px;white-space:pre-wrap;text-align:center;" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
     div3ID +
     '"></div>';
   //set div3
   $("#" + groupDivId(elem)[1]).after($(div3));
 }
 
-//if div.child==empty then
+/*if div.child isEmpty then
+removeDiv & if groupDivid.lenght==1 removeDiv Disable
+*/
 function removeDiv(elem) {
   const groupArr = groupDivId(elem);
-  for (let k = 0; k < groupArr.length; k++) {
+  for (let k = 0; k < groupArr.length - 1; k++) {
     const elements = +$("#" + groupArr[k]).children().length;
     if (elements < 2) {
       $("#" + groupArr[k]).remove();
@@ -302,7 +303,6 @@ function groupDivId(elem) {
   for (let q = 0; q < parnetnodeID.childNodes.length; q++) {
     if (parnetnodeID.childNodes[q].id) {
       let id = parnetnodeID.childNodes[q].id;
-
       if ($("#" + id).hasClass("form-group-body")) {
         groupDivIdArray.push(id);
       }

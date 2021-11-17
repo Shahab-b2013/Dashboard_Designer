@@ -293,7 +293,7 @@
             columnWidth +
             ' col-sm-12  col-xs-12 form-group-body"  ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
             formGroup.FormGroupBoxID +
-            '-0" style="height:370px;margin-bottom:10px;"> </div>';
+            '-0" style="height:370px;margin-bottom:10px;white-space:pre-wrap;text-align:center;"></div>';
         }
 
         if (formGroup.ColumnLayout == "TwoColumn") {
@@ -304,17 +304,17 @@
             columnWidth +
             " form-group-body" +
             '"' +
-            '    ondrop="drop(event)" ondragover="allowDrop(event)"' +
+            'ondrop="drop(event)" ondragover="allowDrop(event)"' +
             ' id="form-group-body-' +
             formGroup.FormGroupBoxID +
             '-0" style="height:370px;margin-bottom:10px;"> </div><div class="' +
             columnWidth +
             " form-group-body" +
             '"' +
-            '    ondrop="drop(event)" ondragover="allowDrop(event)"' +
+            'ondrop="drop(event)" ondragover="allowDrop(event)"' +
             ' id="form-group-body-' +
             formGroup.FormGroupBoxID +
-            '-1" style="height:370px;margin-bottom:10px;"> </div>';
+            '-1" style="height:370px;margin-bottom:10px;"></div>';
         }
 
         if (formGroup.ColumnLayout == "ThreeColumn") {
@@ -401,26 +401,23 @@ function rowbtnOff(e) {
   $("#rowbtn-" + e.target.id).css("display", "none");
 }
 function chartDelete(e) {
-
-  
   //img remove
   let parent = $("#" + e.target.id).parent()[0].id;
-  // if ($("#" + parent).children().length > 2) {
-    let div =
-      '<div id="myModal" class="modal" style="">' +
-      '<div id="chartModal" class="" style="position: relative;width:30%;top:30%;background-color:#fff; margin: auto; overflow: auto; border: 1px solid #ccc; border-radius: 4px;">' +
-      '<div id="contentM" class="row col-lg-12" style="padding: 10px 16px 0px 0px;margin: 20px 0px 40px 0px;">آیا از حذف ای چارت جاری مطمعن هستید ؟</div><hr style="margin:0px;width:100%;">' +
-      '<div class="row" style="padding:16px;margin:0px"><span id="del" class="btn btn-danger" onclick="del(event)"> حذف</span>' +
-      '<span id="closed" class="btn btn-secondary" style="width:60px;margin-Right:10px;" onclick="closed()"> لغو</span></div></div></div>';
+  console.log(parent)
+  let div =
+    '<div id="myModal" class="modal" style="">' +
+    '<div id="chartModal" class="" style="font-size:16px;color:#000;font-style:normal;position: relative;width:30%;top:30%;background-color:#fff; margin: auto; overflow: auto; border: 1px solid #ccc; border-radius: 4px;">' +
+    '<div id="contentM" class="row col-lg-12" style="padding: 10px 16px 0px 0px;margin: 20px 0px 40px 0px;">آیا از حذف ای چارت جاری مطمعن هستید ؟</div><hr style="margin:0px;width:100%;">' +
+    '<div class="row" style="padding:16px;margin:0px"><span id="del" class="btn btn-danger"  onclick="del()"> حذف</span>' +
+    '<span id="closed" class="btn btn-secondary" style="width:60px;margin-Right:10px;" onclick="closed()"> لغو</span></div></div></div>';
 
-    $("#" + parent).append(div);
-    // Get the modal
-    $("#myModal").css("display", "block");
+  $("#" + parent).append(div);
+  // Get the modal
+  $("#myModal").css("display", "block");
   // }
 }
-function del(e) {
+function del() {
   let parent = $("#myModal").parent()[0].id;
-
   let imgid = parent.replaceAll("rowbtn-img-", "img-");
   $("#" + imgid).remove();
 

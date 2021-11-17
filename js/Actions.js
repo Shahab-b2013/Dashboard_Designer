@@ -313,6 +313,7 @@ function BarFns(e) {}
 function LineFns(e) {}
 function AreaFns(e) {}
 function ColumnFns(e) {}
+
 function Group(e) {
   if ($("#" + e.target.id).hasClass("rowBtnGroup")) {
     let GroupId = e.target.id;
@@ -362,6 +363,7 @@ function Group(e) {
  * */
 function drop(ev) {
   if (ev.target.id) {
+    $("#" + ev.target.id).html(""); //delete placeholder div
     if (!$("#" + ev.target.id).hasClass("noDrop")) {
       //get senderId and check number or string for switch
       let dataId = ev.dataTransfer.getData("text");
@@ -401,6 +403,12 @@ function allowDrop(e) {
       if ($("#" + e.target.id).children().length == 0) {
         $("#" + e.target.id).css("border", "1px solid #ccc");
         $("#" + e.target.id).css("border-radius", "10px");
+        if ($("#" + e.target.id).hasClass("form-group-body")) {
+          $("#" + e.target.id).css("color", "#ccc");
+          $("#" + e.target.id).css("font-size", "22px");
+          $("#" + e.target.id).css("font-style", "italic");
+          $("#" + e.target.id).html("&#10;&#10;&#10;&#10;اینجا رها کنید ...");
+        }
         e.preventDefault();
       }
     }
@@ -450,17 +458,19 @@ function dragEnter(e) {
   }
 }
 function onMouseOut(e) {
-  if (!$("#" + e.target.id).hasClass("noDrop")) {
-    if ($("#" + e.target.id).children().length == 0) {
-      $("#" + e.target.id).css("border", "");
-    }
-  }
+  // if (!$("#" + e.target.id).hasClass("noDrop")) {
+  //   if ($("#" + e.target.id).children().length == 0) {
+  //     $("#" + e.target.id).css("border", "");
+  //     $("#" + e.target.id).html("");
+  //   }
+  // }
 }
 function dragLeave(e) {
   if (e.target.id) {
     if (!$("#" + e.target.id).hasClass("noDrop")) {
       if ($("#" + e.target.id).children().length == 0) {
         $("#" + e.target.id).css("border", "");
+        $("#" + e.target.id).html("");
       }
     }
   }

@@ -265,7 +265,6 @@ br {
   /* width: 80%; */
   background-color: #fff;
   overflow: auto;
-
 }
 
 /* The Close Button */
@@ -286,4 +285,7 @@ br {
   object-fit: contain;
   height: 100%;
   width: 100%;
+}
+.placeholder{
+
 }
