@@ -403,7 +403,6 @@ function rowbtnOff(e) {
 function chartDelete(e) {
   //img remove
   let parent = $("#" + e.target.id).parent()[0].id;
-  console.log(parent)
   let div =
     '<div id="myModal" class="modal" style="">' +
     '<div id="chartModal" class="" style="font-size:16px;color:#000;font-style:normal;position: relative;width:30%;top:30%;background-color:#fff; margin: auto; overflow: auto; border: 1px solid #ccc; border-radius: 4px;">' +
