@@ -21,7 +21,6 @@
         ActivityParamID: 101030007,
         ActionControlID: "",
         Label: "پست الکترونیکی",
-        Type: "pie",
         FormID: 1010300,
         ColumnIndex: 0,
         ActivityID: 1010300,
@@ -55,7 +54,6 @@
         ActivityParamID: 101030007,
         ActionControlID: "",
         Label: "پست الکترونیکی",
-        Type: "pie",
         FormID: 1010300,
         ColumnIndex: 1,
         ActivityID: 1010300,
@@ -388,7 +386,7 @@
         "form-group-mbody-" + formItem.FormID + "-" + formItem.ColumnIndex;
     }
 
-    createImgChart(null, formItem, parentID);
+    createImgChart(null, formItem, parentID,formItem.style);
   });
 }
 function rowbtnOn(e) {

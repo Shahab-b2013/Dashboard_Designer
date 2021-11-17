@@ -230,9 +230,9 @@ function DivSplit_2(elem) {
 function DivSplit_3(elem) {
   removeDiv(elem);
   if (groupDivId(elem).length == 1) {
-    setDiv1(elem, 3);
-    CreateDiv2(elem, 3);
-    CreateDiv3(elem, 3);
+    setDiv1(elem, 4);
+    CreateDiv2(elem, 4);
+    CreateDiv3(elem, 4);
   }
   if (groupDivId(elem).length == 2) {
     removeDiv(elem);
@@ -261,7 +261,7 @@ function CreateDiv2(elem, colNum) {
   let div2 =
     '<div class="form-group-body col-md-' +
     colNum +
-    '" style="height:370px;margin-bottom:10px;white-space:pre-wrap;text-align:center;" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
+    '" style="height:370px;margin-bottom:10px;white-space:pre-wrap;text-align:center;" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)"   ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
     div2ID +
     '" ></div>';
   //set div2
@@ -277,7 +277,7 @@ function CreateDiv3(elem, colNum) {
   let div3 =
     '<div class="form-group-body col-md-' +
     colNum +
-    '" style="height:370px;margin-bottom:10px;white-space:pre-wrap;text-align:center;" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
+    '" style="height:370px;margin-bottom:10px;white-space:pre-wrap;text-align:center;" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
     div3ID +
     '"></div>';
   //set div3
@@ -289,10 +289,12 @@ removeDiv & if groupDivid.lenght==1 removeDiv Disable
 */
 function removeDiv(elem) {
   const groupArr = groupDivId(elem);
-  for (let k = 0; k < groupArr.length - 1; k++) {
-    const elements = +$("#" + groupArr[k]).children().length;
-    if (elements < 2) {
-      $("#" + groupArr[k]).remove();
+  for (let k = 0; k < groupArr.length; k++) {
+    if (groupDivId(elem).length >= 2) {
+      const elements = +$("#" + groupArr[k]).children().length;
+      if (elements < 2) {
+        $("#" + groupArr[k]).remove();
+      }
     }
   }
 }

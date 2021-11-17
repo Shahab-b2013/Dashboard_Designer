@@ -265,20 +265,20 @@ function rowContent(ev) {
 //   //set cursor rightPanel item
 //   $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
 // }
-function createImgChart(e, formItem, parentID) {
-  const style = formItem ? formItem.style : imgArray[6]; //base64
-  const colIndex = formItem
+function createImgChart(e, formItem, parentID, bs64) {
+  let style = bs64 ? bs64 : imgDefault;
+  let colIndex = formItem
     ? formItem.ColumnIndex
     : e.target.id.substr(e.target.id.length - 1);
-  const ID = formItem ? formItem.FormGroupBoxID : replaceFn(e);
+  let ID = formItem ? formItem.FormGroupBoxID : replaceFn(e);
   function replaceFn(e) {
     let id = e.target.id.replaceAll("form-group-body-", "");
     id = id.slice(0, -2);
     return id;
   }
-  const parent = parentID ? parentID : e.target.id;
+  let parent = parentID ? parentID : e.target.id;
   let img =
-    '<img class="fit-image noDrop" onmouseenter="rowbtnOn(event)" onmouseleave="rowbtnOff(event)" style=" border:1px solid #ccc;border-radius:10px"   src="data:image/svg+xml;base64,' +
+    '<img class="fit-image noDrop" onmouseenter="rowbtnOn(event)" onmouseleave="rowbtnOff(event)" style="padding-left:10px;border:1px solid #ccc;border-radius:10px"   src="data:image/svg+xml;base64,' +
     style +
     '" id="img-' +
     ID +
@@ -297,7 +297,7 @@ function createImgChart(e, formItem, parentID) {
     ID +
     "-" +
     colIndex +
-    '" class="btn btn-light glyphicon glyphicon-cog" onclick="chartEdit(event)" style=""></span></div></img>';
+    '" class="spanEdit btn btn-light glyphicon glyphicon-cog" onclick="chartEdit(event)" style=""></span></div></img>';
   $("#" + parent)
     .append(img)
     .css("border", "");
@@ -306,7 +306,7 @@ function createImgChart(e, formItem, parentID) {
 function ColumnFns(e) {}
 function PieFns(e) {
   if ($("#" + e.target.id).hasClass("form-group-body")) {
-    createImgChart(e, null, null);
+    createImgChart(e, null, null, null);
   }
 }
 function BarFns(e) {}
@@ -458,12 +458,12 @@ function dragEnter(e) {
   }
 }
 function onMouseOut(e) {
-  // if (!$("#" + e.target.id).hasClass("noDrop")) {
-  //   if ($("#" + e.target.id).children().length == 0) {
-  //     $("#" + e.target.id).css("border", "");
-  //     $("#" + e.target.id).html("");
-  //   }
-  // }
+  if (!$("#" + e.target.id).hasClass("noDrop")) {
+    if ($("#" + e.target.id).children().length == 0) {
+      $("#" + e.target.id).css("border", "");
+      $("#" + e.target.id).html("");
+    }
+  }
 }
 function dragLeave(e) {
   if (e.target.id) {

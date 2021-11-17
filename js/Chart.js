@@ -1,6 +1,5 @@
 function chartEdit(e) {
-  let imgid = $("#" + e.target.id).parent()[0].id;
-  imgid = imgid.replaceAll("rowbtn-img-", "img-");
+  let imgid = e.target.id.replaceAll("spanEdit", "img-");
 
   const chartType = "pie";
 
@@ -12,7 +11,7 @@ function chartEdit(e) {
 
   let div2 =
     '<div id="div2" class="col-lg-9 col-md-8 col-xs-12 " style="border-radius:4px;border:1px solid #ccc; padding:0px"><figure class="highcharts-figure">' +
-    '<div id="containers"></div></figure></div>';
+    '<div id="containers" style="margin:80px 0;"></div></figure></div>';
   $("#contentM").append(div2);
 
   //div1 Add Items
@@ -75,8 +74,6 @@ function chartEdit(e) {
   }
 
   //===============================show chart ============================
-
-
 
   //create chart
   function showChart(chartType) {
@@ -234,17 +231,6 @@ function chartEdit(e) {
     const index = svg_xml.indexOf("</div>") + 6;
     svg_xml = svg_xml.slice(index, 9e9);
 
-    //Dom
-    const parser = new DOMParser();
-    const docSvg = parser.parseFromString(svg_xml, "text/xml");
-
-    // //get id
-    // let getTag = docSvg.getElementsByTagName("clipPath")[0];
-    // const getId = getTag.getAttribute("id");
-
-    // //get svgTag
-    // const svgTag = docSvg.getElementsByTagName("svg")[0];
-
     //base64
     let svg_Base64 = Base64.encode(svg_xml, false);
 
@@ -252,7 +238,6 @@ function chartEdit(e) {
     $("#" + imgid).attr("src", "data:image/svg+xml;base64," + svg_Base64);
     localStorage.setItem("oldChart", svg_Base64);
     $("#myModal").remove();
-    $("#" + imgid);
   };
   rowbtn.appendChild(btnSubmit);
 
