@@ -98,15 +98,26 @@ function CreatePanel() {
       lbl.style.gridRow = "2";
       item.setAttribute("width", "50");
       item.setAttribute("height", "40");
-    } else if (index == 4) {
+    }
+    // else if (index == 4) {
+    //   item.style.gridColumn = "1";
+    //   item.style.gridRow = "3";
+    //   lbl.innerHTML = " مساحت";
+    //   lbl.style.gridColumn = "2";
+    //   lbl.style.gridRow = "3";
+    //   item.setAttribute("width", "50");
+    //   item.setAttribute("height", "50");
+    // }
+    else if (index == 4) {
       item.style.gridColumn = "1";
       item.style.gridRow = "3";
-      lbl.innerHTML = " مساحت";
+      lbl.innerHTML = "مساحت خطی";
       lbl.style.gridColumn = "2";
       lbl.style.gridRow = "3";
-      item.setAttribute("width", "50");
-      item.setAttribute("height", "50");
-    } else if (index == 5) {
+      item.setAttribute("width", "60");
+      item.setAttribute("height", "45");
+    }
+    else if (index == 5) {
       item.style.gridColumn = "3";
       item.style.gridRow = "3";
       lbl.innerHTML = "گروه";
@@ -265,54 +276,94 @@ function rowContent(ev) {
 //   //set cursor rightPanel item
 //   $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
 // }
-function createImgChart(e, formItem, parentID, bs64) {
-  let style = bs64 ? bs64 : imgDefault;
-  let colIndex = formItem
-    ? formItem.ColumnIndex
-    : e.target.id.substr(e.target.id.length - 1);
-  let ID = formItem ? formItem.FormGroupBoxID : replaceFn(e);
-  function replaceFn(e) {
-    let id = e.target.id.replaceAll("form-group-body-", "");
-    id = id.slice(0, -2);
-    return id;
+function createImgChart(e, parentID, formItem, type) {
+  let style = formItem ? formItem.style : styleChart(type);
+  function styleChart(type) {
+    let value;
+    switch (type) {
+      case "column":
+        value = columnBs64;
+        break;
+      case "pie":
+        value = pieBs64;
+        break;
+      case "bar":
+        value = barBs64;
+        break;
+      case "line":
+        value = lineBs64;
+        break;
+      // case "area":
+      //   value = areaBs64;
+      //   break;
+      case "areaspline":
+        value = areaSplineBs64;
+        break;
+      default:
+        value = imgDefault;
+        break;
+    }
+    return value;
   }
+
+  let ID = formItem ? formItem.id : idChart(e);
+  function idChart(e) {
+    let defaultId = e.target.id.replaceAll("form-group-body-", "");
+    // defaultId = defaultId.slice(0, -2);
+    return defaultId;
+  }
+  let chartType = formItem ? formItem.type : type;
   let parent = parentID ? parentID : e.target.id;
   let img =
-    '<img class="fit-image noDrop" onmouseenter="rowbtnOn(event)" onmouseleave="rowbtnOff(event)" style="padding-left:10px;border:1px solid #ccc;border-radius:10px"   src="data:image/svg+xml;base64,' +
+    '<img class="fit-image noDrop"  onmouseenter="rowbtnOn(event)" onmouseleave="rowbtnOff(event)" style="padding-left:10px;border:1px solid #ccc;border-radius:10px"   src="data:image/svg+xml;base64,' +
     style +
-    '" id="img-' +
+    '" id="' +
     ID +
-    "-" +
-    colIndex +
     '"><div class="row" onmouseenter="rowbtnOn2(event)" style="display:none;float: left;margin:-50px 0px 0px 20px;" id="rowbtn-img-' +
     ID +
-    "-" +
-    colIndex +
     '"><span id="spanDelete' +
     ID +
-    "-" +
-    colIndex +
-    '" class="btn btn-light glyphicon glyphicon-trash" onclick="chartDelete(event)" style="margin-left:10px"></span>' +
+    '" class="btn btn-light glyphicon glyphicon-trash"  onclick="chartDelete(event)" style="margin-left:10px"></span>' +
     '<span  id="spanEdit' +
     ID +
-    "-" +
-    colIndex +
-    '" class="spanEdit btn btn-light glyphicon glyphicon-cog" onclick="chartEdit(event)" style=""></span></div></img>';
+    '" class="spanEdit btn btn-light glyphicon glyphicon-cog" type="' +
+    chartType +
+    '" onclick="chartEdit(event)" style=""></span></div></img>';
   $("#" + parent)
     .append(img)
     .css("border", "");
 }
 
-function ColumnFns(e) {}
-function PieFns(e) {
+function ColumnFns(e) {
   if ($("#" + e.target.id).hasClass("form-group-body")) {
-    createImgChart(e, null, null, null);
+    createImgChart(e, null, null, "column");
   }
 }
-function BarFns(e) {}
-function LineFns(e) {}
-function AreaFns(e) {}
-function ColumnFns(e) {}
+function PieFns(e) {
+  if ($("#" + e.target.id).hasClass("form-group-body")) {
+    createImgChart(e, null, null, "pie");
+  }
+}
+function BarFns(e) {
+  if ($("#" + e.target.id).hasClass("form-group-body")) {
+    createImgChart(e, null, null, "bar");
+  }
+}
+function LineFns(e) {
+  if ($("#" + e.target.id).hasClass("form-group-body")) {
+    createImgChart(e, null, null, "line");
+  }
+}
+// function AreaFns(e) {
+//   if ($("#" + e.target.id).hasClass("form-group-body")) {
+//     createImgChart(e, null, null, "area");
+//   }
+// }
+function AreaSplineFns(e) {
+  if ($("#" + e.target.id).hasClass("form-group-body")) {
+    createImgChart(e, null, null, "areaspline");
+  }
+}
 
 function Group(e) {
   if ($("#" + e.target.id).hasClass("rowBtnGroup")) {
@@ -383,7 +434,7 @@ function drop(ev) {
           LineFns(ev);
           break;
         case 4:
-          AreaFns(ev);
+          AreaSplineFns(ev);
           break;
         case 5:
           Group(ev);

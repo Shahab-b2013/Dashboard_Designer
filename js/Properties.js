@@ -285,7 +285,7 @@ function CreateDiv3(elem, colNum) {
 }
 
 /*if div.child isEmpty then
-removeDiv & if groupDivid.lenght==1 removeDiv Disable
+removeDiv & if groupDivid.lenght==1 removeDiv Disablez
 */
 function removeDiv(elem) {
   const groupArr = groupDivId(elem);
