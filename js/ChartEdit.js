@@ -2,20 +2,24 @@ function chartEdit(e) {
   /*
   Get img
   */
+  let getchartType;
   let imgid = e.target.id.replaceAll("spanEdit", "");
-  //get base64 from img
-  // let bs64 = $("#" + imgid)
-  //   .attr("src")
-  //   .replaceAll("data:image/svg+xml;base64,", "");
-  // //new img
-  // let newImg = Base64.decode(bs64, false);
 
-  //parser new img because get id for getTypeChart
-  // let parser = new DOMParser();
-  // parser = parser.parseFromString(newImg, "text/xml");
-  // let docSvg = parser;
-  // let getTag = docSvg.getElementsByTagName("clipPath")[0];
-  // let getId = getTag.getAttribute("id");
+  //if img == default
+  if (e.target.id.indexOf("highchart") != -1) {
+    //get base64 from img
+    let bs64 = $("#" + imgid)
+      .attr("src")
+      .replaceAll("data:image/svg+xml;base64,", "");
+    //new img
+    let newImg = Base64.decode(bs64, false);
+    //parser new img because get id for getTypeChart
+    let docSvg = new DOMParser().parseFromString(newImg, "text/xml");
+    let getTag = docSvg.getElementsByClassName("highcharts-data-labels")[0];
+    getchartType = getTag.getAttribute("class").split(" ")[2].slice(11, -7);
+  } else {
+    getchartType = $("#" + e.target.id).attr("type");
+  }
 
   //create modal form
   FormConstractor("85%", "geContent");
@@ -120,7 +124,6 @@ function chartEdit(e) {
 
     //update chart
     $("#" + imgid).attr("src", "data:image/svg+xml;base64," + svg_Base64);
-    localStorage.setItem("oldChart", svg_Base64);
     $("#myModal").remove();
   };
   rowbtn.appendChild(btnSubmit);
@@ -140,9 +143,8 @@ function chartEdit(e) {
   $("#" + hideRowBtn).css("display", "none");
 
   //=================================onload Chart==========================
-  //get chartType
-  let chartType = $("#" + e.target.id).attr("type");
-  showChart(chartType);
+
+  showChart(getchartType);
 }
 
 //===============================show Chart ============================
@@ -195,7 +197,7 @@ function showChart(chartType) {
     _series = [
       {
         name: _name,
-        data: [8,5,2,4,5,2,1],
+        data: [8, 5, 2, 4, 5, 2, 1],
       },
     ];
 

@@ -8,179 +8,10 @@ function lbl(value, forId) {
 
   $("#PanelPropId").append(item);
 }
-function br() {
-  $("#PanelPropId").append(document.createElement("br"));
-}
 
-function PropItemDefault(id) {
-  item = lbl("نوع آیتم", "lbl1");
-  item = createLbl("lbl", "lbl1");
-  item.innerHTML = "متن";
-  item.style.margin = "10px 36px 10px 0px";
-  item.style.display = "inline";
-  $("#PanelPropId").append(item);
-
-  br();
-
-  item = lbl("رنگ زمینه", "color1");
-  item = createInput("color", "#ffffff", "color1");
-  item.setAttribute("id", "color1");
-  item.style.margin = "10px 25px 10px 0px";
-  // item.addEventListener("click", () => {
-  //   document.getElementById(e.target.id).style.backgroundColor = $(
-  //     "#" + "color" + index
-  //   ).val();
-  // });
-  $("#PanelPropId").append(item);
-
-  br();
-
-  item = lbl("رنگ حاشیه", "color2");
-  item = createInput("color", "#ffffff", "color2");
-  item.setAttribute("id", "color1");
-  item.style.margin = "10px 17px 10px 0px";
-  $("#PanelPropId").append(item);
-
-  br();
-
-  item = lbl("نوع قلم", "font");
-  item = createInput("dropdown", ["IRANSansWeb", "Tahoma", "B Titr"], "font");
-  item.style.margin = "10px 39px 10px 0px";
-  $("#PanelPropId").append(item);
-
-  br();
-
-  item = lbl("سایز قلم", "fontSize");
-  item = createInput("number", 0, "fontSize");
-  item.style.margin = "10px 31px 10px 0px";
-  $("#PanelPropId").append(item);
-
-  br();
-
-  item = lbl("رنگ قلم", "fontColor");
-  item = createInput("color", "#000000", "fontColor");
-  item.style.margin = "10px 38px 10px 0px";
-  $("#PanelPropId").append(item);
-
-  br();
-}
-
-function TextboxProp(id) {
-  $("#PanelPropId").empty();
-  PropItemDefault(id);
-  item = lbl("نوع ورودی", "input");
-  item = createInput("dropdown", [
-    "تاریخ",
-    "ساعت",
-    "تلفن ثابت",
-    "موبایل",
-    "ایمیل",
-    "پسورد",
-  ]);
-  item.style.margin = "10px 8px 10px 0px";
-  $("#PanelPropId").append(item);
-}
-
-function PasswordProp(id) {
-  $("#PanelPropId").empty();
-  PropItemDefault(id);
-  item = lbl("نوع ورودی", "input");
-  item = createInput("dropdown", [
-    "تاریخ",
-    "ساعت",
-    "تلفن ثابت",
-    "موبایل",
-    "ایمیل",
-    "پسورد",
-  ]);
-  item.style.margin = "10px 8px 10px 0px";
-  $("#PanelPropId").append(item);
-}
-
-function labelProp(id) {
-  $("#PanelPropId").empty();
-  //lbl
-  lbl("متن برچسب", "textlbl");
-  //textbox
-  item = document.createElement("input");
-  item.placeholder = "متن  برچسب را وارد نمایید...";
-  item.style.textAlign = "center";
-  item.style.backgroundColor = "#e8f0fe";
-  item.setAttribute("id", "textlbl");
-  item.addEventListener("input", function (e) {
-    if ($(this).val().length == 0) {
-      $("#" + id).html(item.placeholder);
-      $("#" + id).css("color", "#ccc");
-    } else {
-      $("#" + id).html(e.target.value);
-      if ($("#" + id).hasClass("divHeader")) {
-        $("#" + id).css("color", "#fff");
-      } else {
-        $("#" + id).css("color", "#000");
-      }
-    }
-  });
-  $("#PanelPropId").append(item);
-  br();
-}
-
-function CheckboxProp(id) {
-  $("#PanelPropId").empty();
-
-  item = lbl("متن انتخابی", "checklbl");
-  item = document.createElement("input");
-  item.placeholder = "متن  انتخابی را وارد نمایید...";
-  item.style.width = "11rem";
-  item.style.resize = "horizontal";
-  item.style.height = "20px";
-  item.style.fontSize = "1.2rem";
-  item.style.margin = "0px 5px 10px 0px";
-  item.setAttribute("id", "checklbl");
-  $("#PanelPropId").append(item);
-  br();
-  PropItemDefault(id);
-}
-
-function DropdownProp(id) {
-  $("#PanelPropId").empty();
-  PropItemDefault(id);
-
-  //create opt
-  item = lbl("افزودن لیست", "droplbl");
-  // item = $("#selectAfertDrag");
-  item = createInput("dropdown", ["item1", "item2"], "font");
-  item.style.margin = "10px 8px 10px 0px";
-  $("#PanelPropId").append(item);
-}
-
-function RadioProp(id) {
-  $("#PanelPropId").empty();
-  PropItemDefault(e);
-}
 function GroupProp(elem) {
   //label
   $("#PanelPropId").empty();
-  lbl("عنوان گروه", "textlbl");
-  item = document.createElement("input");
-  item.placeholder = "متن  عنوان را وارد نمایید...";
-  item.setAttribute("id", "textlbl");
-  item.style.textAlign = "center";
-  let parentId = elem.parentNode.parentNode.id;
-  let id = parentId.replace("form-group-", "group-info-");
-  item.value = $("#" + id)
-    .find("h4.group-title")
-    .text();
-  item.addEventListener("input", function (e) {
-    if ($(this).val().length == 0) {
-      $("#" + id).html("متن  عنوان را وارد نمایید...");
-      $("#" + id).css("color", "#ccc");
-    } else {
-      $("#" + id).html(e.target.value);
-      $("#" + id).css("color", "#000");
-    }
-  });
-  $("#PanelPropId").append(item);
-  br();
 
   //Set Column
   item = lbl("تعداد چارت ", "colId");
@@ -312,3 +143,7 @@ function groupDivId(elem) {
   }
   return [...new Set(groupDivIdArray)];
 }
+
+
+
+//=======================prop 2================================

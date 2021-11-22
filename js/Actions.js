@@ -25,214 +25,7 @@ function createLbl(className, id) {
   return elt;
 }
 
-//====================================================================RigthPanel============================================================
-function CreatePanel() {
-  let RightPanel = createDiv("col-lg-2", "RightPanel");
-  $("#rowId").append(RightPanel);
 
-  //FildsPanel Header
-  let panelHeader = document.createElement("div");
-  panelHeader.className = "divHeader";
-  panelHeader.innerHTML = "نمودار ها";
-  panelHeader.style.background = "linear-gradient(#61892f99,#527428)";
-  panelHeader.setAttribute("id", "rightPanelID");
-  RightPanel.appendChild(panelHeader);
-
-  //FildsPanel
-  let FildsPanel = createDiv("", "PanelId");
-  RightPanel.append(FildsPanel);
-
-  //get imgArray in Img.js
-  //inset img to panel
-  imgArray.map((value, index) => {
-    //item
-    const item = document.createElement("IMG");
-    item.setAttribute("src", "data:image/png;base64," + value);
-    item.className = "noDrop";
-    item.setAttribute("draggable", true);
-    item.setAttribute("id", index);
-    item.setAttribute("width", "45");
-    item.setAttribute("height", "45");
-    item.addEventListener("dragstart", (ev) => drag(ev));
-    item.addEventListener("mousedown", () => (item.style.cursor = "grabbing"));
-    item.addEventListener("mouseup", () => (item.style.cursor = "grab"));
-    item.addEventListener("mouseover", () => (item.style.cursor = "grab"));
-    item.style.alignSelf = "center";
-    item.style.justifySelf = "center";
-    item.style.marginTop = "12px";
-    FildsPanel.appendChild(item);
-
-    //label
-    const lbl = document.createElement("label");
-    lbl.setAttribute("id", "lbl" + index);
-
-    if (index == 0) {
-      lbl.innerHTML = " ستونی ";
-      item.style.gridColumn = "1";
-      item.style.gridRow = "1";
-      lbl.style.gridColumn = "2";
-      lbl.style.gridRow = "1";
-      item.setAttribute("width", "45");
-      item.setAttribute("height", "45");
-    } else if (index == 1) {
-      item.style.gridColumn = "3";
-      item.style.gridRow = "1";
-      lbl.innerHTML = " دایره ای";
-      lbl.style.gridColumn = "4";
-      lbl.style.gridRow = "1";
-      item.setAttribute("width", "45");
-      item.setAttribute("height", "45");
-    } else if (index == 2) {
-      item.style.gridColumn = "1";
-      item.style.gridRow = "2";
-      lbl.innerHTML = " میله ای";
-      lbl.style.gridColumn = "2";
-      lbl.style.gridRow = "2";
-      item.setAttribute("width", "45");
-      item.setAttribute("height", "45");
-    } else if (index == 3) {
-      item.style.gridColumn = "3";
-      item.style.gridRow = "2";
-      lbl.innerHTML = " خطی";
-      lbl.style.gridColumn = "4";
-      lbl.style.gridRow = "2";
-      item.setAttribute("width", "50");
-      item.setAttribute("height", "40");
-    }
-    // else if (index == 4) {
-    //   item.style.gridColumn = "1";
-    //   item.style.gridRow = "3";
-    //   lbl.innerHTML = " مساحت";
-    //   lbl.style.gridColumn = "2";
-    //   lbl.style.gridRow = "3";
-    //   item.setAttribute("width", "50");
-    //   item.setAttribute("height", "50");
-    // }
-    else if (index == 4) {
-      item.style.gridColumn = "1";
-      item.style.gridRow = "3";
-      lbl.innerHTML = "مساحت خطی";
-      lbl.style.gridColumn = "2";
-      lbl.style.gridRow = "3";
-      item.setAttribute("width", "60");
-      item.setAttribute("height", "45");
-    }
-    else if (index == 5) {
-      item.style.gridColumn = "3";
-      item.style.gridRow = "3";
-      lbl.innerHTML = "گروه";
-      lbl.style.gridColumn = "4";
-      lbl.style.gridRow = "3";
-      item.setAttribute("width", "50");
-      item.setAttribute("height", "50");
-    }
-    lbl.style.marginTop = "27px";
-    lbl.style.marginRight = "0px";
-    lbl.className = "lbl";
-    FildsPanel.appendChild(lbl);
-  });
-
-  //PanelProp Header
-  let PanelPropHeader = document.createElement("div");
-  PanelPropHeader.className = "divHeader";
-  PanelPropHeader.innerHTML = "تنظیمات ";
-  PanelPropHeader.style.gridRow = "1";
-  RightPanel.appendChild(PanelPropHeader);
-
-  //Properties
-  let PropPanel = createDiv("", "PanelPropId");
-  RightPanel.appendChild(PropPanel);
-
-  //PanelProp2 Header
-  let PanelProp2Header = document.createElement("div");
-  PanelProp2Header.className = "divHeader";
-  PanelProp2Header.innerHTML = "تنظیمات2 ";
-  PanelProp2Header.style.gridRow = "1";
-  RightPanel.appendChild(PanelProp2Header);
-
-  //Properties2
-  let PropPanel2 = createDiv("", "PanelPropId2");
-  RightPanel.appendChild(PropPanel2);
-}
-function createInput(type, opt, id) {
-  let input;
-  if (type == "dropdown") {
-    input = document.createElement("select");
-    input.style.width = "120px";
-    input.style.fontSize = "14px";
-    input.style.height = "25px";
-    input.style.fontFamily = "Tahoma";
-    opt.map((value) => {
-      let options = document.createElement("option");
-      options.innerText = value;
-      input.appendChild(options);
-    });
-  } else {
-    input = document.createElement("input");
-    input.type = type;
-    input.value = opt;
-  }
-  input.setAttribute("id", id);
-  input.style.alignSelf = "center";
-  input.style.justifySelf = "right";
-  input.style.marginBottom = "5px";
-  input.style.cursor = "pointer";
-  return input;
-}
-
-//========================================================================================content=================================================================================
-
-function lblContent(value, id) {
-  let lblContent = document.createElement("label");
-  lblContent.setAttribute("id", id);
-  lblContent.innerHTML = value;
-  lblContent.setAttribute("draggable", true);
-  lblContent.addEventListener("dragstart", (ev) => drag(ev));
-  return lblContent;
-}
-
-function rowContent(ev) {
-  //row content
-
-  let id = 0;
-  if ($("#" + ev.target.id).children().length == 0) {
-    id = ev.target.id.replace("form-group-body-", "");
-    id = +id.replace("-0", "") + 10;
-    id = "form-group-" + id;
-  } else {
-    id = $("#" + ev.target.id)
-      .children()
-      .last()[0].id;
-    id = id.replace("form-group-", "");
-
-    id = id.replace("-rep", "");
-    id = +id + 10;
-    id = "form-group-" + id;
-  }
-
-  let row = document.createElement("div");
-  row.className = "form-group noDrop";
-  row.setAttribute("id", id);
-  row.addEventListener("dragover", (event) => allowDrop(event));
-  row.setAttribute("draggable", true);
-  row.setAttribute("dragstart", "drag(event)");
-  $("#" + ev.target.id).append(row);
-
-  //lbl
-  const IdTransfer = +ev.dataTransfer.getData("text");
-  if (IdTransfer != 3 && IdTransfer != 5) {
-    let lblcontentid = "lblcontent" + createID();
-    let lblcontent = lblContent("متن", lblcontentid);
-    lblcontent.className = "form-item-lbl noDrop";
-    lblcontent.addEventListener("dblclick", (ev) => labelProp(ev.target.id));
-    row.appendChild(lblcontent);
-  }
-
-  //br
-  const br = document.createElement("br");
-  row.appendChild(br);
-  return id;
-}
 
 //==========================================================================================Action Items =========================================================================
 // function TextboxFns(ev) {
@@ -309,13 +102,12 @@ function createImgChart(e, parentID, formItem, type) {
   let ID = formItem ? formItem.id : idChart(e);
   function idChart(e) {
     let defaultId = e.target.id.replaceAll("form-group-body-", "");
-    // defaultId = defaultId.slice(0, -2);
     return defaultId;
   }
   let chartType = formItem ? formItem.type : type;
   let parent = parentID ? parentID : e.target.id;
   let img =
-    '<img class="fit-image noDrop"  onmouseenter="rowbtnOn(event)" onmouseleave="rowbtnOff(event)" style="padding-left:10px;border:1px solid #ccc;border-radius:10px"   src="data:image/svg+xml;base64,' +
+    '<img class="fit-image noDrop" draggable="true" ondragstart = "dragstart(event)" ondrop="dropimg(event)" ondragover="event.preventDefault()" onmouseenter = "rowbtnOn(event)" onmouseleave = "rowbtnOff(event)" style = "padding-left:10px;border:1px solid #ccc;border-radius:10px;cursor:grab"  src = "data:image/svg+xml;base64,' +
     style +
     '" id="' +
     ID +
@@ -333,6 +125,25 @@ function createImgChart(e, parentID, formItem, type) {
     .append(img)
     .css("border", "");
 }
+
+//swaping img
+function dropimg(e) {
+  e.preventDefault();
+  let temp;
+  let oneElem = $("#" + e.dataTransfer.getData("text"));
+  let twoElem = $("#" + e.target.id);
+
+  //swap src
+  temp = oneElem.attr("src");
+  oneElem.attr("src", twoElem.attr("src"));
+  twoElem.attr("src", temp);
+}
+
+function dragstart(e) {
+  e.dataTransfer.setData("text", e.target.id);
+}
+
+
 
 function ColumnFns(e) {
   if ($("#" + e.target.id).hasClass("form-group-body")) {
@@ -354,11 +165,7 @@ function LineFns(e) {
     createImgChart(e, null, null, "line");
   }
 }
-// function AreaFns(e) {
-//   if ($("#" + e.target.id).hasClass("form-group-body")) {
-//     createImgChart(e, null, null, "area");
-//   }
-// }
+
 function AreaSplineFns(e) {
   if ($("#" + e.target.id).hasClass("form-group-body")) {
     createImgChart(e, null, null, "areaspline");
@@ -416,52 +223,52 @@ function drop(ev) {
   if (ev.target.id) {
     $("#" + ev.target.id).html(""); //delete placeholder div
     if (!$("#" + ev.target.id).hasClass("noDrop")) {
-      //get senderId and check number or string for switch
-      let dataId = ev.dataTransfer.getData("text");
-      dataId = dataId.length < 3 ? +dataId : dataId;
+    //get senderId and check number or string for switch
+    let dataId = ev.dataTransfer.getData("text");
+    dataId = dataId.length < 3 ? +dataId : dataId;
 
-      switch (dataId) {
-        case 0:
-          ColumnFns(ev);
-          break;
-        case 1:
-          PieFns(ev);
-          break;
-        case 2:
-          BarFns(ev);
-          break;
-        case 3:
-          LineFns(ev);
-          break;
-        case 4:
-          AreaSplineFns(ev);
-          break;
-        case 5:
-          Group(ev);
-          break;
-        default:
-          //drop
-          ev.preventDefault();
-          $("#" + ev.target.id).append(document.getElementById(dataId));
-          break;
-      }
+    switch (dataId) {
+      case 0:
+        ColumnFns(ev);
+        break;
+      case 1:
+        PieFns(ev);
+        break;
+      case 2:
+        BarFns(ev);
+        break;
+      case 3:
+        LineFns(ev);
+        break;
+      case 4:
+        AreaSplineFns(ev);
+        break;
+      case 5:
+        Group(ev);
+        break;
+      default:
+        //drop
+        ev.preventDefault();
+        $("#" + ev.target.id).append(document.getElementById(dataId));
+        break;
+    }
     }
   }
 }
 function allowDrop(e) {
   if (e.target.id) {
     if (!$("#" + e.target.id).hasClass("noDrop")) {
-      if ($("#" + e.target.id).children().length == 0) {
-        $("#" + e.target.id).css("border", "1px solid #ccc");
-        $("#" + e.target.id).css("border-radius", "10px");
-        if ($("#" + e.target.id).hasClass("form-group-body")) {
-          $("#" + e.target.id).css("color", "#ccc");
-          $("#" + e.target.id).css("font-size", "22px");
-          $("#" + e.target.id).css("font-style", "italic");
-          $("#" + e.target.id).html("&#10;&#10;&#10;&#10;اینجا رها کنید ...");
-        }
-        e.preventDefault();
+    if ($("#" + e.target.id).children().length == 0) {
+      $("#" + e.target.id).css("border", "1px solid #ccc");
+      $("#" + e.target.id).css("border-radius", "10px");
+      if ($("#" + e.target.id).hasClass("form-group-body")) {
+        $("#" + e.target.id).css("color", "#ccc");
+        $("#" + e.target.id).css("font-size", "22px");
+        $("#" + e.target.id).css("font-style", "italic");
+        $("#" + e.target.id).html("&#10;&#10;&#10;&#10;اینجا رها کنید ...");
       }
+      e.preventDefault();
+    }
     }
   }
 }
@@ -576,3 +383,4 @@ function FormConstractor(width, parent) {
 
   $("#chartModal").css("width", width);
 }
+
