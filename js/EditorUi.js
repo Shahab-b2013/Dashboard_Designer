@@ -26,7 +26,6 @@ function createDivs() {
     let panelHeader = document.createElement("div");
     panelHeader.className = "divHeader";
     panelHeader.innerHTML = "نمودار ها";
-    panelHeader.style.background = "linear-gradient(#61892f99,#527428)";
     panelHeader.setAttribute("id", "rightPanelID");
     RightPanel.appendChild(panelHeader);
 
@@ -34,11 +33,11 @@ function createDivs() {
     let FildsPanel = createDiv("", "PanelId");
     RightPanel.append(FildsPanel);
 
-    //get imgArray in Img.js
+    //get imgArray from Img.js
     //inset img to panel
     imgArray.map((value, index) => {
       //item
-      const item = document.createElement("IMG");
+      const item = document.createElement("img");
       item.setAttribute("src", "data:image/png;base64," + value);
       item.className = "noDrop";
       item.setAttribute("draggable", true);
@@ -104,74 +103,90 @@ function createDivs() {
       } else if (index == 5) {
         item.style.gridColumn = "3";
         item.style.gridRow = "3";
-        lbl.innerHTML = "گروه";
+        lbl.innerHTML = "سطر";
         lbl.style.gridColumn = "4";
         lbl.style.gridRow = "3";
         item.setAttribute("width", "50");
-        item.setAttribute("height", "50");
+        item.setAttribute("height", "60");
       }
-      lbl.style.marginTop = "27px";
-      lbl.style.marginRight = "0px";
+      lbl.style.marginTop = "20px";
+      lbl.style.marginRight = "5px";
       lbl.className = "lbl";
       FildsPanel.appendChild(lbl);
     });
 
-    //PanelProp Header
-    let PanelPropHeader = document.createElement("div");
-    PanelPropHeader.className = "divHeader";
-    PanelPropHeader.innerHTML = "تنظیمات ";
-    PanelPropHeader.style.gridRow = "1";
-    RightPanel.appendChild(PanelPropHeader);
+    // //PanelProp Header
+    // let PanelPropHeader = document.createElement("div");
+    // PanelPropHeader.className = "divHeader";
+    // PanelPropHeader.innerHTML = "تنظیمات ";
+    // PanelPropHeader.style.gridRow = "1";
+    // RightPanel.appendChild(PanelPropHeader);
 
-    //Properties
-    let PropPanel = createDiv("", "PanelPropId");
-    RightPanel.appendChild(PropPanel);
+    // //Properties
+    // let PropPanel = createDiv("", "PanelPropId");
+    // RightPanel.appendChild(PropPanel);
 
-    //PanelProp2 Header
-    let PanelProp2Header = document.createElement("div");
-    PanelProp2Header.className = "divHeader";
-    PanelProp2Header.innerHTML = "ابزار";
-    PanelProp2Header.style.gridRow = "1";
-    RightPanel.appendChild(PanelProp2Header);
+    //Tools Header
+    let ToolsHeader = document.createElement("div");
+    ToolsHeader.className = "divHeader";
+    ToolsHeader.innerHTML = "ابزار";
+    ToolsHeader.style.gridRow = "1";
+    RightPanel.appendChild(ToolsHeader);
 
     //Properties2
-    let PropPanel2 = createDiv("", "PanelPropId2");
-    RightPanel.appendChild(PropPanel2);
+    let ToolsProp = createDiv("", "ToolsProp");
+    RightPanel.appendChild(ToolsProp);
 
-    let filterIcon = document.createElement("img");
-    filterIcon.className = "imgProp2";
-    filterIcon.setAttribute("src", "data:image/png;base64," + imgFilter);
-    filterIcon.style.gridColumn = "1";
-    filterIcon.style.gridRow = "1";
-    filterIcon.setAttribute("width", "45");
-    filterIcon.setAttribute("height", "45");
-    PropPanel2.appendChild(filterIcon);
+    for (let i = 0; i < 2; i++) {
+      //Tools Icon
+      let ToolsIcon = document.createElement("img");
+      ToolsIcon.className = "ToolsIcon";
+      ToolsIcon.setAttribute("width", "45");
+      ToolsIcon.setAttribute("height", "45");
+      ToolsIcon.setAttribute("draggable", false);
+      //ToolsLbl
+      let ToolsLbl = document.createElement("label");
+      ToolsLbl.className = "ToolsLbl";
 
-    let accessesIcon = document.createElement("img");
-    accessesIcon.className = "imgProp2";
-    accessesIcon.setAttribute("src", "data:image/png;base64," + imgAccesses);
-    accessesIcon.style.gridColumn = "1";
-    accessesIcon.style.gridRow = "2";
-    accessesIcon.setAttribute("width", "45");
-    accessesIcon.setAttribute("height", "45");
-    PropPanel2.appendChild(accessesIcon);
+      if (i == 0) {
+        ToolsIcon.setAttribute("src", "data:image/png;base64," + imgFilter);
+        ToolsIcon.style.gridColumn = "1";
+        ToolsIcon.style.gridRow = "1";
 
-    let lblfilter = document.createElement("label");
-    lblfilter.innerHTML = "filters";
-    lblfilter.style.gridColumn = "2";
-    lblfilter.style.gridRow = "1";
-    lblfilter.className = "lblProp2";
-    lblfilter.onclick = (e) => Filters(e);
-    PropPanel2.appendChild(lblfilter);
-    
-    
-    let lblAccesses = document.createElement("label");
-    lblAccesses.innerHTML = "accesses";
-    lblAccesses.style.gridColumn = "2";
-    lblAccesses.style.gridRow = "2";
-    lblAccesses.className = "lblProp2";
-    lblAccesses.onclick =(e)=> Accesses(e);
-    PropPanel2.appendChild(lblAccesses);
+        ToolsLbl.innerHTML = "filters";
+        ToolsLbl.style.gridColumn = "2";
+        ToolsLbl.style.gridRow = "1";
+        ToolsLbl.onclick = (e) => Filters(e);
+      } else if (i == 1) {
+        ToolsIcon.setAttribute("src", "data:image/png;base64," + imgAccesses);
+        ToolsIcon.style.gridColumn = "1";
+        ToolsIcon.style.gridRow = "2";
+
+        ToolsLbl.innerHTML = "accesses";
+        ToolsLbl.style.gridColumn = "2";
+        ToolsLbl.style.gridRow = "2";
+        ToolsLbl.onclick = (e) => Accesses(e);
+      }
+
+      ToolsProp.appendChild(ToolsIcon);
+      ToolsProp.appendChild(ToolsLbl);
+
+      // let lblfilter = document.createElement("label");
+      // lblfilter.innerHTML = "filters";
+      // lblfilter.style.gridColumn = "2";
+      // lblfilter.style.gridRow = "1";
+      // lblfilter.className = "lblProp2";
+      // lblfilter.onclick = (e) => Filters(e);
+      // PropPanel2.appendChild(lblfilter);
+
+      // let lblAccesses = document.createElement("label");
+      // lblAccesses.innerHTML = "accesses";
+      // lblAccesses.style.gridColumn = "2";
+      // lblAccesses.style.gridRow = "2";
+      // lblAccesses.className = "lblProp2";
+      // lblAccesses.onclick = (e) => Accesses(e);
+      // PropPanel2.appendChild(lblAccesses);
+    }
   }
 
   //Content create form
@@ -278,4 +293,29 @@ function rowContent(ev) {
   const br = document.createElement("br");
   row.appendChild(br);
   return id;
+}
+
+//groupbtn
+function Group_Btn(GroupId) {
+  return (
+    '<div id="' +
+    GroupId +
+    '-rowBtnGroup" class="row  container-fluid rowBtnGroup" style="margin-left:-30px; margin-right:30px;justify-content: left;margin-bottom:-15px" ondrop="drop(event)">' +
+    '<span style="" class="delete btn btn-light glyphicon glyphicon-trash"  title="حذف سطر" onclick="DeleteGroup(this);" id=' +
+    GroupId +
+    "DeleteGroup></span>" +
+    '<span style="" class="btn btn-light glyphicon glyphicon-cog"  title="تعداد ستون ها" onclick="GroupSplit(this);" id=' +
+    GroupId +
+    "EditGroup></span>" +
+    '<span style="display:none" id="slider' +
+    GroupId +
+    '" class="slider"><input type="range" id="myslider' +
+    GroupId +
+    '" class="" min="0" max="3" step="1" value="0" oninput="volume(this)" onmouseout="hideSlider(this)" style="cursor:pointer"/></span>' +
+    '<span style="width:35px;padding:5px" class="btn btn-light glyphicon glyphicon-arrow-up" title="انتقال سطر به بالا" onclick="GroupMoveUp(event);" id=' +
+    GroupId +
+    'moveup></span><span style="width:35px;padding:5px;" class="btn btn-light glyphicon glyphicon-arrow-down"  data-placement="top" title="انتقال سطر به پایین" onclick="GroupMoveDown(event)" id=' +
+    GroupId +
+    "movedown></span ></div>"
+  );
 }

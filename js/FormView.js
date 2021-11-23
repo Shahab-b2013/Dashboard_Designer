@@ -185,7 +185,7 @@
           content +=
             '<div class="' +
             columnWidth +
-            ' col-sm-12  col-xs-12 form-group-body"  ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
+            ' col-sm-12  col-xs-12 form-group-body" ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
             formGroup.RowID +
             '-0" style="height:370px;margin-bottom:10px;white-space:pre-wrap;text-align:center;"></div>';
         }
@@ -282,38 +282,4 @@
   });
 }
 
-function rowbtnOn(e) {
-  $("#rowbtn-img-" + e.target.id).css("display", "block");
-}
-function rowbtnOn2(e) {
-  $("#" + e.target.id).css("display", "block");
-}
-function rowbtnOff(e) {
-  $("#rowbtn-img-" + e.target.id).css("display", "none");
-}
-function chartDelete(e) {
-  // remove popup
-  let parent = $("#" + e.target.id).parent()[0].id;
-  let div =
-    '<div id="myModal" class="modal" style="">' +
-    '<div id="chartModal" class="" style="font-size:16px;color:#000;font-style:normal;position: relative;width:30%;top:30%;background-color:#fff; margin: auto; overflow: auto; border: 1px solid #ccc; border-radius: 4px;">' +
-    '<div id="contentM" class="row col-lg-12" style="padding: 10px 16px 0px 0px;margin: 20px 0px 40px 0px;">آیا از حذف ای چارت جاری مطمعن هستید ؟</div><hr style="margin:0px;width:100%;">' +
-    '<div class="row" style="padding:16px;margin:0px"><span id="del" class="btn btn-danger"  onclick="del()"> حذف</span>' +
-    '<span id="closed" class="btn btn-secondary" style="width:60px;margin-Right:10px;" onclick="closed()"> لغو</span></div></div></div>';
-  $("#" + parent).append(div);
-  // Get the modal
-  $("#myModal").css("display", "block");
-}
-function del() {
-  let parent = $("#myModal").parent()[0].id;
 
-  let imgid = parent.replaceAll("rowbtn-img-", "");
-  $("#" + imgid).remove();
-
-  //rowbtn remove
-  let rowbtn = "rowbtn-img-" + imgid;
-  $("#" + rowbtn).remove();
-}
-function closed() {
-  $("#myModal").css("display", "none");
-}

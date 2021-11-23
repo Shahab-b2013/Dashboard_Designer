@@ -22,7 +22,7 @@ function chartEdit(e) {
   }
 
   //create modal form
-  FormConstractor("85%", "geContent");
+  ChartConstractor("85%", "geContent");
   let div1 =
     '<div id="div1" class="row col-lg-3 col-md-8 col-xs-12" style="border-radius:4px; border:1px solid #ccc; padding:10px 5px 10px 25px; margin-left:10px"></div>';
   $("#contentM").append(div1);
