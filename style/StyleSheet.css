@@ -15,7 +15,7 @@ body {
   width: 100%;
   color: white;
   font: 19px var(--mainFont);
-  padding-right: 20px;
+  padding: 10px;
 }
 /**/
 #geToolbar {
@@ -46,12 +46,15 @@ body {
 #PanelId {
   overflow: auto;
   display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: auto;
+  grid-template:
+    "a a a a" 15px
+    "b b b b" 60px
+    "c c c c" 80px
+    "d d d d " 80px;
+  grid-template-columns: 60px auto auto auto;
   border: 1px solid #ccc;
   margin: 5px 5px 0px 5px;
   padding: 0px 10px 10px 10px;
-  height: 300px;
 }
 ::placeholder {
   font: 10px var(--mainFont);
@@ -74,12 +77,14 @@ body {
 
 #geFooter {
   background-color: var(--mainbackground);
-  font: 1rem var(--mainFont);
+  font: 13px Tahoma;
   position: fixed;
   left: 0px;
   bottom: 0px;
   height: 40px;
+  padding-top: 10px;
   border: 1px solid #ccc;
+  color: #72afd2;
 }
 
 .divHeader {
@@ -89,8 +94,7 @@ body {
   text-align: center;
   align-self: center;
   justify-self: center;
-  background: linear-gradient(#0091ea, #2e4681);
-  background-color: #2e4681;
+  background-color: #0091ea;
   color: white;
   font: 16px var(--mainFont);
   border-radius: 4px;
@@ -171,7 +175,7 @@ body {
   overflow: auto;
 }
 
-input[type=number] {
+input[type="number"] {
   width: 80px;
   height: 25px;
   font: 14px var(--mainFont);
@@ -291,123 +295,50 @@ br {
   overflow: auto;
   display: grid;
   grid-template:
-    "a a a" 60px
-    "c c c" 60px;
+    "a a a a" 15px
+    "c c c c" 60px
+    "c c c c" 70px;
+  grid-template-columns: 60px auto auto auto;
   border: 1px solid #ccc;
-  margin: 5px 5px 10px 5px;
   padding: 0px 10px 10px 10px;
-  height: 427px;
+  margin-top: 5px;
+  height: 480px;
 }
 .ToolsIcon {
-  align-self: right;
   justify-self: right;
-  margin: 10px;
+  margin-top: 10px;
 }
 .ToolsLbl {
-  align-self: center;
   justify-self: right;
   cursor: pointer;
-  margin: 10px;
 }
 
- .slider {
-  
-  /* top: 40%; */
-  /* transform: rotate(90deg);*/
-  width: 0px; 
-  
-  
-height: 20px;
- }  
-input[type=range] {
-  position: relative;
- 
-  
-  top: -75px;
-  right: -90px;
-  
-  transform: rotate(90deg)
+.vol {
+  width: 0px;
 }
-input[type=range]:focus {
+.slider {
+  position: relative;
+  width: 110px;
+  border: 1px solid transparent;
+  top: -75px;
+  right: -70px;
+  transform: rotate(90deg);
+  background-color: transparent;
+  height: 40px;
+}
+input[type="range"] {
+  color: #aaaaaa;
+  width: 100px;
+  margin: 0px;
+}
+input[type="range"]:focus {
   outline: none;
 }
-input[type=range]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 14px;
-  cursor: pointer;
-  animate: 0.2s;
-  box-shadow: 0px 0px 0px #000000;
-  background: #B6B6B6;
-  border-radius: 25px;
-  border: 1px solid #8A8A8A;
-}
-input[type=range]::-webkit-slider-thumb {
-  box-shadow: 1px 1px 1px #828282;
-  border: 1px solid #8A8A8A;
-  height: 18px;
-  width: 29px;
-  border-radius: 6px;
-  background: #DADADA;
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: -3px;
-}
-input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #B6B6B6;
-}
-input[type=range]::-moz-range-track {
-  width: 100%;
-  height: 14px;
-  cursor: pointer;
-  animate: 0.2s;
-  box-shadow: 0px 0px 0px #000000;
-  background: #B6B6B6;
-  border-radius: 25px;
-  border: 1px solid #8A8A8A;
-}
-input[type=range]::-moz-range-thumb {
-  box-shadow: 1px 1px 1px #828282;
-  border: 1px solid #8A8A8A;
-  height: 18px;
-  width: 29px;
-  border-radius: 6px;
-  background: #DADADA;
-  cursor: pointer;
-}
-input[type=range]::-ms-track {
-  width: 100%;
-  height: 14px;
-  cursor: pointer;
-  animate: 0.2s;
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
-}
-input[type=range]::-ms-fill-lower {
-  background: #B6B6B6;
-  border: 1px solid #8A8A8A;
-  border-radius: 50px;
-  box-shadow: 0px 0px 0px #000000;
-}
-input[type=range]::-ms-fill-upper {
-  background: #B6B6B6;
-  border: 1px solid #8A8A8A;
-  border-radius: 50px;
-  box-shadow: 0px 0px 0px #000000;
-}
-input[type=range]::-ms-thumb {
-  margin-top: 1px;
-  box-shadow: 1px 1px 1px #828282;
-  border: 1px solid #8A8A8A;
-  height: 18px;
-  width: 29px;
-  border-radius: 6px;
-  background: #DADADA;
-  cursor: pointer;
-}
-input[type=range]:focus::-ms-fill-lower {
-  background: #B6B6B6;
-}
-input[type=range]:focus::-ms-fill-upper {
-  background: #B6B6B6;
+.lblSlider {
+  position: relative;
+  font: 15px var(--mainFont);
+  margin: 0px;
+  top: -15px;
+  right: 5;
+  transform: rotate(-90deg);
 }

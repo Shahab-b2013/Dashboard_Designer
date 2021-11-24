@@ -173,7 +173,7 @@
           (formGroup.Visibility == "DefaultHidden" ? "display:none" : "") +
           '" id="form-group-' +
           formGroup.RowID +
-          '"  class="row form-group-box"  ondragleave="onMouseOut(event)">';
+          '" class="row form-group-box"  ondragleave="onMouseOut(event)">';
 
         var columnWidth = formGroup.ColumnWidth;
 
@@ -189,9 +189,9 @@
             formGroup.RowID +
             '-0" style="height:370px;margin-bottom:10px;white-space:pre-wrap;text-align:center;"></div>';
         }
-
+       
         if (formGroup.ColumnLayout == "TwoColumn") {
-          columnWidth = "col-md-5";
+          columnWidth = "col-md-6";
 
           content +=
             '<div class="' +

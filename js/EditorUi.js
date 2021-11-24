@@ -25,7 +25,7 @@ function createDivs() {
     //FildsPanel Header
     let panelHeader = document.createElement("div");
     panelHeader.className = "divHeader";
-    panelHeader.innerHTML = "نمودار ها";
+    panelHeader.innerHTML = "نمودار";
     panelHeader.setAttribute("id", "rightPanelID");
     RightPanel.appendChild(panelHeader);
 
@@ -63,49 +63,49 @@ function createDivs() {
       if (index == 0) {
         lbl.innerHTML = " ستونی ";
         item.style.gridColumn = "1";
-        item.style.gridRow = "1";
+        item.style.gridRow = "2";
         lbl.style.gridColumn = "2";
-        lbl.style.gridRow = "1";
+        lbl.style.gridRow = "2";
         item.setAttribute("width", "45");
         item.setAttribute("height", "45");
       } else if (index == 1) {
         item.style.gridColumn = "3";
-        item.style.gridRow = "1";
+        item.style.gridRow = "2";
         lbl.innerHTML = " دایره ای";
         lbl.style.gridColumn = "4";
-        lbl.style.gridRow = "1";
+        lbl.style.gridRow = "2";
         item.setAttribute("width", "45");
         item.setAttribute("height", "45");
       } else if (index == 2) {
         item.style.gridColumn = "1";
-        item.style.gridRow = "2";
+        item.style.gridRow = "3";
         lbl.innerHTML = " میله ای";
         lbl.style.gridColumn = "2";
-        lbl.style.gridRow = "2";
+        lbl.style.gridRow = "3";
         item.setAttribute("width", "45");
         item.setAttribute("height", "45");
       } else if (index == 3) {
         item.style.gridColumn = "3";
-        item.style.gridRow = "2";
+        item.style.gridRow = "3";
         lbl.innerHTML = " خطی";
         lbl.style.gridColumn = "4";
-        lbl.style.gridRow = "2";
+        lbl.style.gridRow = "3";
         item.setAttribute("width", "50");
         item.setAttribute("height", "40");
       } else if (index == 4) {
         item.style.gridColumn = "1";
-        item.style.gridRow = "3";
+        item.style.gridRow = "4";
         lbl.innerHTML = "مساحت خطی";
         lbl.style.gridColumn = "2";
-        lbl.style.gridRow = "3";
+        lbl.style.gridRow = "4";
         item.setAttribute("width", "60");
         item.setAttribute("height", "45");
       } else if (index == 5) {
         item.style.gridColumn = "3";
-        item.style.gridRow = "3";
+        item.style.gridRow = "4";
         lbl.innerHTML = "سطر";
         lbl.style.gridColumn = "4";
-        lbl.style.gridRow = "3";
+        lbl.style.gridRow = "4";
         item.setAttribute("width", "50");
         item.setAttribute("height", "60");
       }
@@ -151,20 +151,22 @@ function createDivs() {
       if (i == 0) {
         ToolsIcon.setAttribute("src", "data:image/png;base64," + imgFilter);
         ToolsIcon.style.gridColumn = "1";
-        ToolsIcon.style.gridRow = "1";
+        ToolsIcon.style.gridRow = "2";
 
-        ToolsLbl.innerHTML = "filters";
+        ToolsLbl.className = "lbl";
+        ToolsLbl.innerHTML = "فیلتر داده ها";
         ToolsLbl.style.gridColumn = "2";
-        ToolsLbl.style.gridRow = "1";
+        ToolsLbl.style.gridRow = "2";
         ToolsLbl.onclick = (e) => Filters(e);
       } else if (i == 1) {
         ToolsIcon.setAttribute("src", "data:image/png;base64," + imgAccesses);
         ToolsIcon.style.gridColumn = "1";
-        ToolsIcon.style.gridRow = "2";
+        ToolsIcon.style.gridRow = "3";
 
-        ToolsLbl.innerHTML = "accesses";
+        ToolsLbl.className = "lbl";
+        ToolsLbl.innerHTML = "دسترسی ها";
         ToolsLbl.style.gridColumn = "2";
-        ToolsLbl.style.gridRow = "2";
+        ToolsLbl.style.gridRow = "3";
         ToolsLbl.onclick = (e) => Accesses(e);
       }
 
@@ -211,7 +213,7 @@ function createDivs() {
 
   //footer
   let Footer = createDiv("container-fluid", "geFooter");
-  Footer.innerHTML = "Footer";
+  Footer.innerHTML = "© كليه حقوق برای شرکت نرم افزاری امن پرداز محفوظ است.";
   Container.appendChild(Footer);
 
   FormView();
@@ -297,21 +299,25 @@ function rowContent(ev) {
 
 //groupbtn
 function Group_Btn(GroupId) {
+
   return (
     '<div id="' +
     GroupId +
-    '-rowBtnGroup" class="row  container-fluid rowBtnGroup" style="margin-left:-30px; margin-right:30px;justify-content: left;margin-bottom:-15px" ondrop="drop(event)">' +
+    '-rowBtnGroup" class="row  container-fluid rowBtnGroup " style="margin-left:0px; margin-right:30px;justify-content: left;margin-bottom:-15px"' +
+    ' ondrop="drop(event)" ondragover="allowDrop(event)">' +
     '<span style="" class="delete btn btn-light glyphicon glyphicon-trash"  title="حذف سطر" onclick="DeleteGroup(this);" id=' +
     GroupId +
     "DeleteGroup></span>" +
     '<span style="" class="btn btn-light glyphicon glyphicon-cog"  title="تعداد ستون ها" onclick="GroupSplit(this);" id=' +
     GroupId +
     "EditGroup></span>" +
-    '<span style="display:none" id="slider' +
+    '<span class="vol"><span style="display:none" id="slider' +
     GroupId +
     '" class="slider"><input type="range" id="myslider' +
     GroupId +
-    '" class="" min="0" max="3" step="1" value="0" oninput="volume(this)" onmouseout="hideSlider(this)" style="cursor:pointer"/></span>' +
+    '" class="" min="1" max="3" step="1" value="" oninput="volume(this)" onmouseout="hideSlider(this)" style="cursor:pointer"/><label class="lblSlider" id="lblSlider' +
+    GroupId +
+    '"></label></span></span>' +
     '<span style="width:35px;padding:5px" class="btn btn-light glyphicon glyphicon-arrow-up" title="انتقال سطر به بالا" onclick="GroupMoveUp(event);" id=' +
     GroupId +
     'moveup></span><span style="width:35px;padding:5px;" class="btn btn-light glyphicon glyphicon-arrow-down"  data-placement="top" title="انتقال سطر به پایین" onclick="GroupMoveDown(event)" id=' +

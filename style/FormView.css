@@ -2,18 +2,15 @@
 /* Release Ferdos.WebAppDesk 1.1.1.0*/
 
 .form-group-box {
-  margin: 20px 20px 20px 20px !important;
-  padding: 0px 20px 20px 15px !important;
+ padding-left: 0px;
+ padding-top: 20px;
+ padding-bottom: 25px;
   border-bottom: solid 1px #e6e9ed; /*@MainColor-B4*/
 }
 
-.form-group-box .group-info {
-  padding: 0px 20px 20px 20px !important;
-}
 
-.form-group-box .group-body {
-  padding: 0px 20px 0px 20px !important;
-}
+
+
 
 .form-group-box .group-title {
   font-family: "IRANSansWeb";

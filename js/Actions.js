@@ -223,7 +223,6 @@ function drop(ev) {
       //get senderId and check number or string for switch
       let dataId = ev.dataTransfer.getData("text");
       dataId = dataId.length < 3 ? +dataId : dataId;
-
       switch (dataId) {
         case 0:
           ColumnFns(ev);
@@ -285,7 +284,7 @@ function DeleteGroup(elem) {
         .eq(0)
         .children().length == 0
     ) {
-      $("#" + parentId).remove()
+      $("#" + parentId).remove();
     } else {
       alert("سطر مورد نظر حاوی یک چارت می باشد.");
     }
@@ -405,7 +404,7 @@ function chartDelete(e) {
     let parentID = $("#myModal").parent()[0].id;
     let imgid = parentID.replaceAll("rowbtn-img-", "");
     $("#" + imgid).remove();
- $("#myModal").remove();
+    $("#myModal").remove();
     //rowbtn remove
     let rowbtn = "rowbtn-img-" + imgid;
     $("#" + rowbtn).remove();
@@ -420,10 +419,25 @@ function closed() {
 
 function GroupSplit(elem) {
   let id = elem.id.replaceAll("EditGroup", "");
+  let group_Child_Length = +$("#form-group-" + id).children().length - 1;
+
+  $("#myslider" + id).attr("value", group_Child_Length);
+
   $("#slider" + id).css("display", "block");
 }
 
 function volume(elem) {
+  // console.log(elem.value)
+  // $("#myslider" + id).attr("value", elem.value);
+  const lblSliderId = elem.id.replaceAll("myslider", "lblSlider");
+  console.log(lblSliderId);
+  document.getElementById(lblSliderId).innerHTML = elem.value;
+  if (elem.value == 1) {
+    document.getElementById(lblSliderId).style.right = "5px";
+  }
+  if (elem.value == 2) $("#" + lblSliderId).css("right", "45px");
+   if (elem.value == 3) $("#" + lblSliderId).css("right", "85px");
+
   switch (+elem.value) {
     case 1:
       DivSplit_1(elem);
@@ -528,8 +542,8 @@ function removeDiv(elem) {
 function groupDivId(elem) {
   let groupDivIdArray = [];
   let parnetnodeID = $("#" + elem.id).hasClass("delete")
-    ? elem.parentNode.parentNode.id
-    : elem.parentNode.parentNode.parentNode.id;
+    ? elem.parentNode.parentNode.parentNode.id
+    : elem.parentNode.parentNode.parentNode.parentNode.id;
   parnetnodeID = document.getElementById(parnetnodeID);
   for (let q = 0; q < parnetnodeID.childNodes.length; q++) {
     if (parnetnodeID.childNodes[q].id) {
