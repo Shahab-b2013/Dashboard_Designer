@@ -24,11 +24,11 @@ function chartEdit(e) {
   //create modal form
   ChartConstractor("85%", "geContent");
   let div1 =
-    '<div id="div1" class="row col-lg-3 col-md-8 col-xs-12" style="border-radius:4px; border:1px solid #ccc; padding:10px 5px 10px 25px; margin-left:10px"></div>';
+    '<div id="div1" class="row col-lg-3 col-md-12 col-sm-12 " style=""></div>';
   $("#contentM").append(div1);
 
   let div2 =
-    '<div id="div2" class="col-lg-9 col-md-8 col-xs-12 " style="border-radius:4px;border:1px solid #ccc; padding:0px"><figure class="highcharts-figure">' +
+    '<div id="div2" class="col-lg-9 col-md-12 col-xs-12 " style="">' +
     '<div id="containers" style="margin:80px 0;"></div></figure></div>';
   $("#contentM").append(div2);
 
@@ -49,24 +49,24 @@ function chartEdit(e) {
     "StlyeColor",
     "version",
   ];
-  for (let i = 0; i < 14; i++) {
+  for (let i = 0; i < ArrLbl.length; i++) {
     let div1Items =
       '<div id="div1Items-' +
       i +
-      '" class=" col-lg-12 col-md-8 col-xs-12" style="margin:10px 0px 10px 0px;"></div>';
+      '" class=" col-lg-12 col-md-12 " style="margin:5px"></div>';
     $("#div1").append(div1Items);
 
     let lbl = document.createElement("label");
     lbl.innerText = ArrLbl[i] + ":";
-    lbl.className = "lbl";
-    lbl.style.float = "left";
-    lbl.style.margin = "2px 0px 0px 200px";
+    lbl.className = "lbl ";
+    // lbl.style.float = "left";
+    lbl.style.margin = "10px 0px 10px 10px";
     $("#div1Items-" + i).append(lbl);
 
     if (i == 2 || i == 6 || i == 7) {
       //dropDown
       let List = document.createElement("select");
-      List.className = "selectBox";
+      List.className = "selectBox ";
       List.setAttribute("id", "select-" + i);
       List.style.left = "0px";
       List.style.position = "absolute";
@@ -83,8 +83,11 @@ function chartEdit(e) {
     } else {
       //textBox
       let textBox = document.createElement("input");
+      textBox.type = "text";
       textBox.setAttribute("id", "text-" + i);
       textBox.style.border = "1px solid #ccc";
+      textBox.style.height = "30px";
+      textBox.style.width = "200px";
       textBox.style.left = "0px";
       textBox.style.position = "absolute";
       $("#div1Items-" + i).append(textBox);

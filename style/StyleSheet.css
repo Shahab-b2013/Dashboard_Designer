@@ -1,5 +1,6 @@
 ﻿html {
   scroll-behavior: smooth;
+  direction: rtl;
 }
 body {
   margin: 0px;
@@ -82,6 +83,7 @@ body {
   left: 0px;
   bottom: 0px;
   height: 40px;
+  width: 100%;
   padding-top: 10px;
   border: 1px solid #ccc;
   color: #72afd2;
@@ -198,21 +200,7 @@ br {
   margin: 20px;
 }
 
-#hider {
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  width: 1600px;
-  height: 2000px;
-  margin-top: -800px; /*set to a negative number 1/2 of your height*/
-  margin-left: -500px; /*set to a negative number 1/2 of your width*/
-  /*
-        z- index must be lower than pop up box
-       */
-  z-index: 99;
-  background-color: Black;
-  opacity: 0.6;
-}
+
 
 #popup_box {
   position: absolute;
@@ -255,17 +243,18 @@ br {
   padding-top: 100px; /* Location of the box */
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
+
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.3); /* Black w/ opacity */
+  
 }
 
 /* Modal Content */
 .modal-content {
   margin: auto;
   padding: 20px;
+  top: -40px;
   /* width: 80%; */
   background-color: #fff;
   overflow: auto;
@@ -315,30 +304,137 @@ br {
 
 .vol {
   width: 0px;
+  height: 0px;
 }
 .slider {
   position: relative;
   width: 110px;
   border: 1px solid transparent;
-  top: -75px;
-  right: -70px;
-  transform: rotate(90deg);
+  top: -65px;
+  right: 85px;
+  transform: rotate(-90deg);
   background-color: transparent;
   height: 40px;
 }
 input[type="range"] {
   color: #aaaaaa;
   width: 100px;
-  margin: 0px;
+  margin: 20px 0;
+  background-color: #ccc;
 }
-input[type="range"]:focus {
-  outline: none;
-}
+
 .lblSlider {
   position: relative;
   font: 15px var(--mainFont);
   margin: 0px;
-  top: -15px;
-  right: 5;
-  transform: rotate(-90deg);
+  top:-65px;
+  left: 0px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+  border-radius: 50%;
+  background-size: cover;
+  transform: rotate(90deg);
+}
+.form-group-body {
+  height: 390px;
+  margin-bottom: 10px;
+  white-space: pre-line;
+  text-align: center;
+}
+.rowBtnGroup {
+  margin: 5px 0px -5px 0px;
+  direction: ltr;
+  display: flex;
+  width: 100%;
+  padding-left: 5px;
+}
+.nav nav-tabs navbar-right {
+  float: right;
+}
+#div1 {
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 10px 5px 10px 25px;
+  margin-left: 10px;
+}
+#div2 {
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 0px;
+}
+.containerside {
+  color: black;
+  /* height: 100%;
+  width: 100%; */
+  direction: rtl;
+  background-color: #ffffff;
+}
+
+#Tab2 {
+  padding: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #e6e6e6;
+  direction: rtl;
+}
+
+#Tab1 {
+  padding: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #e6e6e6;
+  direction: rtl;
+  
+}
+
+.tabdiv {
+  overflow: hidden;
+  border-radius: 5px;
+  margin-bottom: 0px;
+  
+}
+.btnReset {
+  margin-top: 10px;
+  width: 80px;
+  height: 33px;
+  color: white;
+  border-radius: 0px;
+  border-color: #eea236;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  display: inline-block;
+  border: 1px solid transparent;
+  font-family: Tahoma;
+  /* float: right; */
+  background-color: #f0ad4e;
+}
+.form-group-box {
+  padding-left: 0px;
+  padding-top: 20px;
+  padding-bottom: 25px;
+  border-bottom: solid 1px #e6e9ed; /*@MainColor-B4*/
+}
+
+.form-group-box .group-title {
+  font-family: "IRANSansWeb";
+  font-size: 1.05rem;
+  color: #2a3f54;
+}
+
+.form-group-box .group-title small {
+  font-size: 14px;
+}
+
+.form-control {
+  border-color: #d2d6de !important;
+}
+
+.form-control:focus {
+  border-color: #506495 !important; /*@MainColor-A1*/
 }

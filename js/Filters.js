@@ -1,10 +1,13 @@
 function Filters(e) {
-  let div = document.createElement("div");
-  div.setAttribute("id", "builder-basic");
-  div.className = "containerside";
-  div.style.direction = "ltr";
-  this.container = div;
+  ChartConstractor('50%', "geContent");
+  let container = $("#chartModal");
 
+  container.addClass("containerside");
+  let div = createDiv("containerside", "builder-basic");
+
+  container.append(div);
+  $("#builder-basic").css("direction", "ltr");
+  //  container.css.direction = "ltr";
   setTimeout(QueryBuilder, 0);
   setTimeout(BtnSql, 0);
   setTimeout(BtnReset, 0);
@@ -14,6 +17,8 @@ function Filters(e) {
   function BtnReset() {
     let btn = document.createElement("button");
     btn.className = "btnReset";
+    btn.style.height = "34px";
+    btn.style.float = "right";
     btn.innerHTML = "شروع مجدد";
     div.appendChild(btn);
 
@@ -30,6 +35,8 @@ function Filters(e) {
     btn.className = "btn btn-primary";
     btn.style.borderTopLeftRadius = 0;
     btn.style.borderBottomLeftRadius = 0;
+    btn.style.float = "right";
+    btn.style.height = "34px";
     div.appendChild(btn);
 
     btn.onclick = function () {
@@ -48,7 +55,7 @@ function Filters(e) {
         sessionStorage.setItem("Filters", localData);
       }
 
-      editorUi.hideDialog();
+      $("#myModal").remove();
     };
   }
 
@@ -57,11 +64,12 @@ function Filters(e) {
     let btnExit = document.createElement("button");
     btnExit.className = "btn btn-light";
     btnExit.style.float = "right";
+    btnExit.style.height = "34px";
     btnExit.style.borderBottomRightRadius = "0px";
     btnExit.style.borderTopRightRadius = "0px";
     btnExit.innerText = "خروج";
     btnExit.onclick = function () {
-      editorUi.hideDialog();
+       $("#myModal").remove();
     };
     div.appendChild(btnExit);
   }

@@ -115,17 +115,6 @@ function createDivs() {
       FildsPanel.appendChild(lbl);
     });
 
-    // //PanelProp Header
-    // let PanelPropHeader = document.createElement("div");
-    // PanelPropHeader.className = "divHeader";
-    // PanelPropHeader.innerHTML = "تنظیمات ";
-    // PanelPropHeader.style.gridRow = "1";
-    // RightPanel.appendChild(PanelPropHeader);
-
-    // //Properties
-    // let PropPanel = createDiv("", "PanelPropId");
-    // RightPanel.appendChild(PropPanel);
-
     //Tools Header
     let ToolsHeader = document.createElement("div");
     ToolsHeader.className = "divHeader";
@@ -157,6 +146,7 @@ function createDivs() {
         ToolsLbl.innerHTML = "فیلتر داده ها";
         ToolsLbl.style.gridColumn = "2";
         ToolsLbl.style.gridRow = "2";
+        ToolsLbl.style.cursor = "pointer";
         ToolsLbl.onclick = (e) => Filters(e);
       } else if (i == 1) {
         ToolsIcon.setAttribute("src", "data:image/png;base64," + imgAccesses);
@@ -167,27 +157,16 @@ function createDivs() {
         ToolsLbl.innerHTML = "دسترسی ها";
         ToolsLbl.style.gridColumn = "2";
         ToolsLbl.style.gridRow = "3";
+        ToolsLbl.style.cursor = "pointer";
         ToolsLbl.onclick = (e) => Accesses(e);
       }
 
       ToolsProp.appendChild(ToolsIcon);
       ToolsProp.appendChild(ToolsLbl);
 
-      // let lblfilter = document.createElement("label");
-      // lblfilter.innerHTML = "filters";
-      // lblfilter.style.gridColumn = "2";
-      // lblfilter.style.gridRow = "1";
-      // lblfilter.className = "lblProp2";
-      // lblfilter.onclick = (e) => Filters(e);
-      // PropPanel2.appendChild(lblfilter);
+     
 
-      // let lblAccesses = document.createElement("label");
-      // lblAccesses.innerHTML = "accesses";
-      // lblAccesses.style.gridColumn = "2";
-      // lblAccesses.style.gridRow = "2";
-      // lblAccesses.className = "lblProp2";
-      // lblAccesses.onclick = (e) => Accesses(e);
-      // PropPanel2.appendChild(lblAccesses);
+ 
     }
   }
 
@@ -299,28 +278,26 @@ function rowContent(ev) {
 
 //groupbtn
 function Group_Btn(GroupId) {
-
   return (
     '<div id="' +
     GroupId +
-    '-rowBtnGroup" class="row  container-fluid rowBtnGroup " style="margin-left:0px; margin-right:30px;justify-content: left;margin-bottom:-15px"' +
-    ' ondrop="drop(event)" ondragover="allowDrop(event)">' +
-    '<span style="" class="delete btn btn-light glyphicon glyphicon-trash"  title="حذف سطر" onclick="DeleteGroup(this);" id=' +
+    '-rowBtnGroup"  ondrop="drop(event)" ondragover="allowDrop(event)" class="row container-fluid rowBtnGroup">' +
+    '<span style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;" class="delete btn btn-light glyphicon glyphicon-trash"  title="حذف سطر" onclick="DeleteGroup(this);" id=' +
     GroupId +
     "DeleteGroup></span>" +
-    '<span style="" class="btn btn-light glyphicon glyphicon-cog"  title="تعداد ستون ها" onclick="GroupSplit(this);" id=' +
+    '<span style="border-radius:0px" class="btn btn-light glyphicon glyphicon-cog"  title="تعداد ستون ها" onclick="GroupSplit(this);" id=' +
     GroupId +
     "EditGroup></span>" +
     '<span class="vol"><span style="display:none" id="slider' +
     GroupId +
     '" class="slider"><input type="range" id="myslider' +
     GroupId +
-    '" class="" min="1" max="3" step="1" value="" oninput="volume(this)" onmouseout="hideSlider(this)" style="cursor:pointer"/><label class="lblSlider" id="lblSlider' +
+    '" class="myslider" min="1" max="3" step="1" oninput="volume(this)" onmouseout="hideSlider(this)" /><label class="lblSlider" id="lblSlider' +
     GroupId +
     '"></label></span></span>' +
-    '<span style="width:35px;padding:5px" class="btn btn-light glyphicon glyphicon-arrow-up" title="انتقال سطر به بالا" onclick="GroupMoveUp(event);" id=' +
+    '<span style="width:42px;padding:5px;border-radius:0px" class="btn btn-light glyphicon glyphicon-arrow-up" title="انتقال سطر به بالا" onclick="GroupMoveUp(event);" id=' +
     GroupId +
-    'moveup></span><span style="width:35px;padding:5px;" class="btn btn-light glyphicon glyphicon-arrow-down"  data-placement="top" title="انتقال سطر به پایین" onclick="GroupMoveDown(event)" id=' +
+    'moveup></span><span style="width:42px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;" class="btn btn-light glyphicon glyphicon-arrow-down"  data-placement="top" title="انتقال سطر به پایین" onclick="GroupMoveDown(event)" id=' +
     GroupId +
     "movedown></span ></div>"
   );

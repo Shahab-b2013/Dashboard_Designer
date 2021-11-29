@@ -170,6 +170,7 @@ function AreaSplineFns(e) {
 }
 
 function GroupFns(e) {
+  alert('group')
   if ($("#" + e.target.id).hasClass("rowBtnGroup")) {
     let GroupId = e.target.id;
     const parent = $("#" + GroupId)
@@ -205,7 +206,7 @@ function GroupFns(e) {
               id +
               '"></div>' +
               Group_Btn(id) +
-              "</div"
+              "</div>"
           )
         );
     });
@@ -217,12 +218,15 @@ function GroupFns(e) {
  * drag and drop functions
  * */
 function drop(ev) {
+
+  alert(ev.target.id)
   if (ev.target.id) {
     $("#" + ev.target.id).html(""); //delete placeholder div
     if (!$("#" + ev.target.id).hasClass("noDrop")) {
       //get senderId and check number or string for switch
       let dataId = ev.dataTransfer.getData("text");
       dataId = dataId.length < 3 ? +dataId : dataId;
+    alert(dataId)
       switch (dataId) {
         case 0:
           ColumnFns(ev);
@@ -244,6 +248,7 @@ function drop(ev) {
           break;
         default:
           //drop
+        alert(ev.target.id)
           ev.preventDefault();
           $("#" + ev.target.id).append(document.getElementById(dataId));
           break;
@@ -259,9 +264,13 @@ function allowDrop(e) {
         $("#" + e.target.id).css("border-radius", "10px");
         if ($("#" + e.target.id).hasClass("form-group-body")) {
           $("#" + e.target.id).css("color", "#ccc");
-          $("#" + e.target.id).css("font-size", "22px");
+          $("#" + e.target.id).css("font-size", "29px");
           $("#" + e.target.id).css("font-style", "italic");
-          $("#" + e.target.id).html("&#10;&#10;&#10;&#10;اینجا رها کنید ...");
+          $("#" + e.target.id).css("font-family", "tahoma");
+          $("#" + e.target.id).addClass('col-lg-6')
+          $("#" + e.target.id).html(
+            "&#10;&#10;&#10;&#10;اینجا رها کنید ..."
+          );
         }
         e.preventDefault();
       }
@@ -350,8 +359,8 @@ $(function () {
 //chart modal edit
 function ChartConstractor(width, parent) {
   let div =
-    '<div id="myModal" class="modal" style="">' +
-    '<div id="chartModal" class="modal-content" style="border: 1px solid #dcc896; border-radius: 4px;">' +
+    '<div id="myModal" class="modal" style="overflow:auto;">' +
+    '<div id="chartModal" class="modal-content">' +
     '<span class="close"></span>' +
     '<div id="contentM" class="row col-lg-12" style="margin-right:10px;"></div>' +
     "</div>" +
@@ -418,37 +427,49 @@ function closed() {
 }
 
 function GroupSplit(elem) {
+  //group child count & set lblsilder
   let id = elem.id.replaceAll("EditGroup", "");
+  const childCount = $("#form-group-" + id).children().length - 1;
+  $("#lblSlider" + id).html(childCount);
+  $("#myslider" + id).val(childCount);
+
+  //set lblSlider position
+  if (childCount == 1) $("#lblSlider" + id).css("left", "0px");
+  if (childCount == 2) $("#lblSlider" + id).css("left", "40px");
+  if (childCount == 3) $("#lblSlider" + id).css("left", "80px");
+
   let group_Child_Length = +$("#form-group-" + id).children().length - 1;
-
   $("#myslider" + id).attr("value", group_Child_Length);
-
-  $("#slider" + id).css("display", "block");
+  $("#slider" + id).css("display") == "none"
+    ? $("#slider" + id).css("display", "block")
+    : $("#slider" + id).css("display", "none");
 }
 
 function volume(elem) {
-  // console.log(elem.value)
-  // $("#myslider" + id).attr("value", elem.value);
-  const lblSliderId = elem.id.replaceAll("myslider", "lblSlider");
-  console.log(lblSliderId);
-  document.getElementById(lblSliderId).innerHTML = elem.value;
-  if (elem.value == 1) {
-    document.getElementById(lblSliderId).style.right = "5px";
-  }
-  if (elem.value == 2) $("#" + lblSliderId).css("right", "45px");
-   if (elem.value == 3) $("#" + lblSliderId).css("right", "85px");
+  let id = elem.id.replaceAll("myslider", "lblSlider");
+  $("#" + id).html(elem.value);
+  if (elem.value == 1) $("#" + id).css("left", "0px");
+  if (elem.value == 2) $("#" + id).css("left", "40px");
+  if (elem.value == 3) $("#" + id).css("left", "80px");
 
   switch (+elem.value) {
     case 1:
       DivSplit_1(elem);
+      //  document.getElementById(lblSliderId).innerHTML=elem.value;
       break;
     case 2:
       DivSplit_2(elem);
+      //  document.getElementById(lblSliderId).innerHTML = elem.value;
       break;
     case 3:
       DivSplit_3(elem);
+      //  document.getElementById(lblSliderId).innerHTML = elem.value;
       break;
   }
+}
+function hideSlider(elem) {
+  let parent = $("#" + elem.id).parent()[0].id;
+  $("#" + parent).css("display", "none");
 }
 
 function DivSplit_1(elem) {
@@ -502,7 +523,7 @@ function CreateDiv2(elem, colNum) {
   let div2 =
     '<div class="form-group-body col-md-' +
     colNum +
-    '" style="height:370px;margin-bottom:10px;white-space:pre-wrap;text-align:center;" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)"   ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
+    '" style="" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)"   ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
     div2ID +
     '" ></div>';
   //set div2
@@ -518,7 +539,7 @@ function CreateDiv3(elem, colNum) {
   let div3 =
     '<div class="form-group-body col-md-' +
     colNum +
-    '" style="height:370px;margin-bottom:10px;white-space:pre-wrap;text-align:center;" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
+    '" style="" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
     div3ID +
     '"></div>';
   //set div3
@@ -554,8 +575,4 @@ function groupDivId(elem) {
     }
   }
   return [...new Set(groupDivIdArray)];
-}
-function hideSlider(elem) {
-  let parent = $("#" + elem.id).parent()[0].id;
-  $("#" + parent).css("display", "none");
 }

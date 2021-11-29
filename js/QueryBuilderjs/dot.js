@@ -147,7 +147,6 @@
     {},
     [3]
   )(3);
-  //# sourceMappingURL=dot.js.map
 });
 
 //# sourceMappingURL=dot.js.map

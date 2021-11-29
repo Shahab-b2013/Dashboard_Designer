@@ -3589,7 +3589,7 @@ table.text-center th {
     margin: 0 auto;
     margin-top: 10%;
 }
-/
+
 .lockscreen .lockscreen-name {
     text-align: center;
     font-weight: 600;
@@ -5552,15 +5552,15 @@ img.ajaxtoploader {
 
 @font-face {
    font-family: IRANSansWeb;
-   src: url('../style/Bootstrap/Fonts/IRANSansWeb_Light.woff') format('woff');
+   src: url('../style/Bootstrap3.4.1/fonts/IRANSansWeb_Light.woff') format('woff');
 }
 @font-face {
    font-family: IRANSansWeb-bold;
-   src: url('../style/Bootstrap/Fonts/IRANSansWeb_Bold.woff') format('woff');
+   src: url('../styleBootstrap3.4.1/fonts/IRANSansWeb_Bold.woff') format('woff');
 }
 @font-face {
    font-family: IRANSansWeb-medium;
-   src: url('../style/Bootstrap/Fonts/IRANSansWeb_Medium.woff') format('woff');
+   src: url('../style/Bootstrap3.4.1/fonts/IRANSansWeb_Medium.woff') format('woff');
 }
 @media (max-width: 476px) {
 
