@@ -2,25 +2,8 @@ function chartEdit(e) {
   /*
   Get img
   */
-  let getchartType;
   let imgid = e.target.id.replaceAll("spanEdit", "");
-
-  //if img == default
-  if (e.target.id.indexOf("highchart") != -1) {
-    //get base64 from img
-    let bs64 = $("#" + imgid)
-      .attr("src")
-      .replaceAll("data:image/svg+xml;base64,", "");
-    //new img
-    let newImg = Base64.decode(bs64, false);
-    //parser new img because get id for getTypeChart
-    let docSvg = new DOMParser().parseFromString(newImg, "text/xml");
-    let getTag = docSvg.getElementsByClassName("highcharts-data-labels")[0];
-    getchartType = getTag.getAttribute("class").split(" ")[2].slice(11, -7);
-  } else {
-    getchartType = $("#" + e.target.id).attr("type");
-  }
-
+  let getchartType = $("#" + imgid).attr("type");
   //create modal form
   ChartConstractor("85%", "geContent");
   let div1 =
@@ -29,7 +12,7 @@ function chartEdit(e) {
 
   let div2 =
     '<div id="div2" class="col-lg-9 col-md-12 col-xs-12 " style="">' +
-    '<div id="containers" style="margin:80px 0;"></div></figure></div>';
+    '<div id="containers" style="height:640px"></div></figure></div>';
   $("#contentM").append(div2);
 
   //div1 Add Items
@@ -53,13 +36,12 @@ function chartEdit(e) {
     let div1Items =
       '<div id="div1Items-' +
       i +
-      '" class=" col-lg-12 col-md-12 " style="margin:5px"></div>';
+      '" class=" col-lg-12 col-md-12 " style=""></div>';
     $("#div1").append(div1Items);
 
     let lbl = document.createElement("label");
     lbl.innerText = ArrLbl[i] + ":";
     lbl.className = "lbl ";
-    // lbl.style.float = "left";
     lbl.style.margin = "10px 0px 10px 10px";
     $("#div1Items-" + i).append(lbl);
 
@@ -106,8 +88,7 @@ function chartEdit(e) {
   btnShow.style.backgroundColor = "#134C96";
   btnShow.style.borderRadius = "4px";
   btnShow.innerHTML = "پیش نمایش";
-  // btnShow.onclick = () => showChart($("#selectType").val());
-  btnShow.onclick = () => showChart("pie");
+  btnShow.onclick = () => showChart(getchartType);
   rowbtn.appendChild(btnShow);
 
   //btnsubmit
@@ -117,12 +98,12 @@ function chartEdit(e) {
   btnSubmit.style.margin = "10px 10px 10px 10px";
   btnSubmit.innerText = "ذخیره";
   btnSubmit.onclick = (e) => {
-    //get svgid
+    //get svg
     var svg_xml = chartSvg.getSVG();
     const index = svg_xml.indexOf("</div>") + 6;
     svg_xml = svg_xml.slice(index, 9e9);
 
-    //base64
+    //set base64
     let svg_Base64 = Base64.encode(svg_xml, false);
 
     //update chart

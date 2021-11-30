@@ -20,12 +20,16 @@ body {
 }
 /**/
 #geToolbar {
-  background-color: var(--mainbackground);
+  background-color: #fff;
   font: 1rem var(--mainFont);
-  height: 40px;
-  border: 1px solid #ccc;
+  height: 50px;
+  border: 1px solid transparent;
+  direction: ltr;
 }
-
+#Export_btn {
+  margin: 2px;
+  font: 16px var(--mainFont);
+}
 #geSidebar {
   background-color: var(--mainbackground);
   font: 1rem, var(--mainFont);
@@ -40,7 +44,7 @@ body {
   border-radius: 3px;
   padding-right: 20px;
   padding-left: 5px;
-  height: 857px;
+  height: 810px;
   overflow: hidden;
 }
 
@@ -70,7 +74,7 @@ body {
 #geContent {
   background-color: var(--mainbackground);
   font: 1rem var(--mainFont);
-  height: 857px;
+  height: 810px;
   border: 1px solid #ccc;
   border-radius: 3px;
   overflow: auto;
@@ -200,8 +204,6 @@ br {
   margin: 20px;
 }
 
-
-
 #popup_box {
   position: absolute;
   top: 50%;
@@ -247,7 +249,6 @@ br {
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.3); /* Black w/ opacity */
-  
 }
 
 /* Modal Content */
@@ -327,7 +328,7 @@ input[type="range"] {
   position: relative;
   font: 15px var(--mainFont);
   margin: 0px;
-  top:-65px;
+  top: -65px;
   left: 0px;
   width: 22px;
   height: 22px;
@@ -338,6 +339,13 @@ input[type="range"] {
   border-radius: 50%;
   background-size: cover;
   transform: rotate(90deg);
+}
+
+#containers {
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 .form-group-body {
   height: 390px;
@@ -365,6 +373,7 @@ input[type="range"] {
   border-radius: 4px;
   border: 1px solid #ccc;
   padding: 0px;
+  height: 640px;
 }
 .containerside {
   color: black;
@@ -386,14 +395,12 @@ input[type="range"] {
   padding-bottom: 6px;
   border-bottom: 1px solid #e6e6e6;
   direction: rtl;
-  
 }
 
 .tabdiv {
   overflow: hidden;
   border-radius: 5px;
   margin-bottom: 0px;
-  
 }
 .btnReset {
   margin-top: 10px;
@@ -417,7 +424,7 @@ input[type="range"] {
 .form-group-box {
   padding-left: 0px;
   padding-top: 20px;
-  padding-bottom: 25px;
+  padding-bottom: 15px;
   border-bottom: solid 1px #e6e9ed; /*@MainColor-B4*/
 }
 
@@ -437,4 +444,12 @@ input[type="range"] {
 
 .form-control:focus {
   border-color: #506495 !important; /*@MainColor-A1*/
+}
+.rowBtnGroup-span {
+  font: 22px var(--mainFont);
+  color: #ccc;
+  font-style: italic;
+  position: absolute;
+  left: 50%;
+ 
 }

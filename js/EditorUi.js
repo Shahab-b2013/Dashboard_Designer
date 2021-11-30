@@ -10,6 +10,13 @@ function createDivs() {
   TopDiv.innerHTML = " داشبورد امن پرداز";
   Container.appendChild(TopDiv);
 
+  //Toolbar
+  let Toolbar = createDiv("container-fluid", "geToolbar");
+  Container.appendChild(Toolbar);
+  const Export_btn =
+    '<inpu type="button" id="Export_btn" class="btn btn-success" onclick="ExportData()" >  ارسال اطلاعات</inpu>';
+  $("#geToolbar").append(Export_btn);
+
   //rowPanel
   let row = createDiv("row", "rowId");
   Container.appendChild(row);
@@ -35,22 +42,36 @@ function createDivs() {
 
     //get imgArray from Img.js
     //inset img to panel
-    imgArray.map((value, index) => {
+    let id = 0;
+    $.each(imgObject, function (index, items) {
       //item
       const item = document.createElement("img");
-      item.setAttribute("src", "data:image/png;base64," + value);
+      item.setAttribute("src", "data:image/png;base64," + items);
       item.className = "noDrop";
       item.setAttribute("draggable", true);
-      item.setAttribute("id", index);
+      item.setAttribute("id", id);
+      item.setAttribute("type", index);
       item.setAttribute("width", "45");
       item.setAttribute("height", "45");
-      item.addEventListener("dragstart", (ev) => drag(ev));
+      item.addEventListener("dragstart", (ev) => dragstart(ev));
       item.addEventListener(
         "mousedown",
         () => (item.style.cursor = "grabbing")
       );
-      item.addEventListener("mouseup", () => (item.style.cursor = "grab"));
+      item.addEventListener("mouseup", () => {
+        item.style.cursor = "grab";
+        $(".form-group-body").css("opacity", "1");
+        $(".form-group-body").removeClass("noDrop");
+        $(".rowBtnGroup").css("border", "");
+        $(".rowBtnGroup-span").remove();
+      });
       item.addEventListener("mouseover", () => (item.style.cursor = "grab"));
+      item.addEventListener("dragend", () => {
+        $(".form-group-body").css("opacity", "1");
+        $(".form-group-body").removeClass("noDrop");
+        $(".rowBtnGroup").css("border", "");
+        $(".rowBtnGroup-span").remove();
+      });
       item.style.alignSelf = "center";
       item.style.justifySelf = "center";
       item.style.marginTop = "12px";
@@ -58,9 +79,10 @@ function createDivs() {
 
       //label
       const lbl = document.createElement("label");
-      lbl.setAttribute("id", "lbl" + index);
+      lbl.setAttribute("id", "lbl" + id);
+      id++;
 
-      if (index == 0) {
+      if (index == "column") {
         lbl.innerHTML = " ستونی ";
         item.style.gridColumn = "1";
         item.style.gridRow = "2";
@@ -68,7 +90,7 @@ function createDivs() {
         lbl.style.gridRow = "2";
         item.setAttribute("width", "45");
         item.setAttribute("height", "45");
-      } else if (index == 1) {
+      } else if (index == "pie") {
         item.style.gridColumn = "3";
         item.style.gridRow = "2";
         lbl.innerHTML = " دایره ای";
@@ -76,7 +98,7 @@ function createDivs() {
         lbl.style.gridRow = "2";
         item.setAttribute("width", "45");
         item.setAttribute("height", "45");
-      } else if (index == 2) {
+      } else if (index == "bar") {
         item.style.gridColumn = "1";
         item.style.gridRow = "3";
         lbl.innerHTML = " میله ای";
@@ -84,7 +106,7 @@ function createDivs() {
         lbl.style.gridRow = "3";
         item.setAttribute("width", "45");
         item.setAttribute("height", "45");
-      } else if (index == 3) {
+      } else if (index == "line") {
         item.style.gridColumn = "3";
         item.style.gridRow = "3";
         lbl.innerHTML = " خطی";
@@ -92,7 +114,7 @@ function createDivs() {
         lbl.style.gridRow = "3";
         item.setAttribute("width", "50");
         item.setAttribute("height", "40");
-      } else if (index == 4) {
+      } else if (index == "areaspline") {
         item.style.gridColumn = "1";
         item.style.gridRow = "4";
         lbl.innerHTML = "مساحت خطی";
@@ -100,7 +122,7 @@ function createDivs() {
         lbl.style.gridRow = "4";
         item.setAttribute("width", "60");
         item.setAttribute("height", "45");
-      } else if (index == 5) {
+      } else if (index == "group") {
         item.style.gridColumn = "3";
         item.style.gridRow = "4";
         lbl.innerHTML = "سطر";
@@ -163,10 +185,6 @@ function createDivs() {
 
       ToolsProp.appendChild(ToolsIcon);
       ToolsProp.appendChild(ToolsLbl);
-
-     
-
- 
     }
   }
 
@@ -229,7 +247,7 @@ function lblContent(value, id) {
   lblContent.setAttribute("id", id);
   lblContent.innerHTML = value;
   lblContent.setAttribute("draggable", true);
-  lblContent.addEventListener("dragstart", (ev) => drag(ev));
+  lblContent.addEventListener("dragstart", (ev) => dragstart(ev));
   return lblContent;
 }
 
@@ -279,26 +297,26 @@ function rowContent(ev) {
 //groupbtn
 function Group_Btn(GroupId) {
   return (
-    '<div id="' +
+    '<div id="rowBtnGroup-' +
     GroupId +
-    '-rowBtnGroup"  ondrop="drop(event)" ondragover="allowDrop(event)" class="row container-fluid rowBtnGroup">' +
+    '"  ondrop="GroupFns(event);" ondragover="event.preventDefault();" class="row container-fluid rowBtnGroup noDrop">' +
     '<span style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;" class="delete btn btn-light glyphicon glyphicon-trash"  title="حذف سطر" onclick="DeleteGroup(this);" id=' +
     GroupId +
     "DeleteGroup></span>" +
-    '<span style="border-radius:0px" class="btn btn-light glyphicon glyphicon-cog"  title="تعداد ستون ها" onclick="GroupSplit(this);" id=' +
+    '<span style="border-radius:0px" class="btn btn-light glyphicon glyphicon-cog"  title="تعداد ستون ها" onclick="GroupSplit(this);" id="EditGroup-' +
     GroupId +
-    "EditGroup></span>" +
-    '<span class="vol"><span style="display:none" id="slider' +
+    '"></span>' +
+    '<span class="vol"><span style="display:none" id="slider-' +
     GroupId +
-    '" class="slider"><input type="range" id="myslider' +
+    '" class="slider"><input type="range" id="myslider-' +
     GroupId +
-    '" class="myslider" min="1" max="3" step="1" oninput="volume(this)" onmouseout="hideSlider(this)" /><label class="lblSlider" id="lblSlider' +
+    '" class="myslider" min="1" max="3" step="1" oninput="volume(this)" onmouseout="hideSlider(this)" /><label class="lblSlider" id="lblSlider-' +
     GroupId +
     '"></label></span></span>' +
-    '<span style="width:42px;padding:5px;border-radius:0px" class="btn btn-light glyphicon glyphicon-arrow-up" title="انتقال سطر به بالا" onclick="GroupMoveUp(event);" id=' +
+    '<span style="width:42px;padding:5px;border-radius:0px" class="btn btn-light glyphicon glyphicon-arrow-up" title="انتقال سطر به بالا" onclick="GroupMoveUp(event);" id="moveup-' +
     GroupId +
-    'moveup></span><span style="width:42px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;" class="btn btn-light glyphicon glyphicon-arrow-down"  data-placement="top" title="انتقال سطر به پایین" onclick="GroupMoveDown(event)" id=' +
+    '"></span><span style="width:42px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;" class="btn btn-light glyphicon glyphicon-arrow-down"  data-placement="top" title="انتقال سطر به پایین" onclick="GroupMoveDown(event)" id="movedown-' +
     GroupId +
-    "movedown></span ></div>"
+    '"></span ></div>'
   );
 }

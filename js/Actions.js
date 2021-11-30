@@ -73,7 +73,7 @@ function createImgChart(e, parentID, formItem, type) {
     let value;
     switch (type) {
       case "column":
-        value = columnBs64;
+        value = columnBs64; //from img.js
         break;
       case "pie":
         value = pieBs64;
@@ -84,9 +84,6 @@ function createImgChart(e, parentID, formItem, type) {
       case "line":
         value = lineBs64;
         break;
-      // case "area":
-      //   value = areaBs64;
-      //   break;
       case "areaspline":
         value = areaSplineBs64;
         break;
@@ -98,6 +95,7 @@ function createImgChart(e, parentID, formItem, type) {
   }
 
   let ID = formItem ? formItem.id : idChart(e);
+
   function idChart(e) {
     let defaultId = e.target.id.replaceAll("form-group-body-", "");
     return defaultId;
@@ -105,7 +103,9 @@ function createImgChart(e, parentID, formItem, type) {
   let chartType = formItem ? formItem.type : type;
   let parent = parentID ? parentID : e.target.id;
   let img =
-    '<img class="fit-image noDrop" draggable="true" ondragstart="dragstart(event)" ondrop="dropimg(event)" ondragover="event.preventDefault()" onmouseenter="rowbtnOn(event)" onmouseleave="rowbtnOff(event)" style ="padding-left:10px;border:1px solid #ccc;border-radius:10px;cursor:grab"  src="data:image/svg+xml;base64,' +
+    '<img class="fit-image noDrop" type="' +
+    type +
+    '" draggable="true" ondragstart="dragstart(event)" ondrop="swapping(event)" ondragover="event.preventDefault()" onmouseenter="rowbtnOn(event)" onmouseleave="rowbtnOff(event)" style ="padding-left:10px;border:1px solid #ccc;border-radius:10px;cursor:grab"  src="data:image/svg+xml;base64,' +
     style +
     '" id="' +
     ID +
@@ -125,21 +125,37 @@ function createImgChart(e, parentID, formItem, type) {
 }
 
 //swaping img
-function dropimg(e) {
-  e.preventDefault();
+function swapping(e) {
   let temp;
   let oneElem = $("#" + e.dataTransfer.getData("text"));
   let twoElem = $("#" + e.target.id);
-  //swap src
-  if (e.dataTransfer.getData("text").length > 3) {
+
+  if (twoElem == null || twoElem == undefined) {
+    e.preventDefault();
+    twoElem.append(oneElem);
+  } else if (e.dataTransfer.getData("text").length > 3) {
+    e.preventDefault();
+    //swap src
     temp = oneElem.attr("src");
     oneElem.attr("src", twoElem.attr("src"));
     twoElem.attr("src", temp);
+    //swap type
+    temp = oneElem.attr("type");
+    oneElem.attr("type", twoElem.attr("type"));
+    twoElem.attr("type", temp);
   }
 }
 
 function dragstart(e) {
   e.dataTransfer.setData("text", e.target.id);
+  if (e.target.id == "5") {
+    $(".form-group-body").css("opacity", "0.1");
+    $(".form-group-body").addClass("noDrop");
+    $(".rowBtnGroup").css("border", "2px solid #e3b535");
+    $(".rowBtnGroup").append(
+      '<span class="rowBtnGroup-span">گروه را اینجا رها کنید.</span>'
+    );
+  }
 }
 
 function ColumnFns(e) {
@@ -170,7 +186,6 @@ function AreaSplineFns(e) {
 }
 
 function GroupFns(e) {
-  alert('group')
   if ($("#" + e.target.id).hasClass("rowBtnGroup")) {
     let GroupId = e.target.id;
     const parent = $("#" + GroupId)
@@ -188,7 +203,9 @@ function GroupFns(e) {
           }
         }
       });
+    //set last Id
     id++;
+
     $(document).ready(function () {
       $("#" + GroupId)
         .parent()
@@ -198,18 +215,20 @@ function GroupFns(e) {
               "form-group-" +
               id +
               '" class="row form-group-box" ondragover="allowDrop(event)"  >' +
-              '<div style="padding:10px;" class="' +
-              "col-lg-10 col-md-10 form-group-body" +
+              '<div style="" class="' +
+              "col-lg-12 col-md-12 form-group-body" +
               ' col-sm-12  col-xs-12" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
               id +
-              '-0"></div><div class="col-md-1" id="miniDiv-1' +
-              id +
-              '"></div>' +
+              '-0"></div>' +
               Group_Btn(id) +
               "</div>"
           )
         );
     });
+    $(".form-group-body").css("opacity", "1");
+    $(".form-group-body").removeClass("noDrop");
+    $(".rowBtnGroup").css("border", "");
+    $(".rowBtnGroup-span").remove();
   }
 }
 
@@ -218,15 +237,14 @@ function GroupFns(e) {
  * drag and drop functions
  * */
 function drop(ev) {
-
-  alert(ev.target.id)
   if (ev.target.id) {
-    $("#" + ev.target.id).html(""); //delete placeholder div
     if (!$("#" + ev.target.id).hasClass("noDrop")) {
+      $("#" + ev.target.id).html(""); //delete placeholder div
+
       //get senderId and check number or string for switch
       let dataId = ev.dataTransfer.getData("text");
+
       dataId = dataId.length < 3 ? +dataId : dataId;
-    alert(dataId)
       switch (dataId) {
         case 0:
           ColumnFns(ev);
@@ -243,14 +261,16 @@ function drop(ev) {
         case 4:
           AreaSplineFns(ev);
           break;
-        case 5:
-          GroupFns(ev);
-          break;
         default:
           //drop
-        alert(ev.target.id)
           ev.preventDefault();
           $("#" + ev.target.id).append(document.getElementById(dataId));
+          //set rowbtn
+          $("#" + ev.target.id).append(
+            document.getElementById("rowbtn-img-" + dataId)
+          );
+          $("#" + ev.target.id).css("border", "");
+
           break;
       }
     }
@@ -267,10 +287,7 @@ function allowDrop(e) {
           $("#" + e.target.id).css("font-size", "29px");
           $("#" + e.target.id).css("font-style", "italic");
           $("#" + e.target.id).css("font-family", "tahoma");
-          $("#" + e.target.id).addClass('col-lg-6')
-          $("#" + e.target.id).html(
-            "&#10;&#10;&#10;&#10;اینجا رها کنید ..."
-          );
+          $("#" + e.target.id).html("&#10;&#10;&#10;&#10;اینجا رها کنید ...");
         }
         e.preventDefault();
       }
@@ -278,25 +295,11 @@ function allowDrop(e) {
   }
 }
 
-function drag(e) {
-  if (e.target.id) e.dataTransfer.setData("text", e.target.id);
-}
-
 function DeleteGroup(elem) {
   removeDiv(elem);
   let parentId = elem.parentNode.parentNode.id;
-
-  if ($("#" + parentId).children().length == 2) {
-    if (
-      $("#" + parentId)
-        .children()
-        .eq(0)
-        .children().length == 0
-    ) {
-      $("#" + parentId).remove();
-    } else {
-      alert("سطر مورد نظر حاوی یک چارت می باشد.");
-    }
+  if ($("#" + parentId).children().length == 1) {
+    $("#" + parentId).remove();
   } else {
     alert("سطر مورد نظر جاوی چارت می باشد.");
   }
@@ -428,25 +431,26 @@ function closed() {
 
 function GroupSplit(elem) {
   //group child count & set lblsilder
-  let id = elem.id.replaceAll("EditGroup", "");
+
+  let id = elem.id.replaceAll("EditGroup-", "");
   const childCount = $("#form-group-" + id).children().length - 1;
-  $("#lblSlider" + id).html(childCount);
-  $("#myslider" + id).val(childCount);
+  $("#lblSlider-" + id).html(childCount);
+  $("#myslider-" + id).val(childCount);
 
   //set lblSlider position
-  if (childCount == 1) $("#lblSlider" + id).css("left", "0px");
-  if (childCount == 2) $("#lblSlider" + id).css("left", "40px");
-  if (childCount == 3) $("#lblSlider" + id).css("left", "80px");
+  if (childCount == 1) $("#lblSlider-" + id).css("left", "0px");
+  if (childCount == 2) $("#lblSlider-" + id).css("left", "40px");
+  if (childCount == 3) $("#lblSlider-" + id).css("left", "80px");
 
   let group_Child_Length = +$("#form-group-" + id).children().length - 1;
-  $("#myslider" + id).attr("value", group_Child_Length);
-  $("#slider" + id).css("display") == "none"
-    ? $("#slider" + id).css("display", "block")
-    : $("#slider" + id).css("display", "none");
+  $("#myslider-" + id).attr("value", group_Child_Length);
+  $("#slider-" + id).css("display") == "none"
+    ? $("#slider-" + id).css("display", "block")
+    : $("#slider-" + id).css("display", "none");
 }
 
 function volume(elem) {
-  let id = elem.id.replaceAll("myslider", "lblSlider");
+  let id = elem.id.replaceAll("myslider-", "lblSlider-");
   $("#" + id).html(elem.value);
   if (elem.value == 1) $("#" + id).css("left", "0px");
   if (elem.value == 2) $("#" + id).css("left", "40px");
@@ -455,21 +459,19 @@ function volume(elem) {
   switch (+elem.value) {
     case 1:
       DivSplit_1(elem);
-      //  document.getElementById(lblSliderId).innerHTML=elem.value;
       break;
     case 2:
       DivSplit_2(elem);
-      //  document.getElementById(lblSliderId).innerHTML = elem.value;
       break;
     case 3:
       DivSplit_3(elem);
-      //  document.getElementById(lblSliderId).innerHTML = elem.value;
       break;
   }
 }
 function hideSlider(elem) {
-  let parent = $("#" + elem.id).parent()[0].id;
-  $("#" + parent).css("display", "none");
+  let spliter = elem.id.split("-")[1];
+  if ($("#slider-" + spliter).css("display") == "block")
+    $("#slider-" + spliter).css("display", "none");
 }
 
 function DivSplit_1(elem) {
@@ -550,20 +552,31 @@ function CreateDiv3(elem, colNum) {
 removeDiv & if groupDivid.lenght==1 removeDiv Disablez
 */
 function removeDiv(elem) {
-  const groupArr = groupDivId(elem);
-  for (let k = 0; k < groupArr.length; k++) {
-    if (groupDivId(elem).length >= 2) {
-      const elements = +$("#" + groupArr[k]).children().length;
-      if (elements < 2) {
-        $("#" + groupArr[k]).remove();
-      }
+  let groupArr = groupDivId(elem);
+  let minCount = 0;
+  if ($("#" + elem.id).hasClass("delete")) {
+    minCount = 0;
+  } else {
+    // if (groupArr.length == 1) {
+    minCount = 1;
+    // }else {
+    //   minCount = 0;
+    // }
+  }
+  console.log("min", minCount);
+  for (let k = groupArr.length - 1; k >= minCount; k--) {
+    let elements = +$("#" + groupArr[k]).children().length;
+
+    if (elements == 0) {
+      $("#" + groupArr[k]).remove();
     }
   }
 }
+
 function groupDivId(elem) {
   let groupDivIdArray = [];
   let parnetnodeID = $("#" + elem.id).hasClass("delete")
-    ? elem.parentNode.parentNode.parentNode.id
+    ? elem.parentNode.parentNode.id
     : elem.parentNode.parentNode.parentNode.parentNode.id;
   parnetnodeID = document.getElementById(parnetnodeID);
   for (let q = 0; q < parnetnodeID.childNodes.length; q++) {
@@ -574,5 +587,250 @@ function groupDivId(elem) {
       }
     }
   }
+
   return [...new Set(groupDivIdArray)];
+}
+
+function ExportData() {
+  var ExportJson = {
+    DashboardID: 1010300,
+    Name: "Create New User",
+    ItemsGrouping: true,
+    ColumnLayout: "OnceColumn",
+    ColumnWidth: "default",
+    ActivityID: 1010300,
+    DataActivityID: "",
+
+    charts: [
+      {
+        RowID: 10103000,
+        ColumnIndex: 0,
+        id: "highcharts-kzimcwq-199-",
+        name: "",
+        text: "",
+        type: "bar",
+        categoryLabel: "#empty",
+        valueLabel: "#empty",
+        categoryName: "",
+        categoryExpression: "[data2]",
+        seriesType: "",
+        version: "",
+        series: [
+          {
+            name: "",
+            text: "",
+            dataExpression: "Sum([data2])",
+            plotType: "pie",
+            StlyeColor: "#8eb4f1",
+            version: "",
+          },
+        ],
+        style: "",
+      },
+      {
+        RowID: 10103000,
+        ColumnIndex: 1,
+        id: "highcharts-5vfb926-165-",
+        name: "",
+        text: "",
+        type: "pie",
+        categoryLabel: "#empty",
+        valueLabel: "#empty",
+        categoryName: "",
+        categoryExpression: "[data2]",
+        seriesType: "",
+        version: "",
+        series: [
+          {
+            name: "",
+            text: "",
+            dataExpression: "Sum([data2])",
+            plotType: "pie",
+            StlyeColor: "#8eb4f1",
+            version: "",
+          },
+        ],
+        style: "",
+      },
+      {
+        RowID: 10103001,
+        ColumnIndex: 0,
+        id: "highcharts-sltsk21-124-",
+        name: "",
+        text: "sef",
+        type: "areaspline",
+        categoryLabel: "#empty",
+        valueLabel: "#empty",
+        categoryName: "",
+        categoryExpression: "[data2]",
+        seriesType: "",
+        version: "23",
+        series: [
+          {
+            name: "",
+            text: "",
+            dataExpression: "Sum([data2])",
+            plotType: "areaspline",
+            StlyeColor: "#bbc2ce",
+            version: "23",
+          },
+        ],
+        style: "",
+      },
+    ],
+    Grouping: {
+      GroupingEnable: true,
+      header0: true,
+      header1: true,
+      header2: true,
+    },
+    FormGroupBoxs: [
+      {
+        RowID: 10103000,
+        chartID: 1010300,
+        Name: "Personal Info",
+        GroupIndex: 0,
+        GroupDisplayMode: "GroupWithBox",
+        ColumnLayout: "TwoColumn",
+        ColumnWidth: "default",
+        Visibility: "",
+        Enabled: true,
+        Version: "1.1.0.core",
+        Description: "",
+      },
+
+      {
+        RowID: 10103001,
+        chartID: 1010300,
+        Name: "Job Info",
+        GroupIndex: 1,
+        GroupDisplayMode: "GroupWithBox",
+        ColumnLayout: "OnceColumn",
+        ColumnWidth: "default",
+        Visibility: "",
+        Enabled: true,
+        Version: "1.1.0.core",
+        Description: "",
+      },
+      {
+        RowID: 10103002,
+        DashboardID: 1010300,
+        Name: "Contact Info",
+        GroupIndex: 2,
+        GroupDisplayMode: "GroupWithBox",
+        ColumnLayout: "TwoColumn",
+        ColumnWidth: "default",
+        Visibility: "",
+        Enabled: true,
+        Version: "1.1.0.core",
+        Description: "",
+      },
+      {
+        RowID: 10103003,
+        DashboardID: 1010300,
+        Name: "Other Info",
+        GroupIndex: 3,
+        GroupDisplayMode: "GroupWithBox",
+        ColumnLayout: "ThreeColumn",
+        ColumnWidth: "default",
+        Visibility: "",
+        Enabled: true,
+        Version: "1.1.0.core",
+        Description: "",
+      },
+    ],
+
+    Filters: {
+      condition: "AND",
+      rules: [
+        {
+          id: "[data1]",
+          field: "[data1]",
+          type: "string",
+          input: "text",
+          operator: "equal",
+          value: "dd",
+        },
+        {
+          id: "[data2]",
+          field: "[data2]",
+          type: "double",
+          input: "text",
+          operator: "not_equal",
+          value: 252,
+        },
+      ],
+      valid: true,
+    },
+    sqlFilters: "[data1] = 'dd' AND [data2] != 252",
+
+    accessRoles: [
+      {
+        id: 0,
+        label: "مدیریت انبار",
+      },
+      {
+        id: 1,
+        label: "کارشناس انبار",
+      },
+    ],
+    accessGroups: [
+      {
+        id: 0,
+        label: "مدیریت پیکربندی",
+      },
+      {
+        id: 1,
+        label: "مدیریت انبار",
+      },
+      {
+        id: 2,
+        label: "کارشناس انبار",
+      },
+      {
+        id: 3,
+        label: "پیکربندی",
+      },
+    ],
+    refRoles: [
+      {
+        id: 1,
+        label: "مدیریت پیکربندی",
+      },
+      {
+        id: 2,
+        label: "مدیریت انبار",
+      },
+      {
+        id: 4,
+        label: "کارشناس پیکربندی",
+      },
+      {
+        id: 5,
+        label: "کارشناس انبار",
+      },
+    ],
+    refGroups: [
+      {
+        id: 1,
+        label: "مدیریت پیکربندی",
+      },
+      {
+        id: 2,
+        label: "مدیریت انبار",
+      },
+      {
+        id: 3,
+        label: "کارشناس پیکربندی",
+      },
+      {
+        id: 4,
+        label: "کارشناس انبار",
+      },
+      {
+        id: 5,
+        label: "پیکربندی",
+      },
+    ],
+  };
 }
