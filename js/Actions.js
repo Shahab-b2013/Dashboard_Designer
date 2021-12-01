@@ -151,10 +151,7 @@ function dragstart(e) {
   if (e.target.id == "5") {
     $(".form-group-body").css("opacity", "0.1");
     $(".form-group-body").addClass("noDrop");
-    $(".rowBtnGroup").css("border", "2px solid #e3b535");
-    $(".rowBtnGroup").append(
-      '<span class="rowBtnGroup-span">گروه را اینجا رها کنید.</span>'
-    );
+    $(".rowBtnGroup-span").css('display','block');
   }
 }
 
@@ -186,9 +183,10 @@ function AreaSplineFns(e) {
 }
 
 function GroupFns(e) {
-  if ($("#" + e.target.id).hasClass("rowBtnGroup")) {
+  if ($("#" + e.target.id).hasClass("rowBtnGroup-span")) {
     let GroupId = e.target.id;
     const parent = $("#" + GroupId)
+      .parent()
       .parent()
       .parent()
       .attr("id");
@@ -198,6 +196,7 @@ function GroupFns(e) {
       .each(function () {
         if ($(this).hasClass("form-group-box")) {
           let nextId = +$(this).attr("id").replace("form-group-", "");
+          console.log(nextId)
           if (nextId > id) {
             id = nextId;
           }
@@ -208,6 +207,7 @@ function GroupFns(e) {
 
     $(document).ready(function () {
       $("#" + GroupId)
+        .parent()
         .parent()
         .after(
           $(
@@ -227,8 +227,8 @@ function GroupFns(e) {
     });
     $(".form-group-body").css("opacity", "1");
     $(".form-group-body").removeClass("noDrop");
-    $(".rowBtnGroup").css("border", "");
-    $(".rowBtnGroup-span").remove();
+    // $(".]").css("border", "");
+    $(".rowBtnGroup-span").css('display','none');
   }
 }
 

@@ -62,15 +62,13 @@ function createDivs() {
         item.style.cursor = "grab";
         $(".form-group-body").css("opacity", "1");
         $(".form-group-body").removeClass("noDrop");
-        $(".rowBtnGroup").css("border", "");
-        $(".rowBtnGroup-span").remove();
+        $(".rowBtnGroup-span").css('display','none');
       });
       item.addEventListener("mouseover", () => (item.style.cursor = "grab"));
       item.addEventListener("dragend", () => {
         $(".form-group-body").css("opacity", "1");
         $(".form-group-body").removeClass("noDrop");
-        $(".rowBtnGroup").css("border", "");
-        $(".rowBtnGroup-span").remove();
+        $(".rowBtnGroup-span").css('display','none');
       });
       item.style.alignSelf = "center";
       item.style.justifySelf = "center";
@@ -299,7 +297,7 @@ function Group_Btn(GroupId) {
   return (
     '<div id="rowBtnGroup-' +
     GroupId +
-    '"  ondrop="GroupFns(event);" ondragover="event.preventDefault();" class="row container-fluid rowBtnGroup noDrop">' +
+    '" class="row container-fluid rowBtnGroup noDrop">' +
     '<span style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;" class="delete btn btn-light glyphicon glyphicon-trash"  title="حذف سطر" onclick="DeleteGroup(this);" id=' +
     GroupId +
     "DeleteGroup></span>" +
@@ -317,6 +315,6 @@ function Group_Btn(GroupId) {
     GroupId +
     '"></span><span style="width:42px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;" class="btn btn-light glyphicon glyphicon-arrow-down"  data-placement="top" title="انتقال سطر به پایین" onclick="GroupMoveDown(event)" id="movedown-' +
     GroupId +
-    '"></span ></div>'
+    '"></span><span id="rowBtnGroup-span'+GroupId+'" class="rowBtnGroup-span noDrop"  ondrop="GroupFns(event);" ondragover="event.preventDefault();"  >گروه را اینجا رها کنید.</span></div>'
   );
 }

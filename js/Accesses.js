@@ -78,7 +78,7 @@ function Accesses(e) {
 
       for (let item in listLbl) {
         let rowDiv = document.createElement("div");
-        rowDiv.style.margin = "10px 0px 10px 550px";
+        // rowDiv.style.margin = "10px 0px 10px 550px";
         div.appendChild(rowDiv);
 
         //label

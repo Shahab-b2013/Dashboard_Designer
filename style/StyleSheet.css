@@ -446,10 +446,14 @@ input[type="range"] {
   border-color: #506495 !important; /*@MainColor-A1*/
 }
 .rowBtnGroup-span {
-  font: 22px var(--mainFont);
-  color: #ccc;
-  font-style: italic;
-  position: absolute;
-  left: 50%;
- 
+  font: 20px var(--mainFont);
+ font-style: italic;
+  width: 800px;
+  border:2px dashed #e3b535;
+  color:#ccc;
+  box-shadow: -5px 10px 5px #ccc;
+  left: 90%;
+  display: none;
+  border-radius: 5px;
+  text-align: center;
 }
