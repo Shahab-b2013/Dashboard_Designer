@@ -47,19 +47,25 @@ body {
   height: 810px;
   overflow: hidden;
 }
+.rightPanelLbl {
+  margin-right: 60px;
+}
 
 #PanelId {
   overflow: auto;
   display: grid;
+  padding: 10px;
   grid-template:
-    "a a a a" 15px
-    "b b b b" 60px
-    "c c c c" 80px
-    "d d d d " 80px;
-  grid-template-columns: 60px auto auto auto;
+    "a a" 15px
+    "b b" 60px
+    "c c" 60px
+    "d d " 60px;
+  grid-template-columns: 120px auto ;
   border: 1px solid #ccc;
-  margin: 5px 5px 0px 5px;
-  padding: 0px 10px 10px 10px;
+}
+.rightpanelIcon {
+  justify-self: right;
+  margin-top: 10px;
 }
 ::placeholder {
   font: 10px var(--mainFont);
@@ -110,13 +116,20 @@ body {
   position: sticky;
   top: 0;
 }
-/* 
-.headerDiv {
-  color: black;
-  font: 1rem var(--mainFont);
-  font-weight: bold;
-  margin: 10px;
-} */
+
+#nemoodarIcon {
+  position: absolute;
+  width: 20px;
+  right: 5px;
+  top: 12px;
+}
+
+#abzarIcons {
+  position: absolute;
+  width: 20px;
+  right: 5px;
+  top: 14px;
+}
 .textcontent {
   width: 200px;
   height: 40px;
@@ -285,10 +298,10 @@ br {
   overflow: auto;
   display: grid;
   grid-template:
-    "a a a a" 15px
-    "c c c c" 60px
-    "c c c c" 70px;
-  grid-template-columns: 60px auto auto auto;
+    "a a" 15px
+    "c c" 60px
+    "c c" 70px;
+  grid-template-columns: 220px auto auto auto;
   border: 1px solid #ccc;
   padding: 0px 10px 10px 10px;
   margin-top: 5px;
@@ -299,8 +312,8 @@ br {
   margin-top: 10px;
 }
 .ToolsLbl {
-  justify-self: right;
   cursor: pointer;
+  margin-right: 45px;
 }
 
 .vol {
@@ -447,10 +460,10 @@ input[type="range"] {
 }
 .rowBtnGroup-span {
   font: 20px var(--mainFont);
- font-style: italic;
+  font-style: italic;
   width: 800px;
-  border:2px dashed #e3b535;
-  color:#ccc;
+  border: 2px dashed #e3b535;
+  color: #ccc;
   box-shadow: -5px 10px 5px #ccc;
   left: 90%;
   display: none;

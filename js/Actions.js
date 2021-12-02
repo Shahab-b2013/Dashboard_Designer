@@ -151,7 +151,7 @@ function dragstart(e) {
   if (e.target.id == "5") {
     $(".form-group-body").css("opacity", "0.1");
     $(".form-group-body").addClass("noDrop");
-    $(".rowBtnGroup-span").css('display','block');
+    $(".rowBtnGroup-span").css("display", "block");
   }
 }
 
@@ -196,7 +196,7 @@ function GroupFns(e) {
       .each(function () {
         if ($(this).hasClass("form-group-box")) {
           let nextId = +$(this).attr("id").replace("form-group-", "");
-          console.log(nextId)
+          console.log(nextId);
           if (nextId > id) {
             id = nextId;
           }
@@ -227,8 +227,7 @@ function GroupFns(e) {
     });
     $(".form-group-body").css("opacity", "1");
     $(".form-group-body").removeClass("noDrop");
-    // $(".]").css("border", "");
-    $(".rowBtnGroup-span").css('display','none');
+    $(".rowBtnGroup-span").css("display", "none");
   }
 }
 
@@ -301,7 +300,7 @@ function DeleteGroup(elem) {
   if ($("#" + parentId).children().length == 1) {
     $("#" + parentId).remove();
   } else {
-    alert("سطر مورد نظر جاوی چارت می باشد.");
+    alert("سطر مورد نظر حاوی چارت می باشد.");
   }
 }
 
@@ -511,6 +510,7 @@ function setDiv1(elem, colNum) {
     "class",
     "form-group-body  col-md-" + colNum
   );
+  console.log(groupDivId(elem));
 }
 function setDiv2(elem, colNum) {
   $("#" + groupDivId(elem)[1]).attr(
@@ -553,22 +553,20 @@ removeDiv & if groupDivid.lenght==1 removeDiv Disablez
 */
 function removeDiv(elem) {
   let groupArr = groupDivId(elem);
-  let minCount = 0;
-  if ($("#" + elem.id).hasClass("delete")) {
-    minCount = 0;
-  } else {
-    // if (groupArr.length == 1) {
-    minCount = 1;
-    // }else {
-    //   minCount = 0;
-    // }
-  }
-  console.log("min", minCount);
-  for (let k = groupArr.length - 1; k >= minCount; k--) {
+  for (let k = groupArr.length - 1; k >= 0; k--) {
     let elements = +$("#" + groupArr[k]).children().length;
-
-    if (elements == 0) {
-      $("#" + groupArr[k]).remove();
+    if (groupDivId(elem).length == 1) {
+      if ($("#" + elem.id).hasClass("rowBtnGroup-span")) {
+        setDiv1(elem, 12);
+      } else if ($("#" + elem.id).hasClass("delete")) {
+        if (elements == 0) {
+          $("#" + groupArr[k]).remove();
+        }
+      }
+    } else {
+      if (elements == 0) {
+        $("#" + groupArr[k]).remove();
+      }
     }
   }
 }

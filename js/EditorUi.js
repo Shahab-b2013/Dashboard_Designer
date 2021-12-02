@@ -31,10 +31,15 @@ function createDivs() {
 
     //FildsPanel Header
     let panelHeader = document.createElement("div");
-    panelHeader.className = "divHeader";
+    panelHeader.className = "divHeader ";
     panelHeader.innerHTML = "نمودار";
     panelHeader.setAttribute("id", "rightPanelID");
     RightPanel.appendChild(panelHeader);
+
+    const nemoodarIcons = document.createElement("li");
+    nemoodarIcons.className = "glyphicon glyphicon-stats";
+    nemoodarIcons.setAttribute("id", "nemoodarIcon");
+    panelHeader.appendChild(nemoodarIcons);
 
     //FildsPanel
     let FildsPanel = createDiv("", "PanelId");
@@ -47,7 +52,7 @@ function createDivs() {
       //item
       const item = document.createElement("img");
       item.setAttribute("src", "data:image/png;base64," + items);
-      item.className = "noDrop";
+      item.className = "rightpanelIcon noDrop";
       item.setAttribute("draggable", true);
       item.setAttribute("id", id);
       item.setAttribute("type", index);
@@ -62,76 +67,71 @@ function createDivs() {
         item.style.cursor = "grab";
         $(".form-group-body").css("opacity", "1");
         $(".form-group-body").removeClass("noDrop");
-        $(".rowBtnGroup-span").css('display','none');
+        $(".rowBtnGroup-span").css("display", "none");
       });
       item.addEventListener("mouseover", () => (item.style.cursor = "grab"));
       item.addEventListener("dragend", () => {
         $(".form-group-body").css("opacity", "1");
         $(".form-group-body").removeClass("noDrop");
-        $(".rowBtnGroup-span").css('display','none');
+        $(".rowBtnGroup-span").css("display", "none");
       });
-      item.style.alignSelf = "center";
-      item.style.justifySelf = "center";
-      item.style.marginTop = "12px";
       FildsPanel.appendChild(item);
 
       //label
       const lbl = document.createElement("label");
       lbl.setAttribute("id", "lbl" + id);
+      lbl.className = "lbl rightPanelLbl";
       id++;
-
+      //gird right panel
       if (index == "column") {
         lbl.innerHTML = " ستونی ";
         item.style.gridColumn = "1";
         item.style.gridRow = "2";
-        lbl.style.gridColumn = "2";
+        lbl.style.gridColumn = "1";
         lbl.style.gridRow = "2";
-        item.setAttribute("width", "45");
-        item.setAttribute("height", "45");
+        item.setAttribute("width", "35");
+        item.setAttribute("height", "35");
       } else if (index == "pie") {
-        item.style.gridColumn = "3";
+        item.style.gridColumn = "2";
         item.style.gridRow = "2";
         lbl.innerHTML = " دایره ای";
-        lbl.style.gridColumn = "4";
+        lbl.style.gridColumn = "2";
         lbl.style.gridRow = "2";
-        item.setAttribute("width", "45");
-        item.setAttribute("height", "45");
+        item.setAttribute("width", "35");
+        item.setAttribute("height", "35");
       } else if (index == "bar") {
         item.style.gridColumn = "1";
         item.style.gridRow = "3";
         lbl.innerHTML = " میله ای";
-        lbl.style.gridColumn = "2";
+        lbl.style.gridColumn = "1";
         lbl.style.gridRow = "3";
-        item.setAttribute("width", "45");
-        item.setAttribute("height", "45");
+        item.setAttribute("width", "35");
+        item.setAttribute("height", "35");
       } else if (index == "line") {
-        item.style.gridColumn = "3";
+        item.style.gridColumn = "2";
         item.style.gridRow = "3";
         lbl.innerHTML = " خطی";
-        lbl.style.gridColumn = "4";
+        lbl.style.gridColumn = "2";
         lbl.style.gridRow = "3";
-        item.setAttribute("width", "50");
-        item.setAttribute("height", "40");
+        item.setAttribute("width", "40");
+        item.setAttribute("height", "30");
       } else if (index == "areaspline") {
         item.style.gridColumn = "1";
         item.style.gridRow = "4";
         lbl.innerHTML = "مساحت خطی";
-        lbl.style.gridColumn = "2";
-        lbl.style.gridRow = "4";
-        item.setAttribute("width", "60");
-        item.setAttribute("height", "45");
-      } else if (index == "group") {
-        item.style.gridColumn = "3";
-        item.style.gridRow = "4";
-        lbl.innerHTML = "سطر";
-        lbl.style.gridColumn = "4";
+        lbl.style.gridColumn = "1";
         lbl.style.gridRow = "4";
         item.setAttribute("width", "50");
-        item.setAttribute("height", "60");
+        item.setAttribute("height", "35");
+      } else if (index == "group") {
+        item.style.gridColumn = "2";
+        item.style.gridRow = "4";
+        lbl.innerHTML = "سطر";
+        lbl.style.gridColumn = "2";
+        lbl.style.gridRow = "4";
+        item.setAttribute("width", "40");
+        item.setAttribute("height", "50");
       }
-      lbl.style.marginTop = "20px";
-      lbl.style.marginRight = "5px";
-      lbl.className = "lbl";
       FildsPanel.appendChild(lbl);
     });
 
@@ -141,6 +141,11 @@ function createDivs() {
     ToolsHeader.innerHTML = "ابزار";
     ToolsHeader.style.gridRow = "1";
     RightPanel.appendChild(ToolsHeader);
+
+    const abzarIcons = document.createElement("li");
+    abzarIcons.className = "glyphicon glyphicon-cog";
+    abzarIcons.setAttribute("id", "abzarIcons");
+    ToolsHeader.appendChild(abzarIcons);
 
     //Properties2
     let ToolsProp = createDiv("", "ToolsProp");
@@ -161,10 +166,12 @@ function createDivs() {
         ToolsIcon.setAttribute("src", "data:image/png;base64," + imgFilter);
         ToolsIcon.style.gridColumn = "1";
         ToolsIcon.style.gridRow = "2";
+        ToolsIcon.style.width = "35px";
+        ToolsIcon.style.height = "35px";
 
-        ToolsLbl.className = "lbl";
+        ToolsLbl.className = "ToolsLbl lbl";
         ToolsLbl.innerHTML = "فیلتر داده ها";
-        ToolsLbl.style.gridColumn = "2";
+        ToolsLbl.style.gridColumn = "1";
         ToolsLbl.style.gridRow = "2";
         ToolsLbl.style.cursor = "pointer";
         ToolsLbl.onclick = (e) => Filters(e);
@@ -173,9 +180,9 @@ function createDivs() {
         ToolsIcon.style.gridColumn = "1";
         ToolsIcon.style.gridRow = "3";
 
-        ToolsLbl.className = "lbl";
+        ToolsLbl.className = "ToolsLbl lbl";
         ToolsLbl.innerHTML = "دسترسی ها";
-        ToolsLbl.style.gridColumn = "2";
+        ToolsLbl.style.gridColumn = "1";
         ToolsLbl.style.gridRow = "3";
         ToolsLbl.style.cursor = "pointer";
         ToolsLbl.onclick = (e) => Accesses(e);
@@ -315,6 +322,8 @@ function Group_Btn(GroupId) {
     GroupId +
     '"></span><span style="width:42px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;" class="btn btn-light glyphicon glyphicon-arrow-down"  data-placement="top" title="انتقال سطر به پایین" onclick="GroupMoveDown(event)" id="movedown-' +
     GroupId +
-    '"></span><span id="rowBtnGroup-span'+GroupId+'" class="rowBtnGroup-span noDrop"  ondrop="GroupFns(event);" ondragover="event.preventDefault();"  >گروه را اینجا رها کنید.</span></div>'
+    '"></span><span id="rowBtnGroup-span' +
+    GroupId +
+    '" class="rowBtnGroup-span noDrop"  ondrop="GroupFns(event);" ondragover="event.preventDefault();"  > ...گروه را اینجا رها کنید</span></div>'
   );
 }
