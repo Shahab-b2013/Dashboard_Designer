@@ -550,24 +550,28 @@ function groupDivId(elem) {
 }
 
 ///EXPORT JSON
-var ROWBOXS = ["getjson"];
-var CHARTS = ["getjson"];
+var DASHBOARDID;
+var NAME;
+var ITEMSGROUPING;
+var COLUMNLAYOUT;
+var COLUMNWIDTH;
+var ROWBOXS = [];
+var CHARTS = [];
 var FILTERS = {};
-var FILTERSQL = "getjson";
-var ACCESESROLES = ["getjson"];
-var ACCESESGROUPS = ["getjson"];
-var REFROLES = ["getjson"];
-var REFGROUPS = ["getjson"];
-var REFCOLUMNS = ["getjson"];
-
+var FILTERSQL = "";
+var ACCESESROLES = [];
+var ACCESESGROUPS = [];
+var REFROLES = [];
+var REFGROUPS = [];
+var REFCOLUMNS = [];
 
 function ExportData() {
-  return {
-    dashboardID: "getjson",
-    name: "getjson",
-    itemsGrouping: "getjson",
-    columnLayout: "getjson",
-    columnWidth: "getjson",
+  let json = {
+    dashboardID: DASHBOARDID,
+    name: NAME,
+    itemsGrouping: ITEMSGROUPING,
+    columnLayout: COLUMNLAYOUT,
+    columnWidth: COLUMNWIDTH,
     rowBoxs: ROWBOXS,
     charts: CHARTS,
     filters: FILTERS,
@@ -576,11 +580,29 @@ function ExportData() {
     accessGroups: ACCESESGROUPS,
     refRoles: REFROLES,
     refGroups: REFGROUPS,
-    refcolumns:REFCOLUMNS
+    refcolumns: REFCOLUMNS,
   };
+
+  //export action
+  //binary to url
+  json = JSON.stringify(json);
+  var textToSaveAsBlob = new Blob([json], {
+    type: "text/json",
+  });
+  /* download without button hack */
+  var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+  var downloadLink = document.createElement("a");
+  downloadLink.download = "chart_Product.JSON";
+  downloadLink.innerHTML = "Download File";
+  downloadLink.href = textToSaveAsURL;
+  downloadLink.onclick = function (event) {
+    document.body.removeChild(event.target);
+  };
+  downloadLink.style.display = "block";
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
 }
 
 function HideModal() {
   $("#myModal").remove();
 }
-

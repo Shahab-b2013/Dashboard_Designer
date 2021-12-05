@@ -242,7 +242,7 @@ function ImportData() {
     '<input type="button" id="cancel_btn" class="btn btn-light" value="لغو" style="margin-right:5px" onclick="HideModal()">';
   $("#open_div").append(cancel_btn);
 }
-function s(param) {  }
+
 function openfile() {
   let input = document.getElementById("file-input").files[0];
   if (input) {
@@ -250,15 +250,29 @@ function openfile() {
     reader.onload = function (e) {
       var contents = e.target.result;
       contents = JSON.parse(contents);
+      $("#geContent").empty();
       chartView(contents);
+      //set variables
+      DASHBOARDID = contents.dashboardID;
+      NAME = contents.name;
+      ITEMSGROUPING = contents.itemsGrouping;
+      COLUMNLAYOUT = contents.columnLayout;
+      COLUMNWIDTH = contents.columnWidth;
+      ROWBOXS = contents.rowBoxs;
+      CHARTS = contents.charts;
+      FILTERS = contents.filters;
+      FILTERSQL = contents.sqlFilters;
+      ACCESESROLES = contents.accessRoles;
+      ACCESESGROUPS = contents.accessGroups;
+      REFROLES = contents.refRoles;
+      REFGROUPS = contents.refGroups;
+      REFCOLUMNS = contents.refColumns;
       HideModal();
     };
     reader.readAsText(input);
   }
 }
-function dd(s) {
- 
- }
+
 function createInput(type, opt, id) {
   let input;
   if (type == "dropdown") {
