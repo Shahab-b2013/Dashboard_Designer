@@ -1,5 +1,7 @@
+"use strict";
+
 function Filters(e) {
-  ChartConstractor('50%', "geContent");
+  ModalConstractor("50%", "geContent");
   let container = $("#chartModal");
 
   container.addClass("containerside");
@@ -19,6 +21,9 @@ function Filters(e) {
     btn.className = "btnReset";
     btn.style.height = "34px";
     btn.style.float = "right";
+    btn.style.borderRadius = "2px";
+    btn.style.marginRight = "5px";
+    btn.style.marginLeft = "5px";
     btn.innerHTML = "شروع مجدد";
     div.appendChild(btn);
 
@@ -33,8 +38,8 @@ function Filters(e) {
     let btn = document.createElement("button");
     btn.innerHTML = "ذخیره";
     btn.className = "btn btn-primary";
-    btn.style.borderTopLeftRadius = 0;
-    btn.style.borderBottomLeftRadius = 0;
+    // btn.style.borderRadius = "5px";
+
     btn.style.float = "right";
     btn.style.height = "34px";
     div.appendChild(btn);
@@ -44,18 +49,18 @@ function Filters(e) {
 
       //set sql
       if (result.sql.length != null) {
-        let localData = JSON.stringify(result.sql);
-        sessionStorage.setItem("sqlFilters", localData);
+        FILTERSQL = result.sql;
+        // sessionStorage.setItem("sqlFilters", localData);
       }
       //set json
       result = $("#builder-basic").queryBuilder("getRules");
 
       if (!$.isEmptyObject(result)) {
-        let localData = JSON.stringify(result, null, 2);
-        sessionStorage.setItem("Filters", localData);
+        FILTERS = result;
+        // sessionStorage.setItem("Filters", localData);
       }
 
-      $("#myModal").remove();
+      HideModal();
     };
   }
 
@@ -65,11 +70,11 @@ function Filters(e) {
     btnExit.className = "btn btn-light";
     btnExit.style.float = "right";
     btnExit.style.height = "34px";
-    btnExit.style.borderBottomRightRadius = "0px";
-    btnExit.style.borderTopRightRadius = "0px";
+    // btnExit.style.borderBottomRightRadius = "0px";
+    // btnExit.style.borderTopRightRadius = "0px";
     btnExit.innerText = "خروج";
     btnExit.onclick = function () {
-       $("#myModal").remove();
+      HideModal();
     };
     div.appendChild(btnExit);
   }

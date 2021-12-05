@@ -1,5 +1,8 @@
+
+
+"use strict";
 function Accesses(e) {
-  ChartConstractor("50%", "geContent");
+ModalConstractor("50%", "geContent");
   $("#chartModal").addClass("containerside");
   $("#chartModal").css("direction", "ltr");
   let container = $("#chartModal");
@@ -31,7 +34,7 @@ function Accesses(e) {
   a.href = "#Tab2";
   a.innerHTML = "گروه ها";
   a.style.fontWeight = "bold";
-  a.style.fontSize="14px"
+  a.style.fontSize = "14px";
   li2.appendChild(a);
   ul.appendChild(li2);
 
@@ -131,7 +134,7 @@ function Accesses(e) {
   btnSave.className = "btn btn-primary";
   btnSave.innerHTML = "ذخیره";
   btnSave.style.float = "right";
-  btnSave.style.margin = "10px";
+  btnSave.style.margin = "10px 10px 10px 5px";
   container.append(btnSave);
 
   btnSave.onclick = function () {
@@ -152,7 +155,7 @@ function Accesses(e) {
       }
       count++;
     }
-    editorUi.hideDialog();
+     HideModal();
   };
 
   function tabIems(items, tabId) {
@@ -172,19 +175,17 @@ function Accesses(e) {
       }
     }
     if (tabId == "Roles") {
-      let RolesArray = JSON.stringify(Array);
-      sessionStorage.setItem("accessRoles", RolesArray);
+      ACCESESROLES = Array;
     } else if (tabId == "Groups") {
-      let GroupsArray = JSON.stringify(Array);
-      sessionStorage.setItem("accessGroups", GroupsArray);
+      ACCESESGROUPS = Array;
     }
   }
 
   let btnExit = document.createElement("button");
   btnExit.className = "btn btn btn-light";
   btnExit.innerHTML = "خروج";
-  btnExit.onclick = () => $("#myModal").remove();
+  btnExit.onclick = () => HideModal();;
   btnExit.style.float = "right";
-  btnExit.style.margin = "10px";
+  btnExit.style.margin = "10px 0px 10px 10px";
   container.append(btnExit);
 }

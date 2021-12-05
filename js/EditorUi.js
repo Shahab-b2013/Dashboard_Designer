@@ -14,8 +14,12 @@ function createDivs() {
   let Toolbar = createDiv("container-fluid", "geToolbar");
   Container.appendChild(Toolbar);
   const Export_btn =
-    '<inpu type="button" id="Export_btn" class="btn btn-success" onclick="ExportData()" >  ارسال اطلاعات</inpu>';
+    '<input type="button" id="Export_btn" class="btn btn-success Json_btn" onclick="ExportData()" value="ارسال اطلاعات"></input>';
   $("#geToolbar").append(Export_btn);
+
+  const Import_btn =
+    '<input type="button" id="Import_btn" class="btn btn-success Json_btn" onclick="ImportData()" value="دریافت اطلاعات"></input>';
+  $("#geToolbar").append(Import_btn);
 
   //rowPanel
   let row = createDiv("row", "rowId");
@@ -89,31 +93,31 @@ function createDivs() {
         item.style.gridRow = "2";
         lbl.style.gridColumn = "1";
         lbl.style.gridRow = "2";
-        item.setAttribute("width", "35");
-        item.setAttribute("height", "35");
+        item.setAttribute("width", "30");
+        item.setAttribute("height", "25");
       } else if (index == "pie") {
         item.style.gridColumn = "2";
         item.style.gridRow = "2";
         lbl.innerHTML = " دایره ای";
         lbl.style.gridColumn = "2";
         lbl.style.gridRow = "2";
-        item.setAttribute("width", "35");
-        item.setAttribute("height", "35");
+        item.setAttribute("width", "30");
+        item.setAttribute("height", "30");
       } else if (index == "bar") {
         item.style.gridColumn = "1";
         item.style.gridRow = "3";
         lbl.innerHTML = " میله ای";
         lbl.style.gridColumn = "1";
         lbl.style.gridRow = "3";
-        item.setAttribute("width", "35");
-        item.setAttribute("height", "35");
+        item.setAttribute("width", "30");
+        item.setAttribute("height", "30");
       } else if (index == "line") {
         item.style.gridColumn = "2";
         item.style.gridRow = "3";
         lbl.innerHTML = " خطی";
         lbl.style.gridColumn = "2";
         lbl.style.gridRow = "3";
-        item.setAttribute("width", "40");
+        item.setAttribute("width", "30");
         item.setAttribute("height", "30");
       } else if (index == "areaspline") {
         item.style.gridColumn = "1";
@@ -121,16 +125,16 @@ function createDivs() {
         lbl.innerHTML = "مساحت خطی";
         lbl.style.gridColumn = "1";
         lbl.style.gridRow = "4";
-        item.setAttribute("width", "50");
-        item.setAttribute("height", "35");
+        item.setAttribute("width", "30");
+        item.setAttribute("height", "30");
       } else if (index == "group") {
         item.style.gridColumn = "2";
         item.style.gridRow = "4";
         lbl.innerHTML = "سطر";
         lbl.style.gridColumn = "2";
         lbl.style.gridRow = "4";
-        item.setAttribute("width", "40");
-        item.setAttribute("height", "50");
+        item.setAttribute("width", "30");
+        item.setAttribute("height", "30");
       }
       FildsPanel.appendChild(lbl);
     });
@@ -217,10 +221,44 @@ function createDivs() {
   let Footer = createDiv("container-fluid", "geFooter");
   Footer.innerHTML = "© كليه حقوق برای شرکت نرم افزاری امن پرداز محفوظ است.";
   Container.appendChild(Footer);
-
-  FormView();
 }
+///IMPORT JSON
+function ImportData() {
+  ModalConstractor("25%", "geContent");
+  $("#chartModal").css("top", "100px");
 
+  const div = '<div id="open_div"></div>';
+  $("#chartModal").append(div);
+
+  let input_file =
+    '<input type="file" id="file-input" accept=".json" style="margin-bottom: 150px;margin-top: 20px;font-size: 12px;cursor:pointer"/> <hr>';
+  $("#open_div").append(input_file);
+
+  let Open_btn =
+    '<input type="button" id="open_btn" class="btn btn-primary" value="باز کردن" onclick="openfile()"/>';
+  $("#open_div").append(Open_btn);
+
+  let cancel_btn =
+    '<input type="button" id="cancel_btn" class="btn btn-light" value="لغو" style="margin-right:5px" onclick="HideModal()">';
+  $("#open_div").append(cancel_btn);
+}
+function s(param) {  }
+function openfile() {
+  let input = document.getElementById("file-input").files[0];
+  if (input) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      var contents = e.target.result;
+      contents = JSON.parse(contents);
+      chartView(contents);
+      HideModal();
+    };
+    reader.readAsText(input);
+  }
+}
+function dd(s) {
+ 
+ }
 function createInput(type, opt, id) {
   let input;
   if (type == "dropdown") {
@@ -324,6 +362,6 @@ function Group_Btn(GroupId) {
     GroupId +
     '"></span><span id="rowBtnGroup-span' +
     GroupId +
-    '" class="rowBtnGroup-span noDrop"  ondrop="GroupFns(event);" ondragover="event.preventDefault();"  > ...گروه را اینجا رها کنید</span></div>'
+    '" class="rowBtnGroup-span col-lg-12 noDrop"  ondrop="GroupFns(event);" ondragover="event.preventDefault();"  > ...گروه را اینجا رها کنید</span></div>'
   );
 }

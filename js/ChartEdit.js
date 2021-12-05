@@ -1,3 +1,5 @@
+
+"use strict";
 function chartEdit(e) {
   /*
   Get img
@@ -5,21 +7,20 @@ function chartEdit(e) {
   let imgid = e.target.id.replaceAll("spanEdit", "");
   let getchartType = $("#" + imgid).attr("type");
   //create modal form
-  ChartConstractor("85%", "geContent");
+  ModalConstractor("85%", "geContent");
   let div1 =
     '<div id="div1" class="row col-lg-3 col-md-12 col-sm-12 " style=""></div>';
   $("#contentM").append(div1);
 
   let div2 =
     '<div id="div2" class="col-lg-9 col-md-12 col-xs-12 " style="">' +
-    '<div id="containers" style="height:640px"></div></figure></div>';
+    '<div id="containers" style="height:550px"></div></figure></div>';
   $("#contentM").append(div2);
 
   //div1 Add Items
   const ArrLbl = [
     "Text",
     "Name",
-    "chartType",
     "categoryLabel",
     "valueLabel",
     "categoryName",
@@ -28,15 +29,12 @@ function chartEdit(e) {
     "dataExpression",
     "seriesText",
     "seriesName",
-    "seriesType",
     "StlyeColor",
     "version",
   ];
   for (let i = 0; i < ArrLbl.length; i++) {
     let div1Items =
-      '<div id="div1Items-' +
-      i +
-      '" class=" col-lg-12 col-md-12 " style=""></div>';
+      '<div id="div1Items-' + i + '" class="  " style="width:100%"></div>';
     $("#div1").append(div1Items);
 
     let lbl = document.createElement("label");
@@ -45,28 +43,40 @@ function chartEdit(e) {
     lbl.style.margin = "10px 0px 10px 10px";
     $("#div1Items-" + i).append(lbl);
 
-    if (i == 2 || i == 6 || i == 7) {
+    if (i == 6 || i == 7) {
       //dropDown
-      let List = document.createElement("select");
-      List.className = "selectBox ";
-      List.setAttribute("id", "select-" + i);
-      List.style.left = "0px";
-      List.style.position = "absolute";
-      $("#div1Items-" + i).append(List);
-    } else if (i == 12) {
+
+      let Select_List =
+        '<select class="selectBox" id="item-' +
+        i +
+        '" style="left:0px;position:absolute;">';
+
+      if (i == 6) {
+        Select_List +=
+          "<option>value1</option><option>value2</option><option>value3</option>";
+      }
+      if (i == 7) {
+        Select_List +=
+          "<option>value1</option><option>value2</option><option>value3</option>";
+      }
+
+      Select_List += "</select>";
+      $("#div1Items-" + i).append(Select_List);
+    } else if (i == 10) {
       //colorInput
       let color = document.createElement("input");
       color.type = "color";
-      color.setAttribute("id", "color-" + i);
+      color.setAttribute("id", "item-" + i);
       color.style.width = "150px";
-      color.style.left = "0px";
+      color.style.left = "10px";
       color.style.position = "absolute";
       $("#div1Items-" + i).append(color);
     } else {
       //textBox
       let textBox = document.createElement("input");
       textBox.type = "text";
-      textBox.setAttribute("id", "text-" + i);
+      textBox.className = "Textbox";
+      textBox.setAttribute("id", "item-" + i);
       textBox.style.border = "1px solid #ccc";
       textBox.style.height = "30px";
       textBox.style.width = "200px";
@@ -86,7 +96,7 @@ function chartEdit(e) {
   let btnShow = document.createElement("button");
   btnShow.className = "btn btn-primary";
   btnShow.style.backgroundColor = "#134C96";
-  btnShow.style.borderRadius = "4px";
+  // btnShow.style.borderRadius = "4px";
   btnShow.innerHTML = "پیش نمایش";
   btnShow.onclick = () => showChart(getchartType);
   rowbtn.appendChild(btnShow);
@@ -94,31 +104,69 @@ function chartEdit(e) {
   //btnsubmit
   let btnSubmit = document.createElement("button");
   btnSubmit.className = "btn btn-primary";
-  btnSubmit.style.borderRadius = "4px";
-  btnSubmit.style.margin = "10px 10px 10px 10px";
+  // btnSubmit.style.borderRadius = "4px";
+  btnSubmit.style.margin = "10px 5px 10px 5px";
   btnSubmit.innerText = "ذخیره";
-  btnSubmit.onclick = (e) => {
+  btnSubmit.onclick = () => {
     //get svg
     var svg_xml = chartSvg.getSVG();
     const index = svg_xml.indexOf("</div>") + 6;
     svg_xml = svg_xml.slice(index, 9e9);
 
-    //set base64
-    let svg_Base64 = Base64.encode(svg_xml, false);
+    //get items
+    let parser = new DOMParser();
+    let xmlDoc = parser.parseFromString(svg_xml, "text/xml");
+    const _id = xmlDoc.getElementsByTagName("clipPath")[0].getAttribute("id");
+    const _RowID = $("#" + imgid)
+      .parent()
+      .parent()[0]
+      .id.replaceAll("form-group-", "");
+    const _ColumnIndex = $("#" + imgid)
+      .parent()[0]
+      .id.replaceAll("form-group-body-", "")
+      .split("-")[1];
+    _name = $("#item-1").val();
 
-    //update chart
-    $("#" + imgid).attr("src", "data:image/svg+xml;base64," + svg_Base64);
-    $("#myModal").remove();
+    //get base64
+    const _svg_Base64 = Base64.encode(svg_xml, false);
+    //todo
+    CHARTS.push({
+      RowID: _RowID,
+      ColumnIndex: _ColumnIndex,
+      id: _id,
+      name: _name,
+      text: $("#item-0").val(),
+      type: getchartType,
+      categoryLabel: $("#item-2").val(),
+      valueLabel: $("#item-3").val(),
+      categoryName: $("#item-4").val(),
+      categoryExpression: $("#item-5").val(),
+      series: [
+        {
+          name: $("#item-9").val(),
+          dataExpression: $("#item-7 option:selected").val(),
+          plotType: getchartType,
+          StlyeColor: $("#item-10").val(),
+          version: $("#item-11").val(),
+        },
+      ],
+      imgBs64: _svg_Base64,
+    });
+    console.log(CHARTS);
+
+    //update chart to form
+    $("#" + imgid).attr("src", "data:image/svg+xml;base64," + _svg_Base64);
+    HideModal();
   };
   rowbtn.appendChild(btnSubmit);
 
   //btn exit
   let btnExit = document.createElement("button");
   btnExit.className = "btn btn-light";
-  btnExit.style.borderRadius = "4px";
+  // btnExit.style.borderRadius = "4px";
   btnExit.innerText = "لغو";
   btnExit.onclick = function () {
-    $("#myModal").remove();
+    HideModal();
   };
   rowbtn.appendChild(btnExit);
 

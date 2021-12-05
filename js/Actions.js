@@ -26,49 +26,9 @@ function createLbl(className, id) {
 }
 
 //==========================================================================================Action Items =========================================================================
-// function TextboxFns(ev) {
-//   if ($("#" + ev.target.id).hasClass("form-group-body")) {
-//     //form-group and lbl
-//     let rowId = rowContent(ev);
-//     let id = rowId.replace("form-group-", "form-group-item-");
-//     //text
-//     let txtContent = document.createElement("input");
-//     txtContent.type = "text";
-//     txtContent.className = "form-control form-input noDrop";
-//     txtContent.setAttribute("id", id);
-//     txtContent.setAttribute("draggable", true);
-//     txtContent.addEventListener("dragstart", (e) => drag(e));
-//     txtContent.addEventListener("dblclick", (e) => TextboxProp(e.target.id));
-//     $("#" + rowId).append(txtContent);
-//   }
-//   //set cursor rightPanel item
-//   $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
-// }
 
-// function DropdownFns(ev) {
-//   //form-group and lbl
-//   let rowId = rowContent(ev);
-//   //dropdown
-//   let itemsPanel = document.createElement("select");
-//   itemsPanel.className = "dropdown";
-//   itemsPanel.setAttribute("id", "selectAfertDrag-" + createID());
-//   itemsPanel.addEventListener("dragover", (event) => allowDrop(event));
-//   itemsPanel.addEventListener("dblclick", (e) => DropdownProp(e.target.id));
-//   $("#" + rowId).append(itemsPanel);
-//   //set cursor rightPanel item
-//   $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
-// }
-
-// function LabelFns(ev) {
-//   if ($("#" + ev.target.id).hasClass("form-group-body")) {
-//     //form-group and lbl
-//     rowContent(ev);
-//   }
-//   //set cursor rightPanel item
-//   $("#" + ev.dataTransfer.getData("text")).css("cursor", "grab");
-// }
-function createImgChart(e, parentID, formItem, type) {
-  let style = formItem ? formItem.style : styleChart(type);
+function createImgChart(e, parentID, chartItem, type) {
+  let style = chartItem ? chartItem.imgBs64 : styleChart(type);
   function styleChart(type) {
     let value;
     switch (type) {
@@ -94,13 +54,13 @@ function createImgChart(e, parentID, formItem, type) {
     return value;
   }
 
-  let ID = formItem ? formItem.id : idChart(e);
+  let ID = chartItem ? chartItem.id : idChart(e);
 
   function idChart(e) {
     let defaultId = e.target.id.replaceAll("form-group-body-", "");
     return defaultId;
   }
-  let chartType = formItem ? formItem.type : type;
+  let chartType = chartItem ? chartItem.type : type;
   let parent = parentID ? parentID : e.target.id;
   let img =
     '<img class="fit-image noDrop" type="' +
@@ -359,7 +319,7 @@ $(function () {
 });
 
 //chart modal edit
-function ChartConstractor(width, parent) {
+function ModalConstractor(width, parent) {
   let div =
     '<div id="myModal" class="modal" style="overflow:auto;">' +
     '<div id="chartModal" class="modal-content">' +
@@ -396,7 +356,7 @@ function rowbtnOff(e) {
 function MsgBoxDel(parent, msg) {
   let div =
     '<div id="myModal" class="modal" style="">' +
-    '<div id="chartModal" class="" style="font-size:16px;color:#000;font-style:normal;position: relative;width:30%;top:30%;background-color:#fff; margin: auto; overflow: auto; border: 1px solid #ccc; border-radius: 4px;">' +
+    '<div id="chartModal" class="" style="font-size:16px;color:#000;font-style:normal;position: relative;width:30%;background-color:#fff; margin: auto; overflow: auto; border: 1px solid #ccc; border-radius: 4px;">' +
     '<div id="contentM" class="row col-lg-12" style="padding: 10px 16px 0px 0px;margin: 20px 0px 40px 0px;">' +
     msg +
     '</div><hr style="margin:0px;width:100%;">' +
@@ -415,7 +375,7 @@ function chartDelete(e) {
     let parentID = $("#myModal").parent()[0].id;
     let imgid = parentID.replaceAll("rowbtn-img-", "");
     $("#" + imgid).remove();
-    $("#myModal").remove();
+    HideModal();
     //rowbtn remove
     let rowbtn = "rowbtn-img-" + imgid;
     $("#" + rowbtn).remove();
@@ -425,7 +385,7 @@ function chartDelete(e) {
   $("#myModal").css("display", "block");
 }
 function closed() {
-  $("#myModal").remove();
+  HideModal();
 }
 
 function GroupSplit(elem) {
@@ -589,246 +549,38 @@ function groupDivId(elem) {
   return [...new Set(groupDivIdArray)];
 }
 
+///EXPORT JSON
+var ROWBOXS = ["getjson"];
+var CHARTS = ["getjson"];
+var FILTERS = {};
+var FILTERSQL = "getjson";
+var ACCESESROLES = ["getjson"];
+var ACCESESGROUPS = ["getjson"];
+var REFROLES = ["getjson"];
+var REFGROUPS = ["getjson"];
+var REFCOLUMNS = ["getjson"];
+
+
 function ExportData() {
-  var ExportJson = {
-    DashboardID: 1010300,
-    Name: "Create New User",
-    ItemsGrouping: true,
-    ColumnLayout: "OnceColumn",
-    ColumnWidth: "default",
-    ActivityID: 1010300,
-    DataActivityID: "",
-
-    charts: [
-      {
-        RowID: 10103000,
-        ColumnIndex: 0,
-        id: "highcharts-kzimcwq-199-",
-        name: "",
-        text: "",
-        type: "bar",
-        categoryLabel: "#empty",
-        valueLabel: "#empty",
-        categoryName: "",
-        categoryExpression: "[data2]",
-        seriesType: "",
-        version: "",
-        series: [
-          {
-            name: "",
-            text: "",
-            dataExpression: "Sum([data2])",
-            plotType: "pie",
-            StlyeColor: "#8eb4f1",
-            version: "",
-          },
-        ],
-        style: "",
-      },
-      {
-        RowID: 10103000,
-        ColumnIndex: 1,
-        id: "highcharts-5vfb926-165-",
-        name: "",
-        text: "",
-        type: "pie",
-        categoryLabel: "#empty",
-        valueLabel: "#empty",
-        categoryName: "",
-        categoryExpression: "[data2]",
-        seriesType: "",
-        version: "",
-        series: [
-          {
-            name: "",
-            text: "",
-            dataExpression: "Sum([data2])",
-            plotType: "pie",
-            StlyeColor: "#8eb4f1",
-            version: "",
-          },
-        ],
-        style: "",
-      },
-      {
-        RowID: 10103001,
-        ColumnIndex: 0,
-        id: "highcharts-sltsk21-124-",
-        name: "",
-        text: "sef",
-        type: "areaspline",
-        categoryLabel: "#empty",
-        valueLabel: "#empty",
-        categoryName: "",
-        categoryExpression: "[data2]",
-        seriesType: "",
-        version: "23",
-        series: [
-          {
-            name: "",
-            text: "",
-            dataExpression: "Sum([data2])",
-            plotType: "areaspline",
-            StlyeColor: "#bbc2ce",
-            version: "23",
-          },
-        ],
-        style: "",
-      },
-    ],
-    Grouping: {
-      GroupingEnable: true,
-      header0: true,
-      header1: true,
-      header2: true,
-    },
-    FormGroupBoxs: [
-      {
-        RowID: 10103000,
-        chartID: 1010300,
-        Name: "Personal Info",
-        GroupIndex: 0,
-        GroupDisplayMode: "GroupWithBox",
-        ColumnLayout: "TwoColumn",
-        ColumnWidth: "default",
-        Visibility: "",
-        Enabled: true,
-        Version: "1.1.0.core",
-        Description: "",
-      },
-
-      {
-        RowID: 10103001,
-        chartID: 1010300,
-        Name: "Job Info",
-        GroupIndex: 1,
-        GroupDisplayMode: "GroupWithBox",
-        ColumnLayout: "OnceColumn",
-        ColumnWidth: "default",
-        Visibility: "",
-        Enabled: true,
-        Version: "1.1.0.core",
-        Description: "",
-      },
-      {
-        RowID: 10103002,
-        DashboardID: 1010300,
-        Name: "Contact Info",
-        GroupIndex: 2,
-        GroupDisplayMode: "GroupWithBox",
-        ColumnLayout: "TwoColumn",
-        ColumnWidth: "default",
-        Visibility: "",
-        Enabled: true,
-        Version: "1.1.0.core",
-        Description: "",
-      },
-      {
-        RowID: 10103003,
-        DashboardID: 1010300,
-        Name: "Other Info",
-        GroupIndex: 3,
-        GroupDisplayMode: "GroupWithBox",
-        ColumnLayout: "ThreeColumn",
-        ColumnWidth: "default",
-        Visibility: "",
-        Enabled: true,
-        Version: "1.1.0.core",
-        Description: "",
-      },
-    ],
-
-    Filters: {
-      condition: "AND",
-      rules: [
-        {
-          id: "[data1]",
-          field: "[data1]",
-          type: "string",
-          input: "text",
-          operator: "equal",
-          value: "dd",
-        },
-        {
-          id: "[data2]",
-          field: "[data2]",
-          type: "double",
-          input: "text",
-          operator: "not_equal",
-          value: 252,
-        },
-      ],
-      valid: true,
-    },
-    sqlFilters: "[data1] = 'dd' AND [data2] != 252",
-
-    accessRoles: [
-      {
-        id: 0,
-        label: "مدیریت انبار",
-      },
-      {
-        id: 1,
-        label: "کارشناس انبار",
-      },
-    ],
-    accessGroups: [
-      {
-        id: 0,
-        label: "مدیریت پیکربندی",
-      },
-      {
-        id: 1,
-        label: "مدیریت انبار",
-      },
-      {
-        id: 2,
-        label: "کارشناس انبار",
-      },
-      {
-        id: 3,
-        label: "پیکربندی",
-      },
-    ],
-    refRoles: [
-      {
-        id: 1,
-        label: "مدیریت پیکربندی",
-      },
-      {
-        id: 2,
-        label: "مدیریت انبار",
-      },
-      {
-        id: 4,
-        label: "کارشناس پیکربندی",
-      },
-      {
-        id: 5,
-        label: "کارشناس انبار",
-      },
-    ],
-    refGroups: [
-      {
-        id: 1,
-        label: "مدیریت پیکربندی",
-      },
-      {
-        id: 2,
-        label: "مدیریت انبار",
-      },
-      {
-        id: 3,
-        label: "کارشناس پیکربندی",
-      },
-      {
-        id: 4,
-        label: "کارشناس انبار",
-      },
-      {
-        id: 5,
-        label: "پیکربندی",
-      },
-    ],
+  return {
+    dashboardID: "getjson",
+    name: "getjson",
+    itemsGrouping: "getjson",
+    columnLayout: "getjson",
+    columnWidth: "getjson",
+    rowBoxs: ROWBOXS,
+    charts: CHARTS,
+    filters: FILTERS,
+    filterSql: FILTERSQL,
+    accessRoles: ACCESESROLES,
+    accessGroups: ACCESESGROUPS,
+    refRoles: REFROLES,
+    refGroups: REFGROUPS,
+    refcolumns:REFCOLUMNS
   };
 }
+
+function HideModal() {
+  $("#myModal").remove();
+}
+

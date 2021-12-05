@@ -26,9 +26,8 @@ body {
   border: 1px solid transparent;
   direction: ltr;
 }
-#Export_btn {
-  margin: 2px;
-  font: 16px var(--mainFont);
+.Json_btn {
+  margin: 5px;
 }
 #geSidebar {
   background-color: var(--mainbackground);
@@ -48,25 +47,24 @@ body {
   overflow: hidden;
 }
 .rightPanelLbl {
-  margin-right: 60px;
+  margin-right: 45px;
 }
 
 #PanelId {
   overflow: auto;
   display: grid;
-  padding: 10px;
+  padding: 15px;
   grid-template:
-    "a a" 15px
-    "b b" 60px
-    "c c" 60px
-    "d d " 60px;
-  grid-template-columns: 120px auto ;
+    "a a" 0px
+    "b b" 40px
+    "c c " 90px;
+  grid-template-columns: 130px 120px;
   border: 1px solid #ccc;
+  align-items: center;
+  justify-content: right;
+  justify-self: center;
 }
-.rightpanelIcon {
-  justify-self: right;
-  margin-top: 10px;
-}
+
 ::placeholder {
   font: 10px var(--mainFont);
 }
@@ -232,17 +230,23 @@ br {
 }
 
 .Textbox {
-  left: 0px;
   position: absolute;
+  font: 12px var(--mainFont);
+  color: #000;
+  margin-left: 10px;
+  border-radius: 3px;
 }
 .selectBox {
   height: 30px;
   width: 200px;
-  margin: 0px;
+  margin: 0px 0px 0px 10px;
   font-size: inherit;
   border: 1px solid #ccc;
   background-color: #efefef;
   cursor: pointer;
+  font: 12px var(--mainFont);
+  color: #000;
+  border-radius: 3px;
 }
 .lbl {
   font: 14px var(--mainFont);
@@ -257,8 +261,7 @@ br {
   z-index: 1; /* Sit on top */
   padding-top: 100px; /* Location of the box */
   left: 0;
-  top: 0;
-
+  align-items: center;
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.3); /* Black w/ opacity */
@@ -268,10 +271,9 @@ br {
 .modal-content {
   margin: auto;
   padding: 20px;
-  top: -40px;
-  /* width: 80%; */
   background-color: #fff;
   overflow: auto;
+  border-radius: 2px;
 }
 
 /* The Close Button */
@@ -298,22 +300,19 @@ br {
   overflow: auto;
   display: grid;
   grid-template:
-    "a a" 15px
-    "c c" 60px
-    "c c" 70px;
-  grid-template-columns: 220px auto auto auto;
+    "a" 0px
+    "c" 60px;
+  grid-template-columns: 210px;
   border: 1px solid #ccc;
-  padding: 0px 10px 10px 10px;
-  margin-top: 5px;
-  height: 480px;
+
+  align-items: center;
+  justify-content: right;
+  padding: 15px;
 }
-.ToolsIcon {
-  justify-self: right;
-  margin-top: 10px;
-}
+
 .ToolsLbl {
   cursor: pointer;
-  margin-right: 45px;
+  margin-right: 50px;
 }
 
 .vol {
@@ -377,16 +376,16 @@ input[type="range"] {
   float: right;
 }
 #div1 {
-  border-radius: 4px;
+  border-radius: 2px;
   border: 1px solid #ccc;
   padding: 10px 5px 10px 25px;
   margin-left: 10px;
 }
 #div2 {
-  border-radius: 4px;
+  border-radius: 2px;
   border: 1px solid #ccc;
   padding: 0px;
-  height: 640px;
+  height: 550px;
 }
 .containerside {
   color: black;
@@ -461,11 +460,9 @@ input[type="range"] {
 .rowBtnGroup-span {
   font: 20px var(--mainFont);
   font-style: italic;
-  width: 800px;
   border: 2px dashed #e3b535;
   color: #ccc;
   box-shadow: -5px 10px 5px #ccc;
-  left: 90%;
   display: none;
   border-radius: 5px;
   text-align: center;
