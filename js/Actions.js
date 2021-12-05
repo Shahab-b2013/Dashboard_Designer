@@ -292,28 +292,54 @@ function dragLeave(e) {
     }
   }
 }
-function GroupMoveUp(e) {
-  let oldID = $("#" + e.target.parentNode.parentNode.id);
-  let cloned = oldID.clone(true);
-
-  let newID = oldID.prev()[0].id;
-  if (!$("#" + newID).hasClass("divHeader")) {
-    $("#" + newID).before($(cloned));
-    oldID.remove();
-  }
-}
-
-function GroupMoveDown(e) {
-  let oldID = $("#" + e.target.parentNode.parentNode.id);
-  let cloned = oldID.clone(true);
-  if (oldID.next()[0]) {
-    let newID = oldID.next()[0].id;
-    if (newID != "geContent") {
-      $("#" + newID).after($(cloned));
-      oldID.remove();
+function rowMoveUp(e) {
+  let oneID = $("#" + e.target.parentNode.parentNode.id);
+  if (oneID.prev()[0]) {
+    let cloned = oneID.clone(true);
+    let twoID = oneID.prev()[0].id;
+    if (!$("#" + twoID).hasClass("divHeader")) {
+      $("#" + twoID).before($(cloned));
+      ROWBOXS_Modify(
+        "Up",
+        oneID[0].id.replaceAll("form-group-", ""),
+        twoID.replaceAll("form-group-", "")
+      );
+      oneID.remove();
     }
   }
 }
+
+function rowMoveDown(e) {
+  let oneID = $("#" + e.target.parentNode.parentNode.id);
+  if (oneID) {
+    let cloned = oneID.clone(true);
+    if (oneID.next()[0]) {
+      let twoID = oneID.next()[0].id;
+      if (twoID != "geContent") {
+        $("#" + twoID).after($(cloned));
+        ROWBOXS_Modify(
+          "Down",
+          oneID[0].id.replaceAll("form-group-", ""),
+          twoID.replaceAll("form-group-", "")
+        );
+        oneID.remove();
+      }
+    }
+  }
+}
+
+//edit rowIndex
+function ROWBOXS_Modify(move, oneID, twoID) {
+  $.each(ROWBOXS, function (index, item) {
+    if (item.rowID == oneID) {
+      move == "Down" ? item.rowIndex++ : item.rowIndex--;
+    } else if (item.rowID == twoID) {
+      move == "Down" ? item.rowIndex-- : item.rowIndex++;
+    }
+    ROWBOXS.sort((first, second) => first.rowIndex - second.rowIndex);
+  });
+}
+
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 });

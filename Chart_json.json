@@ -77,32 +77,32 @@
 	"rowBoxs": [{
 			"rowID": 10103002,
 			"dashboardID": 1010300,
-			"groupIndex": 0,
-			"groupDisplayMode": "GroupWithBox",
+			"rowIndex": 0,
+			"rowDisplayMode": "GroupWithBox",
 			"columnLayout": "TwoColumn",
 			"columnWidth": "default"
 		},
 		{
 			"rowID": 10103000,
 			"dashboardID": 1010300,
-			"groupIndex": 1,
-			"groupDisplayMode": "GroupWithBox",
+			"rowIndex": 1,
+			"rowDisplayMode": "GroupWithBox",
 			"columnLayout": "TwoColumn",
 			"columnWidth": "default"
 		},
 		{
 			"rowID": 10103001,
 			"dashboardID": 1010300,
-			"groupIndex": 2,
-			"groupDisplayMode": "GroupWithBox",
+			"rowIndex": 2,
+			"rowDisplayMode": "GroupWithBox",
 			"columnLayout": "OnceColumn",
 			"columnWidth": "default"
 		},
 		{
 			"rowID": 10103003,
 			"dashboardID": 1010300,
-			"groupIndex": 3,
-			"groupDisplayMode": "GroupWithBox",
+			"rowIndex": 3,
+			"rowDisplayMode": "GroupWithBox",
 			"columnLayout": "ThreeColumn",
 			"columnWidth": "default"
 		}
