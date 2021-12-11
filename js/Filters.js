@@ -9,7 +9,6 @@ function Filters(e) {
 
   container.append(div);
   $("#builder-basic").css("direction", "ltr");
-  //  container.css.direction = "ltr";
   setTimeout(QueryBuilder, 0);
   setTimeout(BtnSql, 0);
   setTimeout(BtnReset, 0);
@@ -26,38 +25,35 @@ function Filters(e) {
     btn.style.marginLeft = "5px";
     btn.innerHTML = "شروع مجدد";
     div.appendChild(btn);
-
     btn.onclick = function () {
       $("#builder-basic").queryBuilder("reset");
-      sessionStorage.removeItem("Filters");
-      sessionStorage.removeItem("sqlFilters");
+      FILTERS = {};
     };
   }
+
   // BtnSql
   function BtnSql() {
     let btn = document.createElement("button");
     btn.innerHTML = "ذخیره";
     btn.className = "btn btn-primary";
-    // btn.style.borderRadius = "5px";
-
     btn.style.float = "right";
     btn.style.height = "34px";
     div.appendChild(btn);
-
     btn.onclick = function () {
       var result = $("#builder-basic").queryBuilder("getSQL", false);
 
       //set sql
       if (result.sql.length != null) {
-        FILTERSQL = result.sql;
-        // sessionStorage.setItem("sqlFilters", localData);
+        let localData = result.sql;
+        SQLFILTERS = localData;
+        console.log(SQLFILTERS);
       }
       //set json
       result = $("#builder-basic").queryBuilder("getRules");
 
       if (!$.isEmptyObject(result)) {
-        FILTERS = result;
-        // sessionStorage.setItem("Filters", localData);
+        let localData = result;
+        FILTERS = localData;
       }
 
       HideModal();
@@ -70,8 +66,6 @@ function Filters(e) {
     btnExit.className = "btn btn-light";
     btnExit.style.float = "right";
     btnExit.style.height = "34px";
-    // btnExit.style.borderBottomRightRadius = "0px";
-    // btnExit.style.borderTopRightRadius = "0px";
     btnExit.innerText = "خروج";
     btnExit.onclick = function () {
       HideModal();
@@ -80,83 +74,19 @@ function Filters(e) {
   }
 
   function QueryBuilder() {
-    var localjson = sessionStorage.getItem("Filters");
+    var localjson = FILTERS;
     var rules_basic;
-
     if (localjson != "null") {
-      rules_basic = JSON.parse(localjson);
+      rules_basic = localjson;
     }
 
     //load
     $("#builder-basic").queryBuilder(GetLocalFilter(rules_basic));
   }
+
   function GetLocalFilter(rules_basic) {
     var listArray = [];
-    let subjson = sessionStorage.getItem("subjson");
-    subjson = JSON.parse(subjson);
-    let refColumns = [
-      {
-        id: 1,
-        name: "column1",
-        header: "عنوان 1",
-        data: "[data1]",
-        summary: "خلاصه1",
-        type: "string",
-        input: "text",
-        values: {},
-      },
-      {
-        id: 2,
-        name: "column2",
-        header: "عنوان 2",
-        data: "[data2]",
-        summary: "خلاصه2",
-        type: "double",
-        input: "text",
-        values: {},
-      },
-      {
-        id: 3,
-        name: "column3",
-        header: "عنوان 3",
-        data: "[data33333]",
-        summary: "خلاصه3",
-        type: "integer",
-        input: "radio",
-        values: {
-          0: "No",
-          1: "Yes",
-        },
-        operators: ["equal"],
-      },
-      {
-        id: 4,
-        name: "column4",
-        header: "عنوان 4",
-        data: "[data4]",
-        summary: "خلاصه4",
-        type: "integer",
-        input: "select",
-        values: {
-          1: "Books",
-          2: "Movies",
-          3: "Music",
-          4: "Tools",
-          5: "Goodies",
-          6: "Clothes",
-        },
-        operators: [
-          "equal",
-          "not_equal",
-          "in",
-          "not_in",
-          "is_null",
-          "is_not_null",
-        ],
-      },
-    ];
-
-    // subjson.poolDetails.table.refColumns;
+    let refColumns = REFCOLUMNS;
     for (let i = 0; i < refColumns.length; i++) {
       let data = refColumns[i].data;
       let type1 = refColumns[i].type;
@@ -169,7 +99,6 @@ function Filters(e) {
         type: type1,
         input: input,
         values: values,
-
         operators: operators,
       };
 
@@ -177,7 +106,6 @@ function Filters(e) {
     }
 
     var obj = {};
-
     obj.filters = listArray;
     obj.rules = rules_basic;
     return obj;

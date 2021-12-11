@@ -46,7 +46,7 @@ function createDivs() {
     panelHeader.appendChild(nemoodarIcons);
 
     //FildsPanel
-    let FildsPanel = createDiv("", "PanelId");
+    let FildsPanel = createDiv("col-lg-12 col-md-6", "PanelId");
     RightPanel.append(FildsPanel);
 
     //get imgArray from Img.js
@@ -141,7 +141,7 @@ function createDivs() {
 
     //Tools Header
     let ToolsHeader = document.createElement("div");
-    ToolsHeader.className = "divHeader";
+    ToolsHeader.className = "col-lg-12 col-md-6 divHeader";
     ToolsHeader.innerHTML = "ابزار";
     ToolsHeader.style.gridRow = "1";
     RightPanel.appendChild(ToolsHeader);
@@ -248,28 +248,30 @@ function openfile() {
   if (input) {
     var reader = new FileReader();
     reader.onload = function (e) {
-      var contents = e.target.result;
-      contents = JSON.parse(contents);
+      let _json = e.target.result;
+      _json = JSON.parse(_json);
       $("#geContent").empty();
-      chartView(contents);
+      chartView(_json);
       //set variables
-      DASHBOARDID = contents.dashboardID;
-      NAME = contents.name;
-      ITEMSGROUPING = contents.itemsGrouping;
-      COLUMNLAYOUT = contents.columnLayout;
-      COLUMNWIDTH = contents.columnWidth;
-      ROWBOXS = contents.rowBoxs;
-      CHARTS = contents.charts;
-      FILTERS = contents.filters;
-      FILTERSQL = contents.sqlFilters;
-      ACCESESROLES = contents.accessRoles;
-      ACCESESGROUPS = contents.accessGroups;
-      REFROLES = contents.refRoles;
-      REFGROUPS = contents.refGroups;
-      REFCOLUMNS = contents.refColumns;
+      DASHBOARDID = _json.dashboardID;
+      NAME = _json.name;
+      ITEMSGROUPING = _json.itemsGrouping;
+      COLUMNLAYOUT = _json.columnLayout;
+      COLUMNWIDTH = _json.columnWidth;
+      ROWBOXS = _json.rowBoxs;
+      CHARTS = _json.charts;
+      FILTERS = _json.filters;
+      SQLFILTERS = _json.sqlFilters;
+      ACCESESROLES = _json.accessRoles;
+      ACCESESGROUPS = _json.accessGroups;
+      REFROLES = _json.refRoles;
+      REFGROUPS = _json.refGroups;
+      REFCOLUMNS = _json.refColumns;
+      console.log(REFCOLUMNS);
       HideModal();
     };
     reader.readAsText(input);
+ 
   }
 }
 

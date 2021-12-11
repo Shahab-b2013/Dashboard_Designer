@@ -1,8 +1,6 @@
-
-
 "use strict";
 function Accesses(e) {
-ModalConstractor("50%", "geContent");
+  ModalConstractor("50%", "geContent");
   $("#chartModal").addClass("containerside");
   $("#chartModal").css("direction", "ltr");
   let container = $("#chartModal");
@@ -50,7 +48,7 @@ ModalConstractor("50%", "geContent");
   tabcontent.appendChild(tab1);
   //get/set refRoles
 
-  var refRoles = _json.refRoles;
+  var refRoles = REFROLES;
   if (refRoles != null) {
     Tabinfo(refRoles, tab1, "Roles");
   }
@@ -61,7 +59,7 @@ ModalConstractor("50%", "geContent");
   tab2.className = "tab-pane fade";
   tabcontent.appendChild(tab2);
   //get/set refGroups
-  var refGroups = _json.refGroups;
+  var refGroups = REFGROUPS;
   if (refGroups != null) {
     Tabinfo(refGroups, tab2, "Groups");
   }
@@ -69,19 +67,8 @@ ModalConstractor("50%", "geContent");
   // tab Data
   function Tabinfo(listLbl, div, tabId) {
     try {
-      //get/set old Roles
-      // let getRoleLocal = _json.accessRoles;
-      // // getRoleLocal = JSON.parse(getRoleLocal);
-
-      // //get/set old Groups
-      // let getGroupsLocal = _json.accessGroups;
-      // getGroupsLocal = JSON.parse(getGroupsLocal);
-
-      // listLbl = JSON.parse(listLbl);
-
       for (let item in listLbl) {
         let rowDiv = document.createElement("div");
-        // rowDiv.style.margin = "10px 0px 10px 550px";
         div.appendChild(rowDiv);
 
         //label
@@ -110,11 +97,9 @@ ModalConstractor("50%", "geContent");
         tabId == "Roles"
           ? (isLocal = "accessRoles")
           : (isLocal = "accessGroups");
-        // let getListAccess = sessionStorage.getItem(isLocal);
 
         let getListAccess =
-          isLocal == "accessRoles" ? _json.accessRoles : _json.accessGroups;
-        // getListAccess = JSON.parse(getListAccess);
+          isLocal == "accessRoles" ? ACCESESROLES : ACCESESGROUPS;
 
         for (let i = 0; i < getListAccess.length; i++) {
           if (listLbl[item].label == getListAccess[i].label) {
@@ -136,7 +121,6 @@ ModalConstractor("50%", "geContent");
   btnSave.style.float = "right";
   btnSave.style.margin = "10px 10px 10px 5px";
   container.append(btnSave);
-
   btnSave.onclick = function () {
     let count = 0;
     let tabId;
@@ -144,18 +128,16 @@ ModalConstractor("50%", "geContent");
     while (count < 2) {
       if (count == 0) {
         tabId = "Roles";
-        // items = JSON.parse(refRoles);
         items = refRoles;
         tabIems(items, tabId);
       } else {
         tabId = "Groups";
-        // items = JSON.parse(refGroups);
         items = refGroups;
         tabIems(items, tabId);
       }
       count++;
     }
-     HideModal();
+    HideModal();
   };
 
   function tabIems(items, tabId) {
@@ -184,7 +166,7 @@ ModalConstractor("50%", "geContent");
   let btnExit = document.createElement("button");
   btnExit.className = "btn btn btn-light";
   btnExit.innerHTML = "خروج";
-  btnExit.onclick = () => HideModal();;
+  btnExit.onclick = () => HideModal();
   btnExit.style.float = "right";
   btnExit.style.margin = "10px 0px 10px 10px";
   container.append(btnExit);

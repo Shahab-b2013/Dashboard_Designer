@@ -89,20 +89,54 @@ function swapping(e) {
   let temp;
   let oneElem = $("#" + e.dataTransfer.getData("text"));
   let twoElem = $("#" + e.target.id);
+  e.preventDefault();
 
-  if (twoElem == null || twoElem == undefined) {
-    e.preventDefault();
-    twoElem.append(oneElem);
-  } else if (e.dataTransfer.getData("text").length > 3) {
-    e.preventDefault();
-    //swap src
-    temp = oneElem.attr("src");
-    oneElem.attr("src", twoElem.attr("src"));
-    twoElem.attr("src", temp);
-    //swap type
-    temp = oneElem.attr("type");
-    oneElem.attr("type", twoElem.attr("type"));
-    twoElem.attr("type", temp);
+  //swap src
+  temp = oneElem.attr("src");
+  oneElem.attr("src", twoElem.attr("src"));
+  twoElem.attr("src", temp);
+  //swap type
+  temp = oneElem.attr("type");
+  oneElem.attr("type", twoElem.attr("type"));
+  twoElem.attr("type", temp);
+
+  //modify chartArray for swapping
+  let oneObj = CHARTS.find((element) => element.id == oneElem.attr("id"));
+  let twoObj = CHARTS.find((element) => element.id == twoElem.attr("id"));
+
+  //modify oneObj rowID
+  if (twoElem.hasClass("form-group-body")) {
+    oneObj.rowID = +e.target.id
+      .replaceAll("form-group-body-", "")
+      .split("-")[0];
+
+    //modify oneObj columnIndex
+    oneObj.columnIndex = +e.target.id
+      .replaceAll("form-group-body-", "")
+      .split("-")[1];
+  } else {
+    oneObj.rowID = +twoElem
+      .parent()[0]
+      .id.replaceAll("form-group-body-", "")
+      .split("-")[0];
+
+    //modify oneObj columnIndex
+    oneObj.columnIndex = +twoElem
+      .parent()[0]
+      .id.replaceAll("form-group-body-", "")
+      .split("-")[1];
+
+    //modify twoObj rowID
+    twoObj.rowID = +oneElem
+      .parent()[0]
+      .id.replaceAll("form-group-body-", "")
+      .split("-")[0];
+
+    //modify twoObj columnIndex
+    twoObj.columnIndex = +oneElem
+      .parent()[0]
+      .id.replaceAll("form-group-body-", "")
+      .split("-")[1];
   }
 }
 
@@ -156,7 +190,6 @@ function GroupFns(e) {
       .each(function () {
         if ($(this).hasClass("form-group-box")) {
           let nextId = +$(this).attr("id").replace("form-group-", "");
-          console.log(nextId);
           if (nextId > id) {
             id = nextId;
           }
@@ -229,7 +262,7 @@ function drop(ev) {
             document.getElementById("rowbtn-img-" + dataId)
           );
           $("#" + ev.target.id).css("border", "");
-
+          swapping(ev);
           break;
       }
     }
@@ -299,6 +332,7 @@ function rowMoveUp(e) {
     let twoID = oneID.prev()[0].id;
     if (!$("#" + twoID).hasClass("divHeader")) {
       $("#" + twoID).before($(cloned));
+      //for swapping
       ROWBOXS_Modify(
         "Up",
         oneID[0].id.replaceAll("form-group-", ""),
@@ -317,6 +351,7 @@ function rowMoveDown(e) {
       let twoID = oneID.next()[0].id;
       if (twoID != "geContent") {
         $("#" + twoID).after($(cloned));
+        //for swapping
         ROWBOXS_Modify(
           "Down",
           oneID[0].id.replaceAll("form-group-", ""),
@@ -328,7 +363,7 @@ function rowMoveDown(e) {
   }
 }
 
-//edit rowIndex
+//edit rowIndex for swapping
 function ROWBOXS_Modify(move, oneID, twoID) {
   $.each(ROWBOXS, function (index, item) {
     if (item.rowID == oneID) {
@@ -496,7 +531,6 @@ function setDiv1(elem, colNum) {
     "class",
     "form-group-body  col-md-" + colNum
   );
-  console.log(groupDivId(elem));
 }
 function setDiv2(elem, colNum) {
   $("#" + groupDivId(elem)[1]).attr(
@@ -584,7 +618,7 @@ var COLUMNWIDTH;
 var ROWBOXS = [];
 var CHARTS = [];
 var FILTERS = {};
-var FILTERSQL = "";
+var SQLFILTERS = "";
 var ACCESESROLES = [];
 var ACCESESGROUPS = [];
 var REFROLES = [];
@@ -601,12 +635,12 @@ function ExportData() {
     rowBoxs: ROWBOXS,
     charts: CHARTS,
     filters: FILTERS,
-    filterSql: FILTERSQL,
+    sqlFilters: SQLFILTERS,
     accessRoles: ACCESESROLES,
     accessGroups: ACCESESGROUPS,
     refRoles: REFROLES,
     refGroups: REFGROUPS,
-    refcolumns: REFCOLUMNS,
+    refColumns: REFCOLUMNS,
   };
 
   //export action
