@@ -26,7 +26,6 @@ function createLbl(className, id) {
 }
 
 //==========================================================================================Action Items =========================================================================
-
 function createImgChart(e, parentID, chartItem, type) {
   let style = chartItem ? chartItem.imgBs64 : styleChart(type);
   function styleChart(type) {
@@ -53,7 +52,7 @@ function createImgChart(e, parentID, chartItem, type) {
     }
     return value;
   }
-
+  console.log(chartItem.id);
   let ID = chartItem ? chartItem.id : idChart(e);
 
   function idChart(e) {
@@ -65,11 +64,11 @@ function createImgChart(e, parentID, chartItem, type) {
   let img =
     '<img class="fit-image noDrop" type="' +
     type +
-    '" draggable="true" ondragstart="dragstart(event)" ondrop="swapping(event)" ondragover="event.preventDefault()" onmouseenter="rowbtnOn(event)" onmouseleave="rowbtnOff(event)" style ="padding-left:10px;border:1px solid #ccc;border-radius:10px;cursor:grab"  src="data:image/svg+xml;base64,' +
+    '" draggable="true" ondragstart="dragstart(event)" ondrop="swapping(event)" ondragover="event.preventDefault()" onmouseenter="rowbtnOn(this)" onmouseleave="rowbtnOff(this)" style ="padding-left:10px;border:1px solid #ccc;border-radius:10px;cursor:grab"  src="data:image/svg+xml;base64,' +
     style +
     '" id="' +
     ID +
-    '"><div class="row" onmouseenter="rowbtnOn2(event)" style="display:none;float: left;margin:-50px 0px 0px 20px;" id="rowbtn-img-' +
+    '"><div class="row" onmouseenter="rowbtnOn2(this)" style="display:none;float: left;margin:-50px 0px 0px 20px;" id="rowbtn-img-' +
     ID +
     '"><span id="spanDelete' +
     ID +
@@ -405,14 +404,15 @@ function ModalConstractor(width, parent) {
   $("#chartModal").css("width", width);
 }
 
-function rowbtnOn(e) {
-  $("#rowbtn-img-" + e.target.id).css("display", "block");
+function rowbtnOn(elem) {
+  $("#rowbtn-img-" + $(elem)[0].id).css("display", "block");
+  console.log(elem.id)
 }
-function rowbtnOn2(e) {
-  $("#" + e.target.id).css("display", "block");
+function rowbtnOn2(elem) {
+  $("#" + $(elem)[0].id).css("display", "block");
 }
-function rowbtnOff(e) {
-  $("#rowbtn-img-" + e.target.id).css("display", "none");
+function rowbtnOff(elem) {
+  $("#rowbtn-img-" + $(elem)[0].id).css("display", "none");
 }
 function MsgBoxDel(parent, msg) {
   let div =

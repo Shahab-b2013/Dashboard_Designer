@@ -2,7 +2,7 @@
 
 
 
-function chartView(_json) {
+function DashboardView(_json) {
   var _chartGroup = _json;
   var content;
   var bodyID = "#geContent";
@@ -100,10 +100,10 @@ function chartView(_json) {
   //#region Render Form Items
 
   var parentID = "";
-  var _Charts = _json;
+  // var _Charts = _json;
   var itemsGrouping = _chartGroup.itemsGrouping;
-
-  $.each(_Charts.charts, function (index, chartItem) {
+// console.log(CHARTS)
+  $.each(CHARTS, function (index, chartItem) {
     if (itemsGrouping) {
       parentID =
         "form-group-body-" + chartItem.rowID + "-" + chartItem.columnIndex;

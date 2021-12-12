@@ -251,7 +251,7 @@ function openfile() {
       let _json = e.target.result;
       _json = JSON.parse(_json);
       $("#geContent").empty();
-      chartView(_json);
+      
       //set variables
       DASHBOARDID = _json.dashboardID;
       NAME = _json.name;
@@ -267,8 +267,8 @@ function openfile() {
       REFROLES = _json.refRoles;
       REFGROUPS = _json.refGroups;
       REFCOLUMNS = _json.refColumns;
-      console.log(REFCOLUMNS);
       HideModal();
+      DashboardView(_json);
     };
     reader.readAsText(input);
  

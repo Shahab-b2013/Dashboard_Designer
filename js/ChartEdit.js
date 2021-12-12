@@ -1,6 +1,7 @@
-
 "use strict";
+
 function chartEdit(e) {
+  var chartSvg;
   /*
   Get img
   */
@@ -18,6 +19,7 @@ function chartEdit(e) {
   $("#contentM").append(div2);
 
   //div1 Add Items
+  //load chart and items
   const ArrLbl = [
     "Text",
     "Name",
@@ -32,57 +34,263 @@ function chartEdit(e) {
     "StlyeColor",
     "version",
   ];
+  console.log("loadid: ", imgid);
+  console.log(CHARTS);
+
+  let findChart = CHARTS.find((Element) => Element.id == imgid);
+  let ArrItems = [
+    findChart.text,
+    findChart.name,
+    findChart.categoryLabel,
+    findChart.valueLabel,
+    findChart.categoryName,
+    REFCOLUMNS,
+    ["sum", "avg", "count", "min", "max"],
+    findChart.series[0].dataExpression,
+    findChart.series[0].text,
+    findChart.series[0].name,
+    findChart.series[0].styleColor,
+    findChart.version,
+  ];
+
+  //create items and value
   for (let i = 0; i < ArrLbl.length; i++) {
+    divItems(i);
+    label(i, ArrLbl[i]);
+    if (i == 5) {
+      selectList(i, ArrItems[i], findChart.categoryExpression);
+    } else if (i == 6) {
+      selectList(i, ArrItems[i], findChart.operator);
+    } else if (i == 10) {
+      inputColor(i, ArrItems[i]);
+    } else {
+      textBox(i, ArrItems[i]);
+    }
+  }
+
+  //row
+  function divItems(i) {
     let div1Items =
       '<div id="div1Items-' + i + '" class="  " style="width:100%"></div>';
     $("#div1").append(div1Items);
+  }
 
+  //label
+  function label(i, value) {
     let lbl = document.createElement("label");
-    lbl.innerText = ArrLbl[i] + ":";
+    lbl.innerText = value + ":";
     lbl.className = "lbl ";
     lbl.style.margin = "10px 0px 10px 10px";
     $("#div1Items-" + i).append(lbl);
+  }
 
-    if (i == 6 || i == 7) {
-      //dropDown
+  //text Box
+  function textBox(i, value) {
+    let textBox = document.createElement("input");
+    textBox.type = "text";
+    textBox.className = "Textbox";
+    textBox.setAttribute("id", "item-" + i);
+    textBox.style.border = "1px solid #ccc";
+    textBox.style.height = "30px";
+    textBox.style.width = "200px";
+    textBox.style.left = "0px";
+    textBox.style.position = "absolute";
+    textBox.value = value;
+    $("#div1Items-" + i).append(textBox);
+  }
 
-      let Select_List =
-        '<select class="selectBox" id="item-' +
-        i +
-        '" style="left:0px;position:absolute;">';
+  //select box
+  function selectList(i, value, defaultVal) {
+    let Select_List =
+      '<select onchange="operator(event)" class="selectBox" id="item-' +
+      i +
+      '" style="left:0px;position:absolute;">';
+    for (let j = 0; j < value.length; j++) {
+      i == 5
+        ? value[j].data == defaultVal
+          ? (Select_List += "<option selected>" + value[j].data + "</option>")
+          : (Select_List += "<option>" + value[j].data + "</option>")
+        : value[j] == defaultVal
+        ? (Select_List += "<option selected>" + value[j] + "</option>")
+        : (Select_List += "<option>" + value[j] + "</option>");
+    }
+    Select_List += "</select>";
+    $("#div1Items-" + i).append(Select_List);
+  }
 
-      if (i == 6) {
-        Select_List +=
-          "<option>value1</option><option>value2</option><option>value3</option>";
+  //colorInput
+  function inputColor(i, value) {
+    let color = document.createElement("input");
+    color.type = "color";
+    color.setAttribute("id", "item-" + i);
+    color.style.width = "150px";
+    color.style.left = "10px";
+    color.value = value;
+    color.style.position = "absolute";
+    $("#div1Items-" + i).append(color);
+  }
+
+  //===============================show Chart ============================
+
+  //create chart
+  function showChart(chartType) {
+    let _cat, _series, _name;
+
+    //create chart function
+    function chartItems(_series, _cat, chartType) {
+      _TitleOptions.text = "";
+      _GeneralOptions.type = chartType;
+      _YAxisOptions.title.text = "";
+      _XAxisOptions.categories = _cat;
+      _SeriesPlotOptions.color = "";
+
+      if (chartType == "pie") {
+        _GeneralOptions.options3d.enabled = true;
+        _LegendOptions.enabled = true;
+      } else {
+        _GeneralOptions.options3d.enabled = false;
+        _LegendOptions.enabled = false;
       }
-      if (i == 7) {
-        Select_List +=
-          "<option>value1</option><option>value2</option><option>value3</option>";
-      }
 
-      Select_List += "</select>";
-      $("#div1Items-" + i).append(Select_List);
-    } else if (i == 10) {
-      //colorInput
-      let color = document.createElement("input");
-      color.type = "color";
-      color.setAttribute("id", "item-" + i);
-      color.style.width = "150px";
-      color.style.left = "10px";
-      color.style.position = "absolute";
-      $("#div1Items-" + i).append(color);
-    } else {
-      //textBox
-      let textBox = document.createElement("input");
-      textBox.type = "text";
-      textBox.className = "Textbox";
-      textBox.setAttribute("id", "item-" + i);
-      textBox.style.border = "1px solid #ccc";
-      textBox.style.height = "30px";
-      textBox.style.width = "200px";
-      textBox.style.left = "0px";
-      textBox.style.position = "absolute";
-      $("#div1Items-" + i).append(textBox);
+      chartSvg = Highcharts.chart("containers", {
+        chart: _GeneralOptions,
+        colors: _ColorsOptions,
+        credits: _CreditsOptions,
+        legend: _LegendOptions,
+        title: _TitleOptions,
+        xAxis: _XAxisOptions,
+        yAxis: _YAxisOptions,
+        plotOptions: {
+          series: _SeriesPlotOptions,
+          areaspline: _AreaPlotOptions,
+          bar: _BarPlotOptions,
+          column: _ColumnPlotOptions,
+          line: _LinePlotOptions,
+          pie: _PiePlotOptions,
+        },
+        series: _series,
+      });
+    }
+
+    //column
+    if (chartType == "column") {
+      _cat = "";
+      _name = "fdd";
+      _series = [
+        {
+          name: _name,
+          data: [8, 5, 2, 4, 5, 2, 1],
+        },
+      ];
+
+      chartItems(_series, _cat, chartType);
+    }
+    //pie
+    if (chartType == "pie") {
+      _cat = "";
+      _name = "";
+      _series = [
+        {
+          name: _name,
+          data: [
+            ["value1", 8],
+            ["value2", 7],
+            ["value3", 2],
+            ["value4", 1],
+            ["value5", 5],
+          ],
+        },
+      ];
+
+      chartItems(_series, _cat, chartType);
+    }
+
+    // bar
+    else if (chartType == "bar") {
+      _cat = ["Africa", "America", "Asia", "Europe", "Oceania"];
+      _name = $("#catSelect").val();
+      _series = [
+        {
+          name: _name,
+          data: [
+            ["value1", 8],
+            ["value2", 7],
+            ["value3", 2],
+            ["value4", 1],
+            ["value5", 5],
+          ],
+        },
+      ];
+
+      chartItems(_series, _cat, chartType);
+    }
+
+    //line
+    else if (chartType == "line") {
+      _cat = [
+        "value1",
+        "value2",
+        "value3",
+        "value4",
+        "value5",
+        "value6",
+        "value7",
+        "value8",
+        "value9",
+      ];
+      _name = "";
+      _series = [
+        {
+          name: _name,
+          data: [2, 1, 1, 1, 1, 5, 3, 3, 1],
+        },
+      ];
+
+      chartItems(_series, _cat, chartType);
+    }
+
+    // //area
+    // else if (chartType == "area") {
+    //   _cat = [
+    //     "value1",
+    //     "value2",
+    //     "value3",
+    //     "value4",
+    //     "value5",
+    //     "value6",
+    //     "value7",
+    //   ];
+    //   _name = "";
+
+    //   _series = [
+    //     {
+    //       name: _name,
+    //       data: [1, 2, 1, 2, 1, 1, 1],
+    //     },
+    //   ];
+    //   chartItems(_series, _cat, chartType);
+    // }
+
+    //areaspline
+    else if (chartType == "areaspline") {
+      _cat = [
+        "value1",
+        "value2",
+        "value3",
+        "value4",
+        "value5",
+        "value6",
+        "value7",
+      ];
+      _name = "";
+
+      _series = [
+        {
+          name: _name,
+          data: [1, 2, 1, 2, 1, 1, 1],
+        },
+      ];
+      chartItems(_series, _cat, chartType);
     }
   }
 
@@ -104,7 +312,6 @@ function chartEdit(e) {
   //btnsubmit
   let btnSubmit = document.createElement("button");
   btnSubmit.className = "btn btn-primary";
-  // btnSubmit.style.borderRadius = "4px";
   btnSubmit.style.margin = "10px 5px 10px 5px";
   btnSubmit.innerText = "ذخیره";
   btnSubmit.onclick = () => {
@@ -117,6 +324,7 @@ function chartEdit(e) {
     let parser = new DOMParser();
     let xmlDoc = parser.parseFromString(svg_xml, "text/xml");
     const _id = xmlDoc.getElementsByTagName("clipPath")[0].getAttribute("id");
+
     const _RowID = $("#" + imgid)
       .parent()
       .parent()[0]
@@ -125,14 +333,20 @@ function chartEdit(e) {
       .parent()[0]
       .id.replaceAll("form-group-body-", "")
       .split("-")[1];
-    _name = $("#item-1").val();
+    var _name = $("#item-1").val();
 
     //get base64
     const _svg_Base64 = Base64.encode(svg_xml, false);
-    //todo
+
+    //remove oldItem by id
+
+    CHARTS.splice(
+      CHARTS.findIndex((Element) => Element.id == imgid),
+      1
+    );
     CHARTS.push({
-      RowID: _RowID,
-      ColumnIndex: _ColumnIndex,
+      rowID: _RowID,
+      columnIndex: _ColumnIndex,
       id: _id,
       name: _name,
       text: $("#item-0").val(),
@@ -140,22 +354,25 @@ function chartEdit(e) {
       categoryLabel: $("#item-2").val(),
       valueLabel: $("#item-3").val(),
       categoryName: $("#item-4").val(),
-      categoryExpression: $("#item-5").val(),
+      categoryExpression: $("#item-5 option:selected").val(),
+      operator: $("#item-6 option:selected").val(),
+      version: $("#item-11").val(),
       series: [
         {
+          text: $("#item-8").val(),
           name: $("#item-9").val(),
-          dataExpression: $("#item-7 option:selected").val(),
+          dataExpression: $("#item-7").val(),
           plotType: getchartType,
-          StlyeColor: $("#item-10").val(),
-          version: $("#item-11").val(),
+          styleColor: $("#item-10").val(),
         },
       ],
       imgBs64: _svg_Base64,
     });
-    console.log(CHARTS);
-
+    console.log("saveed: ", imgid);
     //update chart to form
     $("#" + imgid).attr("src", "data:image/svg+xml;base64," + _svg_Base64);
+    $("#" + imgid).attr("id", _id);
+
     HideModal();
   };
   rowbtn.appendChild(btnSubmit);
@@ -178,168 +395,6 @@ function chartEdit(e) {
 
   showChart(getchartType);
 }
-
-//===============================show Chart ============================
-
-//create chart
-function showChart(chartType) {
-  let _cat, _series, _name;
-
-  //create chart function
-
-  function chartItems(_series, _cat, chartType) {
-    _TitleOptions.text = "";
-    _GeneralOptions.type = chartType;
-    _YAxisOptions.title.text = "";
-    _XAxisOptions.categories = _cat;
-    _SeriesPlotOptions.color = "";
-
-    if (chartType == "pie") {
-      _GeneralOptions.options3d.enabled = true;
-      _LegendOptions.enabled = true;
-    } else {
-      _GeneralOptions.options3d.enabled = false;
-      _LegendOptions.enabled = false;
-    }
-
-    chartSvg = Highcharts.chart("containers", {
-      chart: _GeneralOptions,
-      colors: _ColorsOptions,
-      credits: _CreditsOptions,
-      legend: _LegendOptions,
-      title: _TitleOptions,
-      xAxis: _XAxisOptions,
-      yAxis: _YAxisOptions,
-      plotOptions: {
-        series: _SeriesPlotOptions,
-        areaspline: _AreaPlotOptions,
-        bar: _BarPlotOptions,
-        column: _ColumnPlotOptions,
-        line: _LinePlotOptions,
-        pie: _PiePlotOptions,
-      },
-      series: _series,
-    });
-  }
-
-  //column
-  if (chartType == "column") {
-    _cat = "";
-    _name = "fdd";
-    _series = [
-      {
-        name: _name,
-        data: [8, 5, 2, 4, 5, 2, 1],
-      },
-    ];
-
-    chartItems(_series, _cat, chartType);
-  }
-  //pie
-  if (chartType == "pie") {
-    _cat = "";
-    _name = "";
-    _series = [
-      {
-        name: _name,
-        data: [
-          ["value1", 8],
-          ["value2", 7],
-          ["value3", 2],
-          ["value4", 1],
-          ["value5", 5],
-        ],
-      },
-    ];
-
-    chartItems(_series, _cat, chartType);
-  }
-
-  // bar
-  else if (chartType == "bar") {
-    _cat = ["Africa", "America", "Asia", "Europe", "Oceania"];
-    _name = $("#catSelect").val();
-    _series = [
-      {
-        name: _name,
-        data: [
-          ["value1", 8],
-          ["value2", 7],
-          ["value3", 2],
-          ["value4", 1],
-          ["value5", 5],
-        ],
-      },
-    ];
-
-    chartItems(_series, _cat, chartType);
-  }
-
-  //line
-  else if (chartType == "line") {
-    _cat = [
-      "value1",
-      "value2",
-      "value3",
-      "value4",
-      "value5",
-      "value6",
-      "value7",
-      "value8",
-      "value9",
-    ];
-    _name = "";
-    _series = [
-      {
-        name: _name,
-        data: [2, 1, 1, 1, 1, 5, 3, 3, 1],
-      },
-    ];
-
-    chartItems(_series, _cat, chartType);
-  }
-
-  // //area
-  // else if (chartType == "area") {
-  //   _cat = [
-  //     "value1",
-  //     "value2",
-  //     "value3",
-  //     "value4",
-  //     "value5",
-  //     "value6",
-  //     "value7",
-  //   ];
-  //   _name = "";
-
-  //   _series = [
-  //     {
-  //       name: _name,
-  //       data: [1, 2, 1, 2, 1, 1, 1],
-  //     },
-  //   ];
-  //   chartItems(_series, _cat, chartType);
-  // }
-
-  //areaspline
-  else if (chartType == "areaspline") {
-    _cat = [
-      "value1",
-      "value2",
-      "value3",
-      "value4",
-      "value5",
-      "value6",
-      "value7",
-    ];
-    _name = "";
-
-    _series = [
-      {
-        name: _name,
-        data: [1, 2, 1, 2, 1, 1, 1],
-      },
-    ];
-    chartItems(_series, _cat, chartType);
-  }
+function operator(e) {
+  $("#item-7").val($("#item-6").val() + "(" + $("#item-5").val() + ")");
 }
