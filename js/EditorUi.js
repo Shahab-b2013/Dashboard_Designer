@@ -231,21 +231,23 @@ function ImportData() {
   $("#chartModal").append(div);
 
   let input_file =
-    '<input type="file" id="file-input" accept=".json" style="margin-bottom:20px;margin-top: 20px;font-size: 12px;cursor:pointer"/><span style="font-size:12px;direction: rtl;display:flex;"> این نرم افزار فقط از فرمت JSON پشتیبانی می کند.  </br></br></br></br></br></span><hr>';
+    '<input type="file" id="file-input" accept=".json" style="margin-bottom:20px;margin-top: 20px;font-size: 12px;cursor:pointer" onchange="openShow()"/><span style="font-size:12px;direction: rtl;display:flex;"> این نرم افزار فقط از فرمت JSON پشتیبانی می کند.  </br></br></br></br></br></span><hr>';
   $("#open_div").append(input_file);
   let Open_btn =
-    '<input type="button" id="open_btn" class="btn btn-primary" value="باز کردن" onclick="openfile()" style="float:right;" />';
+    '<input type="button" id="open_btn" class="btn btn-primary" value="باز کردن" onclick="openfile()" style="float:right;" Disabled />';
   $("#open_div").append(Open_btn);
 
   let cancel_btn =
     '<input type="button" id="cancel_btn" class="btn btn-light" value="لغو" style="margin-right:5px;float:right;" onclick="HideModal()">';
   $("#open_div").append(cancel_btn);
 }
-
+function openShow() {
+  $("#open_btn").removeAttr("Disabled");
+};
 function openfile() {
   let input = document.getElementById("file-input").files[0];
   if (input) {
-    var reader = new FileReader();
+        var reader = new FileReader();
     reader.onload = function (e) {
       let _json = e.target.result;
       _json = JSON.parse(_json);
@@ -271,7 +273,6 @@ function openfile() {
     };
     reader.readAsText(input);
   }
- 
 }
 
 function createInput(type, opt, id) {
