@@ -5,7 +5,7 @@ function chartEdit(e) {
   /*
   Get img
   */
-  const rowbtnId=$("#" + e.target.id).parent()[0].id;
+  const rowbtnId = $("#" + e.target.id).parent()[0].id;
   let imgid = rowbtnId.replaceAll("rowbtn-img-", "");
   let getchartType = $("#" + imgid).attr("type");
   //create modal form

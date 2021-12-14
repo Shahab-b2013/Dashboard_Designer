@@ -7,88 +7,82 @@ function DashboardView(_json) {
 
   //#region Render Form Items Layout & Grouping
 
-  try {
-    $.each(_chartGroup.rowBoxs, function (index, chartGroup) {
-      content =
-        '<div style="' +
-        (chartGroup.Visibility == "DefaultHidden" ? "display:none" : "") +
-        '" id="form-group-' +
+  $.each(_chartGroup.rowBoxs, function (index, chartGroup) {
+    content =
+      '<div style="' +
+      (chartGroup.Visibility == "DefaultHidden" ? "display:none" : "") +
+      '" id="form-group-' +
+      chartGroup.rowID +
+      '" class="row form-group-box " rowIndex="' +
+      chartGroup.rowIndex +
+      '" ondragleave="onMouseOut(event)">';
+    var columnWidth = chartGroup.ColumnWidth;
+    if (chartGroup.columnLayout == "OnceColumn") {
+      if (columnWidth == "default") {
+        columnWidth = "col-lg-12";
+      }
+      content +=
+        '<div class="' +
+        columnWidth +
+        ' col-sm-12 col-xs-12 form-group-body" ondrop="drop(event)" ondragover="allowDrop(event)" columnIndex="0" id="form-group-body-' +
         chartGroup.rowID +
-        '" class="row form-group-box " rowIndex="' +
-        chartGroup.rowIndex +
-        '" ondragleave="onMouseOut(event)">';
-      var columnWidth = chartGroup.ColumnWidth;
-      if (chartGroup.columnLayout == "OnceColumn") {
-        if (columnWidth == "default") {
-          columnWidth = "col-lg-12";
-        }
-        content +=
-          '<div class="' +
-          columnWidth +
-          ' col-sm-12 col-xs-12 form-group-body" ondrop="drop(event)" ondragover="allowDrop(event)" columnIndex="0" id="form-group-body-' +
-          chartGroup.rowID +
-          '-0" ></div>';
+        '-0" ></div>';
+    }
+
+    if (chartGroup.columnLayout == "TwoColumn") {
+      columnWidth = "col-md-6";
+
+      content +=
+        '<div class="' +
+        columnWidth +
+        " form-group-body" +
+        '"' +
+        'ondrop="drop(event)" ondragover="allowDrop(event)"' +
+        ' columnIndex="0" id="form-group-body-' +
+        chartGroup.rowID +
+        '-0"></div><div class="' +
+        columnWidth +
+        " form-group-body" +
+        '"' +
+        'ondrop="drop(event)" columnIndex="1" ondragover="allowDrop(event)"' +
+        ' id="form-group-body-' +
+        chartGroup.rowID +
+        '-1" ></div>';
+    }
+
+    if (chartGroup.columnLayout == "ThreeColumn") {
+      if (chartGroup.groupDisplayMode == "GroupWithBox") {
+        columnWidth = "col-md-4";
+      } else {
+        columnWidth = "col-md-4";
       }
 
-      if (chartGroup.columnLayout == "TwoColumn") {
-        columnWidth = "col-md-6";
+      content +=
+        '<div class="' +
+        columnWidth +
+        " form-group-body" +
+        '"ondrop="drop(event)" ondragover="allowDrop(event)" columnIndex="0" id="form-group-body-' +
+        chartGroup.rowID +
+        '-0" ></div><div class="' +
+        columnWidth +
+        " form-group-body" +
+        '"ondrop="drop(event)" ondragover="allowDrop(event)" columnIndex="1" id="form-group-body-' +
+        chartGroup.rowID +
+        '-1" > </div><div class="' +
+        columnWidth +
+        " form-group-body" +
+        '"ondrop="drop(event)" ondragover="allowDrop(event)" columnIndex="2" id="form-group-body-' +
+        chartGroup.rowID +
+        '-2" ></div>';
+    }
 
-        content +=
-          '<div class="' +
-          columnWidth +
-          " form-group-body" +
-          '"' +
-          'ondrop="drop(event)" ondragover="allowDrop(event)"' +
-          ' columnIndex="0" id="form-group-body-' +
-          chartGroup.rowID +
-          '-0"></div><div class="' +
-          columnWidth +
-          " form-group-body" +
-          '"' +
-          'ondrop="drop(event)" columnIndex="1" ondragover="allowDrop(event)"' +
-          ' id="form-group-body-' +
-          chartGroup.rowID +
-          '-1" ></div>';
-      }
+    //btn json default
+    content += Group_Btn(chartGroup.rowID);
 
-      if (chartGroup.columnLayout == "ThreeColumn") {
-        if (chartGroup.groupDisplayMode == "GroupWithBox") {
-          columnWidth = "col-md-4";
-        } else {
-          columnWidth = "col-md-4";
-        }
+    content += "</div>";
 
-        content +=
-          '<div class="' +
-          columnWidth +
-          " form-group-body" +
-          '"ondrop="drop(event)" ondragover="allowDrop(event)" columnIndex="0" id="form-group-body-' +
-          chartGroup.rowID +
-          '-0" ></div><div class="' +
-          columnWidth +
-          " form-group-body" +
-          '"ondrop="drop(event)" ondragover="allowDrop(event)" columnIndex="1" id="form-group-body-' +
-          chartGroup.rowID +
-          '-1" > </div><div class="' +
-          columnWidth +
-          " form-group-body" +
-          '"ondrop="drop(event)" ondragover="allowDrop(event)" columnIndex="2" id="form-group-body-' +
-          chartGroup.rowID +
-          '-2" ></div>';
-      }
-
-      //btn json default
-      content += Group_Btn(chartGroup.rowID);
-
-      content += "</div>";
-
-      $(bodyID).append(content);
-    });
-  } catch (e) {
-    //   raiseError(e, bodyID);
-
-    return;
-  }
+    $(bodyID).append(content);
+  });
 
   //#endregion
 
