@@ -5,7 +5,8 @@ function chartEdit(e) {
   /*
   Get img
   */
-  let imgid = e.target.id.replaceAll("spanEdit", "");
+  const rowbtnId=$("#" + e.target.id).parent()[0].id;
+  let imgid = rowbtnId.replaceAll("rowbtn-img-", "");
   let getchartType = $("#" + imgid).attr("type");
   //create modal form
   ModalConstractor("85%", "geContent");
@@ -354,7 +355,6 @@ function chartEdit(e) {
     const _svg_Base64 = Base64.encode(svg_xml, false);
 
     //remove oldItem by id
-
     if (findChart) {
       CHARTS.splice(
         CHARTS.findIndex((Element) => Element.id == imgid),
@@ -389,7 +389,7 @@ function chartEdit(e) {
     //update chart to form
     $("#" + imgid).attr("src", "data:image/svg+xml;base64," + _svg_Base64);
     $("#" + imgid).attr("id", _id);
-
+    $("#rowbtn-img-" + imgid).attr("id", "rowbtn-img-" + _id);
     HideModal();
   };
   $("#chartModal").append(btnSubmit);

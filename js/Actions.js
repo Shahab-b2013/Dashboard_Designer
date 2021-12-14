@@ -53,7 +53,6 @@ function createImgChart(e, parentID, chartItem, type) {
     return value;
   }
   let ID = chartItem ? chartItem.id : idChart(e);
-
   function idChart(e) {
     let defaultId = e.target.id.replaceAll("form-group-body-", "");
     return defaultId;
@@ -71,7 +70,7 @@ function createImgChart(e, parentID, chartItem, type) {
     ID +
     '"><span id="spanDelete' +
     ID +
-    '" class="btn btn-light glyphicon glyphicon-trash"  onclick="chartDelete(event)" style="margin-left:10px"></span>' +
+    '" class="btn btn-light glyphicon glyphicon-trash" onclick="chartDelete(event)" style="margin-left:10px"></span>' +
     '<span  id="spanEdit' +
     ID +
     '" class="spanEdit btn btn-light glyphicon glyphicon-cog" type="' +
@@ -196,6 +195,10 @@ function GroupFns(e) {
     //set last Id
     id++;
 
+    const par = $("#" + GroupId)
+      .parent()
+      .parent()[0].id;
+    let rowIndexNum = +$("#" + par).attr("rowIndex") + 1;
     $(document).ready(function () {
       $("#" + GroupId)
         .parent()
@@ -205,7 +208,9 @@ function GroupFns(e) {
             '<div  style="" id="' +
               "form-group-" +
               id +
-              '" class="row form-group-box" ondragover="allowDrop(event)"  >' +
+              '" class="row form-group-box" rowIndex="' +
+              rowIndexNum +
+              '" ondragover="allowDrop(event)"  >' +
               '<div style="" class="' +
               "col-lg-12 col-md-12 form-group-body" +
               ' col-sm-12  col-xs-12" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
@@ -219,6 +224,27 @@ function GroupFns(e) {
     $(".form-group-body").css("opacity", "1");
     $(".form-group-body").removeClass("noDrop");
     $(".rowBtnGroup-span").css("display", "none");
+
+    //add row in rowboxs arr
+    let newRowBox = {
+      rowID: id,
+      rowIndex: rowIndexNum,
+      rowDisplayMode: "GroupWithBox",
+      columnLayout: "OnceColumn",
+      columnWidth: "default",
+    };
+
+    $.each(ROWBOXS, function (index, item) {
+      if (item.rowIndex >= rowIndexNum) {
+        item.rowIndex++;
+        $("#form-group-" + item.rowID).attr("rowIndex", item.rowIndex);
+        console.log(item.rowID, "index ", item.rowIndex);
+      }
+    });
+    ROWBOXS.push(newRowBox);
+    ROWBOXS.sort(
+      (firstItem, secondItem) => firstItem.rowIndex - secondItem.rowIndex
+    );
   }
 }
 
@@ -509,7 +535,6 @@ function DivSplit_1(elem) {
   }
   rowBoxArr_Modify(elem, "OnceColumn");
   chartArr_Modify(elem);
-  //////////////////////////////////////////////todo
 }
 function DivSplit_2(elem) {
   removeDiv(elem);
@@ -561,7 +586,7 @@ function chartArr_Modify(elem) {
         chartID = $("#" + colID).children()[0].id;
       //set new colIndex in arr
       if (chartID) {
-        let colIndex = $("#" + colID).attr("columnIndex");
+        let colIndex = $("#" + colID).attr("columnindex");
         CHARTS.find(function (Element) {
           if (Element.id == chartID) {
             Element.columnIndex = colIndex;

@@ -1,7 +1,5 @@
 ﻿"use strict";
 
-
-
 function DashboardView(_json) {
   var _chartGroup = _json;
   var content;
@@ -16,10 +14,10 @@ function DashboardView(_json) {
         (chartGroup.Visibility == "DefaultHidden" ? "display:none" : "") +
         '" id="form-group-' +
         chartGroup.rowID +
-        '" class="row form-group-box "  ondragleave="onMouseOut(event)">';
-
+        '" class="row form-group-box " rowIndex="' +
+        chartGroup.rowIndex +
+        '" ondragleave="onMouseOut(event)">';
       var columnWidth = chartGroup.ColumnWidth;
-
       if (chartGroup.columnLayout == "OnceColumn") {
         if (columnWidth == "default") {
           columnWidth = "col-lg-12";
@@ -27,7 +25,7 @@ function DashboardView(_json) {
         content +=
           '<div class="' +
           columnWidth +
-          ' col-sm-12  col-xs-12 form-group-body" ondrop="drop(event)" ondragover="allowDrop(event)" columnIndex="0" id="form-group-body-' +
+          ' col-sm-12 col-xs-12 form-group-body" ondrop="drop(event)" ondragover="allowDrop(event)" columnIndex="0" id="form-group-body-' +
           chartGroup.rowID +
           '-0" ></div>';
       }
@@ -85,8 +83,6 @@ function DashboardView(_json) {
       content += "</div>";
 
       $(bodyID).append(content);
-
-      
     });
   } catch (e) {
     //   raiseError(e, bodyID);
