@@ -86,54 +86,57 @@ function swapping(e) {
   let temp;
   let oneElem = $("#" + e.dataTransfer.getData("text"));
   let twoElem = $("#" + e.target.id);
-  e.preventDefault();
+  console.log((oneElem[0].id));
+  if (oneElem[0].id.length > 3) {
+    e.preventDefault();
 
-  //swap src
-  temp = oneElem.attr("src");
-  oneElem.attr("src", twoElem.attr("src"));
-  twoElem.attr("src", temp);
-  //swap type
-  temp = oneElem.attr("type");
-  oneElem.attr("type", twoElem.attr("type"));
-  twoElem.attr("type", temp);
+    //swap src
+    temp = oneElem.attr("src");
+    oneElem.attr("src", twoElem.attr("src"));
+    twoElem.attr("src", temp);
+    //swap type
+    temp = oneElem.attr("type");
+    oneElem.attr("type", twoElem.attr("type"));
+    twoElem.attr("type", temp);
 
-  //modify chartArray for swapping
-  let oneObj = CHARTS.find((element) => element.id == oneElem.attr("id"));
-  let twoObj = CHARTS.find((element) => element.id == twoElem.attr("id"));
+    //modify chartArray for swapping
+    let oneObj = CHARTS.find((element) => element.id == oneElem.attr("id"));
+    let twoObj = CHARTS.find((element) => element.id == twoElem.attr("id"));
 
-  //modify oneObj rowID
-  if (twoElem.hasClass("form-group-body")) {
-    oneObj.rowID = +e.target.id
-      .replaceAll("form-group-body-", "")
-      .split("-")[0];
+    //modify oneObj rowID
+    if (twoElem.hasClass("form-group-body")) {
+      oneObj.rowID = +e.target.id
+        .replaceAll("form-group-body-", "")
+        .split("-")[0];
 
-    //modify oneObj columnIndex
-    oneObj.columnIndex = +e.target.id
-      .replaceAll("form-group-body-", "")
-      .split("-")[1];
-  } else {
-    oneObj.rowID = +twoElem
-      .parent()[0]
-      .id.replaceAll("form-group-body-", "")
-      .split("-")[0];
+      //modify oneObj columnIndex
+      oneObj.columnIndex = +e.target.id
+        .replaceAll("form-group-body-", "")
+        .split("-")[1];
+    } else {
+      oneObj.rowID = +twoElem
+        .parent()[0]
+        .id.replaceAll("form-group-body-", "")
+        .split("-")[0];
 
-    //modify oneObj columnIndex
-    oneObj.columnIndex = +twoElem
-      .parent()[0]
-      .id.replaceAll("form-group-body-", "")
-      .split("-")[1];
+      //modify oneObj columnIndex
+      oneObj.columnIndex = +twoElem
+        .parent()[0]
+        .id.replaceAll("form-group-body-", "")
+        .split("-")[1];
 
-    //modify twoObj rowID
-    twoObj.rowID = +oneElem
-      .parent()[0]
-      .id.replaceAll("form-group-body-", "")
-      .split("-")[0];
+      //modify twoObj rowID
+      twoObj.rowID = +oneElem
+        .parent()[0]
+        .id.replaceAll("form-group-body-", "")
+        .split("-")[0];
 
-    //modify twoObj columnIndex
-    twoObj.columnIndex = +oneElem
-      .parent()[0]
-      .id.replaceAll("form-group-body-", "")
-      .split("-")[1];
+      //modify twoObj columnIndex
+      twoObj.columnIndex = +oneElem
+        .parent()[0]
+        .id.replaceAll("form-group-body-", "")
+        .split("-")[1];
+    }
   }
 }
 
@@ -254,7 +257,10 @@ function GroupFns(e) {
  * */
 function drop(ev) {
   if (ev.target.id) {
-    if (!$("#" + ev.target.id).hasClass("noDrop")) {
+    if (
+      !$("#" + ev.target.id).hasClass("noDrop") &&
+      $("#" + ev.target.id).hasClass("form-group-body")
+    ) {
       $("#" + ev.target.id).html(""); //delete placeholder div
       //get senderId and check number or string for switch
       let dataId = ev.dataTransfer.getData("text");
