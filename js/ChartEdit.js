@@ -10,7 +10,7 @@ function chartEdit(e) {
   //create modal form
   ModalConstractor("85%", "geContent");
   let div1 =
-    '<div id="div1" class="row col-lg-3 col-md-12 col-sm-12 " style=""></div>';
+    '<div id="div1" class="row col-lg-3 col-md-12 col-sm-12 " style="margin-bottom:10px;"></div>';
   $("#contentM").append(div1);
 
   let div2 =
@@ -34,33 +34,47 @@ function chartEdit(e) {
     "StlyeColor",
     "version",
   ];
-  console.log("loadid: ", imgid);
-  console.log(CHARTS);
-
+  let ArrItems = [];
   let findChart = CHARTS.find((Element) => Element.id == imgid);
-  let ArrItems = [
-    findChart.text,
-    findChart.name,
-    findChart.categoryLabel,
-    findChart.valueLabel,
-    findChart.categoryName,
-    REFCOLUMNS,
-    ["sum", "avg", "count", "min", "max"],
-    findChart.series[0].dataExpression,
-    findChart.series[0].text,
-    findChart.series[0].name,
-    findChart.series[0].styleColor,
-    findChart.version,
-  ];
-
+  if (findChart) {
+    ArrItems = [
+      findChart.text,
+      findChart.name,
+      findChart.categoryLabel,
+      findChart.valueLabel,
+      findChart.categoryName,
+      REFCOLUMNS,
+      ["sum", "avg", "count", "min", "max"],
+      findChart.series[0].dataExpression,
+      findChart.series[0].text,
+      findChart.series[0].name,
+      findChart.series[0].styleColor,
+      findChart.version,
+    ];
+  } else {
+    ArrItems = [
+      "",
+      "",
+      "",
+      "",
+      "",
+      REFCOLUMNS,
+      ["sum", "avg", "count", "min", "max"],
+      "",
+      "",
+      "",
+      "",
+      "",
+    ];
+  }
   //create items and value
   for (let i = 0; i < ArrLbl.length; i++) {
     divItems(i);
     label(i, ArrLbl[i]);
     if (i == 5) {
-      selectList(i, ArrItems[i], findChart.categoryExpression);
+      selectList(i, ArrItems[i], findChart ? findChart.categoryExpression : "");
     } else if (i == 6) {
-      selectList(i, ArrItems[i], findChart.operator);
+      selectList(i, ArrItems[i], findChart ? findChart.operator : "");
     } else if (i == 10) {
       inputColor(i, ArrItems[i]);
     } else {
@@ -296,23 +310,24 @@ function chartEdit(e) {
 
   //============================btn=====================
   // create btn
-  let rowbtn = document.createElement("div");
-  rowbtn.style.margin = "0px 10px";
-  $("#chartModal").append(rowbtn);
 
   //btn preview
   let btnShow = document.createElement("button");
   btnShow.className = "btn btn-primary";
   btnShow.style.backgroundColor = "#134C96";
-  // btnShow.style.borderRadius = "4px";
+  btnShow.style.display = "inline";
+  btnShow.style.float = "right";
+  btnShow.style.marginRight = "10px";
   btnShow.innerHTML = "پیش نمایش";
   btnShow.onclick = () => showChart(getchartType);
-  rowbtn.appendChild(btnShow);
+  $("#chartModal").append(btnShow);
 
   //btnsubmit
   let btnSubmit = document.createElement("button");
   btnSubmit.className = "btn btn-primary";
-  btnSubmit.style.margin = "10px 5px 10px 5px";
+  btnSubmit.style.margin = "0px 5px 0px 5px";
+  btnSubmit.style.display = "inline";
+  btnSubmit.style.float = "right";
   btnSubmit.innerText = "ذخیره";
   btnSubmit.onclick = () => {
     //get svg
@@ -340,10 +355,12 @@ function chartEdit(e) {
 
     //remove oldItem by id
 
-    CHARTS.splice(
-      CHARTS.findIndex((Element) => Element.id == imgid),
-      1
-    );
+    if (findChart) {
+      CHARTS.splice(
+        CHARTS.findIndex((Element) => Element.id == imgid),
+        1
+      );
+    }
     CHARTS.push({
       rowID: _RowID,
       columnIndex: _ColumnIndex,
@@ -368,24 +385,25 @@ function chartEdit(e) {
       ],
       imgBs64: _svg_Base64,
     });
-    console.log("saveed: ", imgid);
+
     //update chart to form
     $("#" + imgid).attr("src", "data:image/svg+xml;base64," + _svg_Base64);
     $("#" + imgid).attr("id", _id);
 
     HideModal();
   };
-  rowbtn.appendChild(btnSubmit);
+  $("#chartModal").append(btnSubmit);
 
   //btn exit
   let btnExit = document.createElement("button");
   btnExit.className = "btn btn-light";
-  // btnExit.style.borderRadius = "4px";
+  btnExit.style.display = "inline";
+  btnExit.style.float = "right";
   btnExit.innerText = "لغو";
   btnExit.onclick = function () {
     HideModal();
   };
-  rowbtn.appendChild(btnExit);
+  $("#chartModal").append(btnExit);
 
   //close rowbtn
   const hideRowBtn = $("#" + e.target.id).parent()[0].id;

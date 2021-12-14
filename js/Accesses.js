@@ -1,6 +1,6 @@
 "use strict";
 function Accesses(e) {
-  ModalConstractor("50%", "geContent");
+  ModalConstractor("40%", "geContent");
   $("#chartModal").addClass("containerside");
   $("#chartModal").css("direction", "ltr");
   let container = $("#chartModal");
@@ -69,6 +69,9 @@ function Accesses(e) {
     try {
       for (let item in listLbl) {
         let rowDiv = document.createElement("div");
+        rowDiv.style.display = "flex";
+        rowDiv.style.alignItems = "center";
+        rowDiv.style.justifyContent = "right";
         div.appendChild(rowDiv);
 
         //label
@@ -76,7 +79,7 @@ function Accesses(e) {
         checkLbl.className = "lbl";
         checkLbl.style.display = "inline";
         checkLbl.setAttribute("id", "label" + item + tabId);
-        checkLbl.style.margin = "10px 5px 10px 0px";
+        checkLbl.style.margin = "5px 5px 0px 0px";
         checkLbl.onclick = () =>
           $("#check" + item + tabId).is(":checked")
             ? $("#check" + item + tabId).prop("checked", false)
@@ -90,7 +93,6 @@ function Accesses(e) {
         input.type = "checkbox";
         input.style.margin = "5px";
         input.style.cursor = "pointer";
-        input.style.float = "right";
         rowDiv.appendChild(input);
         //input isChecked
         let isLocal;
@@ -119,7 +121,7 @@ function Accesses(e) {
   btnSave.className = "btn btn-primary";
   btnSave.innerHTML = "ذخیره";
   btnSave.style.float = "right";
-  btnSave.style.margin = "10px 10px 10px 5px";
+  btnSave.style.margin = "10px 0px 10px 5px";
   container.append(btnSave);
   btnSave.onclick = function () {
     let count = 0;

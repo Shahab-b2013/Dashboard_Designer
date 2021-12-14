@@ -2658,7 +2658,7 @@ a:focus {
   border-width: 1px;
 }
 
-.btn:active {
+/* .btn:active {
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
@@ -2699,9 +2699,9 @@ a:focus {
 .btn-default:active,
 .btn-default.hover {
   background-color: #e7e7e7;
-}
+} */
 
-.btn-primary {
+/* .btn-primary {
   background-color: #3c8dbc;
   border-color: #367fa9;
 }
@@ -2819,7 +2819,7 @@ a:focus {
   right: -10px;
   font-size: 10px;
   font-weight: 400;
-}
+} */
 
 .callout {
   border-radius: 3px;

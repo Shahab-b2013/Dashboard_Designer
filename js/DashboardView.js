@@ -24,11 +24,10 @@ function DashboardView(_json) {
         if (columnWidth == "default") {
           columnWidth = "col-lg-12";
         }
-
         content +=
           '<div class="' +
           columnWidth +
-          ' col-sm-12  col-xs-12 form-group-body" ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
+          ' col-sm-12  col-xs-12 form-group-body" ondrop="drop(event)" ondragover="allowDrop(event)" columnIndex="0" id="form-group-body-' +
           chartGroup.rowID +
           '-0" ></div>';
       }
@@ -42,13 +41,13 @@ function DashboardView(_json) {
           " form-group-body" +
           '"' +
           'ondrop="drop(event)" ondragover="allowDrop(event)"' +
-          ' id="form-group-body-' +
+          ' columnIndex="0" id="form-group-body-' +
           chartGroup.rowID +
-          '-0" > </div><div class="' +
+          '-0"></div><div class="' +
           columnWidth +
           " form-group-body" +
           '"' +
-          'ondrop="drop(event)" ondragover="allowDrop(event)"' +
+          'ondrop="drop(event)" columnIndex="1" ondragover="allowDrop(event)"' +
           ' id="form-group-body-' +
           chartGroup.rowID +
           '-1" ></div>';
@@ -65,17 +64,17 @@ function DashboardView(_json) {
           '<div class="' +
           columnWidth +
           " form-group-body" +
-          '"ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
+          '"ondrop="drop(event)" ondragover="allowDrop(event)" columnIndex="0" id="form-group-body-' +
           chartGroup.rowID +
           '-0" ></div><div class="' +
           columnWidth +
           " form-group-body" +
-          '"ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
+          '"ondrop="drop(event)" ondragover="allowDrop(event)" columnIndex="1" id="form-group-body-' +
           chartGroup.rowID +
           '-1" > </div><div class="' +
           columnWidth +
           " form-group-body" +
-          '"ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
+          '"ondrop="drop(event)" ondragover="allowDrop(event)" columnIndex="2" id="form-group-body-' +
           chartGroup.rowID +
           '-2" ></div>';
       }
@@ -100,9 +99,7 @@ function DashboardView(_json) {
   //#region Render Form Items
 
   var parentID = "";
-  // var _Charts = _json;
   var itemsGrouping = _chartGroup.itemsGrouping;
-// console.log(CHARTS)
   $.each(CHARTS, function (index, chartItem) {
     if (itemsGrouping) {
       parentID =

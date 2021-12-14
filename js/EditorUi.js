@@ -231,15 +231,14 @@ function ImportData() {
   $("#chartModal").append(div);
 
   let input_file =
-    '<input type="file" id="file-input" accept=".json" style="margin-bottom: 150px;margin-top: 20px;font-size: 12px;cursor:pointer"/> <hr>';
+    '<input type="file" id="file-input" accept=".json" style="margin-bottom:20px;margin-top: 20px;font-size: 12px;cursor:pointer"/><span style="font-size:12px;direction: rtl;display:flex;"> این نرم افزار فقط از فرمت JSON پشتیبانی می کند.  </br></br></br></br></br></span><hr>';
   $("#open_div").append(input_file);
-
   let Open_btn =
-    '<input type="button" id="open_btn" class="btn btn-primary" value="باز کردن" onclick="openfile()"/>';
+    '<input type="button" id="open_btn" class="btn btn-primary" value="باز کردن" onclick="openfile()" style="float:right;" />';
   $("#open_div").append(Open_btn);
 
   let cancel_btn =
-    '<input type="button" id="cancel_btn" class="btn btn-light" value="لغو" style="margin-right:5px" onclick="HideModal()">';
+    '<input type="button" id="cancel_btn" class="btn btn-light" value="لغو" style="margin-right:5px;float:right;" onclick="HideModal()">';
   $("#open_div").append(cancel_btn);
 }
 
@@ -251,7 +250,7 @@ function openfile() {
       let _json = e.target.result;
       _json = JSON.parse(_json);
       $("#geContent").empty();
-      
+
       //set variables
       DASHBOARDID = _json.dashboardID;
       NAME = _json.name;
@@ -271,8 +270,8 @@ function openfile() {
       DashboardView(_json);
     };
     reader.readAsText(input);
- 
   }
+ 
 }
 
 function createInput(type, opt, id) {

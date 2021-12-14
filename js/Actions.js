@@ -52,7 +52,6 @@ function createImgChart(e, parentID, chartItem, type) {
     }
     return value;
   }
-  console.log(chartItem.id);
   let ID = chartItem ? chartItem.id : idChart(e);
 
   function idChart(e) {
@@ -231,7 +230,6 @@ function drop(ev) {
   if (ev.target.id) {
     if (!$("#" + ev.target.id).hasClass("noDrop")) {
       $("#" + ev.target.id).html(""); //delete placeholder div
-
       //get senderId and check number or string for switch
       let dataId = ev.dataTransfer.getData("text");
 
@@ -291,6 +289,12 @@ function DeleteGroup(elem) {
   let parentId = elem.parentNode.parentNode.id;
   if ($("#" + parentId).children().length == 1) {
     $("#" + parentId).remove();
+    parentId = parentId.replaceAll("form-group-", "");
+    //modify rowboxs arr
+    ROWBOXS.splice(
+      ROWBOXS.findIndex((Element) => Element.rowID == parentId),
+      1
+    );
   } else {
     alert("سطر مورد نظر حاوی چارت می باشد.");
   }
@@ -406,7 +410,6 @@ function ModalConstractor(width, parent) {
 
 function rowbtnOn(elem) {
   $("#rowbtn-img-" + $(elem)[0].id).css("display", "block");
-  console.log(elem.id)
 }
 function rowbtnOn2(elem) {
   $("#" + $(elem)[0].id).css("display", "block");
@@ -417,12 +420,12 @@ function rowbtnOff(elem) {
 function MsgBoxDel(parent, msg) {
   let div =
     '<div id="myModal" class="modal" style="">' +
-    '<div id="chartModal" class="" style="font-size:16px;color:#000;font-style:normal;position: relative;width:30%;background-color:#fff; margin: auto; overflow: auto; border: 1px solid #ccc; border-radius: 4px;">' +
-    '<div id="contentM" class="row col-lg-12" style="padding: 10px 16px 0px 0px;margin: 20px 0px 40px 0px;">' +
+    '<div id="chartModal" class="" style="font-size:16px;color:#000;font-style:normal;position: relative;width:25%;background-color:#fff; margin: auto; overflow: auto; border: 1px solid #ccc; border-radius: 4px;">' +
+    '<div id="contentM" class="row col-lg-12" style="padding: 10px 16px;margin: 20px 0px 40px 0px;display:flex">' +
     msg +
     '</div><hr style="margin:0px;width:100%;">' +
-    '<div class="row" style="padding:16px;margin:0px"><span id="del" class="btn btn-danger"> حذف</span>' +
-    '<span id="closed" class="btn btn-secondary" style="width:60px;margin-Right:10px;" onclick="closed()"> لغو</span></div></div></div>';
+    '<div class="row" style="padding:16px;margin:0px;display:flex;"><span id="del" class="btn btn-danger"> حذف</span>' +
+    '<span id="closed" class="btn btn-light" style="width:60px;margin-Right:10px;" onclick="closed()"> لغو</span></div></div></div>';
   $("#" + parent).append(div);
 }
 function chartDelete(e) {
@@ -440,6 +443,11 @@ function chartDelete(e) {
     //rowbtn remove
     let rowbtn = "rowbtn-img-" + imgid;
     $("#" + rowbtn).remove();
+    //modify chars arr
+    CHARTS.splice(
+      CHARTS.findIndex((Element) => Element.id == imgid),
+      1
+    );
   });
 
   //close msgbox
@@ -499,6 +507,9 @@ function DivSplit_1(elem) {
   if (groupDivId(elem).length == 1) {
     setDiv1(elem, 12);
   }
+  rowBoxArr_Modify(elem, "OnceColumn");
+  chartArr_Modify(elem);
+  //////////////////////////////////////////////todo
 }
 function DivSplit_2(elem) {
   removeDiv(elem);
@@ -510,6 +521,8 @@ function DivSplit_2(elem) {
     setDiv1(elem, 6);
     setDiv2(elem, 6);
   }
+  rowBoxArr_Modify(elem, "TwoColumn");
+  chartArr_Modify(elem);
 }
 function DivSplit_3(elem) {
   removeDiv(elem);
@@ -524,19 +537,53 @@ function DivSplit_3(elem) {
     setDiv2(elem, 4);
     CreateDiv3(elem, 4);
   }
+  rowBoxArr_Modify(elem, "ThreeColumn");
+  chartArr_Modify(elem);
 }
 
+function rowBoxArr_Modify(elem, num) {
+  let rowId = $("#" + groupDivId(elem)[0]).parent()[0].id;
+  rowId = rowId.replaceAll("form-group-", "").split("-")[0];
+  ROWBOXS.find(function (Element) {
+    if (Element.rowID == rowId) {
+      Element.columnLayout = num;
+    }
+  });
+}
+function chartArr_Modify(elem) {
+  let chartID;
+  let rowId = $("#" + groupDivId(elem)[0]).parent()[0].id;
+  let colCount = $("#" + rowId).children().length;
+  for (let i = colCount - 1; i >= 0; i--) {
+    let colID = $("#" + rowId).children()[i].id;
+    if ($("#" + colID).hasClass("form-group-body")) {
+      if ($("#" + colID).children().length > 1)
+        chartID = $("#" + colID).children()[0].id;
+      //set new colIndex in arr
+      if (chartID) {
+        let colIndex = $("#" + colID).attr("columnIndex");
+        CHARTS.find(function (Element) {
+          if (Element.id == chartID) {
+            Element.columnIndex = colIndex;
+          }
+        });
+      }
+    }
+  }
+}
 function setDiv1(elem, colNum) {
   $("#" + groupDivId(elem)[0]).attr(
     "class",
     "form-group-body  col-md-" + colNum
   );
+  $("#" + groupDivId(elem)[0]).attr("columnIndex", 0);
 }
 function setDiv2(elem, colNum) {
   $("#" + groupDivId(elem)[1]).attr(
     "class",
     "form-group-body col-md-" + colNum
   );
+  $("#" + groupDivId(elem)[1]).attr("columnIndex", 1);
 }
 function CreateDiv2(elem, colNum) {
   let div1ID = groupDivId(elem)[0];
@@ -545,7 +592,7 @@ function CreateDiv2(elem, colNum) {
   let div2 =
     '<div class="form-group-body col-md-' +
     colNum +
-    '" style="" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)"   ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
+    '" style="" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnIndex="1" id="' +
     div2ID +
     '" ></div>';
   //set div2
@@ -561,7 +608,7 @@ function CreateDiv3(elem, colNum) {
   let div3 =
     '<div class="form-group-body col-md-' +
     colNum +
-    '" style="" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" id="' +
+    '" style="" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" columnIndex="2" id="' +
     div3ID +
     '"></div>';
   //set div3
@@ -630,8 +677,6 @@ function ExportData() {
     dashboardID: DASHBOARDID,
     name: NAME,
     itemsGrouping: ITEMSGROUPING,
-    columnLayout: COLUMNLAYOUT,
-    columnWidth: COLUMNWIDTH,
     rowBoxs: ROWBOXS,
     charts: CHARTS,
     filters: FILTERS,

@@ -1,7 +1,7 @@
 "use strict";
 
 function Filters(e) {
-  ModalConstractor("50%", "geContent");
+  ModalConstractor("40%", "geContent");
   let container = $("#chartModal");
 
   container.addClass("containerside");

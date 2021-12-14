@@ -3,7 +3,9 @@
   direction: rtl;
 }
 body {
-  margin: 0px;
+  width: 100%;
+  height: 100%;
+  margin: auto;
   background-color: #fff;
   --mainFont: "IRANSansWeb", Tahoma, Verdana, sans-serif;
   --mainbackground: white;
@@ -25,6 +27,7 @@ body {
   height: 50px;
   border: 1px solid transparent;
   direction: ltr;
+  display: flex;
 }
 .Json_btn {
   margin: 5px;
@@ -95,6 +98,7 @@ body {
   padding-top: 10px;
   border: 1px solid #ccc;
   color: #72afd2;
+  display: flex;
 }
 
 .divHeader {
@@ -396,17 +400,15 @@ input[type="range"] {
 }
 
 #Tab2 {
-  padding: 10px;
+  padding: 10px 0;
   padding-bottom: 6px;
   border-bottom: 1px solid #e6e6e6;
-  direction: rtl;
 }
 
 #Tab1 {
-  padding: 10px;
+  padding: 10px 0;
   padding-bottom: 6px;
   border-bottom: 1px solid #e6e6e6;
-  direction: rtl;
 }
 
 .tabdiv {
