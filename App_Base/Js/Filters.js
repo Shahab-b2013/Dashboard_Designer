@@ -9,10 +9,8 @@ function Filters(e) {
 
     container.append(div);
     $("#builder-basic").css("direction", "ltr");
-    setTimeout(QueryBuilder, 0);
-    setTimeout(BtnSql, 0);
-    setTimeout(BtnReset, 0);
-    setTimeout(btnExit, 0);
+
+    (async () => await Promise.all([QueryBuilder(), BtnSql(), BtnReset(), btnExit()]))();
 
     //btn reset
     function BtnReset() {
@@ -46,6 +44,7 @@ function Filters(e) {
             if (result.sql.length != null) {
                 let localData = result.sql;
                 SQLFILTERS = localData;
+
             }
             //set json
             result = $("#builder-basic").queryBuilder("getRules");
@@ -73,38 +72,31 @@ function Filters(e) {
     }
 
     function QueryBuilder() {
-        var localjson = FILTERS;
         var rules_basic;
-        if (localjson != "null") {
-            rules_basic = localjson;
-        }
+        if (FILTERS != "null") rules_basic = FILTERS;
 
         //load
         $("#builder-basic").queryBuilder(GetLocalFilter(rules_basic));
     }
 
     function GetLocalFilter(rules_basic) {
-        var listArray = [];
+
+        var filtersArr = [];
         for (let i = 0; i < REFCOLUMNS.length; i++) {
-            let data = REFCOLUMNS[i].Data;
-            let type1 = REFCOLUMNS[i].Type;
-            let input = REFCOLUMNS[i].Input;
-            let values = REFCOLUMNS[i].Values;
-            let operators = REFCOLUMNS[i].Operators;
             let object = {
-                ID: data,
-                Label: data,
-                Type: type1,
-                Input: input,
-                Values: values,
-                Operators: operators,
+                id: REFCOLUMNS[i].Data,
+                label: REFCOLUMNS[i].Data,
+                type: REFCOLUMNS[i].Type,
+                input: REFCOLUMNS[i].Input,
+                values: REFCOLUMNS[i].Values,
+                operators: REFCOLUMNS[i].Operators,
             };
 
-            listArray.push(object);
+            filtersArr.push(object);
         }
 
         var obj = {};
-        obj.Filters = listArray;
+        obj.filters = filtersArr;
         obj.rules = rules_basic;
         return obj;
     }

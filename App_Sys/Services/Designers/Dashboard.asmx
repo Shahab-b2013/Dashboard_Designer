@@ -1,1 +1,3 @@
-﻿<%@ WebService Language="C#" CodeBehind="~/App_Code/SysServices/Designers/Dashboard.cs" Class="Dashboard" %>
+﻿<%@ WebService Language="C#" CodeBehind="~/App_Code/SysServices/Designers/_Dashboard.cs" Class="_Dashboard" %>
+
+

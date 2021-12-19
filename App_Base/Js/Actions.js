@@ -26,8 +26,8 @@ function createLbl(className, id) {
 }
 
 //==========================================================================================Action Items =========================================================================
-function createImgChart(e, parentID, chartItem, type) {
-    let style = chartItem ? chartItem.ImgBs64 : styleChart(type);
+function createImgChart(e, parentID, chartItem, Type) {
+    let style = chartItem ? chartItem.ImgBs64 : styleChart(Type);
     function styleChart(type) {
         let value;
         switch (type) {
@@ -61,7 +61,7 @@ function createImgChart(e, parentID, chartItem, type) {
     let parent = parentID ? parentID : e.target.id;
     let img =
         '<img class="fit-image noDrop" type="' +
-        type +
+        Type +
         '" draggable="true" ondragstart="dragstart(event)" ondrop="swapping(event)" ondragover="event.preventDefault()" onmouseenter="rowbtnOn(this)" onmouseleave="rowbtnOff(this)" style ="padding-left:10px;border:1px solid #ccc;border-radius:10px;cursor:grab"  src="data:image/svg+xml;base64,' +
         style +
         '" id="' +
@@ -101,9 +101,7 @@ function swapping(e) {
         //modify chartArray for swapping
         let oneObj = CHARTS.find((element) => element.id == oneElem.id);
           let twoObj = CHARTS.find((element) => element.id == twoElem.id);
-          console.log('oneobj ', oneObj)
-          console.log('tw', twoObj)
-        //modify oneObj RowID
+                 //modify oneObj RowID
         if (twoElem.hasClass("form-group-body")) {
             oneObj.RowID = +e.target.id
                 .replaceAll("form-group-body-", "")
@@ -379,7 +377,7 @@ function rowMoveUp(e) {
 
 function rowMoveDown(e) {
     let oneID = $("#" + e.target.parentNode.parentNode.id);
-    console.log(oneID)
+    
     if (oneID) {
         let cloned = oneID.clone(true);
         if (oneID.next()[0]) {
@@ -750,7 +748,7 @@ function openfile() {
             let _json = e.target.result;
             _json = JSON.parse(_json);
             $("#geContent").empty();
-
+          
             //set variables
             DASHBOARDID = _json.DashboardID;
             NAME = _json.Name;

@@ -12,7 +12,7 @@ using System.IO;
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 [ScriptService]
-public class Dashboard : System.Web.Services.WebService
+public class _Dashboard : System.Web.Services.WebService
 {
     [WebMethod(EnableSession = true)]
     public string EditDesign()
@@ -21,9 +21,9 @@ public class Dashboard : System.Web.Services.WebService
 
         JavaScriptSerializer js = new JavaScriptSerializer();
 
-        // activiyParams = js.Deserialize<ActivityParam[]>(HttpContext.Current.Request.Form["design"]);
+        Dashboard design = js.Deserialize<Dashboard>(HttpContext.Current.Request.Form["design"]);
 
-
+       // resp.WriteLine(design);
 
         StreamWriter sw = File.CreateText(Server.MapPath("/") + "/model.json");
 
