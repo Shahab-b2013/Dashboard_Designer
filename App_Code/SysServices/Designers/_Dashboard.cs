@@ -32,5 +32,10 @@ public class _Dashboard : System.Web.Services.WebService
 
         return null;
     }
+
+    public static void CreatePage(int pageId, string pageTemplateId, string name, string label, string type, bool headerVisible, string version, string desc)
+    {
+        SqlDataProvider.ExecuteNoneQuery(string.Format("INSERT INTO Sys_Gui_Pages(PageID, PageTemplateID, Type, Name, Label, HeaderVisible, Enabled, Version, Description) VALUES({0}, {1}, N'{2}', N'{3}', N'{4}', N'{5}',1, N'{6}', N'{7}')", pageId, (pageTemplateId != null ? pageTemplateId.ToString() : "NULL"), type, name, label, headerVisible, version, desc));
+    }
 }
 

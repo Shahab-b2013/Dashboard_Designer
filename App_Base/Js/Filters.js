@@ -25,7 +25,7 @@ function Filters(e) {
         div.appendChild(btn);
         btn.onclick = function () {
             $("#builder-basic").queryBuilder("reset");
-            FILTERS = {};
+            
         };
     }
 
@@ -72,16 +72,42 @@ function Filters(e) {
     }
 
     function QueryBuilder() {
-        var rules_basic;
-        if (FILTERS != "null") rules_basic = FILTERS;
 
-        //load
-        $("#builder-basic").queryBuilder(GetLocalFilter(rules_basic));
+
+        const ruleDefault = {
+            filters: [ {
+                id: '1',
+                label: '- - - - - - - ',
+                type: 'double',
+                validation: {
+                    min: 0,
+                    step: 0.01
+                }
+            }],
+            rules: {
+                condition: 'AND',
+                rules: [{
+                    id: '1',
+                    operator: 'less',
+                    value: 10.25
+                }]
+            }
+        }
+
+   
+        if (Object.keys(FILTERS).length > 0) {
+            //load
+            $("#builder-basic").queryBuilder(GetLocalFilter());
+        } else {
+            //load
+            $("#builder-basic").queryBuilder(ruleDefault);
+            $("#builder-basic").queryBuilder("reset");
+        }
+
     }
 
-    function GetLocalFilter(rules_basic) {
-
-        var filtersArr = [];
+    function GetLocalFilter() {
+        let filtersArr = [];
         for (let i = 0; i < REFCOLUMNS.length; i++) {
             let object = {
                 id: REFCOLUMNS[i].Data,
@@ -94,10 +120,9 @@ function Filters(e) {
 
             filtersArr.push(object);
         }
-
-        var obj = {};
-        obj.filters = filtersArr;
-        obj.rules = rules_basic;
-        return obj;
+        return {
+            filters: filtersArr,
+            rules: FILTERS
+        }
     }
 }

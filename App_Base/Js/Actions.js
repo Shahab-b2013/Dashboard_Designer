@@ -84,56 +84,90 @@ function createImgChart(e, parentID, chartItem, Type) {
 //swaping img
 function swapping(e) {
     let temp;
-    let oneElem = $("#" + e.dataTransfer.getData("text"));
-    let twoElem = $("#" + e.target.id);
-      if (oneElem[0].id.length > 3) {
-        e.preventDefault();
+    let oneID = $("#" + e.dataTransfer.getData("text"));
+    let twoID = $("#" + e.target.id);
 
-        //swap src
-        temp = oneElem.attr("src");
-        oneElem.attr("src", twoElem.attr("src"));
-        twoElem.attr("src", temp);
-        //swap type
-        temp = oneElem.attr("type");
-        oneElem.attr("type", twoElem.attr("type"));
-        twoElem.attr("type", temp);
+    if (oneID[0].id.length > 3) {
 
-        //modify chartArray for swapping
-        let oneObj = CHARTS.find((element) => element.id == oneElem.id);
-          let twoObj = CHARTS.find((element) => element.id == twoElem.id);
-                 //modify oneObj RowID
-        if (twoElem.hasClass("form-group-body")) {
-            oneObj.RowID = +e.target.id
-                .replaceAll("form-group-body-", "")
-                .split("-")[0];
 
-            //modify oneObj ColumnIndex
-            oneObj.ColumnIndex = +e.target.id
-                .replaceAll("form-group-body-", "")
-                .split("-")[1];
+
+        function ExistOneID(item) {
+            return item.ID === oneID[0].id;
+        }
+        function ExistTwoID(item) {
+            return item.ID === twoID[0].id;
+        }
+
+        //check ExistOneID and ExistTwoID
+        if (CHARTS.some(ExistOneID) && CHARTS.some(ExistTwoID)) {
+
+            e.preventDefault();
+            //swap src
+            temp = oneID.attr("src");
+            oneID.attr("src", twoID.attr("src"));
+            twoID.attr("src", temp);
+            //swap type
+            temp = oneID.attr("type");
+            oneID.attr("type", twoID.attr("type"));
+            twoID.attr("type", temp);
+        }
+
+
+
+
+        if (CHARTS.some(ExistOneID)) {
+            //get Element by oneID
+            var oneObj = CHARTS.find((element) => element.ID == oneID[0].id);
+        }
+        if (CHARTS.some(ExistTwoID)) {
+            //get Element by twoID
+            var twoObj = CHARTS.find((element) => element.ID == twoID[0].id);
+        }
+
+
+
+
+        //if img not Exists
+        if (twoID.hasClass("form-group-body")) {
+            if (CHARTS.some(ExistOneID)) {
+                //modify oneObj RowID
+                oneObj.RowID = +e.target.id
+                    .replaceAll("form-group-body-", "")
+                    .split("-")[0];
+
+                //modify oneObj ColumnIndex
+                oneObj.ColumnIndex = +e.target.id
+                    .replaceAll("form-group-body-", "")
+                    .split("-")[1];
+            }
         } else {
-            oneObj.RowID = +twoElem
-                .parent()[0]
-                .id.replaceAll("form-group-body-", "")
-                .split("-")[0];
+            if (CHARTS.some(ExistOneID)) {
+                //modify oneObj RowID
+                oneObj.RowID = +twoID
+                    .parent()[0]
+                    .id.replaceAll("form-group-body-", "")
+                    .split("-")[0];
 
-            //modify oneObj ColumnIndex
-            oneObj.ColumnIndex = +twoElem
-                .parent()[0]
-                .id.replaceAll("form-group-body-", "")
-                .split("-")[1];
+                //modify oneObj ColumnIndex
+                oneObj.ColumnIndex = +twoID
+                    .parent()[0]
+                    .id.replaceAll("form-group-body-", "")
+                    .split("-")[1];
+            }
+            if (CHARTS.some(ExistTwoID)) {
 
-            //modify twoObj RowID
-            twoObj.RowID = +oneElem
-                .parent()[0]
-                .id.replaceAll("form-group-body-", "")
-                .split("-")[0];
+                //modify twoObj RowID
+                twoObj.RowID = +oneID
+                    .parent()[0]
+                    .id.replaceAll("form-group-body-", "")
+                    .split("-")[0];
 
-            //modify twoObj ColumnIndex
-            twoObj.ColumnIndex = +oneElem
-                .parent()[0]
-                .id.replaceAll("form-group-body-", "")
-                .split("-")[1];
+                //modify twoObj ColumnIndex
+                twoObj.ColumnIndex = +oneID
+                    .parent()[0]
+                    .id.replaceAll("form-group-body-", "")
+                    .split("-")[1];
+            }
         }
     }
 }
@@ -182,24 +216,32 @@ function GroupFns(e) {
             .parent()
             .parent()
             .attr("id");
-        let id = 0;
+        let _RowId = 0;
         $("#" + parent)
             .children()
             .each(function () {
                 if ($(this).hasClass("form-group-box")) {
-                    let nextId = +$(this).attr("id").replace("form-group-", "");
-                    if (nextId > id) {
-                        id = nextId;
+                    let nextRowId = +$(this).attr("id").replace("form-group-", "");
+                    if (nextRowId > _RowId) {
+                        _RowId = nextRowId;
                     }
                 }
             });
         //set last Id
-        id++;
+        _RowId++;
 
-        const par = $("#" + GroupId)
+        let par = $("#" + GroupId)
             .parent()
             .parent()[0].id;
-        let rowIndexNum = +$("#" + par).attr("rowIndex") + 1;
+        par = +par.replaceAll("form-group-", "");
+
+
+        let Element = ROWBOXS.find((Element => Element.RowID === par));
+
+        var _RowIndex = Element.RowIndex + 1;
+
+
+
         $(document).ready(function () {
             $("#" + GroupId)
                 .parent()
@@ -208,16 +250,16 @@ function GroupFns(e) {
                     $(
                         '<div  style="" id="' +
                         "form-group-" +
-                        id +
-                        '" class="row form-group-box" rowIndex="' +
-                        rowIndexNum +
+                        _RowId +
+                        '" class="row form-group-box" RowIndex="' +
+                        _RowIndex +
                         '" ondragover="allowDrop(event)"  >' +
                         '<div style="" class="' +
                         "col-lg-12 col-md-12 form-group-body" +
-                        ' col-sm-12  col-xs-12" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" id="form-group-body-' +
-                        id +
+                        ' col-sm-12  col-xs-12" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="0" id="form-group-body-' +
+                        _RowId +
                         '-0"></div>' +
-                        Group_Btn(id) +
+                        Group_Btn(_RowId) +
                         "</div>"
                     )
                 );
@@ -228,23 +270,22 @@ function GroupFns(e) {
 
         //add row in rowboxs arr
         let newRowBox = {
-            RowID: id,
-            RowIndex: rowIndexNum,
+            RowID: _RowId,
+            RowIndex: _RowIndex,
             RowDisplayMode: "GroupWithBox",
             ColumnLayout: "OnceColumn",
             ColumnWidth: "default",
         };
 
+
         $.each(ROWBOXS, function (index, item) {
-            if (item.RowIndex >= rowIndexNum) {
+            if (item.RowIndex >= _RowIndex) {
                 item.RowIndex++;
-                $("#form-group-" + item.RowID).attr("rowIndex", item.RowIndex);
+                $("#form-group-" + item.RowID).attr("RowIndex", item.RowIndex);
             }
         });
         ROWBOXS.push(newRowBox);
-        ROWBOXS.sort(
-            (firstItem, secondItem) => firstItem.RowIndex - secondItem.RowIndex
-        );
+
     }
 }
 
@@ -318,15 +359,13 @@ function DeleteGroup(elem) {
     let parentId = elem.parentNode.parentNode.id;
     if ($("#" + parentId).children().length == 1) {
         $("#" + parentId).remove();
-        parentId = parentId.replaceAll("form-group-", "");
+        parentId = +parentId.replaceAll("form-group-", "");
         //modify rowboxs arr
-        ROWBOXS.splice(
-            ROWBOXS.findIndex((Element) => Element.RowID == parentId),
-            1
-        );
+        ROWBOXS.splice(ROWBOXS.findIndex((Element) => Element.RowID == parentId), 1);
     } else {
         alert("سطر مورد نظر حاوی چارت می باشد.");
     }
+
 }
 
 function dragEnter(e) {
@@ -377,7 +416,7 @@ function rowMoveUp(e) {
 
 function rowMoveDown(e) {
     let oneID = $("#" + e.target.parentNode.parentNode.id);
-    
+
     if (oneID) {
         let cloned = oneID.clone(true);
         if (oneID.next()[0]) {
@@ -394,18 +433,17 @@ function rowMoveDown(e) {
             }
         }
     }
-    
+
 }
 
 //edit rowIndex for swapping
 function ROWBOXS_Modify(move, oneID, twoID) {
     $.each(ROWBOXS, function (index, item) {
         if (item.RowID == oneID) {
-            move == "Down" ? item.rowIndex++ : item.rowIndex--;
+            move == "Down" ? item.RowIndex++ : item.RowIndex--;
         } else if (item.RowID == twoID) {
-            move == "Down" ? item.rowIndex-- : item.rowIndex++;
+            move == "Down" ? item.RowIndex-- : item.RowIndex++;
         }
-        ROWBOXS.sort((first, second) => first.rowIndex - second.rowIndex);
     });
 }
 
@@ -456,7 +494,7 @@ function MsgBoxDel(parent, msg) {
         msg +
         '</div><hr style="margin:0px;width:100%;">' +
         '<div class="row" style="padding:16px;margin:0px;display:flex;"><span id="del" class="btn btn-danger"> حذف</span>' +
-        '<span id="closed" class="btn btn-light" style="width:60px;margin-Right:10px;" onclick="closed()"> لغو</span></div></div></div>';
+        '<span id="closed" class="btn btn-light" style="width:60px;margin-Right:10px;" onclick=" HideModal()"> لغو</span></div></div></div>';
     $("#" + parent).append(div);
 }
 function chartDelete(e) {
@@ -467,6 +505,7 @@ function chartDelete(e) {
     MsgBoxDel(parent, msg);
 
     $("#del").click(() => {
+
         let parentID = $("#myModal").parent()[0].id;
         let imgid = parentID.replaceAll("rowbtn-img-", "");
         $("#" + imgid).remove();
@@ -475,18 +514,15 @@ function chartDelete(e) {
         let rowbtn = "rowbtn-img-" + imgid;
         $("#" + rowbtn).remove();
         //modify chars arr
-        CHARTS.splice(
-            CHARTS.findIndex((Element) => Element.id == imgid),
-            1
-        );
+        CHARTS.splice(CHARTS.findIndex((Element) => Element.ID == imgid), 1);
+        console.log(imgid)
+        console.log(CHARTS)
     });
 
     //close msgbox
     $("#myModal").css("display", "block");
 }
-function closed() {
-    HideModal();
-}
+
 
 function GroupSplit(elem) {
     //group child count & set lblsilder
@@ -709,7 +745,12 @@ var REFROLES = [];
 var REFGROUPS = [];
 var REFCOLUMNS = [];
 
+
+
 function ExportData() {
+    ROWBOXS.sort(
+        (firstItem, secondItem) => firstItem.RowIndex - secondItem.RowIndex
+    );
     let json = {
         DashboardID: DASHBOARDID,
         Name: NAME,
@@ -748,7 +789,6 @@ function openfile() {
             let _json = e.target.result;
             _json = JSON.parse(_json);
             $("#geContent").empty();
-          
             //set variables
             DASHBOARDID = _json.DashboardID;
             NAME = _json.Name;
@@ -766,9 +806,8 @@ function openfile() {
             REFCOLUMNS = _json.RefColumns;
             DashboardView(_json);
             HideModal();
-
         };
         reader.readAsText(input);
-        
+
     }
 }

@@ -7,7 +7,6 @@ function chartEdit(e) {
     */
     const rowbtnId = $("#" + e.target.id).parent()[0].id;
     let imgid = rowbtnId.replaceAll("rowbtn-img-", "");
-    console.log(imgid)
     let getchartType = $("#" + imgid).attr("type");
     //create modal form
     ModalConstractor("85%", "geContent");
@@ -394,7 +393,6 @@ function chartEdit(e) {
         $("#" + imgid).attr("id", _id);
         $("#rowbtn-img-" + imgid).attr("id", "rowbtn-img-" + _id);
         HideModal();
-        console.log(CHARTS)
     };
     $("#chartModal").append(btnSubmit);
 

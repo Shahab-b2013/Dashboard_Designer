@@ -13,7 +13,7 @@ function DashboardView(_json) {
             '<div style="' +
             '" id="form-group-' +
             chartGroup.RowID +
-            '" class="row form-group-box " rowIndex="' +
+            '" class="row form-group-box " RowIndex="' +
             chartGroup.RowIndex +
             '" ondragleave="onMouseOut(event)">';
         var ColumnWidth = chartGroup.ColumnWidth;
