@@ -20,8 +20,26 @@ internal class Dashboard
     private bool itemsGrouping;
     public bool ItemsGrouping { get { return itemsGrouping; } set { itemsGrouping = value; } }
 
-    private RowBoxs[] rowBoxs;
-    public RowBoxs[] RowBoxs { get { return rowBoxs; } set { rowBoxs = value; } }
+    private string pageTemplateId;
+    public string PageTemplateId { get { return pageTemplateId; } set { pageTemplateId = value; } }
+
+    private string label;
+    public string Label { get { return label; } set { label = value; } }
+
+    private string type;
+    public string Type { get { return type; } set { type = value; } }
+
+    private bool headerVisible;
+    public bool HeaderVisible { get { return headerVisible; } set { headerVisible = value; } }
+
+    private string version;
+    public string Version { get { return version; } set { version = value; } }
+
+    private string desc;
+    public string Desc { get { return desc; } set { desc = value; } }
+
+    private RowBox[] rowBoxs;
+    public RowBox[] RowBoxs { get { return rowBoxs; } set { rowBoxs = value; } }
 
     private Charts[] charts;
     public Charts[] Charts { get { return charts; } set { charts = value; } }
@@ -123,11 +141,15 @@ internal class Series
 
 }
 
-internal class RowBoxs
+internal class RowBox
 {
     private int rowID;
     public int RowID { get { return rowID; } set { rowID = value; } }
 
+    private int internalID;
+    public int InternalID { get { return internalID; } set { internalID = value; } }
+
+    
     private int rowIndex;
     public int RowIndex { get { return rowIndex; } set { rowIndex = value; } }
 
