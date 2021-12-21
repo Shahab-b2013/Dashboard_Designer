@@ -55,7 +55,7 @@ function createImgChart(e, parentID, chartItem, Type) {
     let ID = chartItem ? chartItem.ID : chart_defaultId();
     function chart_defaultId() {
         return "chart-defaultId-" + Math.floor(Math.random() * 1000);
-       
+
     }
     let chartType = chartItem ? chartItem.Type : Type;
     let parent = parentID ? parentID : e.target.id;
@@ -286,7 +286,7 @@ function GroupFns(e) {
             let beforItem = ROWBOXS.find(item => item.RowIndex == parentItem.RowIndex + 1);
             beforItem.RowIndex = parentItem.RowIndex + 2;
             newItem.RowIndex = parentItem.RowIndex + 1;
-            Sort_RowIndex();
+            Sort_ROWBOXS();
 
         }
     } else {
@@ -298,7 +298,7 @@ function GroupFns(e) {
 
 function RowIndex_Generator() {
 
-    Sort_RowIndex();
+    Sort_ROWBOXS();
     let temp = 0;
     $.each(ROWBOXS, function (index, item) {
         if (item.RowIndex != temp) {
@@ -309,9 +309,17 @@ function RowIndex_Generator() {
     });
 }
 
-function Sort_RowIndex() {
+function Sort_ROWBOXS() {
     ROWBOXS.sort((firstItem, secondItem) => firstItem.RowIndex - secondItem.RowIndex);
 }
+
+
+function Sort_CHARTS() {
+    CHARTS.sort((firstElem, secondElem) => firstElem.ColumnIndex - secondElem.ColumnIndex);
+}
+
+
+
 
 
 
@@ -381,22 +389,26 @@ function allowDrop(e) {
 }
 
 function DeleteGroup(elem) {
-    removeDiv(elem);
-    let parentId = elem.parentNode.parentNode.id;
-    if ($("#" + parentId).children().length == 1) {
-        $("#" + parentId).remove();
-        parentId = +parentId.replaceAll("form-group-", "");
-        //modify rowboxs arr
-        ROWBOXS.splice(ROWBOXS.findIndex((Element) => Element.RowID == parentId), 1);
+
+    let RowCount = $('#geContent').children().length;
+    if (RowCount > 1) {
+        removeDiv(elem);
+        let parentId = elem.parentNode.parentNode.id;
+
+        if ($("#" + parentId).children().length == 1) {
+            $("#" + parentId).remove();
+            parentId = +parentId.replaceAll("form-group-", "");
+            //modify rowboxs arr
+            ROWBOXS.splice(ROWBOXS.findIndex((Element) => Element.RowID == parentId), 1);
 
 
-        //RowIndex Generate for All Rows
-        RowIndex_Generator();
+            //RowIndex Generate for All Rows
+            RowIndex_Generator();
 
-    } else {
-        alert("سطر مورد نظر حاوی چارت می باشد.");
+        } else {
+            alert("سطر مورد نظر حاوی چارت می باشد.");
+        }
     }
-
 }
 
 function dragEnter(e) {
@@ -443,7 +455,7 @@ function rowMoveUp(e) {
             oneID.remove();
         }
     }
- 
+
     RowIndex_Generator();
 }
 
@@ -466,7 +478,7 @@ function rowMoveDown(e) {
             }
         }
     }
-    
+
     RowIndex_Generator();
 }
 
@@ -549,7 +561,7 @@ function chartDelete(e) {
         $("#" + rowbtn).remove();
         //modify chars arr
         CHARTS.splice(CHARTS.findIndex((Element) => Element.ID == imgid), 1);
-          });
+    });
 
     //close msgbox
     $("#myModal").css("display", "block");
@@ -763,6 +775,8 @@ function HideModal() {
 
 ///EXPORT JSON
 var DASHBOARDID;
+var MODULEID;
+var ENTITYID;
 var NAME;
 var ITEMSGROUPING;
 var PAGETEMPLATEID;
@@ -786,12 +800,15 @@ var REFCOLUMNS = [];
 
 
 function ExportData() {
-    Sort_RowIndex();
+    Sort_ROWBOXS();
+    Sort_CHARTS();
     let json = {
         DashboardID: DASHBOARDID,
+        ModuleID: MODULEID,
+        EntityID: ENTITYID,
         Name: NAME,
         ItemsGrouping: ITEMSGROUPING,
-        PageTemplateId: PAGETEMPLATEID,
+        PageTemplateID: PAGETEMPLATEID,
         Label: LABEL,
         Type: TYPE,
         HeaderVisible: HEADERVISIBLE,
@@ -833,8 +850,10 @@ function openfile() {
             $("#geContent").empty();
             //set variables
             DASHBOARDID = _json.DashboardID;
+            MODULEID = _json.ModuleID;
+            ENTITYID = _json.EntityID;
             NAME = _json.Name;
-            PAGETEMPLATEID = _json.PageTemplateId;
+            PAGETEMPLATEID = _json.PageTemplateID;
             LABEL = _json.Label;
             TYPE = _json.Type;
             HEADERVISIBLE = _json.HeaderVisible;
