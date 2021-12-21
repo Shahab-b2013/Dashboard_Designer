@@ -52,10 +52,10 @@ function createImgChart(e, parentID, chartItem, Type) {
         }
         return value;
     }
-    let ID = chartItem ? chartItem.ID : idChart(e);
-    function idChart(e) {
-        let defaultId = e.target.id.replaceAll("form-group-body-", "");
-        return defaultId;
+    let ID = chartItem ? chartItem.ID : chart_defaultId();
+    function chart_defaultId() {
+        return "chart-defaultId-" + Math.floor(Math.random() * 1000);
+       
     }
     let chartType = chartItem ? chartItem.Type : Type;
     let parent = parentID ? parentID : e.target.id;
@@ -234,14 +234,10 @@ function GroupFns(e) {
                 .parent()
                 .parent()[0].id;
             par = +par.replaceAll("form-group-", "");
-
-
             let Element = ROWBOXS.find((Element => Element.RowID === par));
+            let _RowIndex = Element.RowIndex + 1;
 
-            var _RowIndex = Element.RowIndex + 1;
-
-
-
+            //create UI row
             $(document).ready(function () {
                 $("#" + GroupId)
                     .parent()
@@ -268,7 +264,8 @@ function GroupFns(e) {
             $(".form-group-body").removeClass("noDrop");
             $(".rowBtnGroup-span").css("display", "none");
 
-            //add row in rowboxs arr
+
+            //Add in ROWBOXS
             let newRowBox = {
                 RowID: _RowId,
                 RowIndex: _RowIndex,
@@ -277,20 +274,46 @@ function GroupFns(e) {
                 ColumnWidth: "default",
             };
 
-
-            $.each(ROWBOXS, function (index, item) {
-                if (item.RowIndex >= _RowIndex) {
-                    item.RowIndex++;
-                    $("#form-group-" + item.RowID).attr("RowIndex", item.RowIndex);
-                }
-            });
             ROWBOXS.push(newRowBox);
+
+
+            //RowIndex Generate for All Rows
+            RowIndex_Generator();
+
+            //Swap newElem with beforElem
+            let newItem = ROWBOXS.find(item => item.RowID == _RowId);
+            let parentItem = ROWBOXS.find(item => item.RowID == par);
+            let beforItem = ROWBOXS.find(item => item.RowIndex == parentItem.RowIndex + 1);
+            beforItem.RowIndex = parentItem.RowIndex + 2;
+            newItem.RowIndex = parentItem.RowIndex + 1;
+            Sort_RowIndex();
 
         }
     } else {
+
         alert('تعداد سطر  بیش  از حد مجاز است.')
     }
 }
+
+
+function RowIndex_Generator() {
+
+    Sort_RowIndex();
+    let temp = 0;
+    $.each(ROWBOXS, function (index, item) {
+        if (item.RowIndex != temp) {
+            item.RowIndex = temp;
+        }
+        temp++;
+        $("#form-group-" + item.RowID).attr("RowIndex", item.RowIndex);
+    });
+}
+
+function Sort_RowIndex() {
+    ROWBOXS.sort((firstItem, secondItem) => firstItem.RowIndex - secondItem.RowIndex);
+}
+
+
 
 //=============================================================================drag and drop functions=================================================================================
 /*
@@ -365,6 +388,11 @@ function DeleteGroup(elem) {
         parentId = +parentId.replaceAll("form-group-", "");
         //modify rowboxs arr
         ROWBOXS.splice(ROWBOXS.findIndex((Element) => Element.RowID == parentId), 1);
+
+
+        //RowIndex Generate for All Rows
+        RowIndex_Generator();
+
     } else {
         alert("سطر مورد نظر حاوی چارت می باشد.");
     }
@@ -415,6 +443,8 @@ function rowMoveUp(e) {
             oneID.remove();
         }
     }
+ 
+    RowIndex_Generator();
 }
 
 function rowMoveDown(e) {
@@ -436,7 +466,8 @@ function rowMoveDown(e) {
             }
         }
     }
-
+    
+    RowIndex_Generator();
 }
 
 //edit rowIndex for swapping
@@ -518,9 +549,7 @@ function chartDelete(e) {
         $("#" + rowbtn).remove();
         //modify chars arr
         CHARTS.splice(CHARTS.findIndex((Element) => Element.ID == imgid), 1);
-        console.log(imgid)
-        console.log(CHARTS)
-    });
+          });
 
     //close msgbox
     $("#myModal").css("display", "block");
@@ -757,9 +786,7 @@ var REFCOLUMNS = [];
 
 
 function ExportData() {
-    ROWBOXS.sort(
-        (firstItem, secondItem) => firstItem.RowIndex - secondItem.RowIndex
-    );
+    Sort_RowIndex();
     let json = {
         DashboardID: DASHBOARDID,
         Name: NAME,

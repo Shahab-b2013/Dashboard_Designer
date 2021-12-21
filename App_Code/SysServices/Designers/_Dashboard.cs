@@ -24,7 +24,10 @@ public class _Dashboard : System.Web.Services.WebService
         sw.Write(HttpContext.Current.Request.Form["design"]);
         sw.Close();
 
-        CreatePage(design.DashboardID, design.PageTemplateId, design.Name, design.Label, design.Type, design.HeaderVisible, design.Version, design.Desc);
+
+
+
+        //CreatePage(design.DashboardID, design.PageTemplateId, design.Name, design.Label, design.Type, design.HeaderVisible, design.Version, design.Desc);
 
 
         try
