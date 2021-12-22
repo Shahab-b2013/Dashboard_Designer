@@ -16,6 +16,9 @@ public class Dashboard
     private int entityID;
     public int EntityID { get { return entityID; } set { entityID = value; } }
 
+    private int accessID;
+    public int AccessID { get {return accessID; } set { accessID=value; } }
+
     private string name;
     public string Name { get { return name; } set { name = value; } }
 
@@ -40,14 +43,14 @@ public class Dashboard
     private string desc;
     public string Desc { get { return desc; } set { desc = value; } }
 
+    private string sqlFilters;
+    public string SqlFilters { get { return sqlFilters; } set { sqlFilters = value; } }
+
     private RowBox[] rowBoxs;
     public RowBox[] RowBoxs { get { return rowBoxs; } set { rowBoxs = value; } }
 
     private Chart[] charts;
     public Chart[] Charts { get { return charts; } set { charts = value; } }
-
-    private string sqlFilters;
-    public string SqlFilters { get { return sqlFilters; } set { sqlFilters = value; } }
 
     private AccessRoles[] accessRoles;
     public AccessRoles[] AccessRoles { get { return accessRoles; } set { accessRoles = value; } }

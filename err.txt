@@ -1,2 +1,4 @@
-Violation of PRIMARY KEY constraint 'PK_Sys_Gui_PageLayouts'. Cannot insert duplicate key in object 'dbo.Sys_Gui_PageLayouts'. The duplicate key value is (10000100).
+The DELETE statement conflicted with the REFERENCE constraint "FK_Sys_Gui_Charts_Sys_Gui_ActivityContexts". The conflict occurred in database "FS_Software", table "dbo.Sys_Gui_ChartViews", column 'ActivityContextID'.
+The DELETE statement conflicted with the REFERENCE constraint "FK_Sys_Gui_ActivityContexts_Sys_Activities". The conflict occurred in database "FS_Software", table "dbo.Sys_Gui_ActivityContexts", column 'ActivityID'.
+The statement has been terminated.
 The statement has been terminated.

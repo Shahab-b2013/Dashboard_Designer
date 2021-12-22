@@ -8,14 +8,14 @@ using System.Web;
 /// </summary>
 public class Chart
 {
+    private string id;
+    public string ID { get { return id; } set { id = value; } }
+
     private int rowID;
     public int RowID { get { return rowID; } set { rowID = value; } }
 
     private int columnIndex;
     public int ColumnIndex { get { return columnIndex; } set { columnIndex = value; } }
-
-    private string iD;
-    public string ID { get { return iD; } set { iD = value; } }
 
     private string name;
     public string Name { get { return name; } set { name = value; } }

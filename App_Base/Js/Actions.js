@@ -54,7 +54,7 @@ function createImgChart(e, parentID, chartItem, Type) {
     }
     let ID = chartItem ? chartItem.ID : chart_defaultId();
     function chart_defaultId() {
-        return "chart-defaultId-" + Math.floor(Math.random() * 1000);
+        return "chart-defaultId-" + ~~(Math.random() * 1000);
 
     }
     let chartType = chartItem ? chartItem.Type : Type;
@@ -777,6 +777,7 @@ function HideModal() {
 var DASHBOARDID;
 var MODULEID;
 var ENTITYID;
+var ACCESSID;
 var NAME;
 var ITEMSGROUPING;
 var PAGETEMPLATEID;
@@ -806,6 +807,7 @@ function ExportData() {
         DashboardID: DASHBOARDID,
         ModuleID: MODULEID,
         EntityID: ENTITYID,
+        AccessID:ACCESSID,
         Name: NAME,
         ItemsGrouping: ITEMSGROUPING,
         PageTemplateID: PAGETEMPLATEID,
@@ -852,6 +854,7 @@ function openfile() {
             DASHBOARDID = _json.DashboardID;
             MODULEID = _json.ModuleID;
             ENTITYID = _json.EntityID;
+            ACCESSID=_json.AccessID;
             NAME = _json.Name;
             PAGETEMPLATEID = _json.PageTemplateID;
             LABEL = _json.Label;
