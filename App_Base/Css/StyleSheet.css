@@ -265,7 +265,7 @@ br {
   display: none; /* Hidden by default */
   /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  padding-top: 110px; /* Location of the box */
   left: 0;
   align-items: center;
   overflow: auto; /* Enable scroll if needed */
@@ -391,12 +391,10 @@ input[type="range"] {
   border-radius: 2px;
   border: 1px solid #ccc;
   padding: 0px;
-  height: 550px;
+  height: 561px;
 }
 .containerside {
   color: black;
-  /* height: 100%;
-  width: 100%; */
   direction: rtl;
   background-color: #ffffff;
 }

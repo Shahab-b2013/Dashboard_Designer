@@ -7,6 +7,7 @@ function chartEdit(e) {
     */
     const rowbtnId = $("#" + e.target.id).parent()[0].id;
     let imgid = rowbtnId.replaceAll("rowbtn-img-", "");
+    
     let getchartType = $("#" + imgid).attr("type");
     //create modal form
     ModalConstractor("85%", "geContent");
@@ -33,10 +34,9 @@ function chartEdit(e) {
         "SeriesText",
         "SeriesName",
         "StlyeColor",
-        "Version",
     ];
     let ArrItems = [];
-    let findChart = CHARTS.find((Element) => Element.id == imgid);
+    let findChart = CHARTS.find((Element) => Element.ID == imgid);
     if (findChart) {
         ArrItems = [
             findChart.Text,
@@ -50,7 +50,6 @@ function chartEdit(e) {
             findChart.Series[0].Text,
             findChart.Series[0].Name,
             findChart.Series[0].StyleColor,
-            findChart.Version,
         ];
     } else {
         ArrItems = [
@@ -61,7 +60,6 @@ function chartEdit(e) {
             "",
             REFCOLUMNS,
             ["sum", "avg", "count", "min", "max"],
-            "",
             "",
             "",
             "",
@@ -87,7 +85,7 @@ function chartEdit(e) {
     //row
     function divItems(i) {
         let div1Items =
-            '<div id="div1Items-' + i + '" class="  " style="width:100%"></div>';
+            '<div id="div1Items-' + i + '" class="  " style="width:100%; margin-bottom:10px;"></div>';
         $("#div1").append(div1Items);
     }
 
@@ -96,7 +94,7 @@ function chartEdit(e) {
         let lbl = document.createElement("label");
         lbl.innerText = value + ":";
         lbl.className = "lbl ";
-        lbl.style.margin = "10px 0px 10px 10px";
+        lbl.style.margin = "5px 0px 10px 10px";
         $("#div1Items-" + i).append(lbl);
     }
 
@@ -356,13 +354,17 @@ function chartEdit(e) {
         //get base64
         const _svg_Base64 = Base64.encode(svg_xml, false);
 
+        console.log(CHARTS)
         //remove oldItem by id
         if (findChart) {
             CHARTS.splice(
-                CHARTS.findIndex((Element) => Element.id == imgid),
+                CHARTS.findIndex((Element) => Element.ID == imgid),
                 1
             );
         }
+
+        console.log(findChart)
+
         CHARTS.push({
             RowID: +_RowID,
             ColumnIndex: +_ColumnIndex,
@@ -375,7 +377,6 @@ function chartEdit(e) {
             CategoryName: $("#item-4").val(),
             CategoryExpression: $("#item-5 option:selected").val(),
             Operator: $("#item-6 option:selected").val(),
-            Version: $("#item-11").val(),
             Series: [
                 {
                     Text: $("#item-8").val(),
@@ -387,6 +388,7 @@ function chartEdit(e) {
             ],
             ImgBs64: _svg_Base64,
         });
+
 
         //update chart to form
         $("#" + imgid).attr("src", "data:image/svg+xml;base64," + _svg_Base64);

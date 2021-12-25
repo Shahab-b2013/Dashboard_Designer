@@ -2,8 +2,10 @@
 // Release Ferdos.ProductImplementer 1.0.0.0
 using System;
 using System.Data.SqlClient;
+using System.IO;
+using System.Web;
 
-    public class SqlDataProvider
+public class SqlDataProvider
     {
         public static SqlConnection DbConnection
         {
@@ -76,9 +78,12 @@ using System.Data.SqlClient;
                 }
                 catch (Exception exp)
                 {
-                    Console.WriteLine(query);
+                StreamWriter x = File.CreateText(HttpContext.Current.Server.MapPath("/") + "/errr.txt");
+                x.Write(exp.Message);
+                x.Write(query);
+                x.Close();
 
-                    throw exp;
+                throw exp;
 
                 }
             }

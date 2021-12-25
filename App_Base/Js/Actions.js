@@ -114,17 +114,21 @@ function swapping(e) {
 
 
 
-
         if (CHARTS.some(ExistOneID)) {
             //get Element by oneID
             var oneObj = CHARTS.find((element) => element.ID == oneID[0].id);
+
         }
         if (CHARTS.some(ExistTwoID)) {
             //get Element by twoID
             var twoObj = CHARTS.find((element) => element.ID == twoID[0].id);
+
         }
 
-
+        //swap ID
+        temp = oneObj.ID;
+        oneObj.ID = twoObj.ID;
+        twoObj.ID = temp;
 
 
         //if img not Exists
@@ -807,7 +811,7 @@ function ExportData() {
         DashboardID: DASHBOARDID,
         ModuleID: MODULEID,
         EntityID: ENTITYID,
-        AccessID:ACCESSID,
+        AccessID: ACCESSID,
         Name: NAME,
         ItemsGrouping: ITEMSGROUPING,
         PageTemplateID: PAGETEMPLATEID,
@@ -854,7 +858,7 @@ function openfile() {
             DASHBOARDID = _json.DashboardID;
             MODULEID = _json.ModuleID;
             ENTITYID = _json.EntityID;
-            ACCESSID=_json.AccessID;
+            ACCESSID = _json.AccessID;
             NAME = _json.Name;
             PAGETEMPLATEID = _json.PageTemplateID;
             LABEL = _json.Label;

@@ -35,8 +35,8 @@ public class Chart
     private string categoryName;
     public string CategoryName { get { return categoryName; } set { categoryName = value; } }
 
-    private string categoryExpressionwID;
-    public string CategoryExpressionwID { get { return categoryExpressionwID; } set { categoryExpressionwID = value; } }
+    private string categoryExpression;
+    public string CategoryExpression { get { return categoryExpression; } set { categoryExpression = value; } }
 
     private string seriesType;
     public string SeriesType { get { return seriesType; } set { seriesType = value; } }
