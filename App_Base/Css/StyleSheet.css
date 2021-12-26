@@ -417,24 +417,24 @@ input[type="range"] {
   margin-bottom: 0px;
 }
 .btnReset {
-  margin-top: 10px;
-  width: 80px;
-  height: 33px;
-  color: white;
-  border-radius: 0px;
-  border-color: #eea236;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.42857143;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  display: inline-block;
-  border: 1px solid transparent;
-  font-family: Tahoma;
-  /* float: right; */
-  background-color: #f0ad4e;
-}
+    margin-top: 10px;
+    width: 80px;
+    height: 34px;
+    color: white;
+    border-radius: 0px;
+    border-color: #eea236;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    display: inline-block;
+    border: 1px solid transparent;
+    font-family: Tahoma;
+    background-color: #f0ad4e;
+    float: right;
+    }
 .form-group-box {
   padding-left: 0px;
   padding-top: 20px;

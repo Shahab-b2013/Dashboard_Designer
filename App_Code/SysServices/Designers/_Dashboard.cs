@@ -20,7 +20,7 @@ public class _Dashboard : System.Web.Services.WebService
         try
         {
 
-            //GET JSON
+            //JSON Serializer
             int id = Convert.ToInt32(HttpContext.Current.Request.Form["id"]);
             JavaScriptSerializer js = new JavaScriptSerializer();
             Dashboard design = js.Deserialize<Dashboard>(HttpContext.Current.Request.Form["design"]);
@@ -28,10 +28,8 @@ public class _Dashboard : System.Web.Services.WebService
             sw.Write(HttpContext.Current.Request.Form["design"]);
             sw.Close();
 
-
             //SET ACTIVITYID
             int activityID = (design.ModuleID * 100) + 50;
-
 
             //CLEAR TABLES
             ClearTables(activityID, design.Charts);
@@ -108,8 +106,17 @@ public class _Dashboard : System.Web.Services.WebService
                 }
             }
 
+            //ACCESS ROLES
+            for (int i = 0; i < design.AccessRoles.Length; i++)
+            {
+                Create_UserRole_Accesses(design.AccessRoles[i].ID, design.AccessID, "All", "NULL");
+            }
 
-
+            //ACCESS GROUPS
+            for (int i = 0; i < design.AccessGroups.Length; i++)
+            {
+                Create_UserGroup_Accessess(design.AccessGroups[i].ID, design.AccessID, "All", "NULL");
+            }
 
         }
         catch (Exception e)
@@ -146,6 +153,10 @@ public class _Dashboard : System.Web.Services.WebService
               "DELETE FROM Sys_Gui_ChartViews WHERE ChartID = 1501056;" +
                "DELETE FROM Sys_Gui_ChartViews WHERE ChartID = 1501057;" +
                 "DELETE FROM Sys_Gui_ChartViews WHERE ChartID = 1501058;" +
+
+                "DELETE FROM Sys_UserRole_Accesses WHERE AccessID=150101" +
+                "DELETE FROM Sys_UserGroup_Accesses WHERE AccessID=150101" +
+
             "DELETE FROM Sys_Gui_PageLayouts WHERE PageID = 1000010;" +
             "DELETE FROM Sys_Dev_Activities WHERE ActivityID in (select ActivityID FROM[Sys_Activities] WHERE ModuleID = 15010);" +
             "DELETE FROM Sys_Gui_Page_Accesses WHERE PageID = 1000010;" +
@@ -218,7 +229,14 @@ public class _Dashboard : System.Web.Services.WebService
         SqlDataProvider.ExecuteNoneQuery(string.Format("INSERT INTO Sys_Gui_ChartSeries(ChartSeriesID,ChartID,Name,Label,DataExpression,SeriesIndex,PlotType,StyleColor,Enabled,Version,Description,ActionOnClick,LanchedContextID,LanchedPageID) VALUES({0},{1},N'{2}',N'{3}',N'{4}',N'{5}',N'{6}',N'{7}',{8},N'{9}',N'{10}',N'{11}',{12},{13})", ChartSeriesID, ChartID, Name, Label, DataExpression, SeriesIndex, PlotType, StyleColor, Enabled, Version, Description, ActionOnClick, (LanchedPageID == null ? "NULL" : LanchedContextID), (LanchedPageID == null ? "NULL" : LanchedPageID)));
     }
 
+    public static void Create_UserRole_Accesses(int UserRoleID, int AccessID, string AccessRuleCriteria, string ActivityParamName)
+    {
+        SqlDataProvider.ExecuteNoneQuery(string.Format("INSERT INTO Sys_UserRole_Accesses(UserRoleID,AccessID,AccessRuleCriteria,ActivityParamName) VALUES({0},{1},N'{2}',N'{3}')", UserRoleID, AccessID, AccessRuleCriteria, ActivityParamName));
+    }
 
-
+    public static void Create_UserGroup_Accessess(int UserGroupID, int AccessID, string AccessRuleCriteria, string ActivityParamName)
+    {
+        SqlDataProvider.ExecuteNoneQuery(string.Format("INSERT INTO Sys_UserGroup_Accesses(UserGroupID,AccessID,AccessRuleCriteria,ActivityParamName) VALUES({0},{1},N'{2}',N'{3}')", UserGroupID, AccessID, AccessRuleCriteria, ActivityParamName));
+    }
 }
 

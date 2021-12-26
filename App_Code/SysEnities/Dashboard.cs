@@ -52,11 +52,11 @@ public class Dashboard
     private Chart[] charts;
     public Chart[] Charts { get { return charts; } set { charts = value; } }
 
-    private AccessRoles[] accessRoles;
-    public AccessRoles[] AccessRoles { get { return accessRoles; } set { accessRoles = value; } }
+    private AccessRole[] accessRoles;
+    public AccessRole[] AccessRoles { get { return accessRoles; } set { accessRoles = value; } }
 
-    private AccessGroups[] accessGroups;
-    public AccessGroups[] AccessGroups { get { return accessGroups; } set { accessGroups = value; } }
+    private AccessGroup[] accessGroups;
+    public AccessGroup[] AccessGroups { get { return accessGroups; } set { accessGroups = value; } }
 
 }
 

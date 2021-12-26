@@ -128,12 +128,10 @@ function Accesses(e) {
         while (count < 2) {
             if (count == 0) {
                 tabId = "Roles";
-                items = REFROLES;
-                tabIems(items, tabId);
+                tabIems(REFROLES, tabId);
             } else {
                 tabId = "Groups";
-                items = REFGROUPS;
-                tabIems(items, tabId);
+                tabIems(REFGROUPS, tabId);
             }
             count++;
         }
@@ -143,14 +141,14 @@ function Accesses(e) {
     function tabIems(items, tabId) {
         let obj = {};
         let Array = [];
-        let j = 0;
         for (let i in items) {
             let check = document.getElementById("check" + i + tabId);
             let label = document.getElementById("label" + i + tabId);
-
+            let _ID;
+            tabId == "Roles" ? _ID = REFROLES.find(Element => Element.Label == label.innerHTML).ID : _ID = REFGROUPS.find(Element => Element.Label == label.innerHTML).ID;
             if (check.checked) {
                 obj = {
-                    ID: j++,
+                    ID: _ID,
                     Label: label.innerHTML,
                 };
                 Array.push(obj);

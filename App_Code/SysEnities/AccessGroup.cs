@@ -6,7 +6,7 @@ using System.Web;
 /// <summary>
 /// Summary description for AccessGroups
 /// </summary>
-public class AccessGroups
+public class AccessGroup
 {
     private int id;
     public int ID { get { return id; } set { id = value; } }

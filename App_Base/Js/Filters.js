@@ -16,16 +16,10 @@ function Filters(e) {
     function BtnReset() {
         let btn = document.createElement("button");
         btn.className = "btnReset";
-        btn.style.height = "34px";
-        btn.style.float = "right";
-        btn.style.borderRadius = "2px";
-        btn.style.marginRight = "5px";
-        btn.style.marginLeft = "5px";
         btn.innerHTML = "شروع مجدد";
         div.appendChild(btn);
         btn.onclick = function () {
             $("#builder-basic").queryBuilder("reset");
-            
         };
     }
 
@@ -36,6 +30,8 @@ function Filters(e) {
         btn.className = "btn btn-primary";
         btn.style.float = "right";
         btn.style.height = "34px";
+        btn.style.borderTopLeftRadius = "0px";
+        btn.style.borderBottomLeftRadius = "0px";
         div.appendChild(btn);
         btn.onclick = function () {
             var result = $("#builder-basic").queryBuilder("getSQL", false);
@@ -64,6 +60,8 @@ function Filters(e) {
         btnExit.className = "btn btn-light";
         btnExit.style.float = "right";
         btnExit.style.height = "34px";
+        btnExit.style.borderTopRightRadius = "0px";
+        btnExit.style.borderBottomRightRadius = "0px";
         btnExit.innerText = "خروج";
         btnExit.onclick = function () {
             HideModal();
@@ -75,7 +73,7 @@ function Filters(e) {
 
 
         const ruleDefault = {
-            filters: [ {
+            filters: [{
                 id: '1',
                 label: '- - - - - - - ',
                 type: 'double',
@@ -94,7 +92,7 @@ function Filters(e) {
             }
         }
 
-   
+
         if (Object.keys(FILTERS).length > 0) {
             //load
             $("#builder-basic").queryBuilder(GetLocalFilter());
@@ -125,4 +123,5 @@ function Filters(e) {
             rules: FILTERS
         }
     }
+
 }

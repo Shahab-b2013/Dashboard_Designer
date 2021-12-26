@@ -6,7 +6,7 @@ using System.Web;
 /// <summary>
 /// Summary description for AccessRoles
 /// </summary>
-public class AccessRoles
+public class AccessRole
 {
     private int id;
     public int ID { get { return id; } set { id = value; } }
