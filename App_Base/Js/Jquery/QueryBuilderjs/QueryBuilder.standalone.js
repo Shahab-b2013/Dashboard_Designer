@@ -7247,10 +7247,10 @@
   QueryBuilder.regional["en"] = {
     __locale: "English (en)",
     __author: 'Damien "Mistic" Sorel, http://www.strangeplanet.fr',
-    add_rule: "افزودن نقش",
-    add_group: "افزودن گروه",
-    delete_rule: "حذف نقش",
-    delete_group: "حذف گروه",
+    add_rule: "افزودن شرط",
+    add_group: "افزودن فیلتر",
+    delete_rule: "حذف شرط",
+    delete_group: "حذف فیلتر",
     conditions: {
       AND: "AND",
       OR: "OR",

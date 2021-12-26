@@ -129,11 +129,15 @@
         }
 
             .query-builder .btn-group > .btn:first-child:not(:last-child) {
+                border-top-left-radius: 3px;
+                border-bottom-left-radius: 3px;
                 border-top-right-radius: 0px;
                 border-bottom-right-radius: 0px;
             }
 
         .query-builder .btn-group > .btn:last-child:not(:first-child) {
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
             border-top-left-radius: 0px;
             border-bottom-left-radius: 0px;
         }

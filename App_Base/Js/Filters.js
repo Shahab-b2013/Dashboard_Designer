@@ -18,9 +18,7 @@ function Filters(e) {
         btn.className = "btnReset";
         btn.innerHTML = "شروع مجدد";
         div.appendChild(btn);
-        btn.onclick = function () {
-            $("#builder-basic").queryBuilder("reset");
-        };
+        btn.onclick = () => $("#builder-basic").queryBuilder("reset");
     }
 
     // BtnSql
@@ -33,24 +31,25 @@ function Filters(e) {
         btn.style.borderTopLeftRadius = "0px";
         btn.style.borderBottomLeftRadius = "0px";
         div.appendChild(btn);
-        btn.onclick = function () {
-            var result = $("#builder-basic").queryBuilder("getSQL", false);
+        btn.onclick = () => {
+            //get sql
+            let getSQL = $("#builder-basic").queryBuilder("getSQL", false);
 
-            //set sql
-            if (result.sql.length != null) {
-                let localData = result.sql;
-                SQLFILTERS = localData;
+            //get rules
+            let getRules = $("#builder-basic").queryBuilder("getRules");
 
-            }
-            //set json
-            result = $("#builder-basic").queryBuilder("getRules");
+            //set sql and filters
+            if (getSQL != null) {
+                SQLFILTERS = getSQL.sql;
+                FILTERS = getRules;
 
-            if (!$.isEmptyObject(result)) {
-                let localData = result;
-                FILTERS = localData;
+            } else {
+                SQLFILTERS = null;
+                FILTERS = null;
             }
 
             HideModal();
+
         };
     }
 
@@ -69,38 +68,11 @@ function Filters(e) {
         div.appendChild(btnExit);
     }
 
+
+    //load
     function QueryBuilder() {
-
-
-        const ruleDefault = {
-            filters: [{
-                id: '1',
-                label: '- - - - - - - ',
-                type: 'double',
-                validation: {
-                    min: 0,
-                    step: 0.01
-                }
-            }],
-            rules: {
-                condition: 'AND',
-                rules: [{
-                    id: '1',
-                    operator: 'less',
-                    value: 10.25
-                }]
-            }
-        }
-
-
-        if (Object.keys(FILTERS).length > 0) {
-            //load
-            $("#builder-basic").queryBuilder(GetLocalFilter());
-        } else {
-            //load
-            $("#builder-basic").queryBuilder(ruleDefault);
-            $("#builder-basic").queryBuilder("reset");
-        }
+        $("#builder-basic").queryBuilder(GetLocalFilter());
+        if (FILTERS == null) $("#builder-basic").queryBuilder("reset");
 
     }
 
@@ -120,7 +92,12 @@ function Filters(e) {
         }
         return {
             filters: filtersArr,
-            rules: FILTERS
+            rules: FILTERS == null ? {
+                condition: 'AND',
+                rules: [{
+                    id: REFCOLUMNS[0].Data,
+                }]
+            } : FILTERS
         }
     }
 
