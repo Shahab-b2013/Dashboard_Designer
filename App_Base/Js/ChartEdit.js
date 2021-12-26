@@ -7,7 +7,7 @@ function chartEdit(e) {
     */
     const rowbtnId = $("#" + e.target.id).parent()[0].id;
     let imgid = rowbtnId.replaceAll("rowbtn-img-", "");
-    
+
     let getchartType = $("#" + imgid).attr("type");
     //create modal form
     ModalConstractor("85%", "geContent");
@@ -120,7 +120,7 @@ function chartEdit(e) {
             i +
             '" style="left:0px;position:absolute;">';
         for (let j = 0; j < value.length; j++) {
-             //REFCOLUMNS
+            //REFCOLUMNS
             i == 5
                 ? value[j].data == defaultVal
                     ? (Select_List += "<option selected>" + value[j].Data + "</option>")
@@ -142,8 +142,21 @@ function chartEdit(e) {
         color.style.left = "10px";
         color.value = value;
         color.style.position = "absolute";
+        color.addEventListener('input', () => {
+            showChart(getchartType);
+        });
         $("#div1Items-" + i).append(color);
     }
+
+    document.getElementById("item-0").addEventListener('change', (e) => {
+        _TitleOptions.text = $("#item-0").val();
+        showChart(getchartType);
+    })
+
+    document.getElementById("item-2").addEventListener('change', (e) => {
+        _YAxisOptions.title.text = $("#item-2").val();
+        showChart(getchartType);
+    })
 
     //===============================show Chart ============================
 
@@ -155,9 +168,11 @@ function chartEdit(e) {
         function chartItems(_series, _cat, chartType) {
             _TitleOptions.text = "";
             _GeneralOptions.type = chartType;
-            _YAxisOptions.title.text = "";
+            _ColumnPlotOptions.color = $('#item-10').val();
+            _YAxisOptions.title.text = $('#item-2').val();
             _XAxisOptions.categories = _cat;
-            _SeriesPlotOptions.color = "";
+
+
 
             if (chartType == "pie") {
                 _GeneralOptions.options3d.enabled = true;
@@ -167,6 +182,7 @@ function chartEdit(e) {
                 _LegendOptions.enabled = false;
             }
 
+            _TitleOptions.text = $('#item-0').val();
             chartSvg = Highcharts.chart("containers", {
                 chart: _GeneralOptions,
                 colors: _ColorsOptions,
@@ -189,12 +205,13 @@ function chartEdit(e) {
 
         //column
         if (chartType == "column") {
-            _cat = "";
-            _name = "fdd";
+            
+            _cat = ['تجهیرات کاربری', 'سیستم ها','شبکه','سرور','اتاق سرور','رمز کننده'];
+            _name = "سرورها";
             _series = [
                 {
                     name: _name,
-                    data: [8, 5, 2, 4, 5, 2, 1],
+                    data: [1075, 1058,720,360,126,57]
                 },
             ];
 
