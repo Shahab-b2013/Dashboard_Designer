@@ -769,6 +769,7 @@ var ACCESESGROUPS = [];
 var REFROLES = [];
 var REFGROUPS = [];
 var REFCOLUMNS = [];
+var SERIES = [];
 function ExportData() {
   Sort_ROWBOXS();
   Sort_CHARTS();

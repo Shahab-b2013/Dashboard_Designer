@@ -13,7 +13,7 @@ function chartEdit(e) {
   ModalConstractor("85%", "geContent");
   let div2 =
     '<div id="div2" class="col-lg-9 col-md-9 col-sm-12 " style="">' +
-    '<div id="containers" style="height:550px"></div></figure></div>';
+    '<div id="containers"></div></figure></div>';
   $("#contentM").append(div2);
   let div1 =
     '<div id="div1" class="row col-lg-3 col-md-3 col-sm-12 " style=""></div>';
@@ -29,14 +29,17 @@ function chartEdit(e) {
     "ValueLabel",
     "CategoryName",
     "CatExpression",
-    "Operators",
-    "DataExpression",
     "Series",
-    "StlyeColor",
   ];
-  let ArrItems = [];
+
   let findChart = CHARTS.find((Element) => Element.ID == imgid);
+  let ArrItems;
+  let seriesName = "";
   if (findChart) {
+    for (let i = 0; i < findChart.Series.length; i++) {
+      seriesName += findChart.Series[i].Name + ",";
+    }
+
     ArrItems = [
       findChart.Text,
       findChart.Name,
@@ -44,26 +47,8 @@ function chartEdit(e) {
       findChart.CategoryLabel,
       findChart.ValueLabel,
       findChart.CategoryName,
-      REFCOLUMNS,
-      ["sum", "avg", "count", "min", "max"],
-      findChart.Series[0].DataExpression,
-      // findChart.Series[0].Text,
-      findChart.Series[0].Name,
-      findChart.Series[0].StyleColor,
-    ];
-  } else {
-    ArrItems = [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      REFCOLUMNS,
-      ["sum", "avg", "count", "min", "max"],
-      "",
-      "",
-      "",
+      findChart.CategoryExpression,
+      seriesName,
     ];
   }
   //create items and value
@@ -76,17 +61,11 @@ function chartEdit(e) {
       $("#div1Items-" + i).append(
         '<span id="CommandTextBtn" onclick="CommandText(event)" class="btn btn-light glyphicon glyphicon-option-vertical"></span>'
       );
-    } else if (i == 6) {
-      selectList(i, ArrItems[i], findChart ? findChart.CategoryExpression : "");
     } else if (i == 7) {
-      selectList(i, ArrItems[i], findChart ? findChart.Operator : "");
-    } else if (i == 9) {
       textBox(i, ArrItems[i]);
       $("#div1Items-" + i).append(
         '<span id="SeriesBtn" onclick="Series(event)" class="btn btn-light glyphicon glyphicon-option-vertical"></span>'
       );
-    } else if (i == 10) {
-      inputColor(i, ArrItems[i]);
     } else {
       textBox(i, ArrItems[i]);
     }
@@ -353,13 +332,8 @@ function chartEdit(e) {
   //   $("#chartModal").append(btnShow);
 
   //btnsubmit
-  let btnSubmit = document.createElement("button");
-  btnSubmit.className = "btn btn-primary";
-  btnSubmit.style.margin = "0px 5px 0px 5px";
-  btnSubmit.style.display = "inline";
-  btnSubmit.style.float = "right";
-  btnSubmit.innerText = "ذخیره";
-  btnSubmit.onclick = () => {
+  let Submit = btnSubmit("#chartModal");
+  Submit.onclick = () => {
     //get svg
     var svg_xml = chartSvg.getSVG();
     const index = svg_xml.indexOf("</div>") + 6;
@@ -402,15 +376,11 @@ function chartEdit(e) {
       CategoryLabel: $("#item-3").val(),
       ValueLabel: $("#item-4").val(),
       CategoryName: $("#item-5").val(),
-      CategoryExpression: $("#item-6 option:selected").val(),
-      Operator: $("#item-7 option:selected").val(),
+      // CategoryExpression: $("#item-6 option:selected").val(),
       Series: [
         {
-          // Text: $("#item-9").val(),
-          // Name: $("#item-10").val(),
-          DataExpression: $("#item-8").val(),
           PlotType: getchartType,
-          StyleColor: $("#item-11").val(),
+          StyleColor: "",
         },
       ],
       ImgBs64: _svg_Base64,
@@ -422,18 +392,10 @@ function chartEdit(e) {
     $("#rowbtn-img-" + imgid).attr("id", "rowbtn-img-" + _id);
     HideModal();
   };
-  $("#chartModal").append(btnSubmit);
 
   //btn exit
-  let btnExit = document.createElement("button");
-  btnExit.className = "btn btn-light";
-  btnExit.style.display = "inline";
-  btnExit.style.float = "right";
-  btnExit.innerText = "لغو";
-  btnExit.onclick = function () {
-    HideModal();
-  };
-  $("#chartModal").append(btnExit);
+  let Exit = btnExit("#chartModal");
+  Exit.onclick = () => HideModal();
 
   //close rowbtn
   const hideRowBtn = $("#" + e.target.id).parent()[0].id;
@@ -443,6 +405,26 @@ function chartEdit(e) {
 
   showChart(getchartType);
 }
-function operator(e) {
-  $("#item-8").val($("#item-7").val() + "(" + $("#item-6").val() + ")");
+
+function btnSubmit(par) {
+  let btn = document.createElement("button");
+  btn.className = "btn btn-primary";
+  btn.style.margin = "0px 0px 0px 5px";
+  btn.style.display = "inline";
+  btn.style.float = "right";
+  btn.style.width = "70px";
+  btn.innerText = "ذخیره";
+  $(par).append(btn);
+  return btn;
+}
+
+function btnExit(par) {
+  let btnEx = document.createElement("button");
+  btnEx.className = "btn btn-light";
+  btnEx.style.display = "inline";
+  btnEx.style.float = "right";
+  btnEx.style.width = "70px";
+  btnEx.innerText = "لغو";
+  $(par).append(btnEx);
+  return btnEx;
 }

@@ -21,26 +21,13 @@ function CommandText() {
   $("#commandModal").append(textArea);
 
   //btnsubmit
-  let btnSubmit = document.createElement("button");
-  btnSubmit.className = "btn btn-primary";
-  btnSubmit.style.margin = "0px 5px 0px 5px";
-  btnSubmit.style.display = "inline";
-  btnSubmit.style.float = "right";
-  btnSubmit.innerText = "ذخیره";
-  btnSubmit.onclick = () => {
+  let Submit = btnSubmit("#commandModal");
+  Submit.onclick = () => {
     $("#item-2").val($("#textArea").val());
     $("#myModalCommand").remove();
   };
-  $("#commandModal").append(btnSubmit);
 
   //btn exit
-  let btnExit = document.createElement("button");
-  btnExit.className = "btn btn-light";
-  btnExit.style.display = "inline";
-  btnExit.style.float = "right";
-  btnExit.innerText = "لغو";
-  btnExit.onclick = function () {
-    $("#myModalCommand").remove();
-  };
-  $("#commandModal").append(btnExit);
+  let Exit = btnExit("#commandModal");
+  Exit.onclick = () => $("#myModalCommand").remove();
 }

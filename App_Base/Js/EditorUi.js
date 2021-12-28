@@ -234,45 +234,15 @@ function ImportData() {
     '<input type="file" id="file-input" accept=".json" style="margin-bottom:20px;margin-top: 20px;font-size: 12px;cursor:pointer" onchange="openShow()"/><span style="font-size:12px;direction: rtl;display:flex;"> این نرم افزار فقط از فرمت JSON پشتیبانی می کند.  </br></br></br></br></br></span><hr>';
   $("#open_div").append(input_file);
   let Open_btn =
-    '<input type="button" id="open_btn" class="btn btn-primary" value="باز کردن" onclick="openfile()" style="float:right;" Disabled />';
+    '<input type="button" id="open_btn" class="btn btn-primary" value="باز کردن" onclick="openfile()" style="float:right; width:70px;" Disabled />';
   $("#open_div").append(Open_btn);
 
   let cancel_btn =
-    '<input type="button" id="cancel_btn" class="btn btn-light" value="لغو" style="margin-right:5px;float:right;" onclick="HideModal()">';
+    '<input type="button" id="cancel_btn" class="btn btn-light" value="لغو" style="margin-right:5px;float:right;width:70px;" onclick="HideModal()">';
   $("#open_div").append(cancel_btn);
 }
 function openShow() {
   $("#open_btn").removeAttr("Disabled");
-};
-function openfile() {
-  let input = document.getElementById("file-input").files[0];
-  if (input) {
-        var reader = new FileReader();
-    reader.onload = function (e) {
-      let _json = e.target.result;
-      _json = JSON.parse(_json);
-      $("#geContent").empty();
-
-      //set variables
-      DASHBOARDID = _json.DashboardID;
-      NAME = _json.Name;
-      ITEMSGROUPING = _json.ItemsGrouping;
-      COLUMNLAYOUT = _json.ColumnLayout;
-      COLUMNWIDTH = _json.ColumnWidth;
-      ROWBOXS = _json.RowBoxs;
-      CHARTS = _json.Charts;
-      FILTERS = _json.Filters;
-      SQLFILTERS = _json.SqlFilters;
-      ACCESESROLES = _json.AccessRoles;
-      ACCESESGROUPS = _json.AccessGroups;
-      REFROLES = _json.RefRoles;
-      REFGROUPS = _json.RefGroups;
-      REFCOLUMNS = _json.RefColumns;
-      HideModal();
-      DashboardView(_json);
-    };
-    reader.readAsText(input);
-  }
 }
 
 function createInput(type, opt, id) {

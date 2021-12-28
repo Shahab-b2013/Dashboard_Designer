@@ -2639,12 +2639,12 @@ a:focus {
   border-bottom-color: #ddd;
 }
 
-.btn {
+/* .btn {
   border-radius: 3px;
   -webkit-box-shadow: none;
   box-shadow: none;
   border: 1px solid transparent;
-}
+} */
 
 .btn.uppercase {
   text-transform: uppercase;
