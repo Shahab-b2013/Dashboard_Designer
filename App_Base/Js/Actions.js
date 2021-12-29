@@ -377,19 +377,20 @@ function allowDrop(e) {
 function DeleteGroup(elem) {
   let RowCount = $("#geContent").children().length;
   if (RowCount > 1) {
+    //remove empty div
     removeDiv(elem);
     let parentId = elem.parentNode.parentNode.id;
 
     if ($("#" + parentId).children().length == 1) {
       $("#" + parentId).remove();
       parentId = +parentId.replaceAll("form-group-", "");
-      //modify rowboxs arr
+      //put ROWBOXS
       ROWBOXS.splice(
         ROWBOXS.findIndex((Element) => Element.RowID == parentId),
         1
       );
 
-      //RowIndex Generate for All Rows
+      //RowIndex Generate
       RowIndex_Generator();
     } else {
       alert("سطر مورد نظر حاوی چارت می باشد.");
@@ -486,11 +487,10 @@ $(function () {
 //chart modal edit
 function ModalConstractor(width, parent) {
   let div =
-    '<div id="myModal" class="modal" style="overflow:auto;">' +
+    '<div id="myModal" class="modal" >' +
     '<div id="chartModal" class="modal-content">' +
-    '<div id="contentM" class="row col-md-12" style=""></div>' +
-    "</div>" +
-    "</div>";
+    '<div id="contentM" class="row col-md-12"></div>' +
+    "</div></div>";
   $("#" + parent).append(div);
 
   $("#myModal").css("display", "block");
@@ -507,21 +507,27 @@ function rowbtnOff(elem) {
   $("#rowbtn-img-" + $(elem)[0].id).css("display", "none");
 }
 function MsgBoxDel(parent, msg) {
-  let div =
-    '<div id="myModal" class="modal" style="">' +
-    '<div id="chartModal" class="" style="">' +
-    '<div id="contentM" class="row col-lg-12" style="padding: 10px 16px;margin: 20px 0px 40px 0px;display:flex">' +
-    msg +
-    '</div><hr style="margin:0px;width:100%;">' +
-    '<div class="row" style="padding:16px;margin:0px;display:flex;"><span id="del" class="btn btn-danger"> حذف</span>' +
+  ModalConstractor("25%", parent);
+  let div = $("#contentM");
+  div.html(msg);
+  div.css("display","block");
+  div.css("padding","10px");
+  div.css("text-align", "start");
+  $("#myModal").css("padding-top", "200px");
+  
+  
+  let btn =
+    '<hr style="margin:50px 0px 0px 0px;width:100%;">' +
+    '<div class="row" style="margin:15px 0px 10px 15px;display:flex;"><span id="del" class="btn btn-danger"> حذف</span>' +
     '<span id="closed" class="btn btn-light" style="width:60px;margin-Right:10px;" onclick=" HideModal()"> لغو</span></div></div></div>';
-  $("#" + parent).append(div);
+  div.append(btn);
 }
 function chartDelete(e) {
   // remove popup
   let parent = $("#" + e.target.id).parent()[0].id;
   let msg = "آیا از حذف این چارت مطمعن هستید ؟";
 
+  // MsgBox
   MsgBoxDel(parent, msg);
 
   $("#del").click(() => {
@@ -847,4 +853,27 @@ function openfile() {
     };
     reader.readAsText(input);
   }
+}
+function btnSubmit(par) {
+  let btn = document.createElement("button");
+  btn.className = "btn btn-primary";
+  btn.style.margin = "10px 0px 10px 5px";
+  btn.style.display = "inline";
+  btn.style.float = "right";
+  btn.style.width = "70px";
+  btn.innerText = "ذخیره";
+  $(par).append(btn);
+  return btn;
+}
+
+function btnExit(par) {
+  let btnEx = document.createElement("button");
+  btnEx.className = "btn btn-light";
+  btnEx.style.margin = "10px 0px 10px 0px";
+  btnEx.style.display = "inline";
+  btnEx.style.float = "right";
+  btnEx.style.width = "70px";
+  btnEx.innerText = "لغو";
+  $(par).append(btnEx);
+  return btnEx;
 }

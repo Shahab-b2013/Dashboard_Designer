@@ -22,7 +22,7 @@ function Series() {
     "نام" +
     "</th>" +
     '<th scope="col">' +
-    "فیلد داده ای" +
+    "فیلد داده" +
     "</th>" +
     '<th scope="col">' +
     "رنگ" +
@@ -69,12 +69,14 @@ function Series() {
 
   //btnsubmit
   let Submit = btnSubmit("#seriesModal");
+  Submit.style.marginTop = "-10px";
   Submit.onclick = () => {
     $("#myModalSeries").remove();
   };
 
   //btn exit
   let Exit = btnExit("#seriesModal");
+  Exit.style.marginTop = "-10px";
   Exit.onclick = () => $("#myModalSeries").remove();
 }
 
@@ -88,13 +90,13 @@ function Form_Add_Series(Text, id) {
   $("#myModalSeries").append(div);
 
   $("#Add_Series").css("display", "block");
-  $("#Add_seriesModal").css("width", "20%");
+  $("#Add_seriesModal").css("width", "25%");
 
   let form =
-    '<div class="" style="direction:rtl;margin-bottom:10px;border-bottom:1px solid #CCC;padding-bottom:10px;">' +
+    '<div class="" style="direction:rtl;border-bottom:1px solid #CCC;padding-bottom:10px;">' +
     '<label class="lblSeries">عنوان:<input type="text" id="text1" class="TextboxSeries"></label><br>' +
     '<label class="lblSeries">نام:<input type="text" id="text2" class="TextboxSeries" ></label><br>' +
-    '<label class="lblSeries">فیلد داده ای:<input type="text" id="text3" class="TextboxSeries" ></label><br>' +
+    '<label class="lblSeries">فیلد داده :<input type="text" id="text3" class="TextboxSeries" ></label><br>' +
     '<label class="lblSeries">رنگ:<input type="color" id="text4"></label><br>' +
     "</div>";
   $("#Add_seriesModal").append(form);

@@ -234,11 +234,11 @@ function ImportData() {
     '<input type="file" id="file-input" accept=".json" style="margin-bottom:20px;margin-top: 20px;font-size: 12px;cursor:pointer" onchange="openShow()"/><span style="font-size:12px;direction: rtl;display:flex;"> این نرم افزار فقط از فرمت JSON پشتیبانی می کند.  </br></br></br></br></br></span><hr>';
   $("#open_div").append(input_file);
   let Open_btn =
-    '<input type="button" id="open_btn" class="btn btn-primary" value="باز کردن" onclick="openfile()" style="float:right; width:70px;" Disabled />';
+    '<input type="button" id="open_btn" class="btn btn-primary" value="باز کردن" onclick="openfile()" style="float:right; width:70px;margin-bottom:10px;" Disabled />';
   $("#open_div").append(Open_btn);
 
   let cancel_btn =
-    '<input type="button" id="cancel_btn" class="btn btn-light" value="لغو" style="margin-right:5px;float:right;width:70px;" onclick="HideModal()">';
+    '<input type="button" id="cancel_btn" class="btn btn-light" value="لغو" style="margin-right:5px;float:right;width:70px;margin-bottom:10px;" onclick="HideModal()">';
   $("#open_div").append(cancel_btn);
 }
 function openShow() {

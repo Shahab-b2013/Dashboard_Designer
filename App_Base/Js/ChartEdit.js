@@ -11,29 +11,31 @@ function chartEdit(e) {
   let getchartType = $("#" + imgid).attr("type");
   //create modal form
   ModalConstractor("85%", "geContent");
+  let div1 =
+    '<div id="div1" class="row col-lg-3 col-md-3 col-sm-12 " style=""></div>';
+  $("#contentM").append(div1);
   let div2 =
     '<div id="div2" class="col-lg-9 col-md-9 col-sm-12 " style="">' +
     '<div id="containers"></div></figure></div>';
   $("#contentM").append(div2);
-  let div1 =
-    '<div id="div1" class="row col-lg-3 col-md-3 col-sm-12 " style=""></div>';
-  $("#contentM").append(div1);
 
   //div1 Add Items
   //load chart and items
   const ArrLbl = [
-    "Text",
-    "Name",
-    "CommandText",
-    "CategoryLabel",
-    "ValueLabel",
-    "CategoryName",
-    "CatExpression",
-    "Series",
+    "عنوان چارت",
+    "نام چارت",
+    "جدول داده",
+    "عنوان دسته بندی",
+    "مقدار دسته بندی",
+    "نام دسته بندی",
+    "فیلد دسته بندی ",
+    "سری داده",
   ];
+  console.log(CHARTS);
+  console.log(imgid);
 
   let findChart = CHARTS.find((Element) => Element.ID == imgid);
-  let ArrItems;
+  let ArrItems = [];
   let seriesName = "";
   if (findChart) {
     for (let i = 0; i < findChart.Series.length; i++) {
@@ -50,6 +52,8 @@ function chartEdit(e) {
       findChart.CategoryExpression,
       seriesName,
     ];
+  } else {
+    ArrItems = ["", "", "", "", "", "", "", ""];
   }
   //create items and value
   for (let i = 0; i < ArrLbl.length; i++) {
@@ -57,17 +61,17 @@ function chartEdit(e) {
     label(i, ArrLbl[i]);
     //REFCOLUMNS
     if (i == 2) {
-      textBox(i, ArrItems[i]);
+      textBox(i, ArrItems[i], ArrLbl[i]);
       $("#div1Items-" + i).append(
         '<span id="CommandTextBtn" onclick="CommandText(event)" class="btn btn-light glyphicon glyphicon-option-vertical"></span>'
       );
     } else if (i == 7) {
-      textBox(i, ArrItems[i]);
+      textBox(i, ArrItems[i], ArrLbl[i]);
       $("#div1Items-" + i).append(
         '<span id="SeriesBtn" onclick="Series(event)" class="btn btn-light glyphicon glyphicon-option-vertical"></span>'
       );
     } else {
-      textBox(i, ArrItems[i]);
+      textBox(i, ArrItems[i], ArrLbl[i]);
     }
   }
 
@@ -90,11 +94,19 @@ function chartEdit(e) {
   }
 
   //text Box
-  function textBox(i, value) {
+  function textBox(i, value, Placeholder) {
     let textBox = document.createElement("input");
     textBox.type = "text";
     textBox.className = "TextboxEditChart";
     textBox.setAttribute("id", "item-" + i);
+    if (i == 1) {
+      Placeholder = "chartName";
+    } else if (i == 5) {
+      Placeholder = "categoryName";
+    } else if (i == 6) {
+      Placeholder = "categoryField";
+    }
+    textBox.placeholder = Placeholder;
 
     textBox.value = value;
     $("#div1Items-" + i).append(textBox);
@@ -404,27 +416,4 @@ function chartEdit(e) {
   //=================================onload Chart==========================
 
   showChart(getchartType);
-}
-
-function btnSubmit(par) {
-  let btn = document.createElement("button");
-  btn.className = "btn btn-primary";
-  btn.style.margin = "0px 0px 0px 5px";
-  btn.style.display = "inline";
-  btn.style.float = "right";
-  btn.style.width = "70px";
-  btn.innerText = "ذخیره";
-  $(par).append(btn);
-  return btn;
-}
-
-function btnExit(par) {
-  let btnEx = document.createElement("button");
-  btnEx.className = "btn btn-light";
-  btnEx.style.display = "inline";
-  btnEx.style.float = "right";
-  btnEx.style.width = "70px";
-  btnEx.innerText = "لغو";
-  $(par).append(btnEx);
-  return btnEx;
 }
