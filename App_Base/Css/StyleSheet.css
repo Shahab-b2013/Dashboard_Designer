@@ -214,7 +214,7 @@ input[type="number"] {
 }
 
 input[type="color"] {
-  right: 125px;
+  left: 136px;
   position: absolute;
 }
 
@@ -264,8 +264,7 @@ br {
   margin-left: 10px;
   border-radius: 3px;
   border: 1px solid #ccc;
-  direction: rlt;
-  right: 20px;
+  left: 20px;
   text-align: center;
 }
 
@@ -590,19 +589,18 @@ input[type="range"] {
 .table {
   direction: rtl;
 }
-.btn-success {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.table tbody {
+  text-align: center;
+  font: 14px var(--mainFont);
 }
 i {
-  margin: 0px 5px 0px 5px;
+  position: absolute;
+  margin: 0px 5px 10px 15px;
   font: 12px var(--mainFont);
 }
 .span {
   height: 30px;
   margin-left: 5px;
-  position: relative;
-  padding: 0px 5px 5px 5px;
+  padding: 5px 0px 5px 40px;
   width: 80px;
 }
