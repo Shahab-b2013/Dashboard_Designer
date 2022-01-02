@@ -18,15 +18,18 @@ function Series() {
     '<th scope="col">' +
     "عنوان" +
     "</th>" +
-    '<th scope="col">' +
-    "نام" +
-    "</th>" +
+    //فعلا نمایش داده نشود
+    // '<th scope="col">' +
+    // "نام" +
+    // "</th>" +
     '<th scope="col">' +
     "فیلد داده" +
     "</th>" +
     '<th scope="col">' +
     "رنگ" +
     "</th>" +
+    '<th scope="col">' +
+    "نوع" +
     "</th>" +
     '<th scope="col">' +
     "عملیات" +
@@ -36,48 +39,85 @@ function Series() {
   $("#seriesModal").append(divGrid);
 
   //onload list
-  $.each(SERIES, function (index, item) {
-    let tbody =
-      "<tr>" +
-      '<td scope="row">' +
-      item.ID +
-      "</td>" +
-      '<td scope="row">' +
-      item.Label +
-      "</td>" +
-      '<td scope="row">' +
-      item.Name +
-      "</td>" +
-      '<td scope="row">' +
-      item.DataExpresstion +
-      "</td>" +
-      '<td scope="row">' +
-      item.Color +
-      "</td>" +
-      '<td scope="row">' +
-      '<span id="Series_Delete_' +
-      item.ID +
-      '" class="btn btn-danger glyphicon glyphicon-trash span" onclick="Series_Deleted(id)"><i>حذف</i></span>' +
-      '<span id="Series_Edit_' +
-      item.ID +
-      '" class="btn btn-info glyphicon glyphicon-edit span" onclick="Series_Edited(id)"><i>ویرایش</i></span>' +
-      "</td>" +
-      "</tr>";
+  if (SERIES.length > 0) {
+    let serrieID = 0;
+    $.each(SERIES, function (index, item) {
+      item.ID == undefined ? serrieID++ : (serrieID = item.ID);
+ 
+      let tbody =
+        "<tr>" +
+        '<td scope="row">' +
+        serrieID +
+        "</td>" +
+        '<td scope="row">' +
+        item.Text +
+        "</td>" +
+        // '<td scope="row">' +
+        // item.Name +
+        // "</td>" +
+        '<td scope="row">' +
+        item.DataExpression +
+        "</td>" +
+        '<td scope="row">' +
+        item.StyleColor +
+        "</td>" +
+        '<td scope="row">' +
+        item.PlotType +
+        "</td>" +
+        '<td scope="row">' +
+        '<span id="Series_Delete_' +
+        item.ID +
+        '" class="btn btn-danger glyphicon glyphicon-trash span" onclick="Series_Deleted(id)"><i>حذف</i></span>' +
+        '<span id="Series_Edit_' +
+        item.ID +
+        '" class="btn btn-info glyphicon glyphicon-edit span" onclick="Series_Edited(id)"><i>ویرایش</i></span>' +
+        "</td>" +
+        "</tr>";
 
-    $("#series_tbody").append(tbody);
-  });
+      $("#series_tbody").append(tbody);
+    });
+  }
 
   //btnsubmit
   let Submit = btnSubmit("#seriesModal");
   Submit.style.marginTop = "-10px";
   Submit.onclick = () => {
+    //Save
+
+    $("table tr").each(function (index, item) {
+      if (index == 0) {
+        SERIES_Clear();
+      } else {
+        SERIES.push({
+          ID: +$(this).find("td").eq(0).html(),
+          Text: $(this).find("td").eq(1).html(),
+          Name: $(this).find("td").eq(2).html(),
+          DataExpresstion: $(this).find("td").eq(2).html(),
+          StyleColor: $(this).find("td").eq(3).html(),
+          PlotType: $(this).find("td").eq(4).html(),
+        });
+      }
+    });
+console.log(SERIES);
+    //serie name1,name2,...
+    let name = "";
+    name = SERIES[0].Text;
+    if (SERIES.length > 1)
+      for (let i = 1; i < SERIES.length; i++) name += " , " + SERIES[i].Text;
+
+    $("#item-8").val(name);
+
+    //close modal
     $("#myModalSeries").remove();
   };
 
   //btn exit
   let Exit = btnExit("#seriesModal");
   Exit.style.marginTop = "-10px";
-  Exit.onclick = () => $("#myModalSeries").remove();
+  Exit.onclick = () => {
+    $("#myModalSeries").remove();
+    sessionStorage.clear();
+  };
 }
 
 function Form_Add_Series(Text, id) {
@@ -94,10 +134,11 @@ function Form_Add_Series(Text, id) {
 
   let form =
     '<div class="" style="direction:rtl;border-bottom:1px solid #CCC;padding-bottom:10px;">' +
-    '<label class="lblSeries">عنوان:<input type="text" id="text1" class="TextboxSeries"></label><br>' +
-    '<label class="lblSeries">نام:<input type="text" id="text2" class="TextboxSeries" ></label><br>' +
+    '<label class="lblSeries">عنوان :<input type="text" id="text1" class="TextboxSeries"></label><br>' +
+    // '<label class="lblSeries">نام :<input type="text" id="text2" class="TextboxSeries" ></label><br>' +//فعلا نمایش داده نشود
     '<label class="lblSeries">فیلد داده :<input type="text" id="text3" class="TextboxSeries" ></label><br>' +
-    '<label class="lblSeries">رنگ:<input type="color" id="text4"></label><br>' +
+    '<label class="lblSeries">رنگ :<input type="color" id="inputColor"></label><br>' +
+    '<label class="lblSeries">نوع :<select id="PlotType" class="selectBox" style="width: 250px;margin: 0px;left: 20px;position: absolute;direction: ltr;"><option id="opt1" value="pie">Pie</option><option id="opt2" value="column">Column</option><option id="opt3" value="bar">Bar</option><option id="opt4" value="line">Line</option><option id="opt5" value="areaspline">Area</option></select></label><br>' +
     "</div>";
   $("#Add_seriesModal").append(form);
 
@@ -111,24 +152,27 @@ function Form_Add_Series(Text, id) {
         .parent()
         .parent();
       let rowID = tr.children().eq(0).html();
-      let Element = SERIES.find((Element) => Element.ID == rowID);
-      Element.Label = $("#text1").val();
-      Element.Name = $("#text2").val();
-      Element.DataExpresstion = $("#text3").val();
-      Element.Color = $("#text4").val();
+      sessionStorage.removeItem("putID");
+      sessionStorage.removeItem("_id");
+      sessionStorage.setItem("putID", rowID);
+      sessionStorage.setItem("_id", id);
 
       //put table
       tr.children().eq(1).html($("#text1").val());
-      tr.children().eq(2).html($("#text2").val());
-      tr.children().eq(3).html($("#text3").val());
-      tr.children().eq(4).html($("#text4").val());
+      //فعلا نمایش داده نشود
+      // tr.children().eq(2).html($("#text2").val());
+      tr.children().eq(2).html($("#text3").val());
+      tr.children().eq(3).html($("#inputColor").val());
+      tr.children().eq(4).html($("#PlotType option:selected").val());
 
       //close
       $("#Add_Series").remove();
     } else {
       //set ID
-      let _ID = SERIES.length > 0 ? +SERIES[SERIES.length - 1].ID + 1 : 1;
-
+      let _ID =
+        $("table tr").length == 1
+          ? 1
+          : +$("table tr:last").children().eq(0).html() + 1;
       //Add to tbody in table
       let tbody =
         "<tr>" +
@@ -138,14 +182,18 @@ function Form_Add_Series(Text, id) {
         '<td scope="row">' +
         $("#text1").val() +
         "</td>" +
-        '<td scope="row">' +
-        $("#text2").val() +
-        "</td>" +
+        //فعلا نمایش داده نشود
+        // '<td scope="row">' +
+        // $("#text2").val() +
+        // "</td>" +
         '<td scope="row">' +
         $("#text3").val() +
         "</td>" +
         '<td scope="row">' +
-        $("#text4").val() +
+        $("#inputColor").val() +
+        "</td>" +
+        '<td scope="row">' +
+        $("#PlotType option:selected").val() +
         "</td>" +
         '<td scope="row">' +
         '<span id="Series_Delete_' +
@@ -159,27 +207,16 @@ function Form_Add_Series(Text, id) {
 
       $("#series_tbody").append(tbody);
 
-      //set SERIES
-      const ID = _ID;
-      const Label = $("#text1").val();
-      const Name = $("#text2").val();
-      const DataExpresstion = $("#text3").val();
-      const Color = $("#text4").val();
-      SERIES.push({
-        ID,
-        Label,
-        Name,
-        DataExpresstion,
-        Color,
-      });
-
       //close
       $("#Add_Series").remove();
     }
   };
   //btn exit
   let Exit = btnExit("#Add_seriesModal");
-  Exit.onclick = () => $("#Add_Series").remove();
+  Exit.onclick = () => {
+    $("#Add_Series").remove();
+    sessionStorage.clear();
+  };
 }
 
 function Series_Deleted(id) {
@@ -190,12 +227,10 @@ function Series_Deleted(id) {
   // remove from list
   tr.remove();
 
-  //remove form array
+  //set session rowID for remove array
   let rowID = tr.children().eq(0).html();
-  SERIES.splice(
-    SERIES.findIndex((Element) => Element.ID == rowID),
-    1
-  );
+  sessionStorage.removeItem("deleteID");
+  sessionStorage.setItem("deleteID", rowID);
 }
 function Series_Edited(id) {
   let tr = $("#" + id)
@@ -207,8 +242,11 @@ function Series_Edited(id) {
 
   //set Form_Add_Series Items
   let items = SERIES.find((Element) => Element.ID == rowID);
-  $("#text1").val(items.Label);
-  $("#text2").val(items.Name);
+  $("#text1").val(items.Text);
   $("#text3").val(items.DataExpresstion);
-  $("#text4").val(items.Color);
+  $("#inputColor").val(items.StyleColor);
+  $("#PlotType").val(items.PlotType);
+}
+function SERIES_Clear() {
+  while (SERIES.length > 0) SERIES.pop();
 }

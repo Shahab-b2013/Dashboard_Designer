@@ -82,7 +82,7 @@ public class _Dashboard : System.Web.Services.WebService
                         CreatePageElement(chart.InternalID, design.DashboardID, row.InternalID, null, "Cell", style, false, false, null, false, design.Version);
 
                         //CREATE ACTIVITY
-                        CreateActivity(activityID.ToString(), design.ModuleID, chart.Name, chart.Text, design.Version, null, design.EntityID, "", "SelectQuery", "عملیات با موفقیت انجام شد.", "عملیات با خطا مواجهه شد.", null, null, 100, "DataList");
+                        CreateActivity(activityID.ToString(), design.ModuleID, chart.Name, chart.Text, design.Version, null, design.EntityID,chart.CommandText, "SelectQuery", "عملیات با موفقیت انجام شد.", "عملیات با خطا مواجهه شد.", null, null, 100, "DataList");
 
                         //CREATE ACTIVITY CONTEXT
                         CreateActivityContext(activityID, chart.Name, chart.Text, "ChartView", null, design.Version, null);

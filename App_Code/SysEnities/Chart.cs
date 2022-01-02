@@ -20,6 +20,9 @@ public class Chart
     private string name;
     public string Name { get { return name; } set { name = value; } }
 
+    private string commandText;
+    public string CommandText { get { return commandText; } set { commandText = value; } }
+
     private string text;
     public string Text { get { return text; } set { text = value; } }
 

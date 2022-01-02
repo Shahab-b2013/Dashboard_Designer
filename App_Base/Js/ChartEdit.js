@@ -12,10 +12,10 @@ function chartEdit(e) {
   //create modal form
   ModalConstractor("85%", "geContent");
   let div1 =
-    '<div id="div1" class="row col-lg-3 col-md-3 col-sm-12 " style=""></div>';
+    '<div id="div1" class="row col-lg-3 col-md-3 col-sm-12" style=""></div>';
   $("#contentM").append(div1);
   let div2 =
-    '<div id="div2" class="col-lg-9 col-md-9 col-sm-12 " style="">' +
+    '<div id="div2" class="col-lg-9 col-md-9 col-sm-12" style="">' +
     '<div id="containers"></div></figure></div>';
   $("#contentM").append(div2);
 
@@ -26,47 +26,59 @@ function chartEdit(e) {
     "نام چارت",
     "جدول داده",
     "عنوان دسته بندی",
-    "مقدار دسته بندی",
     "نام دسته بندی",
+    "مقدار دسته بندی",
     "فیلد دسته بندی ",
+    "نوع سری",
     "سری داده",
   ];
-  console.log(CHARTS);
-  console.log(imgid);
-
+  SERIES_Clear();
   let findChart = CHARTS.find((Element) => Element.ID == imgid);
   let ArrItems = [];
-  let seriesName = "";
   if (findChart) {
-    for (let i = 0; i < findChart.Series.length; i++) {
-      seriesName += findChart.Series[i].Name + ",";
-    }
+    for (let i = 0; i < findChart.Series.length; i++)
+      SERIES.push(findChart.Series[i]);
 
     ArrItems = [
       findChart.Text,
       findChart.Name,
       findChart.CommandText,
       findChart.CategoryLabel,
-      findChart.ValueLabel,
       findChart.CategoryName,
+      findChart.ValueLabel,
       findChart.CategoryExpression,
-      seriesName,
+      findChart.SeriesType,
+      "",
     ];
   } else {
-    ArrItems = ["", "", "", "", "", "", "", ""];
+    ArrItems = ["", "", "", "", "", "", "", "", ""];
   }
   //create items and value
   for (let i = 0; i < ArrLbl.length; i++) {
-    divItems(i);
-    label(i, ArrLbl[i]);
-    //REFCOLUMNS
+    if (i != 4) {
+      //فعلا نمایش داده نشود
+      divItems(i);
+      label(i, ArrLbl[i]);
+    }
+
     if (i == 2) {
       textBox(i, ArrItems[i], ArrLbl[i]);
       $("#div1Items-" + i).append(
         '<span id="CommandTextBtn" onclick="CommandText(event)" class="btn btn-light glyphicon glyphicon-option-vertical"></span>'
       );
+    } else if (i == 4) {
+      //فعلا نمایش داده نشود
     } else if (i == 7) {
-      textBox(i, ArrItems[i], ArrLbl[i]);
+      selectList(i);
+    } else if (i == 8) {
+      textBox(i, "", ArrLbl[i]);
+      let textVal = "";
+      if (SERIES.length > 0) {
+        textVal = SERIES[0].Text;
+        for (let i = 1; i < SERIES.length; i++)
+          textVal += " , " + SERIES[i].Text;
+      }
+      $("#item-8").val(textVal);
       $("#div1Items-" + i).append(
         '<span id="SeriesBtn" onclick="Series(event)" class="btn btn-light glyphicon glyphicon-option-vertical"></span>'
       );
@@ -101,8 +113,9 @@ function chartEdit(e) {
     textBox.setAttribute("id", "item-" + i);
     if (i == 1) {
       Placeholder = "chartName";
-    } else if (i == 5) {
-      Placeholder = "categoryName";
+    } else if (i == 4) {
+      //فعلا نمایش داده نشه
+      // Placeholder = "categoryName";
     } else if (i == 6) {
       Placeholder = "categoryField";
     }
@@ -113,38 +126,16 @@ function chartEdit(e) {
   }
 
   //select box
-  function selectList(i, value, defaultVal) {
+  function selectList(i) {
     let Select_List =
-      '<select onchange="operator(event)" class="selectBox" id="item-' +
+      '<select class="selectBox" id="item-' +
       i +
-      '" style="float: right;margin-right: 20px;">';
-    for (let j = 0; j < value.length; j++) {
-      //REFCOLUMNS
-      i == 6
-        ? value[j].Data == defaultVal
-          ? (Select_List += "<option selected>" + value[j].Data + "</option>")
-          : (Select_List += "<option>" + value[j].Data + "</option>")
-        : value[j] == defaultVal
-        ? (Select_List += "<option selected>" + value[j] + "</option>")
-        : (Select_List += "<option>" + value[j] + "</option>");
-    }
-    Select_List += "</select>";
+      '" style="float: left;margin-left: 20px;direction: ltr;">' +
+      "<option >Simple</option>" +
+      "<option >ColumnGroup</option>" +
+      "<option >Stack</option>" +
+      "</select>";
     $("#div1Items-" + i).append(Select_List);
-  }
-
-  //colorInput
-  function inputColor(i, value) {
-    let color = document.createElement("input");
-    color.type = "color";
-    color.setAttribute("id", "item-" + i);
-    color.style.width = "150px";
-    color.style.marginRight = "20px";
-    color.style.float = "right";
-    color.value = value;
-    color.addEventListener("input", () => {
-      showChart(getchartType);
-    });
-    $("#div1Items-" + i).append(color);
   }
 
   document.getElementById("item-0").addEventListener("change", (e) => {
@@ -167,7 +158,7 @@ function chartEdit(e) {
     function chartItems(_series, _cat, chartType) {
       _TitleOptions.text = "";
       _GeneralOptions.type = chartType;
-      _ColumnPlotOptions.color = $("#item-10").val();
+      // _ColumnPlotOptions.color = $("#item-10").val();
       _YAxisOptions.title.text = $("#item-3").val();
       _XAxisOptions.categories = _cat;
 
@@ -376,7 +367,7 @@ function chartEdit(e) {
         1
       );
     }
-
+    console.log("SERIES ", SERIES);
     CHARTS.push({
       RowID: +_RowID,
       ColumnIndex: +_ColumnIndex,
@@ -386,18 +377,15 @@ function chartEdit(e) {
       Text: $("#item-0").val(),
       Type: getchartType,
       CategoryLabel: $("#item-3").val(),
-      ValueLabel: $("#item-4").val(),
-      CategoryName: $("#item-5").val(),
-      // CategoryExpression: $("#item-6 option:selected").val(),
-      Series: [
-        {
-          PlotType: getchartType,
-          StyleColor: "",
-        },
-      ],
+      ValueLabel: $("#item-5").val(),
+      CategoryName: $("#item-6").val(),
+      CategoryExpression: $("#item-6").val(),
+      SeriesType: $("#item-7").val(),
+      Series: SERIES,
       ImgBs64: _svg_Base64,
     });
-
+    console.log('CHARTS ',CHARTS);
+    // SERIES_Clear();
     //update chart to form
     $("#" + imgid).attr("src", "data:image/svg+xml;base64," + _svg_Base64);
     $("#" + imgid).attr("id", _id);
@@ -412,8 +400,6 @@ function chartEdit(e) {
   //close rowbtn
   const hideRowBtn = $("#" + e.target.id).parent()[0].id;
   $("#" + hideRowBtn).css("display", "none");
-
-  //=================================onload Chart==========================
 
   showChart(getchartType);
 }

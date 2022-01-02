@@ -1,0 +1,2 @@
+Violation of PRIMARY KEY constraint 'PK_Sys_Activities'. Cannot insert duplicate key in object 'dbo.Sys_Activities'. The duplicate key value is (1510250).
+The statement has been terminated.
