@@ -43,7 +43,7 @@ function Series() {
     let serrieID = 0;
     $.each(SERIES, function (index, item) {
       item.ID == undefined ? serrieID++ : (serrieID = item.ID);
- 
+
       let tbody =
         "<tr>" +
         '<td scope="row">' +
@@ -83,7 +83,6 @@ function Series() {
   Submit.style.marginTop = "-10px";
   Submit.onclick = () => {
     //Save
-
     $("table tr").each(function (index, item) {
       if (index == 0) {
         SERIES_Clear();
@@ -92,21 +91,23 @@ function Series() {
           ID: +$(this).find("td").eq(0).html(),
           Text: $(this).find("td").eq(1).html(),
           Name: $(this).find("td").eq(2).html(),
-          DataExpresstion: $(this).find("td").eq(2).html(),
+          DataExpression: $(this).find("td").eq(2).html(),
           StyleColor: $(this).find("td").eq(3).html(),
           PlotType: $(this).find("td").eq(4).html(),
         });
       }
     });
-console.log(SERIES);
-    //serie name1,name2,...
-    let name = "";
-    name = SERIES[0].Text;
-    if (SERIES.length > 1)
-      for (let i = 1; i < SERIES.length; i++) name += " , " + SERIES[i].Text;
+    if (SERIES.length > 0) {
+      //serie name1,name2,...
+      let name = "";
+      name = SERIES[0].Text;
+      if (SERIES.length > 1)
+        for (let i = 1; i < SERIES.length; i++) name += " , " + SERIES[i].Text;
 
-    $("#item-8").val(name);
-
+      $("#item-8").val(name);
+    } else {
+      $("#item-8").val("");
+    }
     //close modal
     $("#myModalSeries").remove();
   };
@@ -147,7 +148,7 @@ function Form_Add_Series(Text, id) {
   Text == "edit" ? (Submit.innerHTML = "ویرایش") : (Submit.innerHTML = "ذخیره");
   Submit.onclick = () => {
     if (Text == "edit") {
-      //put SERIES
+      //put table
       let tr = $("#" + id)
         .parent()
         .parent();
@@ -156,8 +157,6 @@ function Form_Add_Series(Text, id) {
       sessionStorage.removeItem("_id");
       sessionStorage.setItem("putID", rowID);
       sessionStorage.setItem("_id", id);
-
-      //put table
       tr.children().eq(1).html($("#text1").val());
       //فعلا نمایش داده نشود
       // tr.children().eq(2).html($("#text2").val());
@@ -242,11 +241,13 @@ function Series_Edited(id) {
 
   //set Form_Add_Series Items
   let items = SERIES.find((Element) => Element.ID == rowID);
+
   $("#text1").val(items.Text);
-  $("#text3").val(items.DataExpresstion);
+  $("#text3").val(items.DataExpression);
   $("#inputColor").val(items.StyleColor);
   $("#PlotType").val(items.PlotType);
 }
+
 function SERIES_Clear() {
-  while (SERIES.length > 0) SERIES.pop();
+  SERIES = [];
 }

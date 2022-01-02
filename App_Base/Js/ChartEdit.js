@@ -32,10 +32,11 @@ function chartEdit(e) {
     "نوع سری",
     "سری داده",
   ];
-  SERIES_Clear();
+
   let findChart = CHARTS.find((Element) => Element.ID == imgid);
   let ArrItems = [];
   if (findChart) {
+    SERIES_Clear();
     for (let i = 0; i < findChart.Series.length; i++)
       SERIES.push(findChart.Series[i]);
 
@@ -48,7 +49,7 @@ function chartEdit(e) {
       findChart.ValueLabel,
       findChart.CategoryExpression,
       findChart.SeriesType,
-      "",
+      findChart.Series,
     ];
   } else {
     ArrItems = ["", "", "", "", "", "", "", "", ""];
@@ -367,7 +368,7 @@ function chartEdit(e) {
         1
       );
     }
-    console.log("SERIES ", SERIES);
+
     CHARTS.push({
       RowID: +_RowID,
       ColumnIndex: +_ColumnIndex,
@@ -384,8 +385,7 @@ function chartEdit(e) {
       Series: SERIES,
       ImgBs64: _svg_Base64,
     });
-    console.log('CHARTS ',CHARTS);
-    // SERIES_Clear();
+   
     //update chart to form
     $("#" + imgid).attr("src", "data:image/svg+xml;base64," + _svg_Base64);
     $("#" + imgid).attr("id", _id);

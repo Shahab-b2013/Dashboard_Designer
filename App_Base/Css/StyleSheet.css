@@ -168,12 +168,13 @@ body {
   font-size: 14px;
 }
 
-#textarea {
-  width: 90%;
-  height: 100px;
+.textarea {
+  width: 95%;
+  height: 200px;
   border: 1px solid #ccc;
   border-radius: 4px;
   margin: 10px;
+  direction: ltr;
 }
 
 #textlbl {

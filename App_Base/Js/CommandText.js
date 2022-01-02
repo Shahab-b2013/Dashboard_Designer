@@ -17,7 +17,7 @@ function CommandText() {
   $("#commandModal").css("width", "50%");
 
   let textArea =
-    '<div ><textarea id="textArea" style="width:940px;height:200px;"></textarea></div>';
+    '<div ><textarea id="textArea" class="textarea"></textarea></div>';
   $("#commandModal").append(textArea);
 
   //btnsubmit
