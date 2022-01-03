@@ -142,7 +142,7 @@ function createDivs() {
     //Tools Header
     let ToolsHeader = document.createElement("div");
     ToolsHeader.className = "col-lg-12 col-md-6 divHeader";
-    ToolsHeader.innerHTML = "ابزار";
+    ToolsHeader.innerHTML = "تنظیمات";
     ToolsHeader.style.gridRow = "1";
     RightPanel.appendChild(ToolsHeader);
 

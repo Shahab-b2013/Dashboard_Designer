@@ -3,12 +3,13 @@
 function chartEdit(e) {
   var chartSvg;
   /*
-    Get img
-    */
+      Get img
+      */
+  SERIES_Clear();
   const rowbtnId = $("#" + e.target.id).parent()[0].id;
   let imgid = rowbtnId.replaceAll("rowbtn-img-", "");
 
-  let getchartType = $("#" + imgid).attr("type");
+  CHARTTYPE = $("#" + imgid).attr("type");
   //create modal form
   ModalConstractor("85%", "geContent");
   let div1 =
@@ -36,7 +37,6 @@ function chartEdit(e) {
   let findChart = CHARTS.find((Element) => Element.ID == imgid);
   let ArrItems = [];
   if (findChart) {
-    SERIES_Clear();
     for (let i = 0; i < findChart.Series.length; i++)
       SERIES.push(findChart.Series[i]);
 
@@ -79,9 +79,11 @@ function chartEdit(e) {
         for (let i = 1; i < SERIES.length; i++)
           textVal += " , " + SERIES[i].Text;
       }
+
       $("#item-8").val(textVal);
+
       $("#div1Items-" + i).append(
-        '<span id="SeriesBtn" onclick="Series(event)" class="btn btn-light glyphicon glyphicon-option-vertical"></span>'
+        '<span id="SeriesBtn" class="btn btn-light glyphicon glyphicon-option-vertical" onclick="SeriesFn(id)"></span>'
       );
     } else {
       textBox(i, ArrItems[i], ArrLbl[i]);
@@ -114,11 +116,15 @@ function chartEdit(e) {
     textBox.setAttribute("id", "item-" + i);
     if (i == 1) {
       Placeholder = "chartName";
+    } else if (i == 2) {
+      textBox.setAttribute("Disabled", "Disabled");
     } else if (i == 4) {
       //فعلا نمایش داده نشه
       // Placeholder = "categoryName";
     } else if (i == 6) {
       Placeholder = "categoryField";
+    } else if (i == 8) {
+      textBox.setAttribute("Disabled", "Disabled");
     }
     textBox.placeholder = Placeholder;
 
@@ -137,35 +143,25 @@ function chartEdit(e) {
       '<option value="Stack">Stack</option>' +
       "</select>";
     $("#div1Items-" + i).append(Select_List);
-    $("#item-" + i).val(selected);
-    // console.log(selected);
-    // if (selected) {
-    //   switch (selected) {
-    //     case "Simple":
-    //       $("#opt1").attr("selected", "selected");
-    //       break;
-    //     case "ColumnGroup":
-    //       $("#opt2").attr("selected", "selected");
-    //       break;
-    //     case "Stack":
-    //       $("#opt3").attr("selected", "selected");
-    //       break;
-    //     default:
-    //       $("#opt1").attr("selected", "selected");
-    //       break;
-    //   }
-    // }
+    selected ? $("#item-" + i).val(selected) : $("#item-" + i).val("Simple");
   }
 
   document.getElementById("item-0").addEventListener("change", (e) => {
     _TitleOptions.text = $("#item-0").val();
-    showChart(getchartType);
+    showChart(CHARTTYPE);
+  });
+
+  document.getElementById("item-5").addEventListener("change", (e) => {
+    _YAxisOptions.title.text = $("#item-5").val();
+    showChart(CHARTTYPE);
   });
 
   document.getElementById("item-3").addEventListener("change", (e) => {
-    _YAxisOptions.title.text = $("#item-3").val();
-    showChart(getchartType);
+    _XAxisOptions.title.text = $("#item-3").val();
+    showChart(CHARTTYPE);
   });
+
+  showChart(CHARTTYPE);
 
   //===============================show Chart ============================
 
@@ -175,11 +171,11 @@ function chartEdit(e) {
 
     //create chart function
     function chartItems(_series, _cat, chartType) {
-      _TitleOptions.text = "";
+      // _TitleOptions.text = "";
       _GeneralOptions.type = chartType;
       // _ColumnPlotOptions.color = $("#item-10").val();
-      _YAxisOptions.title.text = $("#item-3").val();
-      _XAxisOptions.categories = _cat;
+      // _YAxisOptions.title.text = $("#item-3").val();
+      // _XAxisOptions.categories = _cat;
 
       if (chartType == "pie") {
         _GeneralOptions.options3d.enabled = true;
@@ -350,7 +346,7 @@ function chartEdit(e) {
   //   btnShow.style.float = "right";
   //   btnShow.style.marginRight = "10px";
   //   btnShow.innerHTML = "پیش نمایش";
-  //   btnShow.onclick = () => showChart(getchartType);
+  //   btnShow.onclick = () => showChart(CHARTTYPE);
   //   $("#chartModal").append(btnShow);
 
   //btnsubmit
@@ -394,7 +390,7 @@ function chartEdit(e) {
       Name: _name,
       CommandText: $("#item-2").val(),
       Text: $("#item-0").val(),
-      Type: getchartType,
+      Type: CHARTTYPE,
       CategoryLabel: $("#item-3").val(),
       ValueLabel: $("#item-5").val(),
       CategoryName: $("#item-6").val(),
@@ -419,5 +415,5 @@ function chartEdit(e) {
   const hideRowBtn = $("#" + e.target.id).parent()[0].id;
   $("#" + hideRowBtn).css("display", "none");
 
-  showChart(getchartType);
+  showChart(CHARTTYPE);
 }

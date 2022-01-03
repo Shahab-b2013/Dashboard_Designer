@@ -510,12 +510,11 @@ function MsgBoxDel(parent, msg) {
   ModalConstractor("25%", parent);
   let div = $("#contentM");
   div.html(msg);
-  div.css("display","block");
-  div.css("padding","10px");
+  div.css("display", "block");
+  div.css("padding", "10px");
   div.css("text-align", "start");
   $("#myModal").css("padding-top", "200px");
-  
-  
+
   let btn =
     '<hr style="margin:50px 0px 0px 0px;width:100%;">' +
     '<div class="row" style="margin:15px 0px 10px 15px;display:flex;"><span id="del" class="btn btn-danger"> حذف</span>' +
@@ -750,6 +749,8 @@ function groupDivId(elem) {
 function HideModal() {
   $("#myModal").remove();
 }
+//CHART TYPE
+var CHARTTYPE;
 
 ///EXPORT JSON
 var DASHBOARDID;
@@ -854,7 +855,7 @@ function openfile() {
     reader.readAsText(input);
   }
 }
-function btnSubmit(par,text) {
+function btnSubmit(par, text) {
   let btn = document.createElement("button");
   btn.className = "btn btn-primary";
   btn.style.margin = "10px 0px 10px 5px";

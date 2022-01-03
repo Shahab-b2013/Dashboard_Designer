@@ -1,4 +1,4 @@
-function Series() {
+function SeriesFn() {
   let div =
     '<div id="myModalSeries" class="modal" style="padding-top: 150px;">' +
     '<div id="seriesModal" class="modal-content">' +
@@ -11,7 +11,8 @@ function Series() {
   $("#seriesModal").css("width", "60%");
 
   let divGrid =
-    '<div class="" style="height:300px !important;border-bottom:1px solid #ccc;margin-bottom:10px;display:contents;"><button id="btnAddTolist" class="btn btn-success" style="margin-bottom:15px;padding:5px;width:70px;height:34px;" onclick="Form_Add_Series()">افزودن<i class="glyphicon glyphicon-plus-sign" style="margin:5px;"></i></button><table  class="table  table-bordered">' +
+    '<div class="" style="height:300px !important;border-bottom:1px solid #ccc;margin-bottom:10px;display:contents;"><button id="btnAddTolist" class="btn btn-success" style="margin-bottom:15px;padding:5px;width:70px;height:34px;"' +
+    'onclick="Form_Add_Series(id)">افزودن<i class="glyphicon glyphicon-plus-sign" style="margin:5px;"></i></button><table  class="table  table-bordered">' +
     "<thead>" +
     "<tr>" +
     '<th scope="col">ردیف</th>' +
@@ -76,6 +77,10 @@ function Series() {
 
       $("#series_tbody").append(tbody);
     });
+    if (CHARTTYPE == "pie") {
+      if ($("table tr").length - 1 == 1)
+        $("#btnAddTolist").attr("disabled", "disabled");
+    }
   }
 
   //btnsubmit
@@ -120,7 +125,6 @@ function Series() {
     sessionStorage.clear();
   };
 }
-
 function Form_Add_Series(Text, id) {
   let div =
     '<div id="Add_Series" class="modal" style="padding-top: 190px;">' +
@@ -132,34 +136,37 @@ function Form_Add_Series(Text, id) {
 
   $("#Add_Series").css("display", "block");
   $("#Add_seriesModal").css("width", "25%");
-
   let form =
     '<div class="" style="direction:rtl;border-bottom:1px solid #CCC;padding-bottom:10px;">' +
     '<label class="lblSeries">عنوان :<input type="text" id="text1" class="TextboxSeries"></label><br>' +
     // '<label class="lblSeries">نام :<input type="text" id="text2" class="TextboxSeries" ></label><br>' +//فعلا نمایش داده نشود
     '<label class="lblSeries">فیلد داده :<input type="text" id="text3" class="TextboxSeries" ></label><br>' +
     '<label class="lblSeries">رنگ :<input type="color" id="inputColor"></label><br>' +
-    '<label class="lblSeries">نوع :<select id="PlotType" class="selectBox" style="width: 250px;margin: 0px;left: 20px;position: absolute;direction: ltr;">' +
-    '<option  value="pie">pie</option>' +
-    '<option  value="column">column</option>' +
-    '<option  value="bar">bar</option>' +
-    '<option  value="line">line</option>' +
-    '<option  value="areaspline">areaspline</option>' +
-    "</select ></label><br>" +
-    "</div>";
+    '<label class="lblSeries">نوع :<select id="PlotType" class="selectBox" style="width: 250px;margin: 0px;left: 20px;position: absolute;direction: ltr;">';
+  console.log(CHARTTYPE);
+  if (CHARTTYPE == "pie") {
+    form += '<option  value="pie">pie</option>';
+  } else {
+    form +=
+      '<option  value="column">column</option>' +
+      '<option  value="bar">bar</option>' +
+      '<option  value="line">line</option>' +
+      '<option  value="areaspline">areaspline</option>';
+  }
+
+  form += "</select ></label><br>" + "</div>";
   $("#Add_seriesModal").append(form);
 
   //btnsubmit
   let Submit = btnSubmit("#Add_seriesModal", "ثبت ");
   Text == "edit" ? (Submit.innerHTML = "ویرایش") : (Submit.innerHTML = "ثبت");
   Submit.onclick = () => {
-    let tr = $("#" + id)
-      .parent()
-      .parent();
-    let rowID = tr.children().eq(0).html();
-
     if (Text == "edit") {
       //put table
+      let tr = $("#" + id)
+        .parent()
+        .parent();
+      let rowID = tr.children().eq(0).html();
 
       sessionStorage.removeItem("putID");
       sessionStorage.removeItem("_id");
@@ -168,6 +175,9 @@ function Form_Add_Series(Text, id) {
       tr.children().eq(1).html($("#text1").val());
       //فعلا نمایش داده نشود
       // tr.children().eq(2).html($("#text2").val());
+
+      //check rows count for pie
+
       tr.children().eq(2).html($("#text3").val());
       tr.children().eq(3).html($("#inputColor").val());
       tr.children().eq(4).html($("#PlotType option:selected").val());
@@ -180,6 +190,7 @@ function Form_Add_Series(Text, id) {
           ? 1
           : +$("table tr:last").children().eq(0).html() + 1;
       //Add to tbody in table
+
       let tbody =
         "<tr>" +
         '<td scope="row">' +
@@ -215,6 +226,10 @@ function Form_Add_Series(Text, id) {
 
       //close
       $("#Add_Series").remove();
+      if (CHARTTYPE == "pie") {
+        if ($("table tr").length - 1 == 1)
+          $("#btnAddTolist").attr("disabled", "disabled");
+      }
     }
   };
   //btn exit
@@ -237,23 +252,15 @@ function Series_Deleted(id) {
   let rowID = tr.children().eq(0).html();
   sessionStorage.removeItem("deleteID");
   sessionStorage.setItem("deleteID", rowID);
+  if ($("table tr").length - 1 < 1) $("#btnAddTolist").removeAttr("disabled");
 }
 function Series_Edited(id) {
   let tr = $("#" + id)
     .parent()
     .parent();
-  let rowID = tr.children().eq(0).html();
-
   Form_Add_Series("edit", id);
 
   //set Form_Add_Series Items
-  // let items = SERIES.find((Element) => Element.ID == rowID);
-
-  // $("#text1").val(items.Text);
-  // $("#text3").val(items.DataExpression);
-  // $("#inputColor").val(items.StyleColor);
-  // $("#PlotType").val(items.PlotType);
-
   $("#text1").val(tr.children().eq(1).html());
   $("#text3").val(tr.children().eq(2).html());
   $("#inputColor").val(tr.children().eq(3).html());

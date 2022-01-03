@@ -1,12 +1,13 @@
 ﻿html {
-  scroll-behavior: smooth;
-  direction: rtl;
+    scroll-behavior: smooth;
+    direction: rtl;
+
 }
 
 body {
   width: 100%;
-  height: 100%;
-  margin: auto;
+    height: 100%;
+    margin: auto;
   background-color: #fff;
   --mainFont: "IRANSansWeb", Tahoma, Verdana, sans-serif;
   --mainbackground: white;
@@ -65,7 +66,7 @@ body {
     "a a" 0px
     "b b" 40px
     "c c " 90px;
-  grid-template-columns: 110px 120px;
+  grid-template-columns: 135px 90px;
   border: 1px solid #ccc;
   align-items: center;
   justify-content: right;
@@ -405,7 +406,7 @@ br {
   grid-template:
     "a" 0px
     "c" 60px;
-  grid-template-columns: 210px;
+  grid-template-columns: 150px;
   border: 1px solid #ccc;
   align-items: center;
   justify-content: right;

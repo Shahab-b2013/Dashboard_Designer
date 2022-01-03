@@ -60,19 +60,19 @@ var _XAxisOptions = {
     ////    }
     ////},
 
-    //title: {
+    title: {
 
-    //    text: '',
+       text: '',
 
-    //    style: {
+       style: {
 
-    //        fontSize: '13px',
+           fontSize: '13px',
 
-    //        fontFamily: 'IRANSansWeb',
+           fontFamily: 'IRANSansWeb',
 
-    //        color: '#154360'
-    //    }
-    //}
+           color: '#154360'
+       }
+    }
 };
 
 var _ExportingOptions = {

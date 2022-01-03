@@ -491,7 +491,7 @@
                 title: w(c.options.lang[b._titleKey || b.titleKey], ""),
               });
             //نمایش منو show or hide menu
-            // p.menuClassName =
+            //// p.menuClassName =
             //   a.menuClassName || "highcharts-menu-" + c.btnCount++;
             // if (b.symbol) {
             //   var g = d
@@ -689,11 +689,11 @@
           var g;
           d &&
             (d.forEach(function (a, b) {
-              a &&
-                ((a.onclick = a.ontouchstart = null),
-                (g = "cache-" + a.menuClassName),
-                c[g] && delete c[g],
-                (d[b] = a.destroy()));
+                a &&
+                    ((a.onclick = a.ontouchstart = null),
+                        (g = "cache-" + a.menuClassName),
+                        c[g] && delete c[g]);
+                //(d[b] = a.destroy()));
             }),
             (d.length = 0));
           c.exportingGroup &&

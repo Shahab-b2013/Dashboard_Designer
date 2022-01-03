@@ -32,7 +32,7 @@ public class _Dashboard : System.Web.Services.WebService
             int activityID = (design.ModuleID * 100) + 50;
 
             //CLEAR TABLES
-            ClearTables(activityID, design.Charts);
+            ClearTables(design.ModuleID, design.AccessID, design.DashboardID);
 
             //CREATE PAGE
             CreatePage(design.DashboardID, design.PageTemplateID, design.Name, design.Label, design.Type, design.HeaderVisible, design.Version, design.Desc);
@@ -82,7 +82,7 @@ public class _Dashboard : System.Web.Services.WebService
                         CreatePageElement(chart.InternalID, design.DashboardID, row.InternalID, null, "Cell", style, false, false, null, false, design.Version);
 
                         //CREATE ACTIVITY
-                        CreateActivity(activityID.ToString(), design.ModuleID, chart.Name, chart.Text, design.Version, null, design.EntityID,chart.CommandText, "SelectQuery", "عملیات با موفقیت انجام شد.", "عملیات با خطا مواجهه شد.", null, null, 100, "DataList");
+                        CreateActivity(activityID.ToString(), design.ModuleID, chart.Name, chart.Text, design.Version, null, design.EntityID, chart.CommandText, "SelectQuery", "عملیات با موفقیت انجام شد.", "عملیات با خطا مواجهه شد.", null, null, 100, "DataList");
 
                         //CREATE ACTIVITY CONTEXT
                         CreateActivityContext(activityID, chart.Name, chart.Text, "ChartView", null, design.Version, null);
@@ -132,42 +132,23 @@ public class _Dashboard : System.Web.Services.WebService
 
 
 
-    public static void ClearTables(int activityID, Array charts)
+    public static void ClearTables(int ModuleID, int AccessID, int PageID)
     {
-        SqlDataProvider.ExecuteNoneQuery(string.Format("DELETE FROM Sys_Gui_ChartSeries WHERE ChartID = 1501050;" +
-            "DELETE FROM Sys_Gui_ChartSeries WHERE ChartID = 1501051;" +
-            "DELETE FROM Sys_Gui_ChartSeries WHERE ChartID = 1501052;" +
-            "DELETE FROM Sys_Gui_ChartSeries WHERE ChartID = 1501053;" +
-            "DELETE FROM Sys_Gui_ChartSeries WHERE ChartID = 1501054;" +
-             "DELETE FROM Sys_Gui_ChartSeries WHERE ChartID = 1501055;" +
-              "DELETE FROM Sys_Gui_ChartSeries WHERE ChartID = 1501056;" +
-               "DELETE FROM Sys_Gui_ChartSeries WHERE ChartID = 1501057;" +
-                "DELETE FROM Sys_Gui_ChartSeries WHERE ChartID = 1501058;" +
-
-            "DELETE FROM Sys_Gui_ChartViews WHERE ChartID = 1501050;" +
-            "DELETE FROM Sys_Gui_ChartViews WHERE ChartID = 1501051;" +
-            "DELETE FROM Sys_Gui_ChartViews WHERE ChartID = 1501052;" +
-            "DELETE FROM Sys_Gui_ChartViews WHERE ChartID = 1501053;" +
-            "DELETE FROM Sys_Gui_ChartViews WHERE ChartID = 1501054;" +
-             "DELETE FROM Sys_Gui_ChartViews WHERE ChartID = 1501055;" +
-              "DELETE FROM Sys_Gui_ChartViews WHERE ChartID = 1501056;" +
-               "DELETE FROM Sys_Gui_ChartViews WHERE ChartID = 1501057;" +
-                "DELETE FROM Sys_Gui_ChartViews WHERE ChartID = 1501058;" +
-
-                "DELETE FROM Sys_UserRole_Accesses WHERE AccessID=150101" +
-                "DELETE FROM Sys_UserGroup_Accesses WHERE AccessID=150101" +
-
-            "DELETE FROM Sys_Gui_PageLayouts WHERE PageID = 1000010;" +
-            "DELETE FROM Sys_Dev_Activities WHERE ActivityID in (select ActivityID FROM[Sys_Activities] WHERE ModuleID = 15010);" +
-            "DELETE FROM Sys_Gui_Page_Accesses WHERE PageID = 1000010;" +
-            "DELETE FROM Sys_Access_Activities WHERE AccessID = 150101;" +
-            "DELETE FROM dbo.Sys_Access_Activities WHERE ActivityID in (select ActivityID FROM[Sys_Activities] WHERE ModuleID = 15010);" +
-            "DELETE FROM Sys_Gui_ActivityContexts WHERE ActivityID in (select ActivityID FROM[Sys_Activities] WHERE ModuleID = 15010) ;" +
-            "DELETE FROM Sys_Gui_Page_Contexts WHERE PageID = 1000010;" +
-            "DELETE FROM Sys_Gui_Page_Navigations WHERE PageID = 1000010;" +
-            "DELETE FROM Sys_Activities WHERE ModuleID = 15010;" +
-            "DELETE FROM Sys_Gui_Pages WHERE PageID = 1000010;"
-                     ));
+        SqlDataProvider.ExecuteNoneQuery(string.Format("DELETE FROM Sys_Gui_ChartSeries WHERE ChartID in (select ActivityID FROM[Sys_Activities] WHERE ModuleID = {0});" +
+            "DELETE FROM Sys_Gui_ChartViews WHERE ActivityContextID in (select ActivityID FROM[Sys_Activities] WHERE ModuleID = {0});" +
+            "DELETE FROM Sys_UserRole_Accesses WHERE AccessID = {1};" +
+            "DELETE FROM Sys_UserGroup_Accesses WHERE AccessID = {1};" +
+            "DELETE FROM Sys_Gui_PageLayouts WHERE PageID = {2};" +
+            "DELETE FROM Sys_Dev_Activities WHERE ActivityID in (select ActivityID FROM[Sys_Activities] WHERE ModuleID = {0});" +
+            "DELETE FROM Sys_Gui_Page_Accesses WHERE PageID = {2};" +
+            "DELETE FROM Sys_Access_Activities WHERE AccessID = {1};" +
+            "DELETE FROM dbo.Sys_Access_Activities WHERE ActivityID in (select ActivityID FROM[Sys_Activities] WHERE ModuleID = {0});" +
+            "DELETE FROM Sys_Gui_ActivityContexts WHERE ActivityID in (select ActivityID FROM[Sys_Activities] WHERE ModuleID = {0});" +
+            "DELETE FROM Sys_Gui_Page_Contexts WHERE PageID = {2};" +
+            "DELETE FROM Sys_Gui_Page_Navigations WHERE PageID = {2};" +
+            "DELETE FROM Sys_Activities WHERE ModuleID = {0};" +
+            "DELETE FROM Sys_Gui_Pages WHERE PageID = {2};"
+                       , ModuleID, AccessID, PageID));
 
     }
 
