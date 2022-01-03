@@ -79,7 +79,7 @@ function Series() {
   }
 
   //btnsubmit
-  let Submit = btnSubmit("#seriesModal");
+  let Submit = btnSubmit("#seriesModal", "تایید");
   Submit.style.marginTop = "-10px";
   Submit.onclick = () => {
     //Save
@@ -139,20 +139,28 @@ function Form_Add_Series(Text, id) {
     // '<label class="lblSeries">نام :<input type="text" id="text2" class="TextboxSeries" ></label><br>' +//فعلا نمایش داده نشود
     '<label class="lblSeries">فیلد داده :<input type="text" id="text3" class="TextboxSeries" ></label><br>' +
     '<label class="lblSeries">رنگ :<input type="color" id="inputColor"></label><br>' +
-    '<label class="lblSeries">نوع :<select id="PlotType" class="selectBox" style="width: 250px;margin: 0px;left: 20px;position: absolute;direction: ltr;"><option id="opt1" value="pie">Pie</option><option id="opt2" value="column">Column</option><option id="opt3" value="bar">Bar</option><option id="opt4" value="line">Line</option><option id="opt5" value="areaspline">Area</option></select></label><br>' +
+    '<label class="lblSeries">نوع :<select id="PlotType" class="selectBox" style="width: 250px;margin: 0px;left: 20px;position: absolute;direction: ltr;">' +
+    '<option  value="pie">pie</option>' +
+    '<option  value="column">column</option>' +
+    '<option  value="bar">bar</option>' +
+    '<option  value="line">line</option>' +
+    '<option  value="areaspline">areaspline</option>' +
+    "</select ></label><br>" +
     "</div>";
   $("#Add_seriesModal").append(form);
 
   //btnsubmit
-  let Submit = btnSubmit("#Add_seriesModal");
-  Text == "edit" ? (Submit.innerHTML = "ویرایش") : (Submit.innerHTML = "ذخیره");
+  let Submit = btnSubmit("#Add_seriesModal", "ثبت ");
+  Text == "edit" ? (Submit.innerHTML = "ویرایش") : (Submit.innerHTML = "ثبت");
   Submit.onclick = () => {
+    let tr = $("#" + id)
+      .parent()
+      .parent();
+    let rowID = tr.children().eq(0).html();
+
     if (Text == "edit") {
       //put table
-      let tr = $("#" + id)
-        .parent()
-        .parent();
-      let rowID = tr.children().eq(0).html();
+
       sessionStorage.removeItem("putID");
       sessionStorage.removeItem("_id");
       sessionStorage.setItem("putID", rowID);
@@ -167,7 +175,6 @@ function Form_Add_Series(Text, id) {
       //close
       $("#Add_Series").remove();
     } else {
-      //set ID
       let _ID =
         $("table tr").length == 1
           ? 1
@@ -240,12 +247,17 @@ function Series_Edited(id) {
   Form_Add_Series("edit", id);
 
   //set Form_Add_Series Items
-  let items = SERIES.find((Element) => Element.ID == rowID);
+  // let items = SERIES.find((Element) => Element.ID == rowID);
 
-  $("#text1").val(items.Text);
-  $("#text3").val(items.DataExpression);
-  $("#inputColor").val(items.StyleColor);
-  $("#PlotType").val(items.PlotType);
+  // $("#text1").val(items.Text);
+  // $("#text3").val(items.DataExpression);
+  // $("#inputColor").val(items.StyleColor);
+  // $("#PlotType").val(items.PlotType);
+
+  $("#text1").val(tr.children().eq(1).html());
+  $("#text3").val(tr.children().eq(2).html());
+  $("#inputColor").val(tr.children().eq(3).html());
+  $("#PlotType").val(tr.children().eq(4).html());
 }
 
 function SERIES_Clear() {

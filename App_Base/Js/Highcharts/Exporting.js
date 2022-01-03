@@ -490,24 +490,25 @@
               .attr({
                 title: w(c.options.lang[b._titleKey || b.titleKey], ""),
               });
-            p.menuClassName =
-              a.menuClassName || "highcharts-menu-" + c.btnCount++;
-            if (b.symbol) {
-              var g = d
-                .symbol(b.symbol, b.symbolX - n / 2, b.symbolY - n / 2, n, n, {
-                  width: n,
-                  height: n,
-                })
-                .addClass("highcharts-button-symbol")
-                .attr({ zIndex: 1 })
-                .add(p);
-              c.styledMode ||
-                g.attr({
-                  stroke: b.symbolStroke,
-                  fill: b.symbolFill,
-                  "stroke-width": b.symbolStrokeWidth || 1,
-                });
-            }
+            //نمایش منو show or hide menu
+            // p.menuClassName =
+            //   a.menuClassName || "highcharts-menu-" + c.btnCount++;
+            // if (b.symbol) {
+            //   var g = d
+            //     .symbol(b.symbol, b.symbolX - n / 2, b.symbolY - n / 2, n, n, {
+            //       width: n,
+            //       height: n,
+            //     })
+            //     .addClass("highcharts-button-symbol")
+            //     .attr({ zIndex: 1 })
+            //     .add(p);
+            //   c.styledMode ||
+            //     g.attr({
+            //       stroke: b.symbolStroke,
+            //       fill: b.symbolFill,
+            //       "stroke-width": b.symbolStrokeWidth || 1,
+            //     });
+            // }
             p.add(c.exportingGroup).align(
               F(b, { width: p.width, x: w(b.x, c.buttonOffset) }),
               !0,

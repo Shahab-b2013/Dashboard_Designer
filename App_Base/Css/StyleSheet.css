@@ -164,8 +164,7 @@ body {
   border: 1px solid #ccc;
   border-radius: 4px;
   margin: 10px;
-  font-family: var(--mainFont);
-  font-size: 14px;
+  font:14px var(--mainFont);
 }
 
 .textarea {
@@ -175,6 +174,7 @@ body {
   border-radius: 4px;
   margin: 10px;
   direction: ltr;
+  font:14px var(--mainFont);
 }
 
 #textlbl {

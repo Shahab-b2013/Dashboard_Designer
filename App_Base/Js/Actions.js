@@ -854,14 +854,14 @@ function openfile() {
     reader.readAsText(input);
   }
 }
-function btnSubmit(par) {
+function btnSubmit(par,text) {
   let btn = document.createElement("button");
   btn.className = "btn btn-primary";
   btn.style.margin = "10px 0px 10px 5px";
   btn.style.display = "inline";
   btn.style.float = "right";
   btn.style.width = "70px";
-  btn.innerText = "ذخیره";
+  btn.innerText = text;
   $(par).append(btn);
   return btn;
 }

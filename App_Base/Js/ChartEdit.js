@@ -70,7 +70,7 @@ function chartEdit(e) {
     } else if (i == 4) {
       //فعلا نمایش داده نشود
     } else if (i == 7) {
-      selectList(i);
+      selectList(i, ArrItems[i]);
     } else if (i == 8) {
       textBox(i, "", ArrLbl[i]);
       let textVal = "";
@@ -127,16 +127,34 @@ function chartEdit(e) {
   }
 
   //select box
-  function selectList(i) {
+  function selectList(i, selected) {
     let Select_List =
       '<select class="selectBox" id="item-' +
       i +
       '" style="float: left;margin-left: 20px;direction: ltr;">' +
-      "<option >Simple</option>" +
-      "<option >ColumnGroup</option>" +
-      "<option >Stack</option>" +
+      '<option value="Simple">Simple</option>' +
+      '<option value="ColumnGroup">ColumnGroup</option>' +
+      '<option value="Stack">Stack</option>' +
       "</select>";
     $("#div1Items-" + i).append(Select_List);
+    $("#item-" + i).val(selected);
+    // console.log(selected);
+    // if (selected) {
+    //   switch (selected) {
+    //     case "Simple":
+    //       $("#opt1").attr("selected", "selected");
+    //       break;
+    //     case "ColumnGroup":
+    //       $("#opt2").attr("selected", "selected");
+    //       break;
+    //     case "Stack":
+    //       $("#opt3").attr("selected", "selected");
+    //       break;
+    //     default:
+    //       $("#opt1").attr("selected", "selected");
+    //       break;
+    //   }
+    // }
   }
 
   document.getElementById("item-0").addEventListener("change", (e) => {
@@ -336,7 +354,7 @@ function chartEdit(e) {
   //   $("#chartModal").append(btnShow);
 
   //btnsubmit
-  let Submit = btnSubmit("#chartModal");
+  let Submit = btnSubmit("#chartModal", "ذخیره");
   Submit.onclick = () => {
     //get svg
     var svg_xml = chartSvg.getSVG();
@@ -381,11 +399,11 @@ function chartEdit(e) {
       ValueLabel: $("#item-5").val(),
       CategoryName: $("#item-6").val(),
       CategoryExpression: $("#item-6").val(),
-      SeriesType: $("#item-7").val(),
+      SeriesType: $("#item-7 option:selected").val(),
       Series: SERIES,
       ImgBs64: _svg_Base64,
     });
-   
+
     //update chart to form
     $("#" + imgid).attr("src", "data:image/svg+xml;base64," + _svg_Base64);
     $("#" + imgid).attr("id", _id);
