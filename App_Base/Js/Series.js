@@ -143,7 +143,6 @@ function Form_Add_Series(Text, id) {
     '<label class="lblSeries">فیلد داده :<input type="text" id="text3" class="TextboxSeries" ></label><br>' +
     '<label class="lblSeries">رنگ :<input type="color" id="inputColor"></label><br>' +
     '<label class="lblSeries">نوع :<select id="PlotType" class="selectBox" style="width: 250px;margin: 0px;left: 20px;position: absolute;direction: ltr;">';
-  console.log(CHARTTYPE);
   if (CHARTTYPE == "pie") {
     form += '<option  value="pie">pie</option>';
   } else {
@@ -156,6 +155,7 @@ function Form_Add_Series(Text, id) {
 
   form += "</select ></label><br>" + "</div>";
   $("#Add_seriesModal").append(form);
+  $("#PlotType").val(CHARTTYPE);
 
   //btnsubmit
   let Submit = btnSubmit("#Add_seriesModal", "ثبت ");

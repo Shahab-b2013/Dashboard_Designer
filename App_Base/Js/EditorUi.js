@@ -332,7 +332,7 @@ function Group_Btn(GroupId) {
     '<span style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;" class="delete btn btn-light glyphicon glyphicon-trash"  title="حذف سطر" onclick="DeleteGroup(this);" id=' +
     GroupId +
     "DeleteGroup></span>" +
-    '<span style="border-radius:0px" class="btn btn-light glyphicon glyphicon-cog"  title="تعداد ستون ها" onclick="GroupSplit(this);" id="EditGroup-' +
+    '<span style="border-radius:0px" class="edit btn btn-light glyphicon glyphicon-cog"  title="تعداد ستون ها" onclick="GroupSplit(this);" id="EditGroup-' +
     GroupId +
     '"></span>' +
     '<span class="vol"><span style="display:none" id="slider-' +

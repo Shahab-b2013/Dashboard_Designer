@@ -117,49 +117,51 @@ function swapping(e) {
     }
 
     //swap ID
-    temp = oneObj.ID;
-    oneObj.ID = twoObj.ID;
-    twoObj.ID = temp;
+    if (twoObj) {
+      temp = oneObj.ID;
+      oneObj.ID = twoObj.ID;
+      twoObj.ID = temp;
 
-    //if img not Exists
-    if (twoID.hasClass("form-group-body")) {
-      if (CHARTS.some(ExistOneID)) {
-        //modify oneObj RowID
-        oneObj.RowID = +e.target.id
-          .replaceAll("form-group-body-", "")
-          .split("-")[0];
+      //if img not Exists
+      if (twoID.hasClass("form-group-body")) {
+        if (CHARTS.some(ExistOneID)) {
+          //modify oneObj RowID
+          oneObj.RowID = +e.target.id
+            .replaceAll("form-group-body-", "")
+            .split("-")[0];
 
-        //modify oneObj ColumnIndex
-        oneObj.ColumnIndex = +e.target.id
-          .replaceAll("form-group-body-", "")
-          .split("-")[1];
-      }
-    } else {
-      if (CHARTS.some(ExistOneID)) {
-        //modify oneObj RowID
-        oneObj.RowID = +twoID
-          .parent()[0]
-          .id.replaceAll("form-group-body-", "")
-          .split("-")[0];
+          //modify oneObj ColumnIndex
+          oneObj.ColumnIndex = +e.target.id
+            .replaceAll("form-group-body-", "")
+            .split("-")[1];
+        }
+      } else {
+        if (CHARTS.some(ExistOneID)) {
+          //modify oneObj RowID
+          oneObj.RowID = +twoID
+            .parent()[0]
+            .id.replaceAll("form-group-body-", "")
+            .split("-")[0];
 
-        //modify oneObj ColumnIndex
-        oneObj.ColumnIndex = +twoID
-          .parent()[0]
-          .id.replaceAll("form-group-body-", "")
-          .split("-")[1];
-      }
-      if (CHARTS.some(ExistTwoID)) {
-        //modify twoObj RowID
-        twoObj.RowID = +oneID
-          .parent()[0]
-          .id.replaceAll("form-group-body-", "")
-          .split("-")[0];
+          //modify oneObj ColumnIndex
+          oneObj.ColumnIndex = +twoID
+            .parent()[0]
+            .id.replaceAll("form-group-body-", "")
+            .split("-")[1];
+        }
+        if (CHARTS.some(ExistTwoID)) {
+          //modify twoObj RowID
+          twoObj.RowID = +oneID
+            .parent()[0]
+            .id.replaceAll("form-group-body-", "")
+            .split("-")[0];
 
-        //modify twoObj ColumnIndex
-        twoObj.ColumnIndex = +oneID
-          .parent()[0]
-          .id.replaceAll("form-group-body-", "")
-          .split("-")[1];
+          //modify twoObj ColumnIndex
+          twoObj.ColumnIndex = +oneID
+            .parent()[0]
+            .id.replaceAll("form-group-body-", "")
+            .split("-")[1];
+        }
       }
     }
   }
@@ -377,16 +379,16 @@ function allowDrop(e) {
 function DeleteGroup(elem) {
   let RowCount = $("#geContent").children().length;
   if (RowCount > 1) {
-    //remove empty div
-    removeDiv(elem);
-    let parentId = elem.parentNode.parentNode.id;
+    remove_Empty_Div(elem);
 
-    if ($("#" + parentId).children().length == 1) {
-      $("#" + parentId).remove();
-      parentId = +parentId.replaceAll("form-group-", "");
-      //put ROWBOXS
+    let RowID = elem.parentNode.parentNode.id;
+    //check is chid row and delete row
+    if ($("#" + RowID).children().length - 1 == 0) {
+      $("#" + RowID).remove();
+      RowID = +RowID.replaceAll("form-group-", "");
+      //delete row in ROWBOXS
       ROWBOXS.splice(
-        ROWBOXS.findIndex((Element) => Element.RowID == parentId),
+        ROWBOXS.findIndex((Element) => Element.RowID == RowID),
         1
       );
 
@@ -594,20 +596,20 @@ function hideSlider(elem) {
 }
 
 function DivSplit_1(elem) {
-  removeDiv(elem);
-  if (groupDivId(elem).length == 1) {
+  remove_Empty_Div(elem);
+  if (get_Items_Row(elem).length == 1) {
     setDiv1(elem, 12);
   }
   rowBoxArr_Modify(elem, "OnceColumn");
   chartArr_Modify(elem);
 }
 function DivSplit_2(elem) {
-  removeDiv(elem);
-  if (groupDivId(elem).length == 1) {
+  remove_Empty_Div(elem);
+  if (get_Items_Row(elem).length == 1) {
     setDiv1(elem, 6);
     CreateDiv2(elem, 6);
   }
-  if (groupDivId(elem).length == 2) {
+  if (get_Items_Row(elem).length == 2) {
     setDiv1(elem, 6);
     setDiv2(elem, 6);
   }
@@ -615,14 +617,14 @@ function DivSplit_2(elem) {
   chartArr_Modify(elem);
 }
 function DivSplit_3(elem) {
-  removeDiv(elem);
-  if (groupDivId(elem).length == 1) {
+  remove_Empty_Div(elem);
+  if (get_Items_Row(elem).length == 1) {
     setDiv1(elem, 4);
     CreateDiv2(elem, 4);
     CreateDiv3(elem, 4);
   }
-  if (groupDivId(elem).length == 2) {
-    removeDiv(elem);
+  if (get_Items_Row(elem).length == 2) {
+    remove_Empty_Div(elem);
     setDiv1(elem, 4);
     setDiv2(elem, 4);
     CreateDiv3(elem, 4);
@@ -632,7 +634,7 @@ function DivSplit_3(elem) {
 }
 
 function rowBoxArr_Modify(elem, num) {
-  let RowID = $("#" + groupDivId(elem)[0]).parent()[0].id;
+  let RowID = $("#" + get_Items_Row(elem)[0]).parent()[0].id;
   RowID = RowID.replaceAll("form-group-", "").split("-")[0];
   ROWBOXS.find(function (Element) {
     if (Element.RowID == RowID) {
@@ -642,7 +644,7 @@ function rowBoxArr_Modify(elem, num) {
 }
 function chartArr_Modify(elem) {
   let chartID;
-  let RowID = $("#" + groupDivId(elem)[0]).parent()[0].id;
+  let RowID = $("#" + get_Items_Row(elem)[0]).parent()[0].id;
   let colCount = $("#" + RowID).children().length;
   for (let i = colCount - 1; i >= 0; i--) {
     let colID = $("#" + RowID).children()[i].id;
@@ -662,21 +664,21 @@ function chartArr_Modify(elem) {
   }
 }
 function setDiv1(elem, colNum) {
-  $("#" + groupDivId(elem)[0]).attr(
+  $("#" + get_Items_Row(elem)[0]).attr(
     "class",
     "form-group-body  col-md-" + colNum
   );
-  $("#" + groupDivId(elem)[0]).attr("ColumnIndex", 0);
+  $("#" + get_Items_Row(elem)[0]).attr("ColumnIndex", 0);
 }
 function setDiv2(elem, colNum) {
-  $("#" + groupDivId(elem)[1]).attr(
+  $("#" + get_Items_Row(elem)[1]).attr(
     "class",
     "form-group-body col-md-" + colNum
   );
-  $("#" + groupDivId(elem)[1]).attr("ColumnIndex", 1);
+  $("#" + get_Items_Row(elem)[1]).attr("ColumnIndex", 1);
 }
 function CreateDiv2(elem, colNum) {
-  let div1ID = groupDivId(elem)[0];
+  let div1ID = get_Items_Row(elem)[0];
   let lastCharId = +div1ID.substr(div1ID.length - 1) + 1;
   let div2ID = div1ID.substring(0, div1ID.length - 1).concat(lastCharId); //Delete/Add last chart from id
   let div2 =
@@ -686,12 +688,12 @@ function CreateDiv2(elem, colNum) {
     div2ID +
     '" ></div>';
   //set div2
-  $("#" + groupDivId(elem)[0]).after($(div2));
+  $("#" + get_Items_Row(elem)[0]).after($(div2));
 }
 
 function CreateDiv3(elem, colNum) {
   //create div3
-  let div2ID = groupDivId(elem)[1];
+  let div2ID = get_Items_Row(elem)[1];
   let lastCharId = +div2ID.substr(div2ID.length - 1) + 1;
   let div3ID = div2ID.substring(0, div2ID.length - 1).concat(lastCharId); //Delete/Add last chart from id
 
@@ -702,34 +704,45 @@ function CreateDiv3(elem, colNum) {
     div3ID +
     '"></div>';
   //set div3
-  $("#" + groupDivId(elem)[1]).after($(div3));
+  $("#" + get_Items_Row(elem)[1]).after($(div3));
 }
 
-/*if div.child isEmpty then
-removeDiv & if groupDivid.lenght==1 removeDiv Disablez
+/*If div.child isEmpty then
+remove_Empty_Div & if row.lenght==1 remove_Empty_Div Disablez
 */
-function removeDiv(elem) {
-  let groupArr = groupDivId(elem);
-  for (let k = groupArr.length - 1; k >= 0; k--) {
-    let elements = +$("#" + groupArr[k]).children().length;
-    if (groupDivId(elem).length == 1) {
-      if ($("#" + elem.id).hasClass("rowBtnGroup-span")) {
-        setDiv1(elem, 12);
-      } else if ($("#" + elem.id).hasClass("delete")) {
+function remove_Empty_Div(elem) {
+  let chartCount = 0;
+  let Items_Row = get_Items_Row(elem);
+  for (let k = Items_Row.length - 1; k >= 0; k--) {
+    let elements = +$("#" + Items_Row[k]).children().length;
+    if ($("#" + elem.id).hasClass("myslider")) {
+      if (get_Items_Row(elem).length > 1) {
         if (elements == 0) {
-          $("#" + groupArr[k]).remove();
+          $("#" + Items_Row[k]).remove();
         }
       }
-    } else {
-      if (elements == 0) {
-        $("#" + groupArr[k]).remove();
+    } else if ($("#" + elem.id).hasClass("delete")) {
+      if (elements > 0) {
+        chartCount++;
+      }
+      if (k == 0) {
+        if (chartCount == 0) {
+          //chart is null
+          for (let index = Items_Row.length - 1; index >= 0; index--) {
+            if ($("#" + elem.id).hasClass("delete")) {
+              if (elements == 0) {
+                $("#" + Items_Row[index]).remove();
+              }
+            }
+          }
+        }
       }
     }
   }
 }
 
-function groupDivId(elem) {
-  let groupDivIdArray = [];
+function get_Items_Row(elem) {
+  let get_Items_Row = [];
   let parnetnodeID = $("#" + elem.id).hasClass("delete")
     ? elem.parentNode.parentNode.id
     : elem.parentNode.parentNode.parentNode.parentNode.id;
@@ -738,12 +751,11 @@ function groupDivId(elem) {
     if (parnetnodeID.childNodes[q].id) {
       let id = parnetnodeID.childNodes[q].id;
       if ($("#" + id).hasClass("form-group-body")) {
-        groupDivIdArray.push(id);
+        get_Items_Row.push(id);
       }
     }
   }
-
-  return [...new Set(groupDivIdArray)];
+  return [...new Set(get_Items_Row)];
 }
 
 function HideModal() {
