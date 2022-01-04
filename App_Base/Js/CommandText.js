@@ -10,14 +10,14 @@ function CommandText() {
   $("#commandModal").css("width", "50%");
 
   let textArea =
-    '<div ><textarea id="textArea" class="textarea"></textarea></div>';
-  $("#commandModal").append(textArea);
+    '<textarea id="textArea" class="textarea"></textarea>';
+  $("#contentCommand").append(textArea);
 
-  $("#textArea").val($("#item-2").val());
+  $("#textArea").val($("#item-1").val());
   //btnsubmit
   let Submit = btnSubmit("#commandModal", "تایید");
   Submit.onclick = () => {
-    $("#item-2").val($("#textArea").val());
+    $("#item-1").val($("#textArea").val());
     $("#myModalCommand").remove();
   };
 

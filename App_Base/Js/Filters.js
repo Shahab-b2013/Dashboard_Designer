@@ -1,6 +1,23 @@
 "use strict";
 
 function Filters(e) {
+  let Default_Obj;
+  if (REFCOLUMNS.length == 0) {
+    Default_Obj = {
+      ID: 0,
+      Name: "",
+      Header: "عنوان ",
+      Data: "Default",
+      Summary: "",
+      Type: "",
+      Input: "",
+      Values: {
+        
+      },
+      Operators: ["equal"],
+    };
+    REFCOLUMNS.push(Default_Obj);
+  }
   ModalConstractor("40%", "geContent");
   let container = $("#chartModal");
 
@@ -75,18 +92,20 @@ function Filters(e) {
 
   function GetLocalFilter() {
     let filtersArr = [];
-    for (let i = 0; i < REFCOLUMNS.length; i++) {
-      let object = {
-        id: REFCOLUMNS[i].Data,
-        label: REFCOLUMNS[i].Data,
-        type: REFCOLUMNS[i].Type,
-        input: REFCOLUMNS[i].Input,
-        values: REFCOLUMNS[i].Values,
-        operators: REFCOLUMNS[i].Operators,
-      };
+    let object;
+    if (REFCOLUMNS.length > 0)
+      for (let i = 0; i < REFCOLUMNS.length; i++) {
+        object = {
+          id: REFCOLUMNS[i].Data,
+          label: REFCOLUMNS[i].Data,
+          type: REFCOLUMNS[i].Type,
+          input: REFCOLUMNS[i].Input,
+          values: REFCOLUMNS[i].Values,
+          operators: REFCOLUMNS[i].Operators,
+        };
 
-      filtersArr.push(object);
-    }
+        filtersArr.push(object);
+      }
     return {
       filters: filtersArr,
       rules:

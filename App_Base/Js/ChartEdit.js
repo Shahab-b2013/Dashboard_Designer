@@ -1,7 +1,6 @@
 "use strict";
-
+var chartSvg;
 function chartEdit(e) {
-  var chartSvg;
   /*
       Get img
       */
@@ -24,7 +23,6 @@ function chartEdit(e) {
   //load chart and items
   const ArrLbl = [
     "عنوان چارت",
-    "نام چارت",
     "جدول داده",
     "عنوان دسته بندی",
     "نام دسته بندی",
@@ -42,7 +40,6 @@ function chartEdit(e) {
 
     ArrItems = [
       findChart.Text,
-      findChart.Name,
       findChart.CommandText,
       findChart.CategoryLabel,
       findChart.CategoryName,
@@ -52,41 +49,49 @@ function chartEdit(e) {
       findChart.Series,
     ];
   } else {
-    ArrItems = ["", "", "", "", "", "", "", "", ""];
+    ArrItems = ["","","","","","","",""];
   }
   //create items and value
   for (let i = 0; i < ArrLbl.length; i++) {
-    if (i != 4) {
-      //فعلا نمایش داده نشود
+    if (CHARTTYPE == "pie") {
+      if (i != 2 && i != 4) {
+        divItems(i);
+        label(i, ArrLbl[i]);
+      }
+    } else {
       divItems(i);
       label(i, ArrLbl[i]);
     }
-
-    if (i == 2) {
-      textBox(i, ArrItems[i], ArrLbl[i]);
+    if (i == 1) {
+      divItems(i);
+      textBox(i, ArrItems[i]);
       $("#div1Items-" + i).append(
         '<span id="CommandTextBtn" onclick="CommandText(event)" class="btn btn-light glyphicon glyphicon-option-vertical"></span>'
       );
-    } else if (i == 4) {
-      //فعلا نمایش داده نشود
-    } else if (i == 7) {
+    } else if (i == 6) {
+      divItems(i);
       selectList(i, ArrItems[i]);
-    } else if (i == 8) {
-      textBox(i, "", ArrLbl[i]);
+    } else if (i == 7) {
+      divItems(i);
+      textBox(i, "");
       let textVal = "";
       if (SERIES.length > 0) {
         textVal = SERIES[0].Text;
         for (let i = 1; i < SERIES.length; i++)
           textVal += " , " + SERIES[i].Text;
       }
-
-      $("#item-8").val(textVal);
-
+      $("#item-7").val(textVal);
       $("#div1Items-" + i).append(
         '<span id="SeriesBtn" class="btn btn-light glyphicon glyphicon-option-vertical" onclick="SeriesFn(id)"></span>'
       );
+    } else if (CHARTTYPE == "pie") {
+      if (i != 2 && i != 4) {
+        divItems(i);
+        textBox(i, ArrItems[i]);
+      }
     } else {
-      textBox(i, ArrItems[i], ArrLbl[i]);
+      divItems(i);
+      textBox(i, ArrItems[i]);
     }
   }
 
@@ -109,25 +114,17 @@ function chartEdit(e) {
   }
 
   //text Box
-  function textBox(i, value, Placeholder) {
+  function textBox(i, value) {
     let textBox = document.createElement("input");
     textBox.type = "text";
     textBox.className = "TextboxEditChart";
     textBox.setAttribute("id", "item-" + i);
+
     if (i == 1) {
-      Placeholder = "chartName";
-    } else if (i == 2) {
       textBox.setAttribute("Disabled", "Disabled");
-    } else if (i == 4) {
-      //فعلا نمایش داده نشه
-      // Placeholder = "categoryName";
-    } else if (i == 6) {
-      Placeholder = "categoryField";
-    } else if (i == 8) {
+    } else if (i == 7) {
       textBox.setAttribute("Disabled", "Disabled");
     }
-    textBox.placeholder = Placeholder;
-
     textBox.value = value;
     $("#div1Items-" + i).append(textBox);
   }
@@ -150,204 +147,21 @@ function chartEdit(e) {
     _TitleOptions.text = $("#item-0").val();
     showChart(CHARTTYPE);
   });
+  if (CHARTTYPE != "pie") {
+    document.getElementById("item-4").addEventListener("change", (e) => {
+      _YAxisOptions.title.text = $("#item-4").val();
+      showChart(CHARTTYPE);
+    });
 
-  document.getElementById("item-5").addEventListener("change", (e) => {
-    _YAxisOptions.title.text = $("#item-5").val();
-    showChart(CHARTTYPE);
-  });
-
-  document.getElementById("item-3").addEventListener("change", (e) => {
-    _XAxisOptions.title.text = $("#item-3").val();
-    showChart(CHARTTYPE);
-  });
-
-  showChart(CHARTTYPE);
-
-  //===============================show Chart ============================
-
-  //create chart
-  function showChart(chartType) {
-    let _cat, _series, _name;
-
-    //create chart function
-    function chartItems(_series, _cat, chartType) {
-      // _TitleOptions.text = "";
-      _GeneralOptions.type = chartType;
-      // _ColumnPlotOptions.color = $("#item-10").val();
-      // _YAxisOptions.title.text = $("#item-3").val();
-      // _XAxisOptions.categories = _cat;
-
-      if (chartType == "pie") {
-        _GeneralOptions.options3d.enabled = true;
-        _LegendOptions.enabled = true;
-      } else {
-        _GeneralOptions.options3d.enabled = false;
-        _LegendOptions.enabled = false;
-      }
-
-      _TitleOptions.text = $("#item-0").val();
-      chartSvg = Highcharts.chart("containers", {
-        chart: _GeneralOptions,
-        colors: _ColorsOptions,
-        credits: _CreditsOptions,
-        legend: _LegendOptions,
-        title: _TitleOptions,
-        xAxis: _XAxisOptions,
-        yAxis: _YAxisOptions,
-        plotOptions: {
-          series: _SeriesPlotOptions,
-          areaspline: _AreaPlotOptions,
-          bar: _BarPlotOptions,
-          column: _ColumnPlotOptions,
-          line: _LinePlotOptions,
-          pie: _PiePlotOptions,
-        },
-        series: _series,
-      });
-    }
-
-    //column
-    if (chartType == "column") {
-      _cat = [
-        "تجهیرات کاربری",
-        "سیستم ها",
-        "شبکه",
-        "سرور",
-        "اتاق سرور",
-        "رمز کننده",
-      ];
-      _name = "سرورها";
-      _series = [
-        {
-          name: _name,
-          data: [1075, 1058, 720, 360, 126, 57],
-        },
-      ];
-
-      chartItems(_series, _cat, chartType);
-    }
-    //pie
-    if (chartType == "pie") {
-      _cat = "";
-      _name = "";
-      _series = [
-        {
-          name: _name,
-          data: [
-            ["value1", 8],
-            ["value2", 7],
-            ["value3", 2],
-            ["value4", 1],
-            ["value5", 5],
-          ],
-        },
-      ];
-
-      chartItems(_series, _cat, chartType);
-    }
-
-    // bar
-    else if (chartType == "bar") {
-      _cat = ["Africa", "America", "Asia", "Europe", "Oceania"];
-      _name = $("#catSelect").val();
-      _series = [
-        {
-          name: _name,
-          data: [
-            ["value1", 8],
-            ["value2", 7],
-            ["value3", 2],
-            ["value4", 1],
-            ["value5", 5],
-          ],
-        },
-      ];
-
-      chartItems(_series, _cat, chartType);
-    }
-
-    //line
-    else if (chartType == "line") {
-      _cat = [
-        "value1",
-        "value2",
-        "value3",
-        "value4",
-        "value5",
-        "value6",
-        "value7",
-        "value8",
-        "value9",
-      ];
-      _name = "";
-      _series = [
-        {
-          name: _name,
-          data: [2, 1, 1, 1, 1, 5, 3, 3, 1],
-        },
-      ];
-
-      chartItems(_series, _cat, chartType);
-    }
-
-    // //area
-    // else if (chartType == "area") {
-    //   _cat = [
-    //     "value1",
-    //     "value2",
-    //     "value3",
-    //     "value4",
-    //     "value5",
-    //     "value6",
-    //     "value7",
-    //   ];
-    //   _name = "";
-
-    //   _series = [
-    //     {
-    //       name: _name,
-    //       data: [1, 2, 1, 2, 1, 1, 1],
-    //     },
-    //   ];
-    //   chartItems(_series, _cat, chartType);
-    // }
-
-    //areaspline
-    else if (chartType == "areaspline") {
-      _cat = [
-        "value1",
-        "value2",
-        "value3",
-        "value4",
-        "value5",
-        "value6",
-        "value7",
-      ];
-      _name = "";
-
-      _series = [
-        {
-          name: _name,
-          data: [1, 2, 1, 2, 1, 1, 1],
-        },
-      ];
-      chartItems(_series, _cat, chartType);
-    }
+    document.getElementById("item-2").addEventListener("change", (e) => {
+      _XAxisOptions.title.text = $("#item-2").val();
+      showChart(CHARTTYPE);
+    });
   }
+  showChart(CHARTTYPE);
 
   //============================btn=====================
   // create btn
-
-  //btn preview
-  //   let btnShow = document.createElement("button");
-  //   btnShow.className = "btn btn-primary";
-  //   btnShow.style.backgroundColor = "#134C96";
-  //   btnShow.style.display = "inline";
-  //   btnShow.style.float = "right";
-  //   btnShow.style.marginRight = "10px";
-  //   btnShow.innerHTML = "پیش نمایش";
-  //   btnShow.onclick = () => showChart(CHARTTYPE);
-  //   $("#chartModal").append(btnShow);
 
   //btnsubmit
   let Submit = btnSubmit("#chartModal", "ذخیره");
@@ -370,7 +184,6 @@ function chartEdit(e) {
       .parent()[0]
       .id.replaceAll("form-group-body-", "")
       .split("-")[1];
-    var _name = $("#item-1").val();
 
     //get base64
     const _svg_Base64 = Base64.encode(svg_xml, false);
@@ -387,15 +200,15 @@ function chartEdit(e) {
       RowID: +_RowID,
       ColumnIndex: +_ColumnIndex,
       ID: _id,
-      Name: _name,
-      CommandText: $("#item-2").val(),
+      // Name: _name,
+      CommandText: $("#item-1").val(),
       Text: $("#item-0").val(),
       Type: CHARTTYPE,
-      CategoryLabel: $("#item-3").val(),
-      ValueLabel: $("#item-5").val(),
-      CategoryName: $("#item-6").val(),
-      CategoryExpression: $("#item-6").val(),
-      SeriesType: $("#item-7 option:selected").val(),
+      CategoryLabel: $("#item-2").val(),
+      ValueLabel: $("#item-4").val(),
+      CategoryName: $("#item-5").val(),
+      CategoryExpression: $("#item-5").val(),
+      SeriesType: $("#item-6 option:selected").val(),
       Series: SERIES,
       ImgBs64: _svg_Base64,
     });
@@ -416,4 +229,82 @@ function chartEdit(e) {
   $("#" + hideRowBtn).css("display", "none");
 
   showChart(CHARTTYPE);
+}
+
+//===============================show Chart ============================
+
+//create chart
+function showChart(chartType) {
+  switch (chartType) {
+    case "column":
+      chartItems(series(), chartType);
+      break;
+    case "pie":
+      chartItems(series(), chartType);
+      break;
+    case "bar":
+      chartItems(series(), chartType);
+      break;
+    case "line":
+      chartItems(series(), chartType);
+      break;
+    case "areaspline":
+      chartItems(series(), chartType);
+      break;
+  }
+
+  //create chart function
+  function chartItems(_series, chartType) {
+    _GeneralOptions.type = chartType;
+
+    if (chartType == "pie") {
+      _GeneralOptions.options3d.enabled = true;
+      _LegendOptions.enabled = true;
+    } else {
+      _GeneralOptions.options3d.enabled = false;
+      _LegendOptions.enabled = false;
+    }
+
+    _TitleOptions.text = $("#item-0").val();
+    chartSvg = Highcharts.chart("containers", {
+      chart: _GeneralOptions,
+      colors: _ColorsOptions,
+      credits: _CreditsOptions,
+      legend: _LegendOptions,
+      title: _TitleOptions,
+      xAxis: _XAxisOptions,
+      yAxis: _YAxisOptions,
+      plotOptions: {
+        series: _SeriesPlotOptions,
+        areaspline: _AreaPlotOptions,
+        bar: _BarPlotOptions,
+        column: _ColumnPlotOptions,
+        line: _LinePlotOptions,
+        pie: _PiePlotOptions,
+      },
+      series: _series,
+    });
+  }
+
+  function series() {
+    let _series = [];
+    if (SERIES.legend > 0) {
+      for (let i = 0; i < SERIES.length; i++) {
+        _series.push({
+          name: SERIES[i].Text,
+          data: SERIES[i].DataExpression,
+          color: SERIES[i].StyleColor,
+          type: SERIES[i].PlotType,
+        });
+      }
+    } else {
+      _series.push({
+        name: ["value 1","value 2","value 3"],
+        data: [1,8,3],
+        color: "#1344d8",
+        type: CHARTTYPE,
+      });
+    }
+    return _series;
+  }
 }

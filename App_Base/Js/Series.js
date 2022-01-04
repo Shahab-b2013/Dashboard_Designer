@@ -92,11 +92,17 @@ function SeriesFn() {
       if (index == 0) {
         SERIES_Clear();
       } else {
+        let dataExpress = $(this).find("td").eq(2).html().split(",");
+        let data = [];
+        for (let i = 0; i < dataExpress.length; i++) {
+          data.push(parseInt(dataExpress[i]));
+        }
+
         SERIES.push({
           ID: +$(this).find("td").eq(0).html(),
           Text: $(this).find("td").eq(1).html(),
           Name: $(this).find("td").eq(2).html(),
-          DataExpression: $(this).find("td").eq(2).html(),
+          DataExpression: data,
           StyleColor: $(this).find("td").eq(3).html(),
           PlotType: $(this).find("td").eq(4).html(),
         });
@@ -108,10 +114,21 @@ function SeriesFn() {
       name = SERIES[0].Text;
       if (SERIES.length > 1)
         for (let i = 1; i < SERIES.length; i++) name += " , " + SERIES[i].Text;
+      $("#item-7").val(name);
 
-      $("#item-8").val(name);
+      //set color charts
+      _LinePlotOptions.color = SERIES[0].StyleColor;
+      //setting areaspline
+      _AreaPlotOptions.color = SERIES[0].StyleColor;
+      //setting bar
+      _BarPlotOptions.color = SERIES[0].StyleColor;
+      //setting column
+      _ColumnPlotOptions.color = SERIES[0].StyleColor;
+      //setting line
+      _LinePlotOptions.color = SERIES[0].StyleColor;
+      showChart(CHARTTYPE);
     } else {
-      $("#item-8").val("");
+      $("#item-7").val("");
     }
     //close modal
     $("#myModalSeries").remove();
@@ -145,10 +162,11 @@ function Form_Add_Series(Text, id) {
     '<label class="lblSeries">نوع :<select id="PlotType" class="selectBox" style="width: 250px;margin: 0px;left: 20px;position: absolute;direction: ltr;">';
   if (CHARTTYPE == "pie") {
     form += '<option  value="pie">pie</option>';
+  } else if (CHARTTYPE == "bar") {
+    form += '<option  value="bar">bar</option>';
   } else {
     form +=
       '<option  value="column">column</option>' +
-      '<option  value="bar">bar</option>' +
       '<option  value="line">line</option>' +
       '<option  value="areaspline">areaspline</option>';
   }

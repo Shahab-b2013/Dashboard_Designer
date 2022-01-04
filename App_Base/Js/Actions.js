@@ -508,7 +508,27 @@ function rowbtnOn2(elem) {
 function rowbtnOff(elem) {
   $("#rowbtn-img-" + $(elem)[0].id).css("display", "none");
 }
-function MsgBoxDel(parent, msg) {
+//  function MsgBoxDel(parent, msg) {
+//   ModalConstractor("25%", parent);
+//   let div = $("#contentM");
+//   div.html(msg);
+//   div.css("display", "block");
+//   div.css("padding", "10px");
+//   div.css("text-align", "start");
+//   $("#myModal").css("padding-top", "200px");
+
+//   let btn =
+//     '<hr style="margin:50px 0px 0px 0px;width:100%;">' +
+//     '<div class="row" style="margin:15px 0px 10px 15px;display:flex;"><span id="del" class="btn btn-danger"> حذف</span>' +
+//     '<span id="closed" class="btn btn-light" style="width:60px;margin-Right:10px;" onclick=" HideModal()"> لغو</span></div></div></div>';
+//   div.append(btn);
+// }
+function chartDelete(e) {
+  // remove popup
+  let parent = $("#" + e.target.id).parent()[0].id;
+  let msg = "آیا از حذف این چارت مطمعن هستید ؟";
+
+  // MsgBox
   ModalConstractor("25%", parent);
   let div = $("#contentM");
   div.html(msg);
@@ -522,14 +542,6 @@ function MsgBoxDel(parent, msg) {
     '<div class="row" style="margin:15px 0px 10px 15px;display:flex;"><span id="del" class="btn btn-danger"> حذف</span>' +
     '<span id="closed" class="btn btn-light" style="width:60px;margin-Right:10px;" onclick=" HideModal()"> لغو</span></div></div></div>';
   div.append(btn);
-}
-function chartDelete(e) {
-  // remove popup
-  let parent = $("#" + e.target.id).parent()[0].id;
-  let msg = "آیا از حذف این چارت مطمعن هستید ؟";
-
-  // MsgBox
-  MsgBoxDel(parent, msg);
 
   $("#del").click(() => {
     let parentID = $("#myModal").parent()[0].id;

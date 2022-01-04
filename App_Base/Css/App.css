@@ -316,8 +316,7 @@ a:focus {
   overflow: hidden;
 }
 
-.main-header .logo .logo-lg {
-}
+
 
 .main-header .logo .logo-mini {
   display: none;
@@ -708,7 +707,7 @@ a:focus {
   .sidebar-mini.sidebar-collapse .sidebar-menu > li > a > .pull-right,
   .sidebar-mini.sidebar-collapse .sidebar-menu li.header {
     display: none !important;
-    -webkit-transform: translateZ(0);
+    
   }
 
   .sidebar-mini.sidebar-collapse .main-header .logo {
