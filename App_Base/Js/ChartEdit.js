@@ -4,7 +4,7 @@ function chartEdit(e) {
   /*
       Get img
       */
-  SERIES_Clear();
+  SERIES = [];
   const rowbtnId = $("#" + e.target.id).parent()[0].id;
   let imgid = rowbtnId.replaceAll("rowbtn-img-", "");
 
@@ -49,7 +49,7 @@ function chartEdit(e) {
       findChart.Series,
     ];
   } else {
-    ArrItems = ["","","","","","","",""];
+    ArrItems = ["", "", "", "", "", "", "", ""];
   }
   //create items and value
   for (let i = 0; i < ArrLbl.length; i++) {
@@ -288,19 +288,69 @@ function showChart(chartType) {
 
   function series() {
     let _series = [];
-    if (SERIES.legend > 0) {
+    if (SERIES.length > 0) {
       for (let i = 0; i < SERIES.length; i++) {
         _series.push({
           name: SERIES[i].Text,
-          data: SERIES[i].DataExpression,
+          data: [
+            {
+              name: "Value 1",
+              y: 1,
+            },
+            {
+              name: "Value 2",
+              y: 8,
+            },
+            {
+              name: "Value 3",
+              y: 3,
+            },
+            {
+              name: "Value 4",
+              y: 7,
+            },
+            {
+              name: "Value 5",
+              y: 2,
+            },
+            {
+              name: "Value 6",
+              y: 9,
+            },
+          ],
           color: SERIES[i].StyleColor,
           type: SERIES[i].PlotType,
         });
       }
     } else {
       _series.push({
-        name: ["value 1","value 2","value 3"],
-        data: [1,8,3],
+        name: "Default",
+        data: [
+          {
+            name: "Value 1",
+            y: 1,
+          },
+          {
+            name: "Value 2",
+            y: 8,
+          },
+          {
+            name: "Value 3",
+            y: 3,
+          },
+          {
+            name: "Value 4",
+            y: 7,
+          },
+          {
+            name: "Value 5",
+            y: 2,
+          },
+          {
+            name: "Value 6",
+            y: 9,
+          },
+        ],
         color: "#1344d8",
         type: CHARTTYPE,
       });

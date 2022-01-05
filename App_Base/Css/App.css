@@ -707,7 +707,7 @@ a:focus {
   .sidebar-mini.sidebar-collapse .sidebar-menu > li > a > .pull-right,
   .sidebar-mini.sidebar-collapse .sidebar-menu li.header {
     display: none !important;
-    
+  
   }
 
   .sidebar-mini.sidebar-collapse .main-header .logo {
@@ -719,6 +719,7 @@ a:focus {
     margin-left: -15px;
     margin-right: -15px;
     font-size: 18px;
+   
   }
 
   .sidebar-mini.sidebar-collapse .main-header .logo > .logo-lg {
