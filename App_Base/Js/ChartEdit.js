@@ -25,7 +25,6 @@ function chartEdit(e) {
     "عنوان چارت",
     "جدول داده",
     "عنوان دسته بندی",
-    "نام دسته بندی",
     "مقدار دسته بندی",
     "فیلد دسته بندی ",
     "نوع سری",
@@ -54,7 +53,7 @@ function chartEdit(e) {
   //create items and value
   for (let i = 0; i < ArrLbl.length; i++) {
     if (CHARTTYPE == "pie") {
-      if (i != 2 && i != 4) {
+      if (i != 2 && i != 3) {
         divItems(i);
         label(i, ArrLbl[i]);
       }
@@ -68,10 +67,10 @@ function chartEdit(e) {
       $("#div1Items-" + i).append(
         '<span id="CommandTextBtn" onclick="CommandText(event)" class="btn btn-light glyphicon glyphicon-option-vertical"></span>'
       );
-    } else if (i == 6) {
+    } else if (i == 5) {
       divItems(i);
       selectList(i, ArrItems[i]);
-    } else if (i == 7) {
+    } else if (i == 6) {
       divItems(i);
       textBox(i, "");
       let textVal = "";
@@ -80,12 +79,12 @@ function chartEdit(e) {
         for (let i = 1; i < SERIES.length; i++)
           textVal += " , " + SERIES[i].Text;
       }
-      $("#item-7").val(textVal);
+      $("#item-6").val(textVal);
       $("#div1Items-" + i).append(
         '<span id="SeriesBtn" class="btn btn-light glyphicon glyphicon-option-vertical" onclick="SeriesFn(id)"></span>'
       );
     } else if (CHARTTYPE == "pie") {
-      if (i != 2 && i != 4) {
+      if (i != 2 && i != 3) {
         divItems(i);
         textBox(i, ArrItems[i]);
       }
@@ -122,7 +121,7 @@ function chartEdit(e) {
 
     if (i == 1) {
       textBox.setAttribute("Disabled", "Disabled");
-    } else if (i == 7) {
+    } else if (i == 6) {
       textBox.setAttribute("Disabled", "Disabled");
     }
     textBox.value = value;
@@ -148,8 +147,8 @@ function chartEdit(e) {
     showChart(CHARTTYPE);
   });
   if (CHARTTYPE != "pie") {
-    document.getElementById("item-4").addEventListener("change", (e) => {
-      _YAxisOptions.title.text = $("#item-4").val();
+    document.getElementById("item-3").addEventListener("change", (e) => {
+      _YAxisOptions.title.text = $("#item-3").val();
       showChart(CHARTTYPE);
     });
 
@@ -205,10 +204,10 @@ function chartEdit(e) {
       Text: $("#item-0").val(),
       Type: CHARTTYPE,
       CategoryLabel: $("#item-2").val(),
-      ValueLabel: $("#item-4").val(),
-      CategoryName: $("#item-5").val(),
-      CategoryExpression: $("#item-5").val(),
-      SeriesType: $("#item-6 option:selected").val(),
+      ValueLabel: $("#item-3").val(),
+      CategoryName: $("#item-4").val(),
+      CategoryExpression: $("#item-4").val(),
+      SeriesType: $("#item-5 option:selected").val(),
       Series: SERIES,
       ImgBs64: _svg_Base64,
     });

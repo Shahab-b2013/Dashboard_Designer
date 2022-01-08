@@ -113,7 +113,7 @@ function SeriesFn() {
       name = SERIES[0].Text;
       if (SERIES.length > 1)
         for (let i = 1; i < SERIES.length; i++) name += " , " + SERIES[i].Text;
-      $("#item-7").val(name);
+      $("#item-6").val(name);
 
       //set color charts
       _LinePlotOptions.color = SERIES[0].StyleColor;
@@ -127,7 +127,7 @@ function SeriesFn() {
       _LinePlotOptions.color = SERIES[0].StyleColor;
       showChart(CHARTTYPE);
     } else {
-      $("#item-7").val("");
+      $("#item-6").val("");
     }
     //close modal
     $("#myModalSeries").remove();

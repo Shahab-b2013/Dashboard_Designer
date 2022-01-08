@@ -1961,7 +1961,7 @@ a:focus {
 .box.box-solid.box-primary {
   border: 1px solid #3c8dbc;
 }
-
+/* 
 .box.box-solid.box-primary > .box-header {
   color: #ffffff;
   background: #3c8dbc;
@@ -1971,12 +1971,12 @@ a:focus {
 .box.box-solid.box-primary > .box-header a,
 .box.box-solid.box-primary > .box-header .btn {
   color: #ffffff;
-}
+} */
 
 .box.box-solid.box-info {
   border: 1px solid #00c0ef;
 }
-
+/* 
 .box.box-solid.box-info > .box-header {
   color: #ffffff;
   background: #00c0ef;
@@ -1986,7 +1986,7 @@ a:focus {
 .box.box-solid.box-info > .box-header a,
 .box.box-solid.box-info > .box-header .btn {
   color: #ffffff;
-}
+} */
 
 .box.box-solid.box-danger {
   border: 1px solid #dd4b39;
@@ -2400,7 +2400,7 @@ a:focus {
 .chat .item > .offline {
   border: 2px solid #dd4b39;
 }
-
+/* 
 .chat .item > .message {
   margin-left: 55px;
   margin-top: -40px;
@@ -2656,7 +2656,7 @@ a:focus {
   -moz-box-shadow: none;
   box-shadow: none;
   border-width: 1px;
-}
+} */
 
 /* .btn:active {
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);

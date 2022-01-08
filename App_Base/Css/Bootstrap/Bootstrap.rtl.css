@@ -3491,6 +3491,11 @@ fieldset[disabled] .btn-danger.focus {
   color: #d9534f;
   background-color: #fff;
 }
+.btn-light {
+
+ 
+  background-color: rgb(241, 241, 241);
+}
 .btn-link {
   font-weight: 400;
   color: #337ab7;
