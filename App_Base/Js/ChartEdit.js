@@ -167,7 +167,7 @@ function chartEdit(e) {
   let Submit = btnSubmit("#chartModal", "ذخیره");
   Submit.onclick = () => {
     //get svg
-    var svg_xml = chartSvg.getSVG();
+    let svg_xml = chartSvg.getSVG();
     const index = svg_xml.indexOf("</div>") + 6;
     svg_xml = svg_xml.slice(index, 9e9);
 

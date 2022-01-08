@@ -508,21 +508,7 @@ function rowbtnOn2(elem) {
 function rowbtnOff(elem) {
   $("#rowbtn-img-" + $(elem)[0].id).css("display", "none");
 }
-//  function MsgBoxDel(parent, msg) {
-//   ModalConstractor("25%", parent);
-//   let div = $("#contentM");
-//   div.html(msg);
-//   div.css("display", "block");
-//   div.css("padding", "10px");
-//   div.css("text-align", "start");
-//   $("#myModal").css("padding-top", "200px");
 
-//   let btn =
-//     '<hr style="margin:50px 0px 0px 0px;width:100%;">' +
-//     '<div class="row" style="margin:15px 0px 10px 15px;display:flex;"><span id="del" class="btn btn-danger"> حذف</span>' +
-//     '<span id="closed" class="btn btn-light" style="width:60px;margin-Right:10px;" onclick=" HideModal()"> لغو</span></div></div></div>';
-//   div.append(btn);
-// }
 function chartDelete(e) {
   // remove popup
   let parent = $("#" + e.target.id).parent()[0].id;
@@ -719,9 +705,6 @@ function CreateDiv3(elem, colNum) {
   $("#" + get_Items_Row(elem)[1]).after($(div3));
 }
 
-/*If div.child isEmpty then
-remove_Empty_Div & if row.lenght==1 remove_Empty_Div Disablez
-*/
 function remove_Empty_Div(elem) {
   let chartCount = 0;
   let Items_Row = get_Items_Row(elem);
@@ -831,13 +814,9 @@ function ExportData() {
   //Export to backend
 
   var data = new FormData();
-
   data.append("design", JSON.stringify(json));
-
   data.append("ID", DASHBOARDID);
-
   var $dashboard = new editDashboard(data);
-
   $dashboard.submit(data);
 }
 
