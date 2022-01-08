@@ -16,93 +16,73 @@ function Accesses(e) {
   //tab content
   $("#chartModal").append('<div id="tab-content" class="tab-content"></div>');
 
-  //   //tab1
-  // let tab1 = document.createElement("div");
-  // tab1.setAttribute("id", "Tab1");
-  // tab1.className = "tab-pane fade in active";
-  // document.getElementById("tab-content").appendChild(tab1);
-
+  //tab1
   $("#tab-content").append(
     '<div class="tab-pane fade in active" id="Tab1"></div>'
   );
+  //tab2
+  $("#tab-content").append('<div class="tab-pane fade" id="Tab2"></div>');
+
   //get/set refRoles
   if (REFROLES != null) Tabinfo(REFROLES, "Tab1", "Roles");
+  //get/set refGroups
+  if (REFGROUPS != null) Tabinfo(REFGROUPS, "Tab2", "Groups");
 
-  //   //tab2
-  //   let tab2 = document.createElement("div");
-  //   tab2.setAttribute("id", "Tab2");
-  //   tab2.className = "tab-pane fade";
-  //   tabcontent.appendChild(tab2);
-
-  //   //get/set refGroups
-  //   if (REFGROUPS != null) Tabinfo(REFGROUPS, tab2, "Groups");
-
-  // tab Data
+  //tabs body
   function Tabinfo(listLbl, ID, tabId) {
-    try {
-      for (let item in listLbl) {
-        // let rowDiv = document.createElement("div");
-        // rowDiv.style.display = "flex";
-        // rowDiv.style.alignItems = "center";
-        // rowDiv.style.justifyContent = "right";
-        // document.getElementById(ID).appendChild(rowDiv);
-        $("#" + ID).append(
-          '<div id="rowDiv" class="rowDiv" style="display:flex;align-items:center;justify-content:right;"></div>'
-        );
-        let rowDiv = document.getElementById("rowDiv");
-        //label
-        let checkLbl = document.createElement("label");
-        checkLbl.className = "lbl";
-        checkLbl.style.display = "inline";
-        checkLbl.setAttribute("id", "label" + item + tabId);
-        checkLbl.style.margin = "5px 5px 0px 0px";
-        checkLbl.onclick = () =>
-          $("#check" + item + tabId).is(":checked")
-            ? $("#check" + item + tabId).prop("checked", false)
-            : $("#check" + item + tabId).prop("checked", true);
-        checkLbl.innerHTML = listLbl[item].Label;
-        rowDiv.appendChild(checkLbl);
+    for (let item in listLbl) {
+      $("#" + ID).append(
+        '<div id="rowDiv' +
+          ID +
+          '" class="rowDiv" style="direction:rtl;"></div>'
+      );
 
-        //checkbox
-        let input = document.createElement("input");
-        input.setAttribute("id", "check" + item + tabId);
-        input.type = "checkbox";
-        input.style.margin = "5px";
-        input.style.cursor = "pointer";
-        rowDiv.appendChild(input);
-        //input isChecked
-        let isLocal;
-        tabId == "Roles"
-          ? (isLocal = "accessRoles")
-          : (isLocal = "accessGroups");
+      //label
+      $("#rowDiv" + ID).append(
+        '<label id="label' +
+          item +
+          tabId +
+          '" class="lbl" style="display:inline;margin:5px 5px 0px 0px;">' +
+          listLbl[item].Label +
+          "</label>"
+      );
+      $("#label" + item + tabId).click(() => {
+        $("#check" + item + tabId).is(":checked")
+          ? $("#check" + item + tabId).prop("checked", false)
+          : $("#check" + item + tabId).prop("checked", true);
+      });
 
-        let getListAccess =
-          isLocal == "accessRoles" ? ACCESESROLES : ACCESESGROUPS;
+      //checkbox
+      $("#rowDiv" + ID).append(
+        '<input id="check' +
+          item +
+          tabId +
+          '" type="checkbox" style="margin:5px;cursor:pointer;float:right;">'
+      );
+      //input isChecked
+      let isLocal;
+      tabId == "Roles" ? (isLocal = "accessRoles") : (isLocal = "accessGroups");
 
-        for (let i = 0; i < getListAccess.length; i++) {
-          if (listLbl[item].Label == getListAccess[i].Label) {
-            input.checked = true;
-          }
+      let getListAccess =
+        isLocal == "accessRoles" ? ACCESESROLES : ACCESESGROUPS;
+
+      for (let i = 0; i < getListAccess.length; i++) {
+        if (listLbl[item].Label == getListAccess[i].Label) {
+          $("#check" + item + tabId).prop("checked", true);
         }
-
-        rowDiv.appendChild(document.createElement("br"));
       }
-    } catch (e) {
-      div.innerHTML = "Item Not Found";
+
+      $("#rowDiv" + ID).append("</br>");
     }
   }
 
-  //btn save
-  let btnSave = document.createElement("button");
-  btnSave.className = "btn btn-primary";
-  btnSave.innerHTML = "ذخیره";
-  btnSave.style.float = "right";
-  btnSave.style.margin = "10px 0px 10px 5px";
-  $("#chartModal").append(btnSave);
-  btnSave.onclick = function () {
+  //btn Save
+  $("#chartModal").append(
+    '<button id="btnsave_Accessess" class="btn btn-primary" style="float:right;margin:10px 0px 10px 5px;">ذخیره</button>'
+  );
+  $("#btnsave_Accessess").click(() => {
     let count = 0;
     let tabId;
-    let items;
     while (count < 2) {
       if (count == 0) {
         tabId = "Roles";
@@ -114,7 +94,7 @@ function Accesses(e) {
       count++;
     }
     HideModal();
-  };
+  });
 
   function tabIems(items, tabId) {
     let obj = {};
@@ -144,12 +124,8 @@ function Accesses(e) {
       ACCESESGROUPS = Array;
     }
   }
-
-  let btnExit = document.createElement("button");
-  btnExit.className = "btn btn btn-light";
-  btnExit.innerHTML = "خروج";
-  btnExit.onclick = () => HideModal();
-  btnExit.style.float = "right";
-  btnExit.style.margin = "10px 0px 10px 10px";
-  $("#chartModal").append(btnExit);
+  //btn Exit
+  $("#chartModal").append(
+    '<button class="btn btn btn-light" onclick="HideModal()" style="float:right;margin:10px 0px 10px 10px;">خروج</button>'
+  );
 }
