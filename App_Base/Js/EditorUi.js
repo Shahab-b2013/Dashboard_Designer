@@ -27,102 +27,109 @@ function createDivs() {
 
   //FildsPanel Header
   $("#RightPanel").append(
-    '<div id="rightPanelID" class="divHeader">نمودار</div>'
-  );
-
-  $("#RightPanel").append(
-    '<li id="nemoodarIcon" class="glyphicon glyphicon-stats" ></li>'
+    '<div id="rightPanelID" class="divHeader">نمودارها<li id="nemoodarIcon" class="glyphicon glyphicon-stats" ></li></div>'
   );
 
   //FildsPanel
-  let FildsPanel = createDiv("col-lg-12 col-md-6", "PanelId");
-  $("#RightPanel").append(FildsPanel);
+  $("#RightPanel").append(createDiv("col-lg-12 col-md-6", "PanelId"));
 
   //get imgArray from Img.js
   //inset img to panel
   let id = 0;
   $.each(imgObject, function (index, items) {
-    //item
+    //divItem
+    $("#PanelId").append(createDiv("rightpanelIcon noDrop", id));
+    let divItem = $("#" + id);
+    divItem.css("direction", "ltr");
+    divItem.css("display", "flex");
+    divItem.css("justifyContent", "flex-end");
+    divItem.attr("draggable", true);
+    divItem.attr("type", index);
+    divItem.on("dragstart", (ev) => dragstart(ev));
+    divItem.on("mousedown", () => $("#" + id).css("cursor", "grabbing"));
+    divItem.on("mouseup", () => {
+      divItem.css("cursor", "grab");
+      $(".form-group-body").css("opacity", "1");
+      $(".form-group-body").removeClass("noDrop");
+      $(".rowBtnGroup-span").css("display", "none");
+    });
+    divItem.on("mouseover", () => $("#" + id).css("cursor", "grab"));
+    divItem.on("dragend", () => {
+      $(".form-group-body").css("opacity", "1");
+      $(".form-group-body").removeClass("noDrop");
+      $(".rowBtnGroup-span").css("display", "none");
+    });
+
+    //img
     const item = document.createElement("img");
     item.setAttribute("src", "data:image/png;base64," + items);
-    item.className = "rightpanelIcon noDrop";
-    item.setAttribute("draggable", true);
-    item.setAttribute("id", id);
-    item.setAttribute("type", index);
+    item.setAttribute("draggable", false);
+    item.addEventListener("mouseover", () => (item.style.cursor = "grab"));
+    item.addEventListener("mousedown", () => (item.style.cursor = "grabbing"));
     item.setAttribute("width", "45");
     item.setAttribute("height", "45");
-    item.addEventListener("dragstart", (ev) => dragstart(ev));
-    item.addEventListener("mousedown", () => (item.style.cursor = "grabbing"));
-    item.addEventListener("mouseup", () => {
-      item.style.cursor = "grab";
-      $(".form-group-body").css("opacity", "1");
-      $(".form-group-body").removeClass("noDrop");
-      $(".rowBtnGroup-span").css("display", "none");
-    });
-    item.addEventListener("mouseover", () => (item.style.cursor = "grab"));
-    item.addEventListener("dragend", () => {
-      $(".form-group-body").css("opacity", "1");
-      $(".form-group-body").removeClass("noDrop");
-      $(".rowBtnGroup-span").css("display", "none");
-    });
-    FildsPanel.appendChild(item);
 
     //label
     const lbl = document.createElement("label");
     lbl.setAttribute("id", "lbl" + id);
     lbl.className = "lbl rightPanelLbl";
+    lbl.setAttribute("draggable", false);
+    lbl.addEventListener("mouseover", () => (lbl.style.cursor = "grab"));
+    lbl.addEventListener("mousedown", () => (lbl.style.cursor = "grabbing"));
     id++;
     //gird right panel
     if (index == "column") {
       lbl.innerHTML = " ستونی ";
-      item.style.gridColumn = "1";
-      item.style.gridRow = "2";
-      lbl.style.gridColumn = "1";
-      lbl.style.gridRow = "2";
+      divItem.append(lbl);
+      divItem.css("gridColumn", 1);
+      divItem.css("gridRow", 2);
       item.setAttribute("width", "30");
       item.setAttribute("height", "25");
+      divItem.append(item);
     } else if (index == "pie") {
-      item.style.gridColumn = "2";
-      item.style.gridRow = "2";
       lbl.innerHTML = " دایره ای";
-      lbl.style.gridColumn = "2";
-      lbl.style.gridRow = "2";
+      divItem.append(lbl);
+      divItem.css("gridColumn", 2);
+      divItem.css("gridRow", 2);
       item.setAttribute("width", "30");
       item.setAttribute("height", "30");
+      divItem.append(item);
     } else if (index == "bar") {
-      item.style.gridColumn = "1";
-      item.style.gridRow = "3";
       lbl.innerHTML = " میله ای";
-      lbl.style.gridColumn = "1";
-      lbl.style.gridRow = "3";
+      divItem.append(lbl);
+      divItem.css("gridColumn", 1);
+      divItem.css("gridRow", 3);
+
       item.setAttribute("width", "30");
       item.setAttribute("height", "30");
+      divItem.append(item);
     } else if (index == "line") {
-      item.style.gridColumn = "2";
-      item.style.gridRow = "3";
       lbl.innerHTML = " خطی";
-      lbl.style.gridColumn = "2";
-      lbl.style.gridRow = "3";
+      divItem.append(lbl);
+      divItem.css("gridColumn", 2);
+      divItem.css("gridRow", 3);
+
       item.setAttribute("width", "30");
       item.setAttribute("height", "30");
+      divItem.append(item);
     } else if (index == "areaspline") {
-      item.style.gridColumn = "1";
-      item.style.gridRow = "4";
       lbl.innerHTML = "مساحت خطی";
-      lbl.style.gridColumn = "1";
-      lbl.style.gridRow = "4";
+      divItem.append(lbl);
+      divItem.css("gridColumn", 1);
+      divItem.css("gridRow", 4);
+
       item.setAttribute("width", "30");
       item.setAttribute("height", "30");
+      divItem.append(item);
     } else if (index == "group") {
-      item.style.gridColumn = "2";
-      item.style.gridRow = "4";
       lbl.innerHTML = " سطر جدید";
-      lbl.style.gridColumn = "2";
-      lbl.style.gridRow = "4";
+      divItem.append(lbl);
+      divItem.css("gridColumn", 2);
+      divItem.css("gridRow", 4);
       item.setAttribute("width", "30");
       item.setAttribute("height", "30");
+      divItem.append(item);
     }
-    FildsPanel.appendChild(lbl);
   });
 
   //Tools Header
@@ -138,8 +145,7 @@ function createDivs() {
   ToolsHeader.appendChild(abzarIcons);
 
   //Properties2
-  let ToolsProp = createDiv("", "ToolsProp");
-  $("#RightPanel").append(ToolsProp);
+  $("#RightPanel").append(createDiv("", "ToolsProp"));
 
   for (let i = 0; i < 2; i++) {
     //Tools Icon
@@ -178,8 +184,8 @@ function createDivs() {
       ToolsLbl.onclick = (e) => Accesses(e);
     }
 
-    ToolsProp.appendChild(ToolsIcon);
-    ToolsProp.appendChild(ToolsLbl);
+    $("#ToolsProp").append(ToolsIcon);
+    $("#ToolsProp").append(ToolsLbl);
   }
 
   //Content create form

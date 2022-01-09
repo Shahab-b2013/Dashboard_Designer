@@ -291,7 +291,7 @@ function GroupFns(e) {
       Sort_ROWBOXS();
     }
   } else {
-    alert("تعداد سطر  بیش  از حد مجاز است.");
+    alert("تعداد سطرها  بیش  از حد مجاز است.");
   }
 }
 
@@ -403,13 +403,14 @@ function DeleteGroup(elem) {
       //RowIndex Generate
       RowIndex_Generator();
     } else {
-      alert("سطر مورد نظر حاوی چارت می باشد.");
+      alert(" سطر مورد نظر دارای چارت است و قابل حذف کردن نمی باشد.");
+      
     }
   }
 }
 
 function dragEnter(e) {
-  if (e.target.id) {
+  if (e.target.id == true && e.target.id !='lbl5') {
     if ($("#" + e.target.id).children().length == 0) {
       if ($("#" + e.target.id).hasClass("form-group-body")) {
         $("#" + e.target.id).css("border", "1px solid #ccc");
@@ -437,6 +438,7 @@ function dragLeave(e) {
   }
 }
 function rowMoveUp(e) {
+  window.scrollTo(0, 0);
   let oneID = $("#" + e.target.parentNode.parentNode.id);
   if (oneID.prev()[0]) {
     let cloned = oneID.clone(true);
@@ -457,6 +459,7 @@ function rowMoveUp(e) {
 }
 
 function rowMoveDown(e) {
+  window.scrollTo(0, 0);
   let oneID = $("#" + e.target.parentNode.parentNode.id);
 
   if (oneID) {
@@ -561,13 +564,13 @@ function GroupSplit(elem) {
 
   let id = elem.id.replaceAll("EditGroup-", "");
   const childCount = $("#form-group-" + id).children().length - 1;
-  $("#lblSlider-" + id).html(childCount);
+  $("#lblSlider-" + id).html(childCount+' column');
   $("#myslider-" + id).val(childCount);
 
   //set lblSlider position
   if (childCount == 1) $("#lblSlider-" + id).css("left", "0px");
-  if (childCount == 2) $("#lblSlider-" + id).css("left", "40px");
-  if (childCount == 3) $("#lblSlider-" + id).css("left", "80px");
+  if (childCount == 2) $("#lblSlider-" + id).css("left", "30px");
+  if (childCount == 3) $("#lblSlider-" + id).css("left", "70px");
 
   let group_Child_Length = +$("#form-group-" + id).children().length - 1;
   $("#myslider-" + id).attr("value", group_Child_Length);
@@ -578,10 +581,10 @@ function GroupSplit(elem) {
 
 function volume(elem) {
   let id = elem.id.replaceAll("myslider-", "lblSlider-");
-  $("#" + id).html(elem.value);
+  $("#" + id).html(elem.value+' column');
   if (elem.value == 1) $("#" + id).css("left", "0px");
-  if (elem.value == 2) $("#" + id).css("left", "40px");
-  if (elem.value == 3) $("#" + id).css("left", "80px");
+  if (elem.value == 2) $("#" + id).css("left", "30px");
+  if (elem.value == 3) $("#" + id).css("left", "70px");
 
   switch (+elem.value) {
     case 1:
