@@ -59,7 +59,7 @@ function createImgChart(e, parentID, chartItem, Type) {
   let chartType = chartItem ? chartItem.Type : Type;
   let parent = parentID ? parentID : e.target.id;
   let img =
-    '<img class="fit-image noDrop" type="' +
+    '<img class="img-thumbnail fit-image noDrop" type="' +
     Type +
     '" draggable="true" ondragstart="dragstart(event)" ondrop="swapping(event)" ondragover="event.preventDefault()" onmouseenter="rowbtnOn(this)" onmouseleave="rowbtnOff(this)" style ="border:1px solid #ccc;border-radius:10px;cursor:grab"  src="data:image/svg+xml;base64,' +
     style +

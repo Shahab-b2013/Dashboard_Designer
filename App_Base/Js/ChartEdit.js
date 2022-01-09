@@ -24,8 +24,8 @@ function chartEdit(e) {
   const ArrLbl = [
     "عنوان چارت",
     "جدول داده",
-    "عنوان دسته بندی",
-    "مقدار دسته بندی",
+    "عنوان سطر",
+    "عنوان ستون",
     "فیلد دسته بندی ",
     "نوع سری",
     "سری داده",
@@ -41,7 +41,6 @@ function chartEdit(e) {
       findChart.Text,
       findChart.CommandText,
       findChart.CategoryLabel,
-      findChart.CategoryName,
       findChart.ValueLabel,
       findChart.CategoryExpression,
       findChart.SeriesType,
@@ -73,13 +72,14 @@ function chartEdit(e) {
     } else if (i == 6) {
       divItems(i);
       textBox(i, "");
-      let textVal = "";
+      //serie Data Name
+      let seriesName = "";
       if (SERIES.length > 0) {
-        textVal = SERIES[0].Text;
+        seriesName = SERIES[0].Text;
         for (let i = 1; i < SERIES.length; i++)
-          textVal += " , " + SERIES[i].Text;
+          seriesName += " , " + SERIES[i].Text;
       }
-      $("#item-6").val(textVal);
+      $("#item-6").val(seriesName);
       $("#div1Items-" + i).append(
         '<span id="SeriesBtn" class="btn btn-light glyphicon glyphicon-option-vertical" onclick="SeriesFn(id)"></span>'
       );
@@ -133,12 +133,18 @@ function chartEdit(e) {
     let Select_List =
       '<select class="selectBox" id="item-' +
       i +
-      '" style="float: left;margin-left: 20px;direction: ltr;">' +
-      '<option value="Simple">Simple</option>' +
-      '<option value="ColumnGroup">ColumnGroup</option>' +
-      '<option value="Stack">Stack</option>' +
-      "</select>";
+      '" style="float: left;margin-left: 20px;direction: ltr;">';
+    if (CHARTTYPE == "pie") {
+      Select_List += '<option value="Simple">Simple</option>';
+    } else {
+      Select_List +=
+        '<option value="Simple">Simple</option>' +
+        '<option value="ColumnGroup">ColumnGroup</option>' +
+        '<option value="Stack">Stack</option>' +
+        "</select>";
+    }
     $("#div1Items-" + i).append(Select_List);
+
     selected ? $("#item-" + i).val(selected) : $("#item-" + i).val("Simple");
   }
 
@@ -156,7 +162,13 @@ function chartEdit(e) {
       _XAxisOptions.title.text = $("#item-2").val();
       showChart(CHARTTYPE);
     });
+
+    //for load
+    _YAxisOptions.title.text = $("#item-3").val();
+    _XAxisOptions.title.text = $("#item-2").val();
+    _TitleOptions.text = $("#item-0").val();
   }
+
   showChart(CHARTTYPE);
 
   //============================btn=====================
@@ -199,7 +211,7 @@ function chartEdit(e) {
       RowID: +_RowID,
       ColumnIndex: +_ColumnIndex,
       ID: _id,
-      // Name: _name,
+      Name: $("#item-0").val(),
       CommandText: $("#item-1").val(),
       Text: $("#item-0").val(),
       Type: CHARTTYPE,
@@ -211,6 +223,10 @@ function chartEdit(e) {
       Series: SERIES,
       ImgBs64: _svg_Base64,
     });
+
+    _YAxisOptions.title.text = "";
+    _XAxisOptions.title.text = "";
+    _TitleOptions.text = "";
 
     //update chart to form
     $("#" + imgid).attr("src", "data:image/svg+xml;base64," + _svg_Base64);
