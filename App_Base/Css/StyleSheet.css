@@ -53,7 +53,7 @@ body {
 }
 
 .rightPanelLbl {
-  margin-right: 45px;
+  margin-right: 35px;
 }
 
 #PanelId {
@@ -64,7 +64,7 @@ body {
     "a a" 0px
     "b b" 40px
     "c c " 90px;
-  grid-template-columns: 135px 90px;
+  grid-template-columns: 130px 100px;
   border: 1px solid #ccc;
   align-items: center;
   justify-content: right;
@@ -429,7 +429,7 @@ br {
 input[type="range"] {
   color: #aaaaaa;
   width: 100px;
-  margin: 20px 0;
+  margin: 20px 5px;
   background-color: #ccc;
 }
 
@@ -569,11 +569,12 @@ input[type="range"] {
 }
 
 .rowBtnGroup-span {
+
   font: 20px var(--mainFont);
   font-style: italic;
   border: 2px dashed #e3b535;
   color: #ccc;
-  box-shadow: -5px 10px 5px #ccc;
+  box-shadow: -5px 10px 5px hsl(0, 0%, 100%);
   display: none;
   border-radius: 5px;
   text-align: center;

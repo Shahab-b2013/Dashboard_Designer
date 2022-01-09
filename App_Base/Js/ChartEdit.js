@@ -179,6 +179,7 @@ function chartEdit(e) {
   Submit.onclick = () => {
     //get svg
     let svg_xml = chartSvg.getSVG();
+
     const index = svg_xml.indexOf("</div>") + 6;
     svg_xml = svg_xml.slice(index, 9e9);
 
@@ -186,7 +187,10 @@ function chartEdit(e) {
     let parser = new DOMParser();
     let xmlDoc = parser.parseFromString(svg_xml, "text/xml");
     const _id = xmlDoc.getElementsByTagName("clipPath")[0].getAttribute("id");
-
+    // let svg_Dom = xmlDoc.getElementsByTagName("svg")[0];
+    // svg_Dom.setAttribute("width", "1500");
+    // svg_Dom.setAttribute("viewBox", "0 0 1500 400");
+    // console.log(svg_Dom);
     const _RowID = $("#" + imgid)
       .parent()
       .parent()[0]

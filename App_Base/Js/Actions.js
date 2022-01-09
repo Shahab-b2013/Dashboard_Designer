@@ -59,7 +59,7 @@ function createImgChart(e, parentID, chartItem, Type) {
   let chartType = chartItem ? chartItem.Type : Type;
   let parent = parentID ? parentID : e.target.id;
   let img =
-    '<img class="img-thumbnail fit-image noDrop" type="' +
+    '<img class="fit-image noDrop" type="' +
     Type +
     '" draggable="true" ondragstart="dragstart(event)" ondrop="swapping(event)" ondragover="event.preventDefault()" onmouseenter="rowbtnOn(this)" onmouseleave="rowbtnOff(this)" style ="border:1px solid #ccc;border-radius:10px;cursor:grab"  src="data:image/svg+xml;base64,' +
     style +
@@ -245,10 +245,18 @@ function GroupFns(e) {
                 _RowIndex +
                 '" ondragover="allowDrop(event)"  >' +
                 '<div style="" class="' +
-                "col-lg-12 col-md-12 form-group-body" +
-                ' col-sm-12  col-xs-12" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="0" id="form-group-body-' +
+                "col-lg-4 col-md-4 form-group-body" +
+                '" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="0" id="form-group-body-' +
                 _RowId +
-                '-0"></div>' +
+                '-0"></div><div style="" class="' +
+                "col-lg-4 col-md-4 form-group-body" +
+                '" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="0" id="form-group-body-' +
+                _RowId +
+                '-1"></div><div style="" class="' +
+                "col-lg-4 col-md-4 form-group-body" +
+                '" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="0" id="form-group-body-' +
+                _RowId +
+                '-2"></div>' +
                 Group_Btn(_RowId) +
                 "</div>"
             )
@@ -525,27 +533,27 @@ function chartDelete(e) {
 
   let btn =
     '<hr style="margin:80px 0px 0px 0px;width:100%;">' +
-    '<div class="row" style="margin:10px 0px 0px 0px;display:flex;"><span id="del" class="btn btn-danger"> حذف</span>' +
-    '<span id="closed" class="btn btn-light" style="width:60px;margin-Right:10px;" onclick=" HideModal()"> لغو</span></div></div></div>';
+    '<div class="row" style="margin:10px 0px 0px 0px;display:flex;"><span id="del" class="btn btn-danger" onclick="chart_del()"> حذف</span>' +
+    '<span id="closed" class="btn btn-light" style="width:60px;margin-Right:10px;" onclick="HideModal()"> لغو</span></div></div></div>';
   div.append(btn);
-
-  $("#del").click(() => {
-    let parentID = $("#myModal").parent()[0].id;
-    let imgid = parentID.replaceAll("rowbtn-img-", "");
-    $("#" + imgid).remove();
-    HideModal();
-    //rowbtn remove
-    let rowbtn = "rowbtn-img-" + imgid;
-    $("#" + rowbtn).remove();
-    //modify chars arr
-    CHARTS.splice(
-      CHARTS.findIndex((Element) => Element.ID == imgid),
-      1
-    );
-  });
 
   //close msgbox
   $("#myModal").css("display", "block");
+}
+
+function chart_del() {
+  let parentID = $("#myModal").parent()[0].id;
+  let imgid = parentID.replaceAll("rowbtn-img-", "");
+  $("#" + imgid).remove();
+  HideModal();
+  //rowbtn remove
+  let rowbtn = "rowbtn-img-" + imgid;
+  $("#" + rowbtn).remove();
+  //modify chars arr
+  CHARTS.splice(
+    CHARTS.findIndex((Element) => Element.ID == imgid),
+    1
+  );
 }
 
 function GroupSplit(elem) {

@@ -116,7 +116,7 @@ function createDivs() {
     } else if (index == "group") {
       item.style.gridColumn = "2";
       item.style.gridRow = "4";
-      lbl.innerHTML = "سطر";
+      lbl.innerHTML = " سطر جدید";
       lbl.style.gridColumn = "2";
       lbl.style.gridRow = "4";
       item.setAttribute("width", "30");
@@ -296,7 +296,7 @@ function Group_Btn(GroupId) {
     '<div id="rowBtnGroup-' +
     GroupId +
     '" class="row container-fluid rowBtnGroup noDrop">' +
-    '<span style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;" class="delete btn btn-light glyphicon glyphicon-trash"  title="حذف سطر" onclick="DeleteGroup(this);" id=' +
+    '<span style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;" class="delete btn btn-light glyphicon glyphicon-trash"  title="حذف سطر" onclick="DeleteGroup(this);" id=' +
     GroupId +
     "DeleteGroup></span>" +
     '<span style="border-radius:0px" class="edit btn btn-light glyphicon glyphicon-cog"  title="تعداد ستون ها" onclick="GroupSplit(this);" id="EditGroup-' +
@@ -311,10 +311,10 @@ function Group_Btn(GroupId) {
     '"></label></span></span>' +
     '<span style="width:42px;padding:5px;border-radius:0px" class="btn btn-light glyphicon glyphicon-arrow-up" title="انتقال سطر به بالا" onclick="rowMoveUp(event);" id="moveup-' +
     GroupId +
-    '"></span><span style="width:42px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;" class="btn btn-light glyphicon glyphicon-arrow-down"  data-placement="top" title="انتقال سطر به پایین" onclick="rowMoveDown(event)" id="movedown-' +
+    '"></span><span style="width:42px;border-top-left-radius: 0px;border-bottom-left-radius: 0px;" class="btn btn-light glyphicon glyphicon-arrow-down"  data-placement="top" title="انتقال سطر به پایین" onclick="rowMoveDown(event)" id="movedown-' +
     GroupId +
     '"></span><span id="rowBtnGroup-span' +
     GroupId +
-    '" class="rowBtnGroup-span col-lg-12 noDrop"  ondrop="GroupFns(event);" ondragover="event.preventDefault();"  > ...گروه را اینجا رها کنید</span></div>'
+    '" class="rowBtnGroup-span col-lg-12 noDrop"  ondrop="GroupFns(event);" ondragover="event.preventDefault();"  > ...سطر جدید را اینجا رها کنید</span></div>'
   );
 }
