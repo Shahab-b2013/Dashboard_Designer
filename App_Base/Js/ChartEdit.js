@@ -1,5 +1,9 @@
 "use strict";
+<<<<<<< HEAD
 let chartSvg;
+=======
+var chartSvg;
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
 function chartEdit(e) {
   /*
       Get img
@@ -9,11 +13,16 @@ function chartEdit(e) {
   let imgid = rowbtnId.replaceAll("rowbtn-img-", "");
 
   CHARTTYPE = $("#" + imgid).attr("type");
+<<<<<<< HEAD
 
   //create modal form
   CHARTTYPE == "table"
     ? ModalConstractor("50%", "geContent")
     : ModalConstractor("85%", "geContent");
+=======
+  //create modal form
+  ModalConstractor("85%", "geContent");
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
   let div1 =
     '<div id="div1" class="row col-lg-3 col-md-3 col-sm-12" style=""></div>';
   $("#contentM").append(div1);
@@ -53,9 +62,14 @@ function chartEdit(e) {
     ArrItems = ["", "", "", "", "", "", "", ""];
   }
   //create items and value
+<<<<<<< HEAD
   let count = CHARTTYPE == "table" ? 2 : ArrLbl.length;
   for (let i = 0; i < count; i++) {
     if (CHARTTYPE == "pie" || CHARTTYPE == "polar") {
+=======
+  for (let i = 0; i < ArrLbl.length; i++) {
+    if (CHARTTYPE == "pie") {
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       if (i != 2 && i != 3) {
         divItems(i);
         label(i, ArrLbl[i]);
@@ -64,7 +78,10 @@ function chartEdit(e) {
       divItems(i);
       label(i, ArrLbl[i]);
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
     if (i == 1) {
       divItems(i);
       textBox(i, ArrItems[i]);
@@ -88,6 +105,7 @@ function chartEdit(e) {
       $("#div1Items-" + i).append(
         '<span id="SeriesBtn" class="btn btn-light glyphicon glyphicon-option-vertical" onclick="SeriesFn(id)"></span>'
       );
+<<<<<<< HEAD
     } else {
       if (CHARTTYPE == "pie" || CHARTTYPE == "polar") {
         if (i != 2 && i != 3) {
@@ -98,6 +116,19 @@ function chartEdit(e) {
       }
     }
   }
+=======
+    } else if (CHARTTYPE == "pie") {
+      if (i != 2 && i != 3) {
+        divItems(i);
+        textBox(i, ArrItems[i]);
+      }
+    } else {
+      divItems(i);
+      textBox(i, ArrItems[i]);
+    }
+  }
+
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
   //row
   function divItems(i) {
     let div1Items =
@@ -138,7 +169,11 @@ function chartEdit(e) {
       '<select class="selectBox" id="item-' +
       i +
       '" style="float: left;margin-left: 20px;direction: ltr;">';
+<<<<<<< HEAD
     if (CHARTTYPE == "pie" || CHARTTYPE == "polar") {
+=======
+    if (CHARTTYPE == "pie") {
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       Select_List += '<option value="Simple">Simple</option>';
     } else {
       Select_List +=
@@ -152,6 +187,7 @@ function chartEdit(e) {
     selected ? $("#item-" + i).val(selected) : $("#item-" + i).val("Simple");
   }
 
+<<<<<<< HEAD
   if (CHARTTYPE == "table") {
     document.getElementById("item-0").addEventListener("input", (e) => {
       $("#table_head").html($("#item-0").val());
@@ -165,15 +201,28 @@ function chartEdit(e) {
 
   if (CHARTTYPE != "pie" && CHARTTYPE != "table" && CHARTTYPE != "polar") {
     document.getElementById("item-3").addEventListener("change", () => {
+=======
+  document.getElementById("item-0").addEventListener("change", (e) => {
+    _TitleOptions.text = $("#item-0").val();
+    showChart(CHARTTYPE);
+  });
+  if (CHARTTYPE != "pie") {
+    document.getElementById("item-3").addEventListener("change", (e) => {
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       _YAxisOptions.title.text = $("#item-3").val();
       showChart(CHARTTYPE);
     });
 
+<<<<<<< HEAD
     document.getElementById("item-2").addEventListener("change", () => {
+=======
+    document.getElementById("item-2").addEventListener("change", (e) => {
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       _XAxisOptions.title.text = $("#item-2").val();
       showChart(CHARTTYPE);
     });
 
+<<<<<<< HEAD
     document.getElementById("item-5").addEventListener("input", (e) => {
       if ($("#" + e.target.id).val() == "Stack") {
         _ColumnPlotOptions.dataLabels.formatter = function () {
@@ -190,19 +239,27 @@ function chartEdit(e) {
       }
       showChart(CHARTTYPE);
     });
+=======
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
     //for load
     _YAxisOptions.title.text = $("#item-3").val();
     _XAxisOptions.title.text = $("#item-2").val();
     _TitleOptions.text = $("#item-0").val();
   }
 
+<<<<<<< HEAD
   CHARTTYPE == "table" ? showTable() : showChart(CHARTTYPE);
+=======
+  showChart(CHARTTYPE);
+
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
   //============================btn=====================
   // create btn
 
   //btnsubmit
   let Submit = btnSubmit("#chartModal", "ذخیره");
   Submit.onclick = () => {
+<<<<<<< HEAD
     let _RowID, _ColumnIndex, _id, _Base64, myPromise;
 
     if (CHARTTYPE != "table") {
@@ -264,6 +321,33 @@ function chartEdit(e) {
         });
       });
     }
+=======
+    //get svg
+    let svg_xml = chartSvg.getSVG();
+
+    const index = svg_xml.indexOf("</div>") + 6;
+    svg_xml = svg_xml.slice(index, 9e9);
+
+    //get items
+    let parser = new DOMParser();
+    let xmlDoc = parser.parseFromString(svg_xml, "text/xml");
+    const _id = xmlDoc.getElementsByTagName("clipPath")[0].getAttribute("id");
+    // let svg_Dom = xmlDoc.getElementsByTagName("svg")[0];
+    // svg_Dom.setAttribute("width", "1500");
+    // svg_Dom.setAttribute("viewBox", "0 0 1500 400");
+    // console.log(svg_Dom);
+    const _RowID = $("#" + imgid)
+      .parent()
+      .parent()[0]
+      .id.replaceAll("form-group-", "");
+    const _ColumnIndex = $("#" + imgid)
+      .parent()[0]
+      .id.replaceAll("form-group-body-", "")
+      .split("-")[1];
+
+    //get base64
+    const _svg_Base64 = Base64.encode(svg_xml, false);
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
 
     //remove oldItem by id
     if (findChart) {
@@ -273,6 +357,7 @@ function chartEdit(e) {
       );
     }
 
+<<<<<<< HEAD
     myPromise.then(
       function (value) {
         _Base64 = value;
@@ -307,6 +392,34 @@ function chartEdit(e) {
         alert(error);
       }
     );
+=======
+    CHARTS.push({
+      RowID: +_RowID,
+      ColumnIndex: +_ColumnIndex,
+      ID: _id,
+      Name: $("#item-0").val(),
+      CommandText: $("#item-1").val(),
+      Text: $("#item-0").val(),
+      Type: CHARTTYPE,
+      CategoryLabel: $("#item-2").val(),
+      ValueLabel: $("#item-3").val(),
+      CategoryName: $("#item-4").val(),
+      CategoryExpression: $("#item-4").val(),
+      SeriesType: $("#item-5 option:selected").val(),
+      Series: SERIES,
+      ImgBs64: _svg_Base64,
+    });
+
+    _YAxisOptions.title.text = "";
+    _XAxisOptions.title.text = "";
+    _TitleOptions.text = "";
+
+    //update chart to form
+    $("#" + imgid).attr("src", "data:image/svg+xml;base64," + _svg_Base64);
+    $("#" + imgid).attr("id", _id);
+    $("#rowbtn-img-" + imgid).attr("id", "rowbtn-img-" + _id);
+    HideModal();
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
   };
 
   //btn exit
@@ -316,6 +429,11 @@ function chartEdit(e) {
   //close rowbtn
   const hideRowBtn = $("#" + e.target.id).parent()[0].id;
   $("#" + hideRowBtn).css("display", "none");
+<<<<<<< HEAD
+=======
+
+  showChart(CHARTTYPE);
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
 }
 
 //===============================show Chart ============================
@@ -338,15 +456,19 @@ function showChart(chartType) {
     case "areaspline":
       chartItems(series(), chartType);
       break;
+<<<<<<< HEAD
     case "polar":
       chartItems(series(), chartType);
       break;
+=======
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
   }
 
   //create chart function
   function chartItems(_series, chartType) {
     _GeneralOptions.type = chartType;
 
+<<<<<<< HEAD
     //for spiderWeb
     if (_GeneralOptions.type == "polar") {
       _GeneralOptions.polar = true;
@@ -355,6 +477,9 @@ function showChart(chartType) {
     }
 
     if (_GeneralOptions.type == "pie") {
+=======
+    if (chartType == "pie") {
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       _GeneralOptions.options3d.enabled = true;
       _LegendOptions.enabled = true;
     } else {
@@ -365,6 +490,7 @@ function showChart(chartType) {
     _TitleOptions.text = $("#item-0").val();
     chartSvg = Highcharts.chart("containers", {
       chart: _GeneralOptions,
+<<<<<<< HEAD
 
       colors: _ColorsOptions,
 
@@ -383,13 +509,24 @@ function showChart(chartType) {
       yAxis: _YAxisOptions,
 
       // lang: _LangOptions,
+=======
+      colors: _ColorsOptions,
+      credits: _CreditsOptions,
+      legend: _LegendOptions,
+      title: _TitleOptions,
+      xAxis: _XAxisOptions,
+      yAxis: _YAxisOptions,
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       plotOptions: {
         series: _SeriesPlotOptions,
         areaspline: _AreaPlotOptions,
         bar: _BarPlotOptions,
         column: _ColumnPlotOptions,
         line: _LinePlotOptions,
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
         pie: _PiePlotOptions,
       },
       series: _series,
@@ -405,7 +542,11 @@ function showChart(chartType) {
           data: [
             {
               name: "Value 1",
+<<<<<<< HEAD
               y: 5,
+=======
+              y: 1,
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
             },
             {
               name: "Value 2",
@@ -413,7 +554,11 @@ function showChart(chartType) {
             },
             {
               name: "Value 3",
+<<<<<<< HEAD
               y: 9,
+=======
+              y: 3,
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
             },
             {
               name: "Value 4",
@@ -425,11 +570,19 @@ function showChart(chartType) {
             },
             {
               name: "Value 6",
+<<<<<<< HEAD
               y: 1,
             },
           ],
           color: SERIES[i].StyleColor,
           type: CHARTTYPE == "polar" ? "area" : SERIES[i].PlotType,
+=======
+              y: 9,
+            },
+          ],
+          color: SERIES[i].StyleColor,
+          type: SERIES[i].PlotType,
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
         });
       }
     } else {
@@ -438,7 +591,11 @@ function showChart(chartType) {
         data: [
           {
             name: "Value 1",
+<<<<<<< HEAD
             y: 5,
+=======
+            y: 1,
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
           },
           {
             name: "Value 2",
@@ -446,7 +603,11 @@ function showChart(chartType) {
           },
           {
             name: "Value 3",
+<<<<<<< HEAD
             y: 9,
+=======
+            y: 3,
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
           },
           {
             name: "Value 4",
@@ -458,16 +619,25 @@ function showChart(chartType) {
           },
           {
             name: "Value 6",
+<<<<<<< HEAD
             y: 1,
           },
         ],
         color: "#1344d8",
         type: CHARTTYPE == "polar" ? "area" : CHARTTYPE,
+=======
+            y: 9,
+          },
+        ],
+        color: "#1344d8",
+        type: CHARTTYPE,
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       });
     }
     return _series;
   }
 }
+<<<<<<< HEAD
 
 //===============================show Table ============================
 function showTable() {
@@ -506,3 +676,5 @@ function showTable() {
   $("#item-0").css("width", "");
   $("#containers").css("margin-top", "5px");
 }
+=======
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada

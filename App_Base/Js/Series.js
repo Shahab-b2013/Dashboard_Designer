@@ -16,12 +16,29 @@ function SeriesFn() {
     "<thead>" +
     "<tr>" +
     '<th scope="col">ردیف</th>' +
+<<<<<<< HEAD
     '<th scope="col">عنوان</th>' +
     '<th scope="col">فیلد داده</th>';
   if (CHARTTYPE != "pie") divGrid += '<th scope="col">رنگ</th>';
   divGrid +=
     '<th scope="col">نوع</th>' +
     '<th scope="col">عملیات</th>' +
+=======
+    '<th scope="col">' +
+    "عنوان" +
+    "</th>" +
+    '<th scope="col">' +
+    "فیلد داده" +
+    "</th>";
+  if (CHARTTYPE != "pie") divGrid += '<th scope="col">' + "رنگ" + "</th>";
+  divGrid +=
+    '<th scope="col">' +
+    "نوع" +
+    "</th>" +
+    '<th scope="col">' +
+    "عملیات" +
+    "</th>" +
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
     "</tr>" +
     '</thead><tbody id="series_tbody" ></tbody></table></div>';
   $("#seriesModal").append(divGrid);
@@ -61,8 +78,12 @@ function SeriesFn() {
 
       $("#series_tbody").append(tbody);
     });
+<<<<<<< HEAD
     //only 1 serie
     if (CHARTTYPE == "pie" || CHARTTYPE == "polar") {
+=======
+    if (CHARTTYPE == "pie") {
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       if ($("table tr").length - 1 == 1)
         $("#btnAddTolist").attr("disabled", "disabled");
     }
@@ -110,15 +131,30 @@ function SeriesFn() {
 
       //set color charts
       _LinePlotOptions.color = SERIES[0].StyleColor;
+<<<<<<< HEAD
       _AreaPlotOptions.color = SERIES[0].StyleColor;
       _BarPlotOptions.color = SERIES[0].StyleColor;
       _ColumnPlotOptions.color = SERIES[0].StyleColor;
+=======
+      //setting areaspline
+      _AreaPlotOptions.color = SERIES[0].StyleColor;
+      //setting bar
+      _BarPlotOptions.color = SERIES[0].StyleColor;
+      //setting column
+      _ColumnPlotOptions.color = SERIES[0].StyleColor;
+      //setting line
+      _LinePlotOptions.color = SERIES[0].StyleColor;
+      showChart(CHARTTYPE);
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
     } else {
       $("#item-6").val("");
     }
     //close modal
     $("#myModalSeries").remove();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
     showChart(CHARTTYPE);
   };
 
@@ -150,11 +186,14 @@ function Form_Add_Series(Text, id) {
     form +=
       '<label class="lblSeries">نوع :<select id="PlotType" class="selectBox" style="width: 250px;margin: 0px;left: 20px;position: absolute;direction: ltr;">' +
       '<option  value="pie">pie</option>';
+<<<<<<< HEAD
   } else if (CHARTTYPE == "polar") {
     form +=
       '<label class="lblSeries">رنگ :<input type="color" id="inputColor"></label><br>' +
       '<label class="lblSeries">نوع :<select id="PlotType" class="selectBox" style="width: 250px;margin: 0px;left: 20px;position: absolute;direction: ltr;">' +
       '<option  value="area" selected>polar</option>';
+=======
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
   } else if (CHARTTYPE == "bar") {
     form +=
       '<label class="lblSeries">رنگ :<input type="color" id="inputColor"></label><br>' +
@@ -238,7 +277,11 @@ function Form_Add_Series(Text, id) {
 
       //close
       $("#Add_Series").remove();
+<<<<<<< HEAD
       if (CHARTTYPE == "pie" || CHARTTYPE == "polar") {
+=======
+      if (CHARTTYPE == "pie") {
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
         if ($("table tr").length - 1 == 1)
           $("#btnAddTolist").attr("disabled", "disabled");
       }

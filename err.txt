@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 Incorrect syntax near 'Today'.
+=======
+Incorrect syntax near ' +  dbo.[AbrvValue](ProductVersion,'.
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada

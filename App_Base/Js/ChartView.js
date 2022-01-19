@@ -13,7 +13,11 @@ var _GeneralOptions = {
   polar: false,
 
   options3d: {
+<<<<<<< HEAD
     enabled: false,
+=======
+    enabled: true,
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
 
     alpha: 30,
 
@@ -301,7 +305,11 @@ var _LabelsOptions = null;
 var _LoadingOptions = null;
 
 var _LegendOptions = {
+<<<<<<< HEAD
   enabled: false,
+=======
+  enabled: true,
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
 
   symbolRadius: 6,
 
@@ -337,7 +345,11 @@ var _TitleOptions = {
   style: {
     fontSize: "14px",
 
+<<<<<<< HEAD
     fontFamily: "var(--mainFont)",
+=======
+    fontFamily: "IRANSansWeb",
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
 
     color: "#154360",
 
@@ -367,6 +379,7 @@ var _BarPlotOptions = {
 };
 
 var _SubtitleOptions = null;
+<<<<<<< HEAD
 //  '<div align="top"><b>' +
 //       (this.x ??= this.point.name) +
 //       '<br> <span style="font-size:11px">' +
@@ -378,6 +391,19 @@ var _TooltipOptions = {
   formatter: function () {
     return (
      '<span style="color:'+ this.series.color+'">'+this.series.name+': <b>'+this.y+'</b><br/>'
+=======
+
+var _TooltipOptions = {
+  formatter: function () {
+    return (
+      '<div align="top"><b>' +
+      (this.x ??= this.point.name) +
+      '<br> <span style="font-size:11px">' +
+      this.series.name +
+      ": " +
+      this.y +
+      "</span></b></div> "
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
     );
   },
 
@@ -404,6 +430,10 @@ var _TooltipOptions = {
   },
 };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
 var $$ChartStyleOptionsIsLoad = false;
 
 function chartView(id, objKey) {
@@ -515,6 +545,28 @@ function chartView(id, objKey) {
 
       return;
     }
+<<<<<<< HEAD
+=======
+
+    if (_GeneralOptions.type == "polar") {
+      _GeneralOptions.polar = true;
+    } else {
+      _GeneralOptions.polar = false;
+    }
+
+    if (_GeneralOptions.type == "bar" || _GeneralOptions.type == "polar") {
+      _XAxisOptions.labels.rotation = 0;
+    } else {
+      _XAxisOptions.labels.rotation = -45;
+    }
+
+    if (_GeneralOptions.type == "pie") {
+      _GeneralOptions.options3d.enabled = true;
+    } else {
+      _GeneralOptions.options3d.enabled = false;
+    }
+
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
     if (seriesOptions.Type == "Simple" || seriesOptions.Type == "Stack") {
       if (_GeneralOptions.type == "pie") _LegendOptions.enabled = true;
       else _LegendOptions.enabled = false;
@@ -535,6 +587,7 @@ function chartView(id, objKey) {
 
       _ColumnPlotOptions.stacking = "";
     }
+<<<<<<< HEAD
     if (_GeneralOptions.type == "bar" || _GeneralOptions.type == "polar") {
       _XAxisOptions.labels.rotation = 0;
     } else {
@@ -551,6 +604,9 @@ function chartView(id, objKey) {
     } else {
       _GeneralOptions.options3d.enabled = false;
     }
+=======
+
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
     chart = Highcharts.chart("chart-" + _chartOptions.ChartID, {
       chart: _GeneralOptions,
 
@@ -777,3 +833,8 @@ function chartView(id, objKey) {
     );
   };
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada

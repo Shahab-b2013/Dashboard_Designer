@@ -46,12 +46,15 @@ function createImgChart(e, parentID, chartItem, Type) {
       case "areaspline":
         value = areaSplineBs64;
         break;
+<<<<<<< HEAD
       case "polar":
         value = polarBs64;
         break;
       case "table":
         value = tableBs64;
         break;
+=======
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       default:
         value = imgDefault;
         break;
@@ -62,6 +65,7 @@ function createImgChart(e, parentID, chartItem, Type) {
   function chart_defaultId() {
     return "chart-defaultId-" + ~~(Math.random() * 1000);
   }
+<<<<<<< HEAD
 
   //set src and create img
   let src;
@@ -76,13 +80,19 @@ function createImgChart(e, parentID, chartItem, Type) {
   } else {
     src = "data:image/svg+xml;base64,";
   }
+=======
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
   let chartType = chartItem ? chartItem.Type : Type;
   let parent = parentID ? parentID : e.target.id;
   let img =
     '<img class="fit-image noDrop" type="' +
     Type +
+<<<<<<< HEAD
     '" draggable="true" ondragstart="dragstart(event)" ondrop="swapping(event)" ondragover="event.preventDefault()" onmouseenter="rowbtnOn(this)" onmouseleave="rowbtnOff(this)" style ="border:1px solid #ccc;border-radius:10px;cursor:grab"  src="' +
     src +
+=======
+    '" draggable="true" ondragstart="dragstart(event)" ondrop="swapping(event)" ondragover="event.preventDefault()" onmouseenter="rowbtnOn(this)" onmouseleave="rowbtnOff(this)" style ="border:1px solid #ccc;border-radius:10px;cursor:grab"  src="data:image/svg+xml;base64,' +
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
     style +
     '" id="' +
     ID +
@@ -190,7 +200,11 @@ function swapping(e) {
 
 function dragstart(e) {
   e.dataTransfer.setData("text", e.target.id);
+<<<<<<< HEAD
   if (e.target.id == "7") {
+=======
+  if (e.target.id == "5") {
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
     $(".form-group-body").css("opacity", "0.1");
     $(".form-group-body").addClass("noDrop");
     $(".rowBtnGroup-span").css("display", "block");
@@ -223,6 +237,7 @@ function AreaSplineFns(e) {
     createImgChart(e, null, null, "areaspline");
   }
 }
+<<<<<<< HEAD
 function polarFns(e) {
   if ($("#" + e.target.id).hasClass("form-group-body")) {
     createImgChart(e, null, null, "polar");
@@ -234,6 +249,8 @@ function TableFns(e) {
     createImgChart(e, null, null, "table");
   }
 }
+=======
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
 
 function GroupFns(e) {
   if (ROWBOXS.length < 9) {
@@ -303,7 +320,11 @@ function GroupFns(e) {
         RowID: _RowId,
         RowIndex: _RowIndex,
         RowDisplayMode: "GroupWithBox",
+<<<<<<< HEAD
         ColumnLayout: "ThreeColumn",
+=======
+        ColumnLayout: "OnceColumn",
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
         ColumnWidth: "default",
       };
 
@@ -361,12 +382,20 @@ function drop(ev) {
       !$("#" + ev.target.id).hasClass("noDrop") &&
       $("#" + ev.target.id).hasClass("form-group-body")
     ) {
+<<<<<<< HEAD
       //delete placeholder div
       $("#" + ev.target.id).html("");
       //get senderId and check number or string for switch
       let dataId = ev.dataTransfer.getData("text");
       dataId = dataId.length < 3 ? +dataId : dataId;
       console.log(ev.target.id);
+=======
+      $("#" + ev.target.id).html(""); //delete placeholder div
+      //get senderId and check number or string for switch
+      let dataId = ev.dataTransfer.getData("text");
+
+      dataId = dataId.length < 3 ? +dataId : dataId;
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       switch (dataId) {
         case 0:
           ColumnFns(ev);
@@ -383,12 +412,15 @@ function drop(ev) {
         case 4:
           AreaSplineFns(ev);
           break;
+<<<<<<< HEAD
         case 5:
           polarFns(ev);
           break;
         case 6:
           TableFns(ev);
           break;
+=======
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
         default:
           //drop
           ev.preventDefault();
@@ -443,12 +475,20 @@ function DeleteGroup(elem) {
       RowIndex_Generator();
     } else {
       alert(" سطر مورد نظر دارای چارت است و قابل حذف کردن نمی باشد.");
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
     }
   }
 }
 
 function dragEnter(e) {
+<<<<<<< HEAD
   if (e.target.id == true && e.target.id != "lbl5") {
+=======
+  if (e.target.id == true && e.target.id !='lbl5') {
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
     if ($("#" + e.target.id).children().length == 0) {
       if ($("#" + e.target.id).hasClass("form-group-body")) {
         $("#" + e.target.id).css("border", "1px solid #ccc");
@@ -476,8 +516,12 @@ function dragLeave(e) {
   }
 }
 function rowMoveUp(e) {
+<<<<<<< HEAD
   // $('#geContent').animate({ scrollTop: top }, 0);
 
+=======
+  window.scrollTo(0, 0);
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
   let oneID = $("#" + e.target.parentNode.parentNode.id);
   if (oneID.prev()[0]) {
     let cloned = oneID.clone(true);
@@ -562,7 +606,11 @@ function rowbtnOff(elem) {
 function chartDelete(e) {
   // remove popup
   let parent = $("#" + e.target.id).parent()[0].id;
+<<<<<<< HEAD
   let msg = "آیا از حذف این آیتم مطمئن هستید ؟";
+=======
+  let msg = "آیا از حذف این چارت مطمئن هستید ؟";
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
 
   // MsgBox
   ModalConstractor("25%", parent);
@@ -603,7 +651,11 @@ function GroupSplit(elem) {
 
   let id = elem.id.replaceAll("EditGroup-", "");
   const childCount = $("#form-group-" + id).children().length - 1;
+<<<<<<< HEAD
   $("#lblSlider-" + id).html(childCount + " column");
+=======
+  $("#lblSlider-" + id).html(childCount+' column');
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
   $("#myslider-" + id).val(childCount);
 
   //set lblSlider position
@@ -620,7 +672,11 @@ function GroupSplit(elem) {
 
 function volume(elem) {
   let id = elem.id.replaceAll("myslider-", "lblSlider-");
+<<<<<<< HEAD
   $("#" + id).html(elem.value + " column");
+=======
+  $("#" + id).html(elem.value+' column');
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
   if (elem.value == 1) $("#" + id).css("left", "0px");
   if (elem.value == 2) $("#" + id).css("left", "30px");
   if (elem.value == 3) $("#" + id).css("left", "70px");

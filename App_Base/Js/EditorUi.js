@@ -45,6 +45,7 @@ function createDivs() {
     divItem.css("justifyContent", "flex-end");
     divItem.attr("draggable", true);
     divItem.attr("type", index);
+<<<<<<< HEAD
     document
       .getElementById(id)
       .addEventListener("dragstart", (event) => dragstart(event));
@@ -54,15 +55,25 @@ function createDivs() {
         $("#" + id).css("cursor", "grabbing")
       );
     document.getElementById(id).addEventListener("mouseup", () => {
+=======
+    divItem.on("dragstart", (ev) => dragstart(ev));
+    divItem.on("mousedown", () => $("#" + id).css("cursor", "grabbing"));
+    divItem.on("mouseup", () => {
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       divItem.css("cursor", "grab");
       $(".form-group-body").css("opacity", "1");
       $(".form-group-body").removeClass("noDrop");
       $(".rowBtnGroup-span").css("display", "none");
     });
+<<<<<<< HEAD
     document
       .getElementById(id)
       .addEventListener("mouseover", () => $("#" + id).css("cursor", "grab"));
     document.getElementById(id).addEventListener("dragend", () => {
+=======
+    divItem.on("mouseover", () => $("#" + id).css("cursor", "grab"));
+    divItem.on("dragend", () => {
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       $(".form-group-body").css("opacity", "1");
       $(".form-group-body").removeClass("noDrop");
       $(".rowBtnGroup-span").css("display", "none");
@@ -74,8 +85,13 @@ function createDivs() {
     item.setAttribute("draggable", false);
     item.addEventListener("mouseover", () => (item.style.cursor = "grab"));
     item.addEventListener("mousedown", () => (item.style.cursor = "grabbing"));
+<<<<<<< HEAD
     item.setAttribute("width", "30");
     item.setAttribute("height", "30");
+=======
+    item.setAttribute("width", "45");
+    item.setAttribute("height", "45");
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
 
     //label
     const lbl = document.createElement("label");
@@ -84,7 +100,10 @@ function createDivs() {
     lbl.setAttribute("draggable", false);
     lbl.addEventListener("mouseover", () => (lbl.style.cursor = "grab"));
     lbl.addEventListener("mousedown", () => (lbl.style.cursor = "grabbing"));
+<<<<<<< HEAD
     lbl.style.font = "1.4rem var(--mainFont)";
+=======
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
     id++;
     //gird right panel
     if (index == "column") {
@@ -92,30 +111,53 @@ function createDivs() {
       divItem.append(lbl);
       divItem.css("gridColumn", 1);
       divItem.css("gridRow", 2);
+<<<<<<< HEAD
+=======
+      item.setAttribute("width", "30");
+      item.setAttribute("height", "25");
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       divItem.append(item);
     } else if (index == "pie") {
       lbl.innerHTML = " دایره ای";
       divItem.append(lbl);
       divItem.css("gridColumn", 2);
       divItem.css("gridRow", 2);
+<<<<<<< HEAD
+=======
+      item.setAttribute("width", "30");
+      item.setAttribute("height", "30");
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       divItem.append(item);
     } else if (index == "bar") {
       lbl.innerHTML = " میله ای";
       divItem.append(lbl);
       divItem.css("gridColumn", 1);
       divItem.css("gridRow", 3);
+<<<<<<< HEAD
+=======
+
+      item.setAttribute("width", "30");
+      item.setAttribute("height", "30");
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       divItem.append(item);
     } else if (index == "line") {
       lbl.innerHTML = " خطی";
       divItem.append(lbl);
       divItem.css("gridColumn", 2);
       divItem.css("gridRow", 3);
+<<<<<<< HEAD
+=======
+
+      item.setAttribute("width", "30");
+      item.setAttribute("height", "30");
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       divItem.append(item);
     } else if (index == "areaspline") {
       lbl.innerHTML = "مساحت خطی";
       divItem.append(lbl);
       divItem.css("gridColumn", 1);
       divItem.css("gridRow", 4);
+<<<<<<< HEAD
       divItem.append(item);
     } else if (index == "polar") {
       lbl.innerHTML = "چارت انکبوتی";
@@ -128,13 +170,24 @@ function createDivs() {
       divItem.append(lbl);
       divItem.css("gridColumn", 1);
       divItem.css("gridRow", 5);
+=======
+
+      item.setAttribute("width", "30");
+      item.setAttribute("height", "30");
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       divItem.append(item);
     } else if (index == "group") {
       lbl.innerHTML = " سطر جدید";
       divItem.append(lbl);
       divItem.css("gridColumn", 2);
+<<<<<<< HEAD
       divItem.css("gridRow", 5);
 
+=======
+      divItem.css("gridRow", 4);
+      item.setAttribute("width", "30");
+      item.setAttribute("height", "30");
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       divItem.append(item);
     }
   });
@@ -158,17 +211,32 @@ function createDivs() {
     //Tools Icon
     let ToolsIcon = document.createElement("img");
     ToolsIcon.className = "ToolsIcon";
+<<<<<<< HEAD
     ToolsIcon.setAttribute("width", "30");
     ToolsIcon.setAttribute("height", "30");
+=======
+    ToolsIcon.setAttribute("width", "45");
+    ToolsIcon.setAttribute("height", "45");
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
     ToolsIcon.setAttribute("draggable", false);
     //ToolsLbl
     let ToolsLbl = document.createElement("label");
     ToolsLbl.className = "ToolsLbl";
+<<<<<<< HEAD
     ToolsLbl.style.font = "1.4rem var(--mainFont)";
+=======
+
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
     if (i == 0) {
       ToolsIcon.setAttribute("src", "data:image/png;base64," + imgFilter);
       ToolsIcon.style.gridColumn = "1";
       ToolsIcon.style.gridRow = "2";
+<<<<<<< HEAD
+=======
+      ToolsIcon.style.width = "35px";
+      ToolsIcon.style.height = "35px";
+
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
       ToolsLbl.className = "ToolsLbl lbl";
       ToolsLbl.innerHTML = "فیلتر داده ها";
       ToolsLbl.style.gridColumn = "1";
@@ -254,7 +322,11 @@ function lblContent(value, id) {
   lblContent.setAttribute("id", id);
   lblContent.innerHTML = value;
   lblContent.setAttribute("draggable", true);
+<<<<<<< HEAD
   lblContent.addEventListener("dragstart", (event) => dragstart(event));
+=======
+  lblContent.addEventListener("dragstart", (ev) => dragstart(ev));
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
   return lblContent;
 }
 
@@ -325,6 +397,10 @@ function Group_Btn(GroupId) {
     GroupId +
     '"></span><span id="rowBtnGroup-span' +
     GroupId +
+<<<<<<< HEAD
     '" class="rowBtnGroup-span col-lg-12 noDrop" ondrop="GroupFns(event);" ondragover="event.preventDefault();"> ...سطر جدید را اینجا رها کنید</span></div>'
+=======
+    '" class="rowBtnGroup-span col-lg-12 noDrop"  ondrop="GroupFns(event);" ondragover="event.preventDefault();"  > ...سطر جدید را اینجا رها کنید</span></div>'
+>>>>>>> 9f52a9c2bccad69b660f06563668d21057872ada
   );
 }
