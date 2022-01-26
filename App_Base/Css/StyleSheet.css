@@ -62,9 +62,11 @@ body {
   padding: 15px;
   grid-template:
     "a a" 0px
-    "b b" 40px
-    "c c " 90px;
-  grid-template-columns: 130px 100px;
+    "b b" 60px
+    "c c " 60px
+    "d d " 60px
+    "e e " 60px;
+  grid-template-columns: 130px 110px;
   border: 1px solid #ccc;
   align-items: center;
   justify-content: right;
@@ -451,12 +453,12 @@ input[type="range"] {
   
 }
 
-#containers {
+/* #containers {
   overflow: hidden;
   align-items: center;
   justify-content: center;
   display: flex;
-}
+} */
 
 .form-group-body {
   height: 390px;
@@ -587,6 +589,8 @@ input[type="range"] {
 }
 .table {
   direction: rtl;
+  margin-top: 35px;
+  margin-bottom: 40px;
 }
 .table tbody {
   text-align: center;
@@ -602,6 +606,7 @@ i {
   margin-left: 5px;
   padding: 5px 0px 5px 40px;
   width: 80px;
+  
 }
 ::placeholder {
   font-size: 12px;
@@ -609,4 +614,11 @@ i {
 #contentCommand {
   margin: auto;
   padding: 0px;
+}
+.btn_submint_exit{
+ 
+  margin:10px 0px 10px 5px ;
+  display:inline ;
+  float: right;
+  width:70px ;
 }

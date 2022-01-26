@@ -1,24 +1,6 @@
 ﻿"use strict";
 
-function createID() {
-  let Id = sessionStorage.getItem("id");
-  if (Id == null || undefined) {
-    Id = 0;
-    sessionStorage.setItem("id", 0);
-  } else if (Id != null || undefined) {
-    Id++;
-    sessionStorage.setItem("id", Id);
-  }
-  return Id;
-}
 function createDiv(className, id) {
-  let elt = document.createElement("div");
-  elt.className = className;
-  elt.setAttribute("id", id);
-  return elt;
-}
-
-function createLbl(className, id) {
   let elt = document.createElement("div");
   elt.className = className;
   elt.setAttribute("id", id);
@@ -46,6 +28,12 @@ function createImgChart(e, parentID, chartItem, Type) {
       case "areaspline":
         value = areaSplineBs64;
         break;
+      case "polar":
+        value = polarBs64;
+        break;
+      case "table":
+        value = tableBs64;
+        break;
       default:
         value = imgDefault;
         break;
@@ -56,12 +44,25 @@ function createImgChart(e, parentID, chartItem, Type) {
   function chart_defaultId() {
     return "chart-defaultId-" + ~~(Math.random() * 1000);
   }
+
+  //set src and create img
+  let src;
+  if (chartItem) {
+    if (chartItem.Type == "table" || CHARTTYPE == "table") {
+      src = "";
+    } else {
+      src = "data:image/svg+xml;base64,";
+    }
+  } else {
+    src = "data:image/svg+xml;base64,";
+  }
   let chartType = chartItem ? chartItem.Type : Type;
   let parent = parentID ? parentID : e.target.id;
   let img =
     '<img class="fit-image noDrop" type="' +
     Type +
-    '" draggable="true" ondragstart="dragstart(event)" ondrop="swapping(event)" ondragover="event.preventDefault()" onmouseenter="rowbtnOn(this)" onmouseleave="rowbtnOff(this)" style ="border:1px solid #ccc;border-radius:10px;cursor:grab"  src="data:image/svg+xml;base64,' +
+    '" draggable="true" ondragstart="dragstart(event)" ondrop="swapping(event)" ondragover="event.preventDefault()" onmouseenter="rowbtnOn(this)" onmouseleave="rowbtnOff(this)" style ="border:1px solid #ccc;border-radius:10px;cursor:grab"  src="' +
+    src +
     style +
     '" id="' +
     ID +
@@ -107,14 +108,13 @@ function swapping(e) {
       twoID.attr("type", temp);
     }
 
-    if (CHARTS.some(ExistOneID)) {
+    if (CHARTS.some(ExistOneID))
       //get Element by oneID
       var oneObj = CHARTS.find((element) => element.ID == oneID[0].id);
-    }
-    if (CHARTS.some(ExistTwoID)) {
+
+    if (CHARTS.some(ExistTwoID))
       //get Element by twoID
       var twoObj = CHARTS.find((element) => element.ID == twoID[0].id);
-    }
 
     //swap ID
     if (twoObj) {
@@ -169,7 +169,7 @@ function swapping(e) {
 
 function dragstart(e) {
   e.dataTransfer.setData("text", e.target.id);
-  if (e.target.id == "5") {
+  if (e.target.id == "7") {
     $(".form-group-body").css("opacity", "0.1");
     $(".form-group-body").addClass("noDrop");
     $(".rowBtnGroup-span").css("display", "block");
@@ -200,6 +200,17 @@ function LineFns(e) {
 function AreaSplineFns(e) {
   if ($("#" + e.target.id).hasClass("form-group-body")) {
     createImgChart(e, null, null, "areaspline");
+  }
+}
+function polarFns(e) {
+  if ($("#" + e.target.id).hasClass("form-group-body")) {
+    createImgChart(e, null, null, "polar");
+  }
+}
+
+function TableFns(e) {
+  if ($("#" + e.target.id).hasClass("form-group-body")) {
+    createImgChart(e, null, null, "table");
   }
 }
 
@@ -271,7 +282,7 @@ function GroupFns(e) {
         RowID: _RowId,
         RowIndex: _RowIndex,
         RowDisplayMode: "GroupWithBox",
-        ColumnLayout: "OnceColumn",
+        ColumnLayout: "ThreeColumn",
         ColumnWidth: "default",
       };
 
@@ -329,11 +340,12 @@ function drop(ev) {
       !$("#" + ev.target.id).hasClass("noDrop") &&
       $("#" + ev.target.id).hasClass("form-group-body")
     ) {
-      $("#" + ev.target.id).html(""); //delete placeholder div
+      //delete placeholder div
+      $("#" + ev.target.id).html("");
       //get senderId and check number or string for switch
       let dataId = ev.dataTransfer.getData("text");
-
       dataId = dataId.length < 3 ? +dataId : dataId;
+      console.log(ev.target.id);
       switch (dataId) {
         case 0:
           ColumnFns(ev);
@@ -349,6 +361,12 @@ function drop(ev) {
           break;
         case 4:
           AreaSplineFns(ev);
+          break;
+        case 5:
+          polarFns(ev);
+          break;
+        case 6:
+          TableFns(ev);
           break;
         default:
           //drop
@@ -404,13 +422,12 @@ function DeleteGroup(elem) {
       RowIndex_Generator();
     } else {
       alert(" سطر مورد نظر دارای چارت است و قابل حذف کردن نمی باشد.");
-      
     }
   }
 }
 
 function dragEnter(e) {
-  if (e.target.id == true && e.target.id !='lbl5') {
+  if (e.target.id == true && e.target.id != "lbl5") {
     if ($("#" + e.target.id).children().length == 0) {
       if ($("#" + e.target.id).hasClass("form-group-body")) {
         $("#" + e.target.id).css("border", "1px solid #ccc");
@@ -438,7 +455,6 @@ function dragLeave(e) {
   }
 }
 function rowMoveUp(e) {
-  window.scrollTo(0, 0);
   let oneID = $("#" + e.target.parentNode.parentNode.id);
   if (oneID.prev()[0]) {
     let cloned = oneID.clone(true);
@@ -454,7 +470,6 @@ function rowMoveUp(e) {
       oneID.remove();
     }
   }
-
   RowIndex_Generator();
 }
 
@@ -523,7 +538,7 @@ function rowbtnOff(elem) {
 function chartDelete(e) {
   // remove popup
   let parent = $("#" + e.target.id).parent()[0].id;
-  let msg = "آیا از حذف این چارت مطمئن هستید ؟";
+  let msg = "آیا از حذف این آیتم مطمئن هستید ؟";
 
   // MsgBox
   ModalConstractor("25%", parent);
@@ -564,7 +579,7 @@ function GroupSplit(elem) {
 
   let id = elem.id.replaceAll("EditGroup-", "");
   const childCount = $("#form-group-" + id).children().length - 1;
-  $("#lblSlider-" + id).html(childCount+' column');
+  $("#lblSlider-" + id).html(childCount + " column");
   $("#myslider-" + id).val(childCount);
 
   //set lblSlider position
@@ -581,7 +596,7 @@ function GroupSplit(elem) {
 
 function volume(elem) {
   let id = elem.id.replaceAll("myslider-", "lblSlider-");
-  $("#" + id).html(elem.value+' column');
+  $("#" + id).html(elem.value + " column");
   if (elem.value == 1) $("#" + id).css("left", "0px");
   if (elem.value == 2) $("#" + id).css("left", "30px");
   if (elem.value == 3) $("#" + id).css("left", "70px");
@@ -716,9 +731,7 @@ function CreateDiv3(elem, colNum) {
   $("#" + get_Items_Row(elem)[1]).after($(div3));
 }
 
-/*If div.child isEmpty then
-remove_Empty_Div & if row.lenght==1 remove_Empty_Div Disablez
-*/
+//Remove empty Div when DivSplit
 function remove_Empty_Div(elem) {
   let chartCount = 0;
   let Items_Row = get_Items_Row(elem);
@@ -770,10 +783,9 @@ function get_Items_Row(elem) {
 function HideModal() {
   $("#myModal").remove();
 }
-//CHART TYPE
-var CHARTTYPE;
 
-///EXPORT JSON
+//Globar Var
+var CHARTTYPE;
 var DASHBOARDID;
 var MODULEID;
 var ENTITYID;
@@ -798,6 +810,8 @@ var REFROLES = [];
 var REFGROUPS = [];
 var REFCOLUMNS = [];
 var SERIES = [];
+
+///EXPORT JSON
 function ExportData() {
   Sort_ROWBOXS();
   Sort_CHARTS();
@@ -826,15 +840,10 @@ function ExportData() {
   };
 
   //Export to backend
-
   var data = new FormData();
-
   data.append("design", JSON.stringify(json));
-
   data.append("ID", DASHBOARDID);
-
   var $dashboard = new editDashboard(data);
-
   $dashboard.submit(data);
 }
 
@@ -878,11 +887,7 @@ function openfile() {
 }
 function btnSubmit(par, text) {
   let btn = document.createElement("button");
-  btn.className = "btn btn-primary";
-  btn.style.margin = "10px 0px 10px 5px";
-  btn.style.display = "inline";
-  btn.style.float = "right";
-  btn.style.width = "70px";
+  btn.className = "btn btn-primary btn_submint_exit";
   btn.innerText = text;
   $(par).append(btn);
   return btn;
@@ -890,11 +895,7 @@ function btnSubmit(par, text) {
 
 function btnExit(par) {
   let btnEx = document.createElement("button");
-  btnEx.className = "btn btn-light";
-  btnEx.style.margin = "10px 0px 10px 0px";
-  btnEx.style.display = "inline";
-  btnEx.style.float = "right";
-  btnEx.style.width = "70px";
+  btnEx.className = "btn btn-light btn_submint_exit";
   btnEx.innerText = "لغو";
   $(par).append(btnEx);
   return btnEx;

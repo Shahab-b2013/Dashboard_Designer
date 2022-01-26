@@ -24,7 +24,7 @@ public class _Dashboard : System.Web.Services.WebService
             int id = Convert.ToInt32(HttpContext.Current.Request.Form["id"]);
             JavaScriptSerializer js = new JavaScriptSerializer();
             Dashboard design = js.Deserialize<Dashboard>(HttpContext.Current.Request.Form["design"]);
-            StreamWriter sw = File.CreateText(Server.MapPath("/") + "/model.json");
+            StreamWriter sw = File.CreateText(Server.MapPath("/App_Data") + "/model.json");
             sw.Write(HttpContext.Current.Request.Form["design"]);
             sw.Close();
 
@@ -121,7 +121,7 @@ public class _Dashboard : System.Web.Services.WebService
         }
         catch (Exception e)
         {
-            StreamWriter x = File.CreateText(Server.MapPath("/") + "/err.txt");
+            StreamWriter x = File.CreateText(Server.MapPath("App_Data") + "/err.txt");
             x.Write(e.Message);
             x.Close();
 

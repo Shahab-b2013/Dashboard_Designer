@@ -78,7 +78,7 @@ public class SqlDataProvider
                 }
                 catch (Exception exp)
                 {
-                StreamWriter x = File.CreateText(HttpContext.Current.Server.MapPath("/") + "/errr.txt");
+                StreamWriter x = File.CreateText(HttpContext.Current.Server.MapPath("/App_Data") + "/errr.txt");
                 x.Write(exp.Message);
                 x.Write(query);
                 x.Close();

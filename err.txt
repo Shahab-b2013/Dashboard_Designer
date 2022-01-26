@@ -1,1 +1,0 @@
-Incorrect syntax near ' +  dbo.[AbrvValue](ProductVersion,'.
