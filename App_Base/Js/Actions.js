@@ -122,6 +122,7 @@ function swapping(e) {
       oneObj.ID = twoObj.ID;
       twoObj.ID = temp;
 
+      //تغییر
       //if img not Exists
       if (twoID.hasClass("form-group-body")) {
         if (CHARTS.some(ExistOneID)) {
@@ -131,9 +132,8 @@ function swapping(e) {
             .split("-")[0];
 
           //modify oneObj ColumnIndex
-          oneObj.ColumnIndex = +e.target.id
-            .replaceAll("form-group-body-", "")
-            .split("-")[1];
+          oneObj.ColumnIndex = +$('#' + e.target.id).attr('ColumnIndex');
+            
         }
       } else {
         if (CHARTS.some(ExistOneID)) {
@@ -144,10 +144,10 @@ function swapping(e) {
             .split("-")[0];
 
           //modify oneObj ColumnIndex
-          oneObj.ColumnIndex = +twoID
-            .parent()[0]
-            .id.replaceAll("form-group-body-", "")
-            .split("-")[1];
+          const par =
+            twoID.parent()[0].id;
+          oneObj.ColumnIndex = +$('#' + par).attr('ColumnIndex');
+           
         }
         if (CHARTS.some(ExistTwoID)) {
           //modify twoObj RowID
@@ -157,12 +157,17 @@ function swapping(e) {
             .split("-")[0];
 
           //modify twoObj ColumnIndex
-          twoObj.ColumnIndex = +oneID
-            .parent()[0]
-            .id.replaceAll("form-group-body-", "")
-            .split("-")[1];
+           const par =
+            oneID.parent()[0].id;
+          twoObj.ColumnIndex = +$('#' + par).attr('ColumnIndex')
+          
         }
       }
+    } else {
+      //if twoObj not Exists 
+       const par =
+            oneID.parent()[0].id;
+      oneObj.ColumnIndex = +$('#' + par).attr('ColumnIndex');
     }
   }
 }
@@ -339,13 +344,12 @@ function drop(ev) {
     if (
       !$("#" + ev.target.id).hasClass("noDrop") &&
       $("#" + ev.target.id).hasClass("form-group-body")
-    ) {
-      //delete placeholder div
-      $("#" + ev.target.id).html("");
-      //get senderId and check number or string for switch
-      let dataId = ev.dataTransfer.getData("text");
+      ) {
+        //delete placeholder div
+        $("#" + ev.target.id).html("");
+        //get senderId and check number or string for switch
+        let dataId = ev.dataTransfer.getData("text");
       dataId = dataId.length < 3 ? +dataId : dataId;
-      console.log(ev.target.id);
       switch (dataId) {
         case 0:
           ColumnFns(ev);
@@ -600,7 +604,6 @@ function volume(elem) {
   if (elem.value == 1) $("#" + id).css("left", "0px");
   if (elem.value == 2) $("#" + id).css("left", "30px");
   if (elem.value == 3) $("#" + id).css("left", "70px");
-
   switch (+elem.value) {
     case 1:
       DivSplit_1(elem);
@@ -666,6 +669,7 @@ function rowBoxArr_Modify(elem, num) {
     }
   });
 }
+//تغییر
 function chartArr_Modify(elem) {
   let chartID;
   let RowID = $("#" + get_Items_Row(elem)[0]).parent()[0].id;
@@ -678,13 +682,13 @@ function chartArr_Modify(elem) {
       //set new colIndex in arr
       if (chartID) {
         let colIndex = $("#" + colID).attr("ColumnIndex");
-        CHARTS.find(function (Element) {
-          if (Element.id == chartID) {
-            Element.ColumnIndex = colIndex;
+        let element = CHARTS.filter(x => x.ID == chartID);
+        element[0].ColumnIndex = +colIndex;
+            console.log('Element ', element[0].ColumnIndex);
           }
-        });
-      }
-    }
+        };
+      
+    
   }
 }
 function setDiv1(elem, colNum) {
@@ -693,6 +697,7 @@ function setDiv1(elem, colNum) {
     "form-group-body  col-md-" + colNum
   );
   $("#" + get_Items_Row(elem)[0]).attr("ColumnIndex", 0);
+
 }
 function setDiv2(elem, colNum) {
   $("#" + get_Items_Row(elem)[1]).attr(

@@ -216,10 +216,13 @@ function chartEdit(e) {
         .parent()
         .parent()[0]
         .id.replaceAll("form-group-", "");
-      _ColumnIndex = $("#" + imgid)
-        .parent()[0]
-        .id.replaceAll("form-group-body-", "")
-        .split("-")[1];
+      
+      //تغییر
+        let par = $("#" + imgid)
+          .parent()[0]
+          .id;
+      _ColumnIndex = $("#" + par).attr('ColumnIndex')
+
 
       //get base64
       myPromise = new Promise(function (myResolve, myReject) {
@@ -238,10 +241,11 @@ function chartEdit(e) {
 
       _id = imgid.replaceAll("chart-defaultId-", "table-");
 
-      _ColumnIndex = $("#" + imgid)
-        .parent()[0]
-        .id.replaceAll("form-group-body-", "")
-        .split("-")[1];
+       //تغییر
+        let par = $("#" + imgid)
+          .parent()[0]
+          .id;
+      _ColumnIndex = $("#" + par).attr('ColumnIndex')
 
       myPromise = new Promise(function (myResolve, myReject) {
         $("#div2").css("border", "0px");
@@ -265,7 +269,6 @@ function chartEdit(e) {
         1
       );
     }
-
     myPromise.then(
       function (value) {
         _Base64 = value;

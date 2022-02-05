@@ -3549,7 +3549,7 @@
           return (this.style = e(
             {
               fontFamily:
-                '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif',
+                '"IRANSansWeb", Tahoma, Verdana, sans-serif',
               fontSize: "12px",
             },
             b

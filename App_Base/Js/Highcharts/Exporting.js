@@ -1011,7 +1011,7 @@
           da = [
             /-/,
             /^(clipPath|cssText|d|height|width)$/,
-            /^font$/,
+            // /^font$/,
             /[lL]ogical(Width|Height)$/,
             /perspective/,
             /TapHighlightColor/,

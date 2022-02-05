@@ -5762,7 +5762,7 @@ img.ajaxtoploader {
 }
 
 @font-face {
-  font-family: IRANSansWeb;
+  font-family: IRANSansWeb_Light;
   src: url("Fonts/IRANSansWeb_Light.woff")
     format("woff");
 }
@@ -5773,6 +5773,11 @@ img.ajaxtoploader {
 @font-face {
     font-family: IRANSansWeb-medium;
     src: url("Fonts/IRANSansWeb_Medium.woff") format("woff");
+}
+@font-face {
+  font-family: IRANSansWeb;
+  src: url("Fonts/IRANSansWeb.woff")
+    format("woff");
 }
 @media (max-width: 476px) {
   div.toolbar {

@@ -249,45 +249,7 @@ function createInput(type, opt, id) {
   return input;
 }
 
-function lblContent(value, id) {
-  let lblContent = document.createElement("label");
-  lblContent.setAttribute("id", id);
-  lblContent.innerHTML = value;
-  lblContent.setAttribute("draggable", true);
-  lblContent.addEventListener("dragstart", (event) => dragstart(event));
-  return lblContent;
-}
 
-function rowContent(ev) {
-  //row content
-  let id = 0;
-  if ($("#" + ev.target.id).children().length == 0) {
-    id = ev.target.id.replace("form-group-body-", "");
-    id = +id.replace("-0", "") + 10;
-    id = "form-group-" + id;
-  } else {
-    id = $("#" + ev.target.id)
-      .children()
-      .last()[0].id;
-    id = id.replace("form-group-", "");
-    id = id.replace("-rep", "");
-    id = +id + 10;
-    id = "form-group-" + id;
-  }
-
-  let row = document.createElement("div");
-  row.className = "form-group noDrop";
-  row.setAttribute("id", id);
-  row.addEventListener("dragover", (event) => allowDrop(event));
-  row.setAttribute("draggable", true);
-  row.setAttribute("dragstart", "drag(event)");
-  $("#" + ev.target.id).append(row);
-
-  //br
-  const br = document.createElement("br");
-  row.appendChild(br);
-  return id;
-}
 
 //groupbtn
 function Group_Btn(GroupId) {
