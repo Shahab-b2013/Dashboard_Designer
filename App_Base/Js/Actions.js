@@ -133,7 +133,9 @@ function swapping(e) {
 
           //modify oneObj ColumnIndex
           oneObj.ColumnIndex = +$('#' + e.target.id).attr('ColumnIndex');
-            
+            //  oneObj.ColumnIndex = +e.target.id
+            // .replaceAll("form-group-body-", "")
+            // .split("-")[1];
         }
       } else {
         if (CHARTS.some(ExistOneID)) {
@@ -147,6 +149,10 @@ function swapping(e) {
           const par =
             twoID.parent()[0].id;
           oneObj.ColumnIndex = +$('#' + par).attr('ColumnIndex');
+          //  oneObj.ColumnIndex = +twoID
+          //   .parent()[0]
+          //   .id.replaceAll("form-group-body-", "")
+          //   .split("-")[1];
            
         }
         if (CHARTS.some(ExistTwoID)) {
@@ -161,13 +167,20 @@ function swapping(e) {
             oneID.parent()[0].id;
           twoObj.ColumnIndex = +$('#' + par).attr('ColumnIndex')
           
+          //  twoObj.ColumnIndex = +oneID
+          //   .parent()[0]
+          //   .id.replaceAll("form-group-body-", "")
+          //   .split("-")[1];
         }
       }
     } else {
       //if twoObj not Exists 
        const par =
-            oneID.parent()[0].id;
+      oneID.parent()[0].id;
       oneObj.ColumnIndex = +$('#' + par).attr('ColumnIndex');
+      oneObj.RowID = +par.replaceAll("form-group-body-", "").split("-")[0];
+    
+      
     }
   }
 }
@@ -247,7 +260,7 @@ function GroupFns(e) {
       let Element = ROWBOXS.find((Element) => Element.RowID === par);
       let _RowIndex = Element.RowIndex + 1;
 
-      //create UI row
+      //add row
       $(document).ready(function () {
         $("#" + GroupId)
           .parent()
@@ -266,11 +279,11 @@ function GroupFns(e) {
                 _RowId +
                 '-0"></div><div style="" class="' +
                 "col-lg-4 col-md-4 form-group-body" +
-                '" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="0" id="form-group-body-' +
+                '" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="1" id="form-group-body-' +
                 _RowId +
                 '-1"></div><div style="" class="' +
                 "col-lg-4 col-md-4 form-group-body" +
-                '" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="0" id="form-group-body-' +
+                '" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="2" id="form-group-body-' +
                 _RowId +
                 '-2"></div>' +
                 Group_Btn(_RowId) +
@@ -684,9 +697,17 @@ function chartArr_Modify(elem) {
         let colIndex = $("#" + colID).attr("ColumnIndex");
         let element = CHARTS.filter(x => x.ID == chartID);
         element[0].ColumnIndex = +colIndex;
-            console.log('Element ', element[0].ColumnIndex);
-          }
-        };
+        //     console.log('Element ', element[0].ColumnIndex);
+        //   }
+        // };
+        //     CHARTS.find(function (Element) {
+        //   if (Element.id == chartID) {
+        //     Element.ColumnIndex = colIndex;
+        //   }
+        // });
+      }
+    }
+        
       
     
   }

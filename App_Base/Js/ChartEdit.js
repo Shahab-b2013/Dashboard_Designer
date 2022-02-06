@@ -222,6 +222,11 @@ function chartEdit(e) {
           .parent()[0]
           .id;
       _ColumnIndex = $("#" + par).attr('ColumnIndex')
+      //  _ColumnIndex = $("#" + imgid)
+      //   .parent()[0]
+      //   .id.replaceAll("form-group-body-", "")
+      //   .split("-")[1];
+      
 
 
       //get base64
@@ -246,6 +251,11 @@ function chartEdit(e) {
           .parent()[0]
           .id;
       _ColumnIndex = $("#" + par).attr('ColumnIndex')
+
+      //  _ColumnIndex = $("#" + imgid)
+      //   .parent()[0]
+      //   .id.replaceAll("form-group-body-", "")
+      //   .split("-")[1];
 
       myPromise = new Promise(function (myResolve, myReject) {
         $("#div2").css("border", "0px");
