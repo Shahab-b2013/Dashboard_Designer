@@ -23,7 +23,7 @@ function DashboardView(_json) {
         content +=
           '<div class="' +
           ColumnWidth +
-          ' col-sm-12 col-xs-12 form-group-body" ondrop="drop(event)" ondragover="allowDrop(event)" ColumnIndex="0" id="form-group-body-' +
+          ' col-sm-12 col-xs-12 form-group-body" onmouseover="copyCheck(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" ColumnIndex="0" id="form-group-body-' +
           chartGroup.RowID +
           '-0" ></div>';
       }
@@ -36,14 +36,14 @@ function DashboardView(_json) {
           ColumnWidth +
           " form-group-body" +
           '"' +
-          'ondrop="drop(event)" ondragover="allowDrop(event)"' +
+          'onmouseover="copyCheck(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)"' +
           ' ColumnIndex="0" id="form-group-body-' +
           chartGroup.RowID +
           '-0"></div><div class="' +
           ColumnWidth +
           " form-group-body" +
           '"' +
-          'ondrop="drop(event)" ColumnIndex="1" ondragover="allowDrop(event)"' +
+          'onmouseover="copyCheck(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ColumnIndex="1" ondragover="allowDrop(event)"' +
           ' id="form-group-body-' +
           chartGroup.RowID +
           '-1" ></div>';
@@ -60,17 +60,17 @@ function DashboardView(_json) {
           '<div class="' +
           ColumnWidth +
           " form-group-body" +
-          '"ondrop="drop(event)" ondragover="allowDrop(event)" ColumnIndex="0" id="form-group-body-' +
+          '"ondrop="drop(event)" onmouseover="copyCheck(event)" onmouseout="onMouseOut(event)" ondragover="allowDrop(event)" ColumnIndex="0" id="form-group-body-' +
           chartGroup.RowID +
           '-0" ></div><div class="' +
           ColumnWidth +
           " form-group-body" +
-          '"ondrop="drop(event)" ondragover="allowDrop(event)" ColumnIndex="1" id="form-group-body-' +
+          '"ondrop="drop(event)" onmouseover="copyCheck(event)" onmouseout="onMouseOut(event)" ondragover="allowDrop(event)" ColumnIndex="1" id="form-group-body-' +
           chartGroup.RowID +
           '-1" > </div><div class="' +
           ColumnWidth +
           " form-group-body" +
-          '"ondrop="drop(event)" ondragover="allowDrop(event)" ColumnIndex="2" id="form-group-body-' +
+          '"ondrop="drop(event)" onmouseover="copyCheck(event)" onmouseout="onMouseOut(event)" ondragover="allowDrop(event)" ColumnIndex="2" id="form-group-body-' +
           chartGroup.RowID +
           '-2" ></div>';
       }

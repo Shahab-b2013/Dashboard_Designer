@@ -19,8 +19,8 @@ function SeriesFn() {
     '<th scope="col">عنوان</th>' +
     '<th scope="col">فیلد داده</th>';
   if (CHARTTYPE != "pie") divGrid += '<th scope="col">رنگ</th>';
+  if (CHARTTYPE != "table") divGrid += '<th scope="col">نوع</th>';
   divGrid +=
-    '<th scope="col">نوع</th>' +
     '<th scope="col">عملیات</th>' +
     "</tr>" +
     '</thead><tbody id="series_tbody" ></tbody></table></div>';
@@ -31,7 +31,6 @@ function SeriesFn() {
     let serrieID = 0;
     $.each(SERIES, function (index, item) {
       item.ID == undefined ? serrieID++ : (serrieID = item.ID);
-
       let tbody =
         "<tr>" +
         '<td scope="row">' +
@@ -45,10 +44,9 @@ function SeriesFn() {
         "</td>";
       if (CHARTTYPE != "pie")
         tbody += '<td scope="row">' + item.StyleColor + "</td>";
+      if (CHARTTYPE != "table")
+        tbody += '<td scope="row">' + item.PlotType + "</td>";
       tbody +=
-        '<td scope="row">' +
-        item.PlotType +
-        "</td>" +
         '<td scope="row">' +
         '<span id="Series_Delete_' +
         item.ID +
@@ -63,7 +61,7 @@ function SeriesFn() {
     });
     //only 1 serie
     if (CHARTTYPE == "pie" || CHARTTYPE == "polar") {
-      if ($("table tr").length - 1 == 1)
+      if ($("#series_tbody tr").length - 1 < 1)
         $("#btnAddTolist").attr("disabled", "disabled");
     }
   }
@@ -73,32 +71,30 @@ function SeriesFn() {
   Submit.style.marginTop = "-10px";
   Submit.onclick = () => {
     //Save
-    $("table tr").each(function (index, item) {
-      if (index == 0) {
-        SERIES = [];
+    SERIES = [];
+    $("#series_tbody tr").each(function (index, item) {
+      let _StyleColor;
+      let _PlotType;
+      let _ID = +$(item).children().eq(0).html();
+      let _Text = $(item).children().eq(1).html();
+      let _Name = $(item).children().eq(2).html();
+      let _DataExpression = $(item).children().eq(2).html();
+      if (CHARTTYPE == "pie") {
+        _PlotType = $(item).children().eq(3).html();
+      } else if (CHARTTYPE == "table") {
+        _StyleColor = $(item).children().eq(3).html();
       } else {
-        let _StyleColor;
-        let _PlotType;
-        let _ID = +$(this).find("td").eq(0).html();
-        let _Text = $(this).find("td").eq(1).html();
-        let _Name = $(this).find("td").eq(2).html();
-        let _DataExpression = $(this).find("td").eq(2).html();
-        if (CHARTTYPE != "pie") {
-          _StyleColor = $(this).find("td").eq(3).html();
-          _PlotType = $(this).find("td").eq(4).html();
-        } else {
-          _PlotType = $(this).find("td").eq(3).html();
-        }
-
-        SERIES.push({
-          ID: _ID,
-          Text: _Text,
-          Name: _Name,
-          DataExpression: _DataExpression,
-          StyleColor: _StyleColor,
-          PlotType: _PlotType,
-        });
+        _StyleColor = $(item).children().eq(3).html();
+        _PlotType = $(item).children().eq(4).html();
       }
+      SERIES.push({
+        ID: _ID,
+        Text: _Text,
+        Name: _Name,
+        DataExpression: _DataExpression,
+        StyleColor: _StyleColor,
+        PlotType: _PlotType,
+      });
     });
     if (SERIES.length > 0) {
       //serie name1,name2,...
@@ -116,10 +112,11 @@ function SeriesFn() {
     } else {
       $("#item-6").val("");
     }
+
     //close modal
     $("#myModalSeries").remove();
 
-    showChart(CHARTTYPE);
+    CHARTTYPE == "table" ? showTable() : showChart(CHARTTYPE);
   };
 
   //btn exit
@@ -160,6 +157,9 @@ function Form_Add_Series(Text, id) {
       '<label class="lblSeries">رنگ :<input type="color" id="inputColor"></label><br>' +
       '<label class="lblSeries">نوع :<select id="PlotType" class="selectBox" style="width: 250px;margin: 0px;left: 20px;position: absolute;direction: ltr;">' +
       '<option  value="bar">bar</option>';
+  } else if (CHARTTYPE == "table") {
+    form +=
+      '<label class="lblSeries">رنگ :<input type="color" id="inputColor"></label><br>';
   } else {
     form +=
       '<label class="lblSeries">رنگ :<input type="color" id="inputColor"></label><br>' +
@@ -202,9 +202,9 @@ function Form_Add_Series(Text, id) {
       $("#Add_Series").remove();
     } else {
       let _ID =
-        $("table tr").length == 1
+        $("#series_tbody tr").length == 0
           ? 1
-          : +$("table tr:last").children().eq(0).html() + 1;
+          : +$("#series_tbody tr:last").children().eq(0).html() + 1;
       //Add to tbody in table
 
       let tbody =
@@ -219,11 +219,15 @@ function Form_Add_Series(Text, id) {
         $("#text3").val() +
         "</td>";
       if (CHARTTYPE != "pie")
-        tbody += '<td scope="row">' + $("#inputColor").val() + "</td>";
+        tbody +=
+          '<td scope="row">' +
+          $("#inputColor").val() +
+          // '<span span style = "color:$("#inputColor").val()" class="fa fa-check-square"></span>'
+          "</td >";
+      if (CHARTTYPE != "table")
+        tbody +=
+          '<td scope="row">' + $("#PlotType option:selected").val() + "</td>";
       tbody +=
-        '<td scope="row">' +
-        $("#PlotType option:selected").val() +
-        "</td>" +
         '<td scope="row">' +
         '<span id="Series_Delete_' +
         _ID +
@@ -239,7 +243,7 @@ function Form_Add_Series(Text, id) {
       //close
       $("#Add_Series").remove();
       if (CHARTTYPE == "pie" || CHARTTYPE == "polar") {
-        if ($("table tr").length - 1 == 1)
+        if ($("#series_tbody tr").length - 1 < 1)
           $("#btnAddTolist").attr("disabled", "disabled");
       }
     }
@@ -264,7 +268,8 @@ function Series_Deleted(id) {
   let rowID = tr.children().eq(0).html();
   sessionStorage.removeItem("deleteID");
   sessionStorage.setItem("deleteID", rowID);
-  if ($("table tr").length - 1 < 1) $("#btnAddTolist").removeAttr("disabled");
+  if ($("#series_tbody tr").length - 1 < 1)
+    $("#btnAddTolist").removeAttr("disabled");
 }
 function Series_Edited(id) {
   let tr = $("#" + id)

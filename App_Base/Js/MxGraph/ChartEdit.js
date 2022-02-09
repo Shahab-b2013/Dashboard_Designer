@@ -10,7 +10,7 @@ function chartEdit(e) {
 
   //create modal form
   CHARTTYPE == "table"
-    ? ModalConstractor("50%", "geContent")
+    ? ModalConstractor("60%", "geContent")
     : ModalConstractor("85%", "geContent");
   let div1 =
     '<div id="div1" class="row col-lg-3 col-md-3 col-sm-12" style=""></div>';
@@ -49,30 +49,43 @@ function chartEdit(e) {
   } else {
     ArrItems = ["", "", "", "", "", "", "", ""];
   }
+
   //create items and value
-  let count = CHARTTYPE == "table" ? 2 : ArrLbl.length;
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i < ArrLbl.length; i++) {
     if (CHARTTYPE == "pie" || CHARTTYPE == "polar") {
       if (i != 2 && i != 3) {
         divItems(i);
         label(i, ArrLbl[i]);
       }
     } else {
-      divItems(i);
-      label(i, ArrLbl[i]);
+      if (CHARTTYPE == "table") {
+        if (i == 0 || i == 1 || i == 6) {
+          divItems(i);
+          i == 6 ? label(i, "ستون جدول") : label(i, ArrLbl[i]);
+        }
+      } else {
+        divItems(i);
+        label(i, ArrLbl[i]);
+      }
     }
 
     if (i == 1) {
-      divItems(i);
       textBox(i, ArrItems[i]);
       $("#div1Items-" + i).append(
         '<span id="CommandTextBtn" onclick="CommandText(event)" class="btn btn-light glyphicon glyphicon-option-vertical"></span>'
       );
     } else if (i == 5) {
-      divItems(i);
       selectList(i, ArrItems[i]);
+      if (ArrItems[i] == "ColumnGroup") {
+        $("#div1Items-5").after(
+          $(
+            '<div id="GrouppingItem" class="divItems_ChartEdit" style=""><label class="lbl " style="margin: 5px 0px 10px 10px;">فیلد (Groupping):</label><input type="text" class="TextboxEditChart" id="TextGroupping" value="' +
+              findChart.GrouuppingExpression +
+              '"></div>'
+          )
+        );
+      }
     } else if (i == 6) {
-      divItems(i);
       textBox(i, "");
       //serie Data Name
       let seriesName = "";
@@ -88,6 +101,7 @@ function chartEdit(e) {
     } else {
       if (CHARTTYPE == "pie" || CHARTTYPE == "polar") {
         if (i != 2 && i != 3) {
+          divItems(i);
           textBox(i, ArrItems[i]);
         }
       } else {
@@ -95,6 +109,7 @@ function chartEdit(e) {
       }
     }
   }
+
   //row
   function divItems(i) {
     let div1Items =
@@ -140,7 +155,7 @@ function chartEdit(e) {
     } else {
       Select_List +=
         '<option value="Simple">Simple</option>' +
-        '<option value="ColumnGroup">ColumnGroup</option>' +
+        '<option value="ColumnGroup">Groupping</option>' +
         '<option value="Stack">Stack</option>' +
         "</select>";
     }
@@ -172,21 +187,28 @@ function chartEdit(e) {
     });
 
     document.getElementById("item-5").addEventListener("input", (e) => {
-      if ($("#" + e.target.id).val() == "Stack") {
-        _ColumnPlotOptions.dataLabels.formatter = function () {
-          return this.point.percentage.toFixed(0) + "%";
-        };
-
-        _ColumnPlotOptions.dataLabels.format = "%" + "{y}";
-
+      const name = $("#" + e.target.id + " option:selected").html();
+      if (name == "Stack") {
         _ColumnPlotOptions.stacking = "percent";
-      } else {
-        _ColumnPlotOptions.dataLabels.format = "{y}";
-
+        _BarPlotOptions.stacking = "percent";
+        $("#GrouppingItem").remove();
+      } else if (CHARTTYPE == "column" && name == "Groupping") {
+        $("#div1Items-5").after(
+          $(
+            '<div id="GrouppingItem" class="divItems_ChartEdit" style=""><label class="lbl " style="margin: 5px 0px 10px 10px;">فیلد (Groupping):</label><input type="text" class="TextboxEditChart" id="TextGroupping" "></div>'
+          )
+        );
         _ColumnPlotOptions.stacking = "";
+        _BarPlotOptions.stacking = "";
+      } else {
+        $("#GrouppingItem").remove();
+        _ColumnPlotOptions.dataLabels.format = "{y}";
+        _ColumnPlotOptions.stacking = "";
+        _BarPlotOptions.stacking = "";
       }
       showChart(CHARTTYPE);
     });
+
     //for load
     _YAxisOptions.title.text = $("#item-3").val();
     _XAxisOptions.title.text = $("#item-2").val();
@@ -216,18 +238,9 @@ function chartEdit(e) {
         .parent()
         .parent()[0]
         .id.replaceAll("form-group-", "");
-      
-      //تغییر
-        let par = $("#" + imgid)
-          .parent()[0]
-          .id;
-      _ColumnIndex = $("#" + par).attr('ColumnIndex')
-      //  _ColumnIndex = $("#" + imgid)
-      //   .parent()[0]
-      //   .id.replaceAll("form-group-body-", "")
-      //   .split("-")[1];
-      
 
+      let par = $("#" + imgid).parent()[0].id;
+      _ColumnIndex = $("#" + par).attr("ColumnIndex");
 
       //get base64
       myPromise = new Promise(function (myResolve, myReject) {
@@ -246,16 +259,8 @@ function chartEdit(e) {
 
       _id = imgid.replaceAll("chart-defaultId-", "table-");
 
-       //تغییر
-        let par = $("#" + imgid)
-          .parent()[0]
-          .id;
-      _ColumnIndex = $("#" + par).attr('ColumnIndex')
-
-      //  _ColumnIndex = $("#" + imgid)
-      //   .parent()[0]
-      //   .id.replaceAll("form-group-body-", "")
-      //   .split("-")[1];
+      let par = $("#" + imgid).parent()[0].id;
+      _ColumnIndex = $("#" + par).attr("ColumnIndex");
 
       myPromise = new Promise(function (myResolve, myReject) {
         $("#div2").css("border", "0px");
@@ -295,6 +300,7 @@ function chartEdit(e) {
           CategoryName: $("#item-4").val(),
           CategoryExpression: $("#item-4").val(),
           SeriesType: $("#item-5 option:selected").val(),
+          GrouuppingExpression: $("#TextGroupping").val(),
           Series: SERIES,
           ImgBs64: _Base64,
         });
@@ -352,7 +358,11 @@ function showChart(chartType) {
   //create chart function
   function chartItems(_series, chartType) {
     _GeneralOptions.type = chartType;
-
+    if ($("#item-5").val() == "Stack") {
+      _ColumnPlotOptions.stacking = "percent";
+      _BarPlotOptions.stacking = "percent";
+    }
+    _LegendOptions.labelFormatter();
     //for spiderWeb
     if (_GeneralOptions.type == "polar") {
       _GeneralOptions.polar = true;
@@ -477,31 +487,54 @@ function showChart(chartType) {
 
 //===============================show Table ============================
 function showTable() {
+  $("#chrtTable").remove();
   let divGrid =
-    '<div class="" style="height:300px !important;border-bottom:1px solid #ccc;margin-bottom:10px;display:contents;"><span style="top: 30px;position:absolute;top:1px;font: 14px var(--mainFont);" id="table_head">' +
+    '<div class="" style="height:300px !important;border-bottom:1px solid #ccc;margin-bottom:10px;display:contents;"><span style="top: 30px;position:absolute;top:1px;font-size: 14px;text-align: right;" id="table_head">' +
     $("#item-0").val() +
     "</span>" +
-    '<table  class="table  table-bordered">' +
-    "<thead>" +
-    "<tr>" +
-    '<th scope="col">column1</th>' +
-    '<th scope="col">column2</th>' +
-    '<th scope="col">column3</th>' +
-    "</tr>" +
-    '</thead><tbody id="series_tbody" >';
-  for (let i = 0; i < 8; i++) {
+    '<table id="chrtTable" class="table-bordered">' +
+    '<thead id="chartTable_thead">' +
+    "<tr>";
+  //thead
+  if (SERIES.length > 0) {
+    divGrid += '<th scope="col"><span>ردیف</span></th>';
+    for (let i in SERIES) {
+      divGrid += '<th scope="col"><span>' + SERIES[i].Text + "</span></th>";
+    }
+  } else {
     divGrid +=
-      "<tr>" +
-      "<td>" +
-      i +
-      "</td>" +
-      "<td>columnData" +
-      i +
-      "</td>" +
-      "<td>value" +
-      i +
-      "</td>" +
-      "</tr>";
+      '<th scope="col"><span>ردیف</span></th>' +
+      '<th scope="col"><span>column2</span></th>' +
+      '<th scope="col"><span>column3</span></th>';
+  }
+  divGrid += "</tr>" + '</thead><tbody id="chartTable_tbody" >';
+
+  //tbody
+  for (let i = 0; i < 8; i++) {
+    divGrid += "<tr>";
+    if (SERIES.length > 0) {
+      divGrid += '<td scope="col">' + i + "</td>";
+      for (let i in SERIES) {
+        divGrid +=
+          '<td style="color:' +
+          SERIES[i].StyleColor +
+          '">' +
+          SERIES[i].DataExpression +
+          "</td>";
+      }
+    } else {
+      divGrid +=
+        "<td>" +
+        i +
+        "</td>" +
+        "<td style='color:#0091ea'>columnData" +
+        i +
+        "</td>" +
+        "<td style='color:#4cae4c'>value" +
+        i +
+        "</td>";
+    }
+    divGrid += "</tr>";
   }
 
   divGrid += "</tbody></table ></div>";

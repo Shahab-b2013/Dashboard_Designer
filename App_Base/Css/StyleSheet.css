@@ -450,7 +450,6 @@ input[type="range"] {
   border-radius: 50%;
   background-size: cover; */
   transform: rotate(90deg);
-  
 }
 
 /* #containers {
@@ -572,7 +571,6 @@ input[type="range"] {
 }
 
 .rowBtnGroup-span {
-
   font: 20px var(--mainFont);
   font-style: italic;
   border: 2px dashed #e3b535;
@@ -606,7 +604,6 @@ i {
   margin-left: 5px;
   padding: 5px 0px 5px 40px;
   width: 80px;
-  
 }
 ::placeholder {
   font-size: 12px;
@@ -615,10 +612,78 @@ i {
   margin: auto;
   padding: 0px;
 }
-.btn_submint_exit{
- 
-  margin:10px 0px 10px 5px ;
-  display:inline ;
+.btn_submint_exit {
+  margin: 10px 0px 10px 5px;
+  display: inline;
   float: right;
-  width:70px ;
+  width: 70px;
 }
+
+#chrtTable th {
+  font: 15px var(--mainFont);
+  background-color: rgb(250, 250, 250);
+  padding: 10px;
+}
+#chrtTable{
+  direction: rtl;
+  margin-top: 35px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+#chrtTable tbody td {
+  text-align: right;
+  padding: 5px;
+  font: 14px var(--mainFont);
+}
+/* =======================================popup menu============================= */
+ .card-inverse-info {
+     background: rgba(61, 165, 244, 0.2);
+     border: 1px solid #3898e0;
+     color: #2e7db9
+ }
+
+ .context-menu-list {
+     box-shadow: none;
+     border: 1px solid #f3f3f3
+ }
+
+ .context-menu-list {
+     position: absolute;
+     display: inline-block;
+     min-width: 13em;
+     max-width: 26em;
+     padding: .25em 0;
+     margin: .3em;
+     font-family: inherit;
+     font-size: inherit;
+     list-style-type: none;
+     background: #fff;
+     border: 1px solid rgb(238, 235, 235);
+     border-radius: .2em;
+     -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+     box-shadow: 0 2px 5px rgba(0, 0, 0, .5)
+     
+ }
+
+ .context-menu-item {
+     position: relative;
+     padding: 0.5em 6em;
+     color: #2f2f2f;
+     -webkit-user-select: none;
+     -moz-user-select: none;
+     -ms-user-select: none;
+     user-select: none;
+     background-color: #fff
+ }
+
+ .context-menu-list .context-menu-item.context-menu-hover {
+     background-color: black;
+     color: #fff
+ }
+
+ .context-menu-separator {
+     padding: 0;
+     margin: .35em 0;
+     border-bottom: 1px solid #e6e6e6
+ }
+ 

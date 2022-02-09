@@ -231,7 +231,7 @@ var _ColumnPlotOptions = {
     crop: false,
 
     inside: true,
-
+    formatter: "",
     style: {
       fontSize: "13px",
 

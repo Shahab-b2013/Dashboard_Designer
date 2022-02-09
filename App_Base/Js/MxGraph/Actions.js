@@ -1,5 +1,16 @@
 ﻿"use strict";
 
+var ImgCopy = null;
+var Id_Copy = null;
+var CopyIndex = 0;
+
+function getCopyIndex() {
+  return CopyIndex++;
+}
+
+// right click borwser disabled
+$(document).on("contextmenu", (e) => e.preventDefault(), false);
+
 function createDiv(className, id) {
   let elt = document.createElement("div");
   elt.className = className;
@@ -60,25 +71,145 @@ function createImgChart(e, parentID, chartItem, Type) {
   let parent = parentID ? parentID : e.target.id;
   let img =
     '<img class="fit-image noDrop" type="' +
-    Type +
-    '" draggable="true" ondragstart="dragstart(event)" ondrop="swapping(event)" ondragover="event.preventDefault()" onmouseenter="rowbtnOn(this)" onmouseleave="rowbtnOff(this)" style ="border:1px solid #ccc;border-radius:10px;cursor:grab"  src="' +
+    chartType +
+    '" draggable="true" oncontextmenu="PopupMenu(event)" ondragstart="dragstart(event)" ondrop="swapping(event)" ondragover="event.preventDefault()" onmouseenter="rowbtnOn(this)" onmouseleave="rowbtnOff(this)" style ="border:1px solid #ccc;border-radius:10px;cursor:grab"  src="' +
     src +
     style +
     '" id="' +
     ID +
-    '"><div class="row" onmouseenter="rowbtnOn2(this)" style="display:none;float: left;margin:-50px 0px 0px 20px;" id="rowbtn-img-' +
+    '">' +
+    rowbtn_img(ID);
+  $("#" + parent)
+    .append(img)
+    .css("border", "");
+}
+
+function rowbtn_img(ID) {
+  return (
+    '<div class="row" onmouseenter="rowbtnOn2(this)" style="display:none;float: left;margin:-50px 0px 0px 20px;" id="rowbtn-img-' +
     ID +
     '"><span id="spanDelete' +
     ID +
     '" class="btn btn-light glyphicon glyphicon-trash" onclick="chartDelete(event)" style="margin-left:10px"></span>' +
     '<span  id="spanEdit' +
     ID +
-    '" class="spanEdit btn btn-light glyphicon glyphicon-cog" type="' +
-    chartType +
-    '" onclick="chartEdit(event)" style=""></span></div></img>';
-  $("#" + parent)
-    .append(img)
-    .css("border", "");
+    '" class="spanEdit btn btn-light glyphicon glyphicon-cog"  onclick="chartEdit(event)" style=""></span></div>'
+  );
+}
+
+function PopupMenu(e) {
+  let itemID = e.target.id;
+  //Not default img
+  if (itemID.search("default") == -1) {
+    let menu_Ui =
+      '<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:none;width:200px" id="contextMenu" >' +
+      '<li id="iCopy"><a>کپی</a></li>' +
+      '<li id="iPaste" class="disabled"><a style="color:#eeebeb">درج</a></li>' +
+      '<li class="divider"></li>' +
+      '<li><a tabindex="-1" >Separated link</a></li>' +
+      '<li class="dropdown-submenu">' +
+      '<a tabindex="-1">More options</a>' +
+      '<ul class="dropdown-menu">' +
+      "..." +
+      "</ul>" +
+      "</li>" +
+      "</ul>";
+    $("body").append(menu_Ui);
+    // if ($("#itemID").hasClass("form-group-body")) {
+    //   $("#iPaste").removeClass("disabled");
+    //   $("#iPaste a").css("color", "#000");
+    //   $("#iCopy").addClass("disabled");
+    //   $("#iCopy a").css("color", "#eeebeb");
+    // } else {
+    //   $("#iCopy").removeClass("disabled");
+    //   $("#iCopy a").css("color", "#000");
+    //   $("#iPaste").addClass("disabled");
+    //   $("#iPaste a").css("color", "#eeebeb");
+    // }
+    $("#iCopy").on("click", () => isCopy(itemID));
+    $("#iPaste").on("click", () => isPaste(itemID));
+    //css menu
+    let menu = $("#contextMenu");
+    menu.css("display", "block");
+    menu.css("left", e.pageX - 200 + "px");
+    menu.css("top", e.pageY + "px");
+    //disable menu
+    document.onclick = hideMenu;
+    e.preventDefault();
+
+    function hideMenu() {
+      $("#contextMenu").css("display", "none");
+    }
+  } else {
+    // right click borwser disabled
+    $(document).on("contextmenu", (e) => e.preventDefault(), false);
+  }
+}
+
+function isCopy(Id) {
+  if (Id != null) {
+    ImgCopy = $("#" + Id).clone(true);
+    ImgCopy[0].id = Id + getCopyIndex();
+
+  
+    $("#iPaste").removeClass("disabled");
+    $("#iPaste a").css("color", "#000");
+
+    Id_Copy = Id;
+  }
+}
+
+function isPaste(id) {
+  if (id.search("default") == -1) {
+    $("#" + id).append(ImgCopy);
+    //css
+   
+    $("#iPaste").addClass("disabled");
+    $("#iPaste a").css("color", "#eeebeb");
+
+    setTimeout(() => {
+      if (ImgCopy != null)
+        $("#" + ImgCopy[0].id).after(rowbtn_img(ImgCopy[0].id));
+
+      //clon to array
+      if (Id_Copy != null) {
+        let newItem = CHARTS.filter((x) => x.ID == Id_Copy);
+        function clone(obj) {
+          if (null == obj || "object" != typeof obj) return obj;
+          var copy = obj.constructor();
+          for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) {
+              attr == "ID"
+                ? (copy[attr] = ImgCopy[0].id)
+                : (copy[attr] = obj[attr]);
+            }
+          }
+          return copy;
+        }
+        CHARTS.push(clone(newItem[0]));
+        Id_Copy = null;
+        ImgCopy = null;
+        console.log(CHARTS);
+      }
+    }, 10);
+  }
+}
+
+function copyCheck(e) {
+  if ($("#" + e.target.id).hasClass("form-group-body")) {
+    if ($("#" + e.target.id + " img").length < 1) {
+      if (ImgCopy != null) {
+        $("#" + e.target.id).css("border", "1px solid #ccc");
+        $("#" + e.target.id).css("border-radius", "10px");
+        $("#" + e.target.id).css("color", "#ccc");
+        $("#" + e.target.id).css("font-size", "29px");
+        $("#" + e.target.id).css("font-style", "italic");
+        $("#" + e.target.id).css("font-family", "tahoma");
+        $("#" + e.target.id).html("&#10;&#10;&#10;&#10;اینجا درج کنید ...");
+        $("#" + e.target.id).on("contextmenu", (event) => PopupMenu(event));
+      }
+    }
+  }
 }
 
 //swaping img
@@ -132,10 +263,10 @@ function swapping(e) {
             .split("-")[0];
 
           //modify oneObj ColumnIndex
-          oneObj.ColumnIndex = +$('#' + e.target.id).attr('ColumnIndex');
-            //  oneObj.ColumnIndex = +e.target.id
-            // .replaceAll("form-group-body-", "")
-            // .split("-")[1];
+          oneObj.ColumnIndex = +$("#" + e.target.id).attr("ColumnIndex");
+          //  oneObj.ColumnIndex = +e.target.id
+          // .replaceAll("form-group-body-", "")
+          // .split("-")[1];
         }
       } else {
         if (CHARTS.some(ExistOneID)) {
@@ -146,14 +277,12 @@ function swapping(e) {
             .split("-")[0];
 
           //modify oneObj ColumnIndex
-          const par =
-            twoID.parent()[0].id;
-          oneObj.ColumnIndex = +$('#' + par).attr('ColumnIndex');
+          const par = twoID.parent()[0].id;
+          oneObj.ColumnIndex = +$("#" + par).attr("ColumnIndex");
           //  oneObj.ColumnIndex = +twoID
           //   .parent()[0]
           //   .id.replaceAll("form-group-body-", "")
           //   .split("-")[1];
-           
         }
         if (CHARTS.some(ExistTwoID)) {
           //modify twoObj RowID
@@ -163,10 +292,9 @@ function swapping(e) {
             .split("-")[0];
 
           //modify twoObj ColumnIndex
-           const par =
-            oneID.parent()[0].id;
-          twoObj.ColumnIndex = +$('#' + par).attr('ColumnIndex')
-          
+          const par = oneID.parent()[0].id;
+          twoObj.ColumnIndex = +$("#" + par).attr("ColumnIndex");
+
           //  twoObj.ColumnIndex = +oneID
           //   .parent()[0]
           //   .id.replaceAll("form-group-body-", "")
@@ -174,13 +302,12 @@ function swapping(e) {
         }
       }
     } else {
-      //if twoObj not Exists 
-       const par =
-      oneID.parent()[0].id;
-      oneObj.ColumnIndex = +$('#' + par).attr('ColumnIndex');
-      oneObj.RowID = +par.replaceAll("form-group-body-", "").split("-")[0];
-    
-      
+      //if twoObj not Exists
+      if (oneObj) {
+        const par = oneID.parent()[0].id;
+        oneObj.ColumnIndex = +$("#" + par).attr("ColumnIndex");
+        oneObj.RowID = +par.replaceAll("form-group-body-", "").split("-")[0];
+      }
     }
   }
 }
@@ -275,15 +402,15 @@ function GroupFns(e) {
                 '" ondragover="allowDrop(event)"  >' +
                 '<div style="" class="' +
                 "col-lg-4 col-md-4 form-group-body" +
-                '" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="0" id="form-group-body-' +
+                '" ondragenter="dragEnter(event)"  ondragleave="dragLeave(event)" onmouseover="copyCheck(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="0" id="form-group-body-' +
                 _RowId +
                 '-0"></div><div style="" class="' +
                 "col-lg-4 col-md-4 form-group-body" +
-                '" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="1" id="form-group-body-' +
+                '" ondragenter="dragEnter(event)"  ondragleave="dragLeave(event)" onmouseover="copyCheck(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="1" id="form-group-body-' +
                 _RowId +
                 '-1"></div><div style="" class="' +
                 "col-lg-4 col-md-4 form-group-body" +
-                '" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="2" id="form-group-body-' +
+                '" ondragenter="dragEnter(event)"  ondragleave="dragLeave(event)" onmouseover="copyCheck(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="2" id="form-group-body-' +
                 _RowId +
                 '-2"></div>' +
                 Group_Btn(_RowId) +
@@ -357,11 +484,11 @@ function drop(ev) {
     if (
       !$("#" + ev.target.id).hasClass("noDrop") &&
       $("#" + ev.target.id).hasClass("form-group-body")
-      ) {
-        //delete placeholder div
-        $("#" + ev.target.id).html("");
-        //get senderId and check number or string for switch
-        let dataId = ev.dataTransfer.getData("text");
+    ) {
+      //delete placeholder div
+      $("#" + ev.target.id).html("");
+      //get senderId and check number or string for switch
+      let dataId = ev.dataTransfer.getData("text");
       dataId = dataId.length < 3 ? +dataId : dataId;
       switch (dataId) {
         case 0:
@@ -639,22 +766,24 @@ function DivSplit_1(elem) {
   remove_Empty_Div(elem);
   if (get_Items_Row(elem).length == 1) {
     setDiv1(elem, 12);
+    rowBoxArr_Modify(elem, "OnceColumn");
+    chartArr_Modify(elem);
   }
-  rowBoxArr_Modify(elem, "OnceColumn");
-  chartArr_Modify(elem);
 }
 function DivSplit_2(elem) {
   remove_Empty_Div(elem);
   if (get_Items_Row(elem).length == 1) {
     setDiv1(elem, 6);
     CreateDiv2(elem, 6);
+    rowBoxArr_Modify(elem, "TwoColumn");
+    chartArr_Modify(elem);
   }
   if (get_Items_Row(elem).length == 2) {
     setDiv1(elem, 6);
     setDiv2(elem, 6);
+    rowBoxArr_Modify(elem, "TwoColumn");
+    chartArr_Modify(elem);
   }
-  rowBoxArr_Modify(elem, "TwoColumn");
-  chartArr_Modify(elem);
 }
 function DivSplit_3(elem) {
   remove_Empty_Div(elem);
@@ -662,15 +791,17 @@ function DivSplit_3(elem) {
     setDiv1(elem, 4);
     CreateDiv2(elem, 4);
     CreateDiv3(elem, 4);
+    rowBoxArr_Modify(elem, "ThreeColumn");
+    chartArr_Modify(elem);
   }
   if (get_Items_Row(elem).length == 2) {
     remove_Empty_Div(elem);
     setDiv1(elem, 4);
     setDiv2(elem, 4);
     CreateDiv3(elem, 4);
+    rowBoxArr_Modify(elem, "ThreeColumn");
+    chartArr_Modify(elem);
   }
-  rowBoxArr_Modify(elem, "ThreeColumn");
-  chartArr_Modify(elem);
 }
 
 function rowBoxArr_Modify(elem, num) {
@@ -695,21 +826,10 @@ function chartArr_Modify(elem) {
       //set new colIndex in arr
       if (chartID) {
         let colIndex = $("#" + colID).attr("ColumnIndex");
-        let element = CHARTS.filter(x => x.ID == chartID);
+        let element = CHARTS.filter((x) => x.ID == chartID);
         element[0].ColumnIndex = +colIndex;
-        //     console.log('Element ', element[0].ColumnIndex);
-        //   }
-        // };
-        //     CHARTS.find(function (Element) {
-        //   if (Element.id == chartID) {
-        //     Element.ColumnIndex = colIndex;
-        //   }
-        // });
       }
     }
-        
-      
-    
   }
 }
 function setDiv1(elem, colNum) {
@@ -718,7 +838,6 @@ function setDiv1(elem, colNum) {
     "form-group-body  col-md-" + colNum
   );
   $("#" + get_Items_Row(elem)[0]).attr("ColumnIndex", 0);
-
 }
 function setDiv2(elem, colNum) {
   $("#" + get_Items_Row(elem)[1]).attr(
@@ -734,7 +853,7 @@ function CreateDiv2(elem, colNum) {
   let div2 =
     '<div class="form-group-body col-md-' +
     colNum +
-    '" style="" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="drop(event)" ondragover="allowDrop(event)" ColumnIndex="1" id="' +
+    '" style="" onmouseover="copyCheck(event)" onmouseout="onMouseOut(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="drop(event)" ondragover="allowDrop(event)" ColumnIndex="1" id="' +
     div2ID +
     '" ></div>';
   //set div2
@@ -750,7 +869,7 @@ function CreateDiv3(elem, colNum) {
   let div3 =
     '<div class="form-group-body col-md-' +
     colNum +
-    '" style="" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" ColumnIndex="2" id="' +
+    '" style="" onmouseover="copyCheck(event)" onmouseout="onMouseOut(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" ColumnIndex="2" id="' +
     div3ID +
     '"></div>';
   //set div3
