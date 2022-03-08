@@ -1,4 +1,4 @@
-﻿"use strict";
+﻿'use strict';
 
 var ImgCopy = null;
 var Id_Copy = null;
@@ -9,12 +9,12 @@ function getCopyIndex() {
 }
 
 // right click borwser disabled
-$(document).on("contextmenu", (e) => e.preventDefault(), false);
+$(document).on('contextmenu', (e) => e.preventDefault(), false);
 
 function createDiv(className, id) {
-  let elt = document.createElement("div");
+  let elt = document.createElement('div');
   elt.className = className;
-  elt.setAttribute("id", id);
+  elt.setAttribute('id', id);
   return elt;
 }
 
@@ -24,25 +24,25 @@ function createImgChart(e, parentID, chartItem, Type) {
   function styleChart(type) {
     let value;
     switch (type) {
-      case "column":
+      case 'column':
         value = columnBs64; //from img.js
         break;
-      case "pie":
+      case 'pie':
         value = pieBs64;
         break;
-      case "bar":
+      case 'bar':
         value = barBs64;
         break;
-      case "line":
+      case 'line':
         value = lineBs64;
         break;
-      case "areaspline":
+      case 'areaspline':
         value = areaSplineBs64;
         break;
-      case "polar":
+      case 'polar':
         value = polarBs64;
         break;
-      case "table":
+      case 'table':
         value = tableBs64;
         break;
       default:
@@ -53,19 +53,19 @@ function createImgChart(e, parentID, chartItem, Type) {
   }
   let ID = chartItem ? chartItem.ID : chart_defaultId();
   function chart_defaultId() {
-    return "chart-defaultId-" + ~~(Math.random() * 1000);
+    return 'chart-defaultId-' + ~~(Math.random() * 1000);
   }
 
   //set src and create img
   let src;
   if (chartItem) {
-    if (chartItem.Type == "table" || CHARTTYPE == "table") {
-      src = "";
+    if (chartItem.Type == 'table' || CHARTTYPE == 'table') {
+      src = '';
     } else {
-      src = "data:image/svg+xml;base64,";
+      src = 'data:image/svg+xml;base64,';
     }
   } else {
-    src = "data:image/svg+xml;base64,";
+    src = 'data:image/svg+xml;base64,';
   }
   let chartType = chartItem ? chartItem.Type : Type;
   let parent = parentID ? parentID : e.target.id;
@@ -79,9 +79,9 @@ function createImgChart(e, parentID, chartItem, Type) {
     ID +
     '">' +
     rowbtn_img(ID);
-  $("#" + parent)
+  $('#' + parent)
     .append(img)
-    .css("border", "");
+    .css('border', '');
 }
 
 function rowbtn_img(ID) {
@@ -100,7 +100,7 @@ function rowbtn_img(ID) {
 function PopupMenu(e) {
   let itemID = e.target.id;
   //Not default img
-  if (itemID.search("default") == -1) {
+  if (itemID.includes('default') == false) {
     let menu_Ui =
       '<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:none;width:200px" id="contextMenu" >' +
       '<li id="iCopy"><a>کپی</a></li>' +
@@ -110,11 +110,11 @@ function PopupMenu(e) {
       '<li class="dropdown-submenu">' +
       '<a tabindex="-1">More options</a>' +
       '<ul class="dropdown-menu">' +
-      "..." +
-      "</ul>" +
-      "</li>" +
-      "</ul>";
-    $("body").append(menu_Ui);
+      '...' +
+      '</ul>' +
+      '</li>' +
+      '</ul>';
+    $('body').append(menu_Ui);
     // if ($("#itemID").hasClass("form-group-body")) {
     //   $("#iPaste").removeClass("disabled");
     //   $("#iPaste a").css("color", "#000");
@@ -126,87 +126,79 @@ function PopupMenu(e) {
     //   $("#iPaste").addClass("disabled");
     //   $("#iPaste a").css("color", "#eeebeb");
     // }
-    $("#iCopy").on("click", () => isCopy(itemID));
-    $("#iPaste").on("click", () => isPaste(itemID));
+    $('#iCopy').on('click', () => isCopy(itemID));
+    $('#iPaste').on('click', () => isPaste(itemID));
     //css menu
-    let menu = $("#contextMenu");
-    menu.css("display", "block");
-    menu.css("left", e.pageX - 200 + "px");
-    menu.css("top", e.pageY + "px");
+    let menu = $('#contextMenu');
+    menu.css('display', 'block');
+    menu.css('left', e.pageX - 200 + 'px');
+    menu.css('top', e.pageY + 'px');
     //disable menu
     document.onclick = hideMenu;
     e.preventDefault();
 
     function hideMenu() {
-      $("#contextMenu").css("display", "none");
+      $('#contextMenu').css('display', 'none');
     }
   } else {
     // right click borwser disabled
-    $(document).on("contextmenu", (e) => e.preventDefault(), false);
+    $(document).on('contextmenu', (e) => e.preventDefault(), false);
   }
 }
 
-function isCopy(Id) {
+async function isCopy(Id) {
   if (Id != null) {
-    ImgCopy = $("#" + Id).clone(true);
-    ImgCopy[0].id = Id + getCopyIndex();
+    ImgCopy = await $('#' + Id).clone(true);
+    ImgCopy[0].id = Id + (await getCopyIndex());
 
-  
-    $("#iPaste").removeClass("disabled");
-    $("#iPaste a").css("color", "#000");
+    $('#iPaste').removeClass('disabled');
+    $('#iPaste a').css('color', '#000');
 
     Id_Copy = Id;
   }
 }
 
-function isPaste(id) {
-  if (id.search("default") == -1) {
-    $("#" + id).append(ImgCopy);
+async function isPaste(id) {
+  if (id.includes('default') == false) {
+    await $('#' + id).append(ImgCopy);
     //css
-   
-    $("#iPaste").addClass("disabled");
-    $("#iPaste a").css("color", "#eeebeb");
+    $('#iPaste').addClass('disabled');
+    $('#iPaste a').css('color', '#eeebeb');
+    //edit btn
+    if (ImgCopy != null) await $('#' + ImgCopy[0].id).after(rowbtn_img(ImgCopy[0].id));
 
-    setTimeout(() => {
-      if (ImgCopy != null)
-        $("#" + ImgCopy[0].id).after(rowbtn_img(ImgCopy[0].id));
-
-      //clon to array
-      if (Id_Copy != null) {
-        let newItem = CHARTS.filter((x) => x.ID == Id_Copy);
-        function clone(obj) {
-          if (null == obj || "object" != typeof obj) return obj;
-          var copy = obj.constructor();
-          for (var attr in obj) {
-            if (obj.hasOwnProperty(attr)) {
-              attr == "ID"
-                ? (copy[attr] = ImgCopy[0].id)
-                : (copy[attr] = obj[attr]);
-            }
+    //clone array item
+    if (Id_Copy != null) {
+      let newItem = CHARTS.filter((x) => x.ID == Id_Copy);
+      function clone(obj) {
+        if (null == obj || 'object' != typeof obj) return obj;
+        var copy = obj.constructor();
+        for (var attr in obj) {
+          if (obj.hasOwnProperty(attr)) {
+            attr == 'ID' ? (copy[attr] = ImgCopy[0].id) : (copy[attr] = obj[attr]);
           }
-          return copy;
         }
-        CHARTS.push(clone(newItem[0]));
-        Id_Copy = null;
-        ImgCopy = null;
-        console.log(CHARTS);
+        return copy;
       }
-    }, 10);
+      CHARTS.push(clone(newItem[0]));
+      Id_Copy = null;
+      ImgCopy = null;
+    }
   }
 }
 
 function copyCheck(e) {
-  if ($("#" + e.target.id).hasClass("form-group-body")) {
-    if ($("#" + e.target.id + " img").length < 1) {
+  if ($('#' + e.target.id).hasClass('form-group-body')) {
+    if ($('#' + e.target.id + ' img').length < 1) {
       if (ImgCopy != null) {
-        $("#" + e.target.id).css("border", "1px solid #ccc");
-        $("#" + e.target.id).css("border-radius", "10px");
-        $("#" + e.target.id).css("color", "#ccc");
-        $("#" + e.target.id).css("font-size", "29px");
-        $("#" + e.target.id).css("font-style", "italic");
-        $("#" + e.target.id).css("font-family", "tahoma");
-        $("#" + e.target.id).html("&#10;&#10;&#10;&#10;اینجا درج کنید ...");
-        $("#" + e.target.id).on("contextmenu", (event) => PopupMenu(event));
+        $('#' + e.target.id).css('border', '1px solid #ccc');
+        $('#' + e.target.id).css('border-radius', '10px');
+        $('#' + e.target.id).css('color', '#ccc');
+        $('#' + e.target.id).css('font-size', '29px');
+        $('#' + e.target.id).css('font-style', 'italic');
+        $('#' + e.target.id).css('font-family', 'tahoma');
+        $('#' + e.target.id).html('&#10;&#10;&#10;&#10;اینجا درج کنید ...');
+        $('#' + e.target.id).on('contextmenu', (event) => PopupMenu(event));
       }
     }
   }
@@ -215,8 +207,8 @@ function copyCheck(e) {
 //swaping img
 function swapping(e) {
   let temp;
-  let oneID = $("#" + e.dataTransfer.getData("text"));
-  let twoID = $("#" + e.target.id);
+  let oneID = $('#' + e.dataTransfer.getData('text'));
+  let twoID = $('#' + e.target.id);
 
   if (oneID[0].id.length > 3) {
     function ExistOneID(item) {
@@ -230,13 +222,13 @@ function swapping(e) {
     if (CHARTS.some(ExistOneID) && CHARTS.some(ExistTwoID)) {
       e.preventDefault();
       //swap src
-      temp = oneID.attr("src");
-      oneID.attr("src", twoID.attr("src"));
-      twoID.attr("src", temp);
+      temp = oneID.attr('src');
+      oneID.attr('src', twoID.attr('src'));
+      twoID.attr('src', temp);
       //swap type
-      temp = oneID.attr("type");
-      oneID.attr("type", twoID.attr("type"));
-      twoID.attr("type", temp);
+      temp = oneID.attr('type');
+      oneID.attr('type', twoID.attr('type'));
+      twoID.attr('type', temp);
     }
 
     if (CHARTS.some(ExistOneID))
@@ -255,15 +247,13 @@ function swapping(e) {
 
       //تغییر
       //if img not Exists
-      if (twoID.hasClass("form-group-body")) {
+      if (twoID.hasClass('form-group-body')) {
         if (CHARTS.some(ExistOneID)) {
           //modify oneObj RowID
-          oneObj.RowID = +e.target.id
-            .replaceAll("form-group-body-", "")
-            .split("-")[0];
+          oneObj.RowID = +e.target.id.replaceAll('form-group-body-', '').split('-')[0];
 
           //modify oneObj ColumnIndex
-          oneObj.ColumnIndex = +$("#" + e.target.id).attr("ColumnIndex");
+          oneObj.ColumnIndex = +$('#' + e.target.id).attr('ColumnIndex');
           //  oneObj.ColumnIndex = +e.target.id
           // .replaceAll("form-group-body-", "")
           // .split("-")[1];
@@ -271,14 +261,11 @@ function swapping(e) {
       } else {
         if (CHARTS.some(ExistOneID)) {
           //modify oneObj RowID
-          oneObj.RowID = +twoID
-            .parent()[0]
-            .id.replaceAll("form-group-body-", "")
-            .split("-")[0];
+          oneObj.RowID = +twoID.parent()[0].id.replaceAll('form-group-body-', '').split('-')[0];
 
           //modify oneObj ColumnIndex
           const par = twoID.parent()[0].id;
-          oneObj.ColumnIndex = +$("#" + par).attr("ColumnIndex");
+          oneObj.ColumnIndex = +$('#' + par).attr('ColumnIndex');
           //  oneObj.ColumnIndex = +twoID
           //   .parent()[0]
           //   .id.replaceAll("form-group-body-", "")
@@ -286,14 +273,11 @@ function swapping(e) {
         }
         if (CHARTS.some(ExistTwoID)) {
           //modify twoObj RowID
-          twoObj.RowID = +oneID
-            .parent()[0]
-            .id.replaceAll("form-group-body-", "")
-            .split("-")[0];
+          twoObj.RowID = +oneID.parent()[0].id.replaceAll('form-group-body-', '').split('-')[0];
 
           //modify twoObj ColumnIndex
           const par = oneID.parent()[0].id;
-          twoObj.ColumnIndex = +$("#" + par).attr("ColumnIndex");
+          twoObj.ColumnIndex = +$('#' + par).attr('ColumnIndex');
 
           //  twoObj.ColumnIndex = +oneID
           //   .parent()[0]
@@ -305,130 +289,130 @@ function swapping(e) {
       //if twoObj not Exists
       if (oneObj) {
         const par = oneID.parent()[0].id;
-        oneObj.ColumnIndex = +$("#" + par).attr("ColumnIndex");
-        oneObj.RowID = +par.replaceAll("form-group-body-", "").split("-")[0];
+        oneObj.ColumnIndex = +$('#' + par).attr('ColumnIndex');
+        oneObj.RowID = +par.replaceAll('form-group-body-', '').split('-')[0];
       }
     }
   }
 }
 
 function dragstart(e) {
-  e.dataTransfer.setData("text", e.target.id);
-  if (e.target.id == "7") {
-    $(".form-group-body").css("opacity", "0.1");
-    $(".form-group-body").addClass("noDrop");
-    $(".rowBtnGroup-span").css("display", "block");
+  e.dataTransfer.setData('text', e.target.id);
+  if (e.target.id == '7') {
+    $('.form-group-body').css('opacity', '0.1');
+    $('.form-group-body').addClass('noDrop');
+    $('.rowBtnGroup-span').css('display', 'block');
   }
 }
 
 function ColumnFns(e) {
-  if ($("#" + e.target.id).hasClass("form-group-body")) {
-    createImgChart(e, null, null, "column");
+  if ($('#' + e.target.id).hasClass('form-group-body')) {
+    createImgChart(e, null, null, 'column');
   }
 }
 function PieFns(e) {
-  if ($("#" + e.target.id).hasClass("form-group-body")) {
-    createImgChart(e, null, null, "pie");
+  if ($('#' + e.target.id).hasClass('form-group-body')) {
+    createImgChart(e, null, null, 'pie');
   }
 }
 function BarFns(e) {
-  if ($("#" + e.target.id).hasClass("form-group-body")) {
-    createImgChart(e, null, null, "bar");
+  if ($('#' + e.target.id).hasClass('form-group-body')) {
+    createImgChart(e, null, null, 'bar');
   }
 }
 function LineFns(e) {
-  if ($("#" + e.target.id).hasClass("form-group-body")) {
-    createImgChart(e, null, null, "line");
+  if ($('#' + e.target.id).hasClass('form-group-body')) {
+    createImgChart(e, null, null, 'line');
   }
 }
 
 function AreaSplineFns(e) {
-  if ($("#" + e.target.id).hasClass("form-group-body")) {
-    createImgChart(e, null, null, "areaspline");
+  if ($('#' + e.target.id).hasClass('form-group-body')) {
+    createImgChart(e, null, null, 'areaspline');
   }
 }
 function polarFns(e) {
-  if ($("#" + e.target.id).hasClass("form-group-body")) {
-    createImgChart(e, null, null, "polar");
+  if ($('#' + e.target.id).hasClass('form-group-body')) {
+    createImgChart(e, null, null, 'polar');
   }
 }
 
 function TableFns(e) {
-  if ($("#" + e.target.id).hasClass("form-group-body")) {
-    createImgChart(e, null, null, "table");
+  if ($('#' + e.target.id).hasClass('form-group-body')) {
+    createImgChart(e, null, null, 'table');
   }
 }
 
 function GroupFns(e) {
   if (ROWBOXS.length < 9) {
-    if ($("#" + e.target.id).hasClass("rowBtnGroup-span")) {
+    if ($('#' + e.target.id).hasClass('rowBtnGroup-span')) {
       let GroupId = e.target.id;
-      const parent = $("#" + GroupId)
+      const parent = $('#' + GroupId)
         .parent()
         .parent()
         .parent()[0].id;
       let _RowId = 0;
       //get last ID
-      $("#" + parent)
+      $('#' + parent)
         .children()
         .each(function () {
-          if ($(this).hasClass("form-group-box")) {
-            let nextRowId = +$(this).attr("id").replace("form-group-", "");
+          if ($(this).hasClass('form-group-box')) {
+            let nextRowId = +$(this).attr('id').replace('form-group-', '');
             if (nextRowId > _RowId) _RowId = nextRowId;
           }
         });
       //set last Id
       _RowId++;
 
-      let par = $("#" + GroupId)
+      let par = $('#' + GroupId)
         .parent()
         .parent()[0].id;
-      par = +par.replaceAll("form-group-", "");
+      par = +par.replaceAll('form-group-', '');
       let Element = ROWBOXS.find((Element) => Element.RowID === par);
       let _RowIndex = Element.RowIndex + 1;
 
       //add row
       $(document).ready(function () {
-        $("#" + GroupId)
+        $('#' + GroupId)
           .parent()
           .parent()
           .after(
             $(
               '<div  style="" id="' +
-                "form-group-" +
+                'form-group-' +
                 _RowId +
                 '" class="row form-group-box" RowIndex="' +
                 _RowIndex +
                 '" ondragover="allowDrop(event)"  >' +
                 '<div style="" class="' +
-                "col-lg-4 col-md-4 form-group-body" +
+                'col-lg-4 col-md-4 form-group-body' +
                 '" ondragenter="dragEnter(event)"  ondragleave="dragLeave(event)" onmouseover="copyCheck(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="0" id="form-group-body-' +
                 _RowId +
                 '-0"></div><div style="" class="' +
-                "col-lg-4 col-md-4 form-group-body" +
+                'col-lg-4 col-md-4 form-group-body' +
                 '" ondragenter="dragEnter(event)"  ondragleave="dragLeave(event)" onmouseover="copyCheck(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="1" id="form-group-body-' +
                 _RowId +
                 '-1"></div><div style="" class="' +
-                "col-lg-4 col-md-4 form-group-body" +
+                'col-lg-4 col-md-4 form-group-body' +
                 '" ondragenter="dragEnter(event)"  ondragleave="dragLeave(event)" onmouseover="copyCheck(event)" onmouseout="onMouseOut(event)" ondrop="drop(event)" ondragover="allowDrop(event)" columnindex="2" id="form-group-body-' +
                 _RowId +
                 '-2"></div>' +
                 Group_Btn(_RowId) +
-                "</div>"
-            )
+                '</div>',
+            ),
           );
       });
-      $(".form-group-body").css("opacity", "1");
-      $(".form-group-body").removeClass("noDrop");
-      $(".rowBtnGroup-span").css("display", "none");
+      $('.form-group-body').css('opacity', '1');
+      $('.form-group-body').removeClass('noDrop');
+      $('.rowBtnGroup-span').css('display', 'none');
 
       //Add in ROWBOXS
       let newRowBox = {
         RowID: _RowId,
         RowIndex: _RowIndex,
-        RowDisplayMode: "GroupWithBox",
-        ColumnLayout: "ThreeColumn",
-        ColumnWidth: "default",
+        RowDisplayMode: 'GroupWithBox',
+        ColumnLayout: 'ThreeColumn',
+        ColumnWidth: 'default',
       };
 
       ROWBOXS.push(newRowBox);
@@ -439,15 +423,13 @@ function GroupFns(e) {
       //Swap newElem with beforElem
       let newItem = ROWBOXS.find((item) => item.RowID == _RowId);
       let parentItem = ROWBOXS.find((item) => item.RowID == par);
-      let beforItem = ROWBOXS.find(
-        (item) => item.RowIndex == parentItem.RowIndex + 1
-      );
+      let beforItem = ROWBOXS.find((item) => item.RowIndex == parentItem.RowIndex + 1);
       beforItem.RowIndex = parentItem.RowIndex + 2;
       newItem.RowIndex = parentItem.RowIndex + 1;
       Sort_ROWBOXS();
     }
   } else {
-    alert("تعداد سطرها  بیش  از حد مجاز است.");
+    alert('تعداد سطرها  بیش  از حد مجاز است.');
   }
 }
 
@@ -459,20 +441,16 @@ function RowIndex_Generator() {
       item.RowIndex = temp;
     }
     temp++;
-    $("#form-group-" + item.RowID).attr("RowIndex", item.RowIndex);
+    $('#form-group-' + item.RowID).attr('RowIndex', item.RowIndex);
   });
 }
 
 function Sort_ROWBOXS() {
-  ROWBOXS.sort(
-    (firstItem, secondItem) => firstItem.RowIndex - secondItem.RowIndex
-  );
+  ROWBOXS.sort((firstItem, secondItem) => firstItem.RowIndex - secondItem.RowIndex);
 }
 
 function Sort_CHARTS() {
-  CHARTS.sort(
-    (firstElem, secondElem) => firstElem.ColumnIndex - secondElem.ColumnIndex
-  );
+  CHARTS.sort((firstElem, secondElem) => firstElem.ColumnIndex - secondElem.ColumnIndex);
 }
 
 //=============================================================================drag and drop functions=================================================================================
@@ -481,14 +459,11 @@ function Sort_CHARTS() {
  * */
 function drop(ev) {
   if (ev.target.id) {
-    if (
-      !$("#" + ev.target.id).hasClass("noDrop") &&
-      $("#" + ev.target.id).hasClass("form-group-body")
-    ) {
+    if (!$('#' + ev.target.id).hasClass('noDrop') && $('#' + ev.target.id).hasClass('form-group-body')) {
       //delete placeholder div
-      $("#" + ev.target.id).html("");
+      $('#' + ev.target.id).html('');
       //get senderId and check number or string for switch
-      let dataId = ev.dataTransfer.getData("text");
+      let dataId = ev.dataTransfer.getData('text');
       dataId = dataId.length < 3 ? +dataId : dataId;
       switch (dataId) {
         case 0:
@@ -515,12 +490,10 @@ function drop(ev) {
         default:
           //drop
           ev.preventDefault();
-          $("#" + ev.target.id).append(document.getElementById(dataId));
+          $('#' + ev.target.id).append(document.getElementById(dataId));
           //set rowbtn
-          $("#" + ev.target.id).append(
-            document.getElementById("rowbtn-img-" + dataId)
-          );
-          $("#" + ev.target.id).css("border", "");
+          $('#' + ev.target.id).append(document.getElementById('rowbtn-img-' + dataId));
+          $('#' + ev.target.id).css('border', '');
           swapping(ev);
           break;
       }
@@ -529,16 +502,16 @@ function drop(ev) {
 }
 function allowDrop(e) {
   if (e.target.id) {
-    if (!$("#" + e.target.id).hasClass("noDrop")) {
-      if ($("#" + e.target.id).children().length == 0) {
-        $("#" + e.target.id).css("border", "1px solid #ccc");
-        $("#" + e.target.id).css("border-radius", "10px");
-        if ($("#" + e.target.id).hasClass("form-group-body")) {
-          $("#" + e.target.id).css("color", "#ccc");
-          $("#" + e.target.id).css("font-size", "29px");
-          $("#" + e.target.id).css("font-style", "italic");
-          $("#" + e.target.id).css("font-family", "tahoma");
-          $("#" + e.target.id).html("&#10;&#10;&#10;&#10;اینجا رها کنید ...");
+    if (!$('#' + e.target.id).hasClass('noDrop')) {
+      if ($('#' + e.target.id).children().length == 0) {
+        $('#' + e.target.id).css('border', '1px solid #ccc');
+        $('#' + e.target.id).css('border-radius', '10px');
+        if ($('#' + e.target.id).hasClass('form-group-body')) {
+          $('#' + e.target.id).css('color', '#ccc');
+          $('#' + e.target.id).css('font-size', '29px');
+          $('#' + e.target.id).css('font-style', 'italic');
+          $('#' + e.target.id).css('font-family', 'tahoma');
+          $('#' + e.target.id).html('&#10;&#10;&#10;&#10;اینجا رها کنید ...');
         }
         e.preventDefault();
       }
@@ -547,70 +520,66 @@ function allowDrop(e) {
 }
 
 function DeleteGroup(elem) {
-  let RowCount = $("#geContent").children().length;
+  let RowCount = $('#geContent').children().length;
   if (RowCount > 1) {
     remove_Empty_Div(elem);
 
     let RowID = elem.parentNode.parentNode.id;
     //check is chid row and delete row
-    if ($("#" + RowID).children().length - 1 == 0) {
-      $("#" + RowID).remove();
-      RowID = +RowID.replaceAll("form-group-", "");
+    if ($('#' + RowID).children().length - 1 == 0) {
+      $('#' + RowID).remove();
+      RowID = +RowID.replaceAll('form-group-', '');
       //delete row in ROWBOXS
       ROWBOXS.splice(
         ROWBOXS.findIndex((Element) => Element.RowID == RowID),
-        1
+        1,
       );
 
       //RowIndex Generate
       RowIndex_Generator();
     } else {
-      alert(" سطر مورد نظر دارای چارت است و قابل حذف کردن نمی باشد.");
+      alert(' سطر مورد نظر دارای چارت است و قابل حذف کردن نمی باشد.');
     }
   }
 }
 
 function dragEnter(e) {
-  if (e.target.id == true && e.target.id != "lbl5") {
-    if ($("#" + e.target.id).children().length == 0) {
-      if ($("#" + e.target.id).hasClass("form-group-body")) {
-        $("#" + e.target.id).css("border", "1px solid #ccc");
-        $("#" + e.target.id).css("border-radius", "10px");
+  if (e.target.id == true && e.target.id != 'lbl5') {
+    if ($('#' + e.target.id).children().length == 0) {
+      if ($('#' + e.target.id).hasClass('form-group-body')) {
+        $('#' + e.target.id).css('border', '1px solid #ccc');
+        $('#' + e.target.id).css('border-radius', '10px');
       }
     }
   }
 }
 function onMouseOut(e) {
-  if (!$("#" + e.target.id).hasClass("noDrop")) {
-    if ($("#" + e.target.id).children().length == 0) {
-      $("#" + e.target.id).css("border", "");
-      $("#" + e.target.id).html("");
+  if (!$('#' + e.target.id).hasClass('noDrop')) {
+    if ($('#' + e.target.id).children().length == 0) {
+      $('#' + e.target.id).css('border', '');
+      $('#' + e.target.id).html('');
     }
   }
 }
 function dragLeave(e) {
   if (e.target.id) {
-    if (!$("#" + e.target.id).hasClass("noDrop")) {
-      if ($("#" + e.target.id).children().length == 0) {
-        $("#" + e.target.id).css("border", "");
-        $("#" + e.target.id).html("");
+    if (!$('#' + e.target.id).hasClass('noDrop')) {
+      if ($('#' + e.target.id).children().length == 0) {
+        $('#' + e.target.id).css('border', '');
+        $('#' + e.target.id).html('');
       }
     }
   }
 }
 function rowMoveUp(e) {
-  let oneID = $("#" + e.target.parentNode.parentNode.id);
+  let oneID = $('#' + e.target.parentNode.parentNode.id);
   if (oneID.prev()[0]) {
     let cloned = oneID.clone(true);
     let twoID = oneID.prev()[0].id;
-    if (!$("#" + twoID).hasClass("divHeader")) {
-      $("#" + twoID).before($(cloned));
+    if (!$('#' + twoID).hasClass('divHeader')) {
+      $('#' + twoID).before($(cloned));
       //for swapping
-      ROWBOXS_Modify(
-        "Up",
-        oneID[0].id.replaceAll("form-group-", ""),
-        twoID.replaceAll("form-group-", "")
-      );
+      ROWBOXS_Modify('Up', oneID[0].id.replaceAll('form-group-', ''), twoID.replaceAll('form-group-', ''));
       oneID.remove();
     }
   }
@@ -619,20 +588,16 @@ function rowMoveUp(e) {
 
 function rowMoveDown(e) {
   window.scrollTo(0, 0);
-  let oneID = $("#" + e.target.parentNode.parentNode.id);
+  let oneID = $('#' + e.target.parentNode.parentNode.id);
 
   if (oneID) {
     let cloned = oneID.clone(true);
     if (oneID.next()[0]) {
       let twoID = oneID.next()[0].id;
-      if (twoID != "geContent") {
-        $("#" + twoID).after($(cloned));
+      if (twoID != 'geContent') {
+        $('#' + twoID).after($(cloned));
         //for swapping
-        ROWBOXS_Modify(
-          "Down",
-          oneID[0].id.replaceAll("form-group-", ""),
-          twoID.replaceAll("form-group-", "")
-        );
+        ROWBOXS_Modify('Down', oneID[0].id.replaceAll('form-group-', ''), twoID.replaceAll('form-group-', ''));
         oneID.remove();
       }
     }
@@ -645,9 +610,9 @@ function rowMoveDown(e) {
 function ROWBOXS_Modify(move, oneID, twoID) {
   $.each(ROWBOXS, function (index, item) {
     if (item.RowID == oneID) {
-      move == "Down" ? item.RowIndex++ : item.RowIndex--;
+      move == 'Down' ? item.RowIndex++ : item.RowIndex--;
     } else if (item.RowID == twoID) {
-      move == "Down" ? item.RowIndex-- : item.RowIndex++;
+      move == 'Down' ? item.RowIndex-- : item.RowIndex++;
     }
   });
 }
@@ -662,36 +627,36 @@ function ModalConstractor(width, parent) {
     '<div id="myModal" class="modal" >' +
     '<div id="chartModal" class="modal-content">' +
     '<div id="contentM" class="row col-md-12"></div>' +
-    "</div></div>";
-  $("#" + parent).append(div);
+    '</div></div>';
+  $('#' + parent).append(div);
 
-  $("#myModal").css("display", "block");
-  $("#chartModal").css("width", width);
+  $('#myModal').css('display', 'block');
+  $('#chartModal').css('width', width);
 }
 
 function rowbtnOn(elem) {
-  $("#rowbtn-img-" + $(elem)[0].id).css("display", "block");
+  $('#rowbtn-img-' + $(elem)[0].id).css('display', 'block');
 }
 function rowbtnOn2(elem) {
-  $("#" + $(elem)[0].id).css("display", "block");
+  $('#' + $(elem)[0].id).css('display', 'block');
 }
 function rowbtnOff(elem) {
-  $("#rowbtn-img-" + $(elem)[0].id).css("display", "none");
+  $('#rowbtn-img-' + $(elem)[0].id).css('display', 'none');
 }
 
 function chartDelete(e) {
   // remove popup
-  let parent = $("#" + e.target.id).parent()[0].id;
-  let msg = "آیا از حذف این آیتم مطمئن هستید ؟";
+  let parent = $('#' + e.target.id).parent()[0].id;
+  let msg = 'آیا از حذف این آیتم مطمئن هستید ؟';
 
   // MsgBox
-  ModalConstractor("25%", parent);
-  let div = $("#contentM");
+  ModalConstractor('25%', parent);
+  let div = $('#contentM');
   div.html(msg);
-  div.css("display", "block");
-  div.css("padding", "10px");
-  div.css("text-align", "start");
-  $("#myModal").css("padding-top", "200px");
+  div.css('display', 'block');
+  div.css('padding', '10px');
+  div.css('text-align', 'start');
+  $('#myModal').css('padding-top', '200px');
 
   let btn =
     '<hr style="margin:80px 0px 0px 0px;width:100%;">' +
@@ -700,50 +665,48 @@ function chartDelete(e) {
   div.append(btn);
 
   //close msgbox
-  $("#myModal").css("display", "block");
+  $('#myModal').css('display', 'block');
 }
 
 function chart_del() {
-  let parentID = $("#myModal").parent()[0].id;
-  let imgid = parentID.replaceAll("rowbtn-img-", "");
-  $("#" + imgid).remove();
+  let parentID = $('#myModal').parent()[0].id;
+  let imgid = parentID.replaceAll('rowbtn-img-', '');
+  $('#' + imgid).remove();
   HideModal();
   //rowbtn remove
-  let rowbtn = "rowbtn-img-" + imgid;
-  $("#" + rowbtn).remove();
+  let rowbtn = 'rowbtn-img-' + imgid;
+  $('#' + rowbtn).remove();
   //modify chars arr
   CHARTS.splice(
     CHARTS.findIndex((Element) => Element.ID == imgid),
-    1
+    1,
   );
 }
 
 function GroupSplit(elem) {
   //group child count & set lblsilder
 
-  let id = elem.id.replaceAll("EditGroup-", "");
-  const childCount = $("#form-group-" + id).children().length - 1;
-  $("#lblSlider-" + id).html(childCount + " column");
-  $("#myslider-" + id).val(childCount);
+  let id = elem.id.replaceAll('EditGroup-', '');
+  const childCount = $('#form-group-' + id).children().length - 1;
+  $('#lblSlider-' + id).html(childCount + ' column');
+  $('#myslider-' + id).val(childCount);
 
   //set lblSlider position
-  if (childCount == 1) $("#lblSlider-" + id).css("left", "0px");
-  if (childCount == 2) $("#lblSlider-" + id).css("left", "30px");
-  if (childCount == 3) $("#lblSlider-" + id).css("left", "70px");
+  if (childCount == 1) $('#lblSlider-' + id).css('left', '0px');
+  if (childCount == 2) $('#lblSlider-' + id).css('left', '30px');
+  if (childCount == 3) $('#lblSlider-' + id).css('left', '70px');
 
-  let group_Child_Length = +$("#form-group-" + id).children().length - 1;
-  $("#myslider-" + id).attr("value", group_Child_Length);
-  $("#slider-" + id).css("display") == "none"
-    ? $("#slider-" + id).css("display", "block")
-    : $("#slider-" + id).css("display", "none");
+  let group_Child_Length = +$('#form-group-' + id).children().length - 1;
+  $('#myslider-' + id).attr('value', group_Child_Length);
+  $('#slider-' + id).css('display') == 'none' ? $('#slider-' + id).css('display', 'block') : $('#slider-' + id).css('display', 'none');
 }
 
 function volume(elem) {
-  let id = elem.id.replaceAll("myslider-", "lblSlider-");
-  $("#" + id).html(elem.value + " column");
-  if (elem.value == 1) $("#" + id).css("left", "0px");
-  if (elem.value == 2) $("#" + id).css("left", "30px");
-  if (elem.value == 3) $("#" + id).css("left", "70px");
+  let id = elem.id.replaceAll('myslider-', 'lblSlider-');
+  $('#' + id).html(elem.value + ' column');
+  if (elem.value == 1) $('#' + id).css('left', '0px');
+  if (elem.value == 2) $('#' + id).css('left', '30px');
+  if (elem.value == 3) $('#' + id).css('left', '70px');
   switch (+elem.value) {
     case 1:
       DivSplit_1(elem);
@@ -757,16 +720,15 @@ function volume(elem) {
   }
 }
 function hideSlider(elem) {
-  let spliter = elem.id.split("-")[1];
-  if ($("#slider-" + spliter).css("display") == "block")
-    $("#slider-" + spliter).css("display", "none");
+  let spliter = elem.id.split('-')[1];
+  if ($('#slider-' + spliter).css('display') == 'block') $('#slider-' + spliter).css('display', 'none');
 }
 
 function DivSplit_1(elem) {
   remove_Empty_Div(elem);
   if (get_Items_Row(elem).length == 1) {
     setDiv1(elem, 12);
-    rowBoxArr_Modify(elem, "OnceColumn");
+    rowBoxArr_Modify(elem, 'OnceColumn');
     chartArr_Modify(elem);
   }
 }
@@ -775,13 +737,13 @@ function DivSplit_2(elem) {
   if (get_Items_Row(elem).length == 1) {
     setDiv1(elem, 6);
     CreateDiv2(elem, 6);
-    rowBoxArr_Modify(elem, "TwoColumn");
+    rowBoxArr_Modify(elem, 'TwoColumn');
     chartArr_Modify(elem);
   }
   if (get_Items_Row(elem).length == 2) {
     setDiv1(elem, 6);
     setDiv2(elem, 6);
-    rowBoxArr_Modify(elem, "TwoColumn");
+    rowBoxArr_Modify(elem, 'TwoColumn');
     chartArr_Modify(elem);
   }
 }
@@ -791,7 +753,7 @@ function DivSplit_3(elem) {
     setDiv1(elem, 4);
     CreateDiv2(elem, 4);
     CreateDiv3(elem, 4);
-    rowBoxArr_Modify(elem, "ThreeColumn");
+    rowBoxArr_Modify(elem, 'ThreeColumn');
     chartArr_Modify(elem);
   }
   if (get_Items_Row(elem).length == 2) {
@@ -799,14 +761,14 @@ function DivSplit_3(elem) {
     setDiv1(elem, 4);
     setDiv2(elem, 4);
     CreateDiv3(elem, 4);
-    rowBoxArr_Modify(elem, "ThreeColumn");
+    rowBoxArr_Modify(elem, 'ThreeColumn');
     chartArr_Modify(elem);
   }
 }
 
 function rowBoxArr_Modify(elem, num) {
-  let RowID = $("#" + get_Items_Row(elem)[0]).parent()[0].id;
-  RowID = RowID.replaceAll("form-group-", "").split("-")[0];
+  let RowID = $('#' + get_Items_Row(elem)[0]).parent()[0].id;
+  RowID = RowID.replaceAll('form-group-', '').split('-')[0];
   ROWBOXS.find(function (Element) {
     if (Element.RowID == RowID) {
       Element.ColumnLayout = num;
@@ -816,16 +778,15 @@ function rowBoxArr_Modify(elem, num) {
 //تغییر
 function chartArr_Modify(elem) {
   let chartID;
-  let RowID = $("#" + get_Items_Row(elem)[0]).parent()[0].id;
-  let colCount = $("#" + RowID).children().length;
+  let RowID = $('#' + get_Items_Row(elem)[0]).parent()[0].id;
+  let colCount = $('#' + RowID).children().length;
   for (let i = colCount - 1; i >= 0; i--) {
-    let colID = $("#" + RowID).children()[i].id;
-    if ($("#" + colID).hasClass("form-group-body")) {
-      if ($("#" + colID).children().length > 1)
-        chartID = $("#" + colID).children()[0].id;
+    let colID = $('#' + RowID).children()[i].id;
+    if ($('#' + colID).hasClass('form-group-body')) {
+      if ($('#' + colID).children().length > 1) chartID = $('#' + colID).children()[0].id;
       //set new colIndex in arr
       if (chartID) {
-        let colIndex = $("#" + colID).attr("ColumnIndex");
+        let colIndex = $('#' + colID).attr('ColumnIndex');
         let element = CHARTS.filter((x) => x.ID == chartID);
         element[0].ColumnIndex = +colIndex;
       }
@@ -833,18 +794,12 @@ function chartArr_Modify(elem) {
   }
 }
 function setDiv1(elem, colNum) {
-  $("#" + get_Items_Row(elem)[0]).attr(
-    "class",
-    "form-group-body  col-md-" + colNum
-  );
-  $("#" + get_Items_Row(elem)[0]).attr("ColumnIndex", 0);
+  $('#' + get_Items_Row(elem)[0]).attr('class', 'form-group-body  col-md-' + colNum);
+  $('#' + get_Items_Row(elem)[0]).attr('ColumnIndex', 0);
 }
 function setDiv2(elem, colNum) {
-  $("#" + get_Items_Row(elem)[1]).attr(
-    "class",
-    "form-group-body col-md-" + colNum
-  );
-  $("#" + get_Items_Row(elem)[1]).attr("ColumnIndex", 1);
+  $('#' + get_Items_Row(elem)[1]).attr('class', 'form-group-body col-md-' + colNum);
+  $('#' + get_Items_Row(elem)[1]).attr('ColumnIndex', 1);
 }
 function CreateDiv2(elem, colNum) {
   let div1ID = get_Items_Row(elem)[0];
@@ -857,7 +812,7 @@ function CreateDiv2(elem, colNum) {
     div2ID +
     '" ></div>';
   //set div2
-  $("#" + get_Items_Row(elem)[0]).after($(div2));
+  $('#' + get_Items_Row(elem)[0]).after($(div2));
 }
 
 function CreateDiv3(elem, colNum) {
@@ -873,7 +828,7 @@ function CreateDiv3(elem, colNum) {
     div3ID +
     '"></div>';
   //set div3
-  $("#" + get_Items_Row(elem)[1]).after($(div3));
+  $('#' + get_Items_Row(elem)[1]).after($(div3));
 }
 
 //Remove empty Div when DivSplit
@@ -881,14 +836,14 @@ function remove_Empty_Div(elem) {
   let chartCount = 0;
   let Items_Row = get_Items_Row(elem);
   for (let k = Items_Row.length - 1; k >= 0; k--) {
-    let elements = +$("#" + Items_Row[k]).children().length;
-    if ($("#" + elem.id).hasClass("myslider")) {
+    let elements = +$('#' + Items_Row[k]).children().length;
+    if ($('#' + elem.id).hasClass('myslider')) {
       if (get_Items_Row(elem).length > 1) {
         if (elements == 0) {
-          $("#" + Items_Row[k]).remove();
+          $('#' + Items_Row[k]).remove();
         }
       }
-    } else if ($("#" + elem.id).hasClass("delete")) {
+    } else if ($('#' + elem.id).hasClass('delete')) {
       if (elements > 0) {
         chartCount++;
       }
@@ -896,9 +851,9 @@ function remove_Empty_Div(elem) {
         if (chartCount == 0) {
           //chart is null
           for (let index = Items_Row.length - 1; index >= 0; index--) {
-            if ($("#" + elem.id).hasClass("delete")) {
+            if ($('#' + elem.id).hasClass('delete')) {
               if (elements == 0) {
-                $("#" + Items_Row[index]).remove();
+                $('#' + Items_Row[index]).remove();
               }
             }
           }
@@ -910,14 +865,12 @@ function remove_Empty_Div(elem) {
 
 function get_Items_Row(elem) {
   let get_Items_Row = [];
-  let parnetnodeID = $("#" + elem.id).hasClass("delete")
-    ? elem.parentNode.parentNode.id
-    : elem.parentNode.parentNode.parentNode.parentNode.id;
+  let parnetnodeID = $('#' + elem.id).hasClass('delete') ? elem.parentNode.parentNode.id : elem.parentNode.parentNode.parentNode.parentNode.id;
   parnetnodeID = document.getElementById(parnetnodeID);
   for (let q = 0; q < parnetnodeID.childNodes.length; q++) {
     if (parnetnodeID.childNodes[q].id) {
       let id = parnetnodeID.childNodes[q].id;
-      if ($("#" + id).hasClass("form-group-body")) {
+      if ($('#' + id).hasClass('form-group-body')) {
         get_Items_Row.push(id);
       }
     }
@@ -926,7 +879,7 @@ function get_Items_Row(elem) {
 }
 
 function HideModal() {
-  $("#myModal").remove();
+  $('#myModal').remove();
 }
 
 //Globar Var
@@ -948,7 +901,7 @@ var COLUMNWIDTH;
 var ROWBOXS = [];
 var CHARTS = [];
 var FILTERS = {};
-var SQLFILTERS = "";
+var SQLFILTERS = '';
 var ACCESESROLES = [];
 var ACCESESGROUPS = [];
 var REFROLES = [];
@@ -986,20 +939,23 @@ function ExportData() {
 
   //Export to backend
   var data = new FormData();
-  data.append("design", JSON.stringify(json));
-  data.append("ID", DASHBOARDID);
+  data.append('design', JSON.stringify(json));
+  data.append('ID', DASHBOARDID);
   var $dashboard = new editDashboard(data);
   $dashboard.submit(data);
+
+  console.log(JSON.stringify(json));
 }
 
 function openfile() {
-  let input = document.getElementById("file-input").files[0];
+  let input = document.getElementById('file-input').files[0];
   if (input) {
     var reader = new FileReader();
     reader.onload = function (e) {
       let _json = e.target.result;
       _json = JSON.parse(_json);
-      $("#geContent").empty();
+      console.log(_json);
+      $('#geContent').empty();
       //set variables
       DASHBOARDID = _json.DashboardID;
       MODULEID = _json.ModuleID;
@@ -1030,18 +986,19 @@ function openfile() {
     reader.readAsText(input);
   }
 }
+
 function btnSubmit(par, text) {
-  let btn = document.createElement("button");
-  btn.className = "btn btn-primary btn_submint_exit";
+  let btn = document.createElement('button');
+  btn.className = 'btn btn-primary btn_submint_exit';
   btn.innerText = text;
   $(par).append(btn);
   return btn;
 }
 
 function btnExit(par) {
-  let btnEx = document.createElement("button");
-  btnEx.className = "btn btn-light btn_submint_exit";
-  btnEx.innerText = "لغو";
+  let btnEx = document.createElement('button');
+  btnEx.className = 'btn btn-light btn_submint_exit';
+  btnEx.innerText = 'لغو';
   $(par).append(btnEx);
   return btnEx;
 }
